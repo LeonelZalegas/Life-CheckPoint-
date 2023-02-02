@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "385558963876",
+    "project_id": "life-checkpoint",
+    "storage_bucket": "life-checkpoint.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:385558963876:android:abccfaa1b483923adea831",
+        "android_client_info": {
+          "package_name": "com.example.influencer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "385558963876-t0q9s0d1licckj1n5br8dr4f1n69r1jm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIF9BX92wEG2KPYda4rJ6_1s5WOujqcl0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "385558963876-t0q9s0d1licckj1n5br8dr4f1n69r1jm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

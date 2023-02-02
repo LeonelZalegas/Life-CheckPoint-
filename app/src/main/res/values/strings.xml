@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Influencer</string>
+    // Para la pantalla de registro (SignIn)
+    <string name="Sign_In">Sign In c:</string>
+    <string name="enter_new_password"> Enter New Password</string>
+    <string name="enter_new_username">Enter New Username</string>
+    <string name="enter_new_password_again">Enter New Password Again</string>
+    //para los errores de validacion, autenticacion y carga en firestore del SignIn
+    <string name="error_usuario">please, Enter a Valid Username</string>
+    <string name="error_email">please, Enter a Valid Email</string>
+    <string name="error_password">please, Enter a Valid password</string>
+    <string name="error_password_confirmacion">password does not match</string>
+    <string name="Re_enter_Fields">Please, Re-Enter the fields Correctly</string>
+    <string name="LogIn_successful">Log In has been successful</string>
+    <string name="error_SignIn">An Error has occurred when trying sign you up, try again</string>
+    //para los errores del LogIn
+    <string name="error_LogIn">Email or Password are wrong, please re-enter them</string>
+    <string name="empty_fields_LogIn">please, remove empty spaces or complete all the fields</string>
+    //para pantallas de cargas
+    <string name="Loading">Loading...just wait a sec</string>
+
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.App.ElSplash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/naranja_intermedio</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/elsplash_sinfondo_foreground</item>
+        <item name="windowSplashScreenAnimationDuration">300</item>
+        <item name="postSplashScreenTheme">@style/Theme.Influencer</item>
+        <item name="android:windowSplashScreenBrandingImage">@drawable/logo_app</item>
+    </style>
+</resources>
