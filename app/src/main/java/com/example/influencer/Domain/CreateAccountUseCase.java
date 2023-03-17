@@ -1,4 +1,4 @@
-package com.example.influencer.UI.SignIn;
+package com.example.influencer.Domain;
 
 import android.content.Context;
 import android.widget.Toast;
@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import com.example.influencer.Data.Network.AuthenticationService;
 import com.example.influencer.Data.Network.UserService;
 import com.example.influencer.R;
+import com.example.influencer.UI.SignIn.CreateAccountListener;
 import com.example.influencer.UI.SignIn.Model.UsuarioSignin;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
