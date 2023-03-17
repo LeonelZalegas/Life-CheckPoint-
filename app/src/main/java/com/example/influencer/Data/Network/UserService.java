@@ -1,5 +1,6 @@
 package com.example.influencer.Data.Network;
 
+import com.example.influencer.UI.SignIn.Model.UsuarioSignin;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 
