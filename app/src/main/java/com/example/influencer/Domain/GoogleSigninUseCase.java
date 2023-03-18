@@ -32,8 +32,8 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public class GoogleSigninUseCase {
 
     SweetAlertDialog carga;
-    private AuthenticationService authenticationService;
-    private UserService userService;
+    private final AuthenticationService authenticationService;
+    private final UserService userService;
     Context context;
     AppCompatActivity googleSigninActivity;
 

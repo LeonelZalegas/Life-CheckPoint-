@@ -15,8 +15,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 
 public class CreateAccountUseCase {
-    private AuthenticationService authenticationService;
-    private UserService userService;
+    private final AuthenticationService authenticationService;
+    private final UserService userService;
 
     public CreateAccountUseCase(AuthenticationService authenticationService, UserService userService) {
         this.authenticationService = authenticationService;
