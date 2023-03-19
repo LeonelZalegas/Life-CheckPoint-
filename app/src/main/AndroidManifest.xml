@@ -20,14 +20,28 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Activities.Registro"
+            android:name=".UI.GoogleSignin.GoogleSigninActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Activities.MainActivity"
+            android:name=".UI.SignIn.SignInActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".UI.SignIn.SigninValidation"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".UI.Login.LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.App.ElSplash">
             <intent-filter>
