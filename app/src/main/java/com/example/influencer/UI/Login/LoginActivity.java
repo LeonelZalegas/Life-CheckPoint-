@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         //
 
         LoginUseCase loginUseCase = new LoginUseCase(AuthenticationService.getInstance());
-        LoginViewModel loginViewModel = new LoginViewModel(loginUseCase, this);
+        loginViewModel = new LoginViewModel(loginUseCase, this);
         initUI();
     }
 

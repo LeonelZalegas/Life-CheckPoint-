@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace 'com.example.influencer'
-    compileSdk 33
+    compileSdk 32
 
     defaultConfig {
         applicationId "com.example.influencer"
@@ -45,7 +45,7 @@ dependencies {
     implementation 'com.github.f0ris.sweetalert:library:1.6.2' //para pantallas de carga
     implementation 'androidx.core:core-splashscreen:1.0.0-beta02'//para el splash
     // ViewModel
-    implementation "androidx.lifecycle:lifecycle-viewmodel:2.6.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:2.0.0"
     // LiveData
-    implementation "androidx.lifecycle:lifecycle-livedata:2.6.0"
+    implementation "androidx.lifecycle:lifecycle-livedata:2.0.0"
 }

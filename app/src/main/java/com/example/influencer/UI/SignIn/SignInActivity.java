@@ -30,7 +30,7 @@ public class SignInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registro);
 
         CreateAccountUseCase createAccountUseCase = new CreateAccountUseCase(AuthenticationService.getInstance(), new UserService(FirebaseClient.getInstance()));
-        SignInViewModel signInViewModel = new SignInViewModel(createAccountUseCase, this);
+        signInViewModel = new SignInViewModel(createAccountUseCase, this);
         initUI();
     }
 
