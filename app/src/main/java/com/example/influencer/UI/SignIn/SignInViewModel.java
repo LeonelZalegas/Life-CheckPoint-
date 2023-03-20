@@ -3,6 +3,7 @@ package com.example.influencer.UI.SignIn;
 import android.content.Context;
 import android.graphics.Color;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -58,8 +59,8 @@ public class SignInViewModel extends ViewModel implements CreateAccountListener 
         _backToLogin.setValue(new Event<>(true));
     }
 
-    public boolean validatingSignIn(){
-        return signinValidation.invoke();
+    public boolean validatingSignIn(AppCompatActivity signinContext){
+        return signinValidation.invoke(signinContext);
     }
 
     public void finishvalidatingSignIn(){

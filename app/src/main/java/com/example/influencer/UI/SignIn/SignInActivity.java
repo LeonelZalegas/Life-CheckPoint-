@@ -23,6 +23,7 @@ public class SignInActivity extends AppCompatActivity {
     EditText ET_poner_usuario;
     EditText ET_poner_email;
     EditText ET_poner_contrasena;
+    AppCompatActivity ActivityContext = this; //para poder hacer la validacion del Signin (y no volverla un Activity)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,7 @@ public class SignInActivity extends AppCompatActivity {
         FAB_flecha_avanzar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (signInViewModel.validatingSignIn()) {
+                if (signInViewModel.validatingSignIn(ActivityContext)) {
                     signInViewModel.finishvalidatingSignIn();
                     signInViewModel.onSignInSelected(new UsuarioSignin(
                             ET_poner_email.getText().toString(),
