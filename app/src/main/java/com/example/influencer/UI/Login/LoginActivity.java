@@ -64,12 +64,12 @@ public class LoginActivity extends AppCompatActivity {
         ET_poner_email = findViewById(R.id.poner_email);
         ET_poner_contrasena = findViewById(R.id.poner_contrasena);
         B_Button_LogIn = findViewById(R.id.button_LogIn);
-        String email =  ET_poner_email.getText().toString();
-        String contrasena = ET_poner_contrasena.getText().toString();
 
         B_Button_LogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String email =  ET_poner_email.getText().toString();
+                String contrasena = ET_poner_contrasena.getText().toString();
                 if(loginViewModel.validatingLogin(email,contrasena)) {
                     loginViewModel.onLoginSelected(new UsuarioLogin(email,contrasena));
                 }
