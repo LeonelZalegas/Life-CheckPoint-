@@ -13,7 +13,7 @@ import com.example.influencer.R;
 
 public class SigninValidation  {
 
-    public boolean invoke(AppCompatActivity context) {
+    static public boolean invoke(AppCompatActivity context) {
         AwesomeValidation Validacion_piola;
         Validacion_piola = new AwesomeValidation(ValidationStyle.BASIC);
         Validacion_piola.addValidation(context,R.id.poner_usuario,"[a-zA-Z0-9]*",R.string.error_usuario);// para q solo se ponga letras (may y min) y numeros en el Usuario

@@ -18,7 +18,6 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public class SignInViewModel extends ViewModel implements CreateAccountListener {
     private final CreateAccountUseCase createAccountUseCase;
     SweetAlertDialog carga;
-    SigninValidation signinValidation = new SigninValidation() ; //instancia (de una activity con igual layout )para poder hacer validacion de datos
     Context context; //para asi poder usar los Toast
 
     private final MutableLiveData<Event<Boolean>> _backToLogin = new MutableLiveData<>();
@@ -60,10 +59,6 @@ public class SignInViewModel extends ViewModel implements CreateAccountListener 
     }
 
     public boolean validatingSignIn(AppCompatActivity signinContext){
-        return signinValidation.invoke(signinContext);
-    }
-
-    public void finishvalidatingSignIn(){
-        signinValidation = null; //para que eventualmente se elimine esa instancia
+        return SigninValidation.invoke(signinContext);
     }
 }

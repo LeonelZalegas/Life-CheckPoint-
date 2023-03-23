@@ -37,4 +37,6 @@ public class UsuarioSignin {
     public void setUsername(String username) {
         Username = username;
     }
+
+    public String getUsername(){return Username;}
 }

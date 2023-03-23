@@ -27,7 +27,7 @@ public class CreateAccountUseCase {
         authenticationService.registrar(usuarioSignIn.getEmail(), usuarioSignIn.getContrasena()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
+                if (task.isSuccessful()) {  //si autenticarse tiene exito ingresa aca (para crear y guardar el usuario en firestore)
                     usuarioSignIn.setId(authenticationService.getuid());
                     userService.crearUsuario(usuarioSignIn).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

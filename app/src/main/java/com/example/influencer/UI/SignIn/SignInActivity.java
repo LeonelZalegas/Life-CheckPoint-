@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.example.influencer.Activities.HomeActivity;
 import com.example.influencer.Data.Network.AuthenticationService;
@@ -60,7 +61,6 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (signInViewModel.validatingSignIn(ActivityContext)) {
-                    signInViewModel.finishvalidatingSignIn();
                     signInViewModel.onSignInSelected(new UsuarioSignin(
                             ET_poner_email.getText().toString(),
                             ET_poner_usuario.getText().toString(),
@@ -89,7 +89,7 @@ public class SignInActivity extends AppCompatActivity {
     private void goTonavigateToHome() {
         Intent intent_LogIn = new Intent(SignInActivity.this, HomeActivity.class);
         startActivity(intent_LogIn);
-        finish();
+        ActivityCompat.finishAffinity(this); //en vez de poner finish() nomas utilizamos este metodo par asi tambien finalizar el activity de Login (antes solo se cerraba el Signin, por ende podias ir de Home a Login de nuevo si volvias para atras)
     }
 
     private void goTobackToLogin() {
