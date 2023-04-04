@@ -13,6 +13,8 @@
     <color name="naranja_suave">#FCC572</color>
     <color name="rojo_normal">#E33327</color>
     <color name="naranja_intermedio">#FDAB2F</color>
+    <color name="naranja_OnBoarding">#FABE2F</color>
+    <color name="naranja_Home">#FAC710</color>
 
 
 </resources>
