@@ -10,8 +10,10 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottieAnimationView"
-        android:layout_width="255dp"
-        android:layout_height="219dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintWidth_percent="0.65"
+        app:layout_constraintHeight_percent="0.3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,8 +25,10 @@
 
     <ImageView
         android:id="@+id/logo_app"
-        android:layout_width="376dp"
-        android:layout_height="147dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintWidth_percent="0.90"
+        app:layout_constraintHeight_percent="0.2"
         android:src="@drawable/logo_app"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,12 +45,11 @@
         android:layout_marginEnd="30dp"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/poner_contrasena"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.50"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo_app"
-        app:layout_constraintVertical_bias="0.13" />
+        app:layout_constraintTop_toBottomOf="@+id/guideline1"
+        app:layout_constraintVertical_chainStyle="spread" />
 
     <EditText
         android:id="@+id/poner_contrasena"
@@ -56,12 +59,10 @@
         android:layout_marginEnd="30dp"
         android:hint="Password"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/poner_email"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintTop_toBottomOf="@+id/poner_email" />
 
     <ImageView
         android:id="@+id/vector_asset_email"
@@ -73,16 +74,14 @@
         app:layout_constraintBottom_toTopOf="@id/vector_asset_password"
         app:layout_constraintEnd_toStartOf="@+id/poner_email"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/logo_app"
-        app:layout_constraintVertical_bias="0.16"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintTop_toBottomOf="@+id/guideline1"
+        app:layout_constraintVertical_chainStyle="spread" />
 
     <ImageView
         android:id="@+id/vector_asset_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toStartOf="@id/poner_contrasena"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/vector_asset_email"
@@ -92,17 +91,17 @@
     <Button
         android:id="@+id/button_LogIn"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginEnd="80dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.08"
+        app:layout_constraintWidth_percent="0.65"
         android:background="@drawable/boton_redondo"
         android:text="Log in"
         app:backgroundTint="@color/rojo_normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/poner_contrasena"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintTop_toBottomOf="@+id/guideline2"
+        app:layout_constraintVertical_bias="0.1" />
 
     <TextView
         android:id="@+id/textView"
@@ -111,9 +110,9 @@
         android:text="don't have an account? "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_LogIn"
+        app:layout_constraintTop_toBottomOf="@+id/buttom_signInGoogle"
         app:layout_constraintEnd_toStartOf="@id/sign_in"
-        app:layout_constraintVertical_bias="0.95"
+        app:layout_constraintVertical_bias="0.85"
         app:layout_constraintHorizontal_chainStyle="packed"/>
 
     <TextView
@@ -124,15 +123,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/button_LogIn"
-        app:layout_constraintVertical_bias="0.95"
+        app:layout_constraintTop_toBottomOf="@+id/buttom_signInGoogle"
+        app:layout_constraintVertical_bias="0.85"
         android:textStyle="bold"
         />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/buttom_signInGoogle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.075"
+        app:layout_constraintWidth_percent="0.85"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -140,6 +141,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/button_LogIn"
         app:layout_constraintVertical_bias="0.15" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.47" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.62" />
 
 
 

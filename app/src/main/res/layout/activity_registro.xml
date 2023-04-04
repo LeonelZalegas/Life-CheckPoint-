@@ -4,41 +4,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.SignIn.SignInActivity"
-    android:background="@color/naranja_intermedio">
+    android:background="@color/naranja_intermedio"
+    tools:context=".UI.SignIn.SignInActivity">
 
     <ImageView
         android:id="@+id/imagen_fondo"
-        android:layout_width="410dp"
-        android:layout_height="277dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:scaleType="fitXY"
         android:src="@drawable/top_registro"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.38"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0" />
 
     <TextView
         android:id="@+id/sign_in_titulo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/Sign_In"
+        android:textColor="@color/white"
+        android:textSize="40dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guideline1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.10"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imagen_fondo"
         app:layout_constraintVertical_bias="0"
-        android:text="@string/Sign_In"
-        android:textSize="40dp"
-        android:layout_marginStart="40dp"
-        android:textColor="@color/white"
-        android:textStyle="bold"/>
+        app:layout_constraintWidth_percent="0.90" />
 
     <EditText
         android:id="@+id/poner_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
+
         android:layout_marginEnd="30dp"
-        android:layout_marginTop="15dp"
         android:hint="Email"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/poner_contrasena"
@@ -52,7 +56,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginTop="15dp"
         android:hint="@string/enter_new_password"
         android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@id/poner_contrasena_again"
@@ -64,25 +67,23 @@
         android:id="@+id/vector_asset_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
+        android:layout_marginBottom="0dp"
         android:src="@drawable/vector_asset_email"
         app:layout_constraintBottom_toTopOf="@id/vector_asset_password"
         app:layout_constraintEnd_toStartOf="@+id/poner_email"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/vector_asset_new_user"
-        />
-
+        app:layout_constraintTop_toBottomOf="@id/vector_asset_new_user" />
 
 
     <ImageView
         android:id="@+id/vector_put_password_again"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="0dp"
         android:src="@drawable/vector_put_password_again"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline2"
         app:layout_constraintEnd_toStartOf="@id/poner_contrasena_again"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/vector_asset_password" />
@@ -91,19 +92,19 @@
         android:id="@+id/vector_asset_new_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="0dp"
         android:src="@drawable/vector_asset_new_user"
         app:layout_constraintBottom_toTopOf="@id/vector_asset_email"
         app:layout_constraintEnd_toStartOf="@id/poner_usuario"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sign_in_titulo"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintTop_toBottomOf="@+id/guideline1"
+        app:layout_constraintVertical_chainStyle="spread" />
 
     <ImageView
         android:id="@+id/vector_asset_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="0dp"
         android:src="@drawable/vector_asset_password"
         app:layout_constraintBottom_toTopOf="@id/vector_put_password_again"
         app:layout_constraintEnd_toStartOf="@id/poner_contrasena"
@@ -121,9 +122,9 @@
         app:layout_constraintBottom_toTopOf="@id/poner_email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imagen_fondo"
-        app:layout_constraintVertical_bias="0.50"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintTop_toBottomOf="@+id/guideline1"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintVertical_chainStyle="spread" />
 
     <EditText
         android:id="@+id/poner_contrasena_again"
@@ -131,13 +132,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginTop="15dp"
         android:hint="@string/enter_new_password_again"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/poner_contrasena"/>
+        app:layout_constraintTop_toBottomOf="@+id/poner_contrasena" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_flecha_avanzar"
@@ -145,14 +145,13 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:backgroundTint="@color/rojo_normal"
+        android:src="@drawable/vector_asset_flecha_avanzar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/poner_contrasena_again"
         app:layout_constraintHorizontal_bias="0.95"
-        android:src="@drawable/vector_asset_flecha_avanzar"
-        app:tint="#FFFFFF"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline2"
+        app:tint="#FFFFFF" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_volver_atras"
@@ -169,6 +168,19 @@
         app:layout_constraintVertical_bias="0.0"
         app:tint="#FFFFFF" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.90"  />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
