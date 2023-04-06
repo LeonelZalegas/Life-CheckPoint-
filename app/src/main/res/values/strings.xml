@@ -18,5 +18,7 @@
     <string name="empty_fields_LogIn">please, remove empty spaces or complete all the fields</string>
     //para pantallas de cargas
     <string name="Loading">Loading...just wait a sec</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
