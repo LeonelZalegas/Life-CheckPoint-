@@ -11,16 +11,16 @@
         android:id="@+id/titulo"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="@string/primer_fragment"
+        android:text="@string/segundo_fragment"
         android:textColor="@color/black"
         android:autoSizeTextType="uniform"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/lottieAnimationView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.15"
+        app:layout_constraintHeight_percent="0.13"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.90"
+        app:layout_constraintWidth_percent="0.93"
         app:layout_constraintVertical_chainStyle="spread_inside" />
 
     <com.airbnb.lottie.LottieAnimationView
@@ -35,13 +35,13 @@
         app:layout_constraintTop_toBottomOf="@+id/titulo"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/primer_fragment_gif" />
+        app:lottie_rawRes="@raw/segundo_fragment_gif" />
 
     <TextView
         android:id="@+id/description"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="@string/despription_primer_fragment"
+        android:text="@string/despription_segundo_fragment"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:autoSizeTextType="uniform"
