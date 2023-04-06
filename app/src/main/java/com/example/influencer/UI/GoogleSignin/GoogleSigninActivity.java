@@ -6,7 +6,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.influencer.Activities.HomeActivity;
+import com.example.influencer.Activities.OnBoardingActivity;
 import com.example.influencer.Data.Network.AuthenticationService;
 import com.example.influencer.Data.Network.FirebaseClient;
 import com.example.influencer.Data.Network.UserService;
@@ -42,7 +42,7 @@ public class GoogleSigninActivity extends AppCompatActivity implements GoogleSig
 
     @Override
     public void onUserAuthenticated() {
-        Intent intent_LogIn = new Intent(GoogleSigninActivity.this, HomeActivity.class);
+        Intent intent_LogIn = new Intent(GoogleSigninActivity.this, OnBoardingActivity.class);
         startActivity(intent_LogIn);
         finish();
     }

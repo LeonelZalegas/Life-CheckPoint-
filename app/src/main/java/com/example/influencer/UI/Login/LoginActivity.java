@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.influencer.Activities.HomeActivity;
+import com.example.influencer.Activities.OnBoardingActivity;
 import com.example.influencer.Data.Network.AuthenticationService;
 import com.example.influencer.Domain.LoginUseCase;
 import com.example.influencer.R;
@@ -116,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void goTonavigateToHome() {
-        Intent intent_LogIn = new Intent(LoginActivity.this, HomeActivity.class);
+        Intent intent_LogIn = new Intent(LoginActivity.this, OnBoardingActivity.class);
         startActivity(intent_LogIn);
         finish();
     }

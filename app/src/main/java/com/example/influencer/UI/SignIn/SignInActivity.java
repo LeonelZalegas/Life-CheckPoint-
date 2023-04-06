@@ -8,7 +8,7 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.example.influencer.Activities.HomeActivity;
+import com.example.influencer.Activities.OnBoardingActivity;
 import com.example.influencer.Data.Network.AuthenticationService;
 import com.example.influencer.Data.Network.FirebaseClient;
 import com.example.influencer.Data.Network.UserService;
@@ -87,7 +87,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void goTonavigateToHome() {
-        Intent intent_LogIn = new Intent(SignInActivity.this, HomeActivity.class);
+        Intent intent_LogIn = new Intent(SignInActivity.this, OnBoardingActivity.class);
         startActivity(intent_LogIn);
         ActivityCompat.finishAffinity(this); //en vez de poner finish() nomas utilizamos este metodo par asi tambien finalizar el activity de Login (antes solo se cerraba el Signin, por ende podias ir de Home a Login de nuevo si volvias para atras)
     }
