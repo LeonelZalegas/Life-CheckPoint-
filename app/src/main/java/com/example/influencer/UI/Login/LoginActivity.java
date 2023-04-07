@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.influencer.Activities.OnBoardingActivity;
+import com.example.influencer.UI.OnBoarding.OnBoardingActivity;
 import com.example.influencer.Data.Network.AuthenticationService;
 import com.example.influencer.Domain.LoginUseCase;
 import com.example.influencer.R;

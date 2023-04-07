@@ -6,7 +6,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.influencer.Activities.OnBoardingActivity;
+import com.example.influencer.UI.OnBoarding.OnBoardingActivity;
 import com.example.influencer.Data.Network.AuthenticationService;
 import com.example.influencer.Data.Network.FirebaseClient;
 import com.example.influencer.Data.Network.UserService;

@@ -1,4 +1,4 @@
-package com.example.influencer.Activities;
+package com.example.influencer.UI.OnBoarding;
 
 import androidx.appcompat.app.AppCompatActivity;
 
