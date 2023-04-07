@@ -8,6 +8,7 @@
     android:background="@color/naranja_OnBoarding">
 
     <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/onboardingViewPager"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/guideline"
@@ -23,7 +24,7 @@
         app:layout_constraintGuide_percent="0.75" />
 
     <Button
-        android:id="@+id/button_LogIn"
+        android:id="@+id/button_StartNow"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintHeight_percent="0.08"
