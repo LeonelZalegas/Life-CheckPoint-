@@ -13,11 +13,13 @@ import com.example.influencer.UI.OnBoarding.Fragments.OnboardingFragment1;
 import com.example.influencer.UI.OnBoarding.Fragments.OnboardingFragment2;
 import com.example.influencer.UI.OnBoarding.Fragments.OnboardingFragment3;
 import com.example.influencer.databinding.ActivityOnboardingBinding;
+import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 public class OnBoardingActivity extends AppCompatActivity {
 
     private ActivityOnboardingBinding binding;
     private OnboardingViewModel viewModel;
+    private DotsIndicator dotsIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,9 @@ public class OnBoardingActivity extends AppCompatActivity {
         pagerAdapter.addFragment(new OnboardingFragment2());
         pagerAdapter.addFragment(new OnboardingFragment3());
         binding.onboardingViewPager.setAdapter(pagerAdapter);
+
+        dotsIndicator = binding.dotsIndicator;
+        dotsIndicator.attachTo(binding.onboardingViewPager);
 
         binding.buttonStartNow.setOnClickListener(new View.OnClickListener() {
             @Override

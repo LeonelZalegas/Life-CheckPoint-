@@ -25,6 +25,6 @@
     <string name="description_segundo_fragment">There is many people living or that have lived a similar life as you. Find, chat and ask/give advices to them !</string>
     <string name="Start_Onboarding">Start Now !</string>
     <string name="tercer_fragment">Track your Checkpoints!</string>
-    <string name="description_tercer_fragment">Update creating threads of new checkpoints related to that specific aspect of your life. As also rating your Satisfaction Scale</string>
+    <string name="description_tercer_fragment">Update creating threads of new checkpoints related to that specific aspect of your life</string>
 
 </resources>
