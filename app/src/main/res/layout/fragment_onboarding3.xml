@@ -4,14 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".UI.OnBoarding.Fragments.OnboardingFragment2"
+    tools:context=".UI.OnBoarding.Fragments.OnboardingFragment3"
     android:background="@color/naranja_OnBoarding">
+
+
 
     <TextView
         android:id="@+id/titulo"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="@string/segundo_fragment"
+        android:text="@string/tercer_fragment"
         android:textColor="@color/black"
         android:fontFamily="@font/happy"
         android:textAlignment="center"
@@ -36,13 +38,13 @@
         app:layout_constraintTop_toBottomOf="@+id/titulo"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/segundo_fragment_gif" />
+        app:lottie_rawRes="@raw/untercer_fragment_gif" />
 
     <TextView
         android:id="@+id/description"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="@string/description_segundo_fragment"
+        android:text="@string/description_tercer_fragment"
         android:textColor="@color/black"
         android:fontFamily="@font/happy"
         android:textAlignment="center"
@@ -61,5 +63,4 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.1" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,14 +14,16 @@
         android:text="@string/primer_fragment"
         android:textColor="@color/black"
         android:autoSizeTextType="uniform"
-        android:textStyle="bold"
+        android:fontFamily="@font/happy"
+        android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/lottieAnimationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.15"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.90"
-        app:layout_constraintVertical_chainStyle="spread_inside" />
+        app:layout_constraintTop_toTopOf="@+id/guideline1"
+        app:layout_constraintWidth_percent="0.9"
+        app:layout_constraintVertical_chainStyle="spread_inside"
+        app:layout_constraintVertical_bias="0.5"/>
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottieAnimationView"
@@ -41,10 +43,11 @@
         android:id="@+id/description"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="@string/despription_primer_fragment"
+        android:text="@string/description_primer_fragment"
         android:textColor="@color/black"
-        android:textStyle="bold"
+        android:fontFamily="@font/happy"
         android:autoSizeTextType="uniform"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.15"
@@ -52,5 +55,15 @@
         app:layout_constraintTop_toBottomOf="@id/lottieAnimationView"
         app:layout_constraintVertical_bias="0.05"
         app:layout_constraintWidth_percent="0.90" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.03" />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,9 +20,11 @@
     <string name="Loading">Loading...just wait a sec</string>
     //para el Onboarding
     <string name="primer_fragment">Create Checkpoints of your life!</string>
-    <string name="despription_primer_fragment">Explain your current situation in life, in aspects like love, work, etc to the Entire World evertytime u feel too !</string>
+    <string name="description_primer_fragment">Explain your current situation in life, in aspects like love, work, etc to the Entire World every time u feel to !</string>
     <string name="segundo_fragment">8,045,311,447 people</string>
-    <string name="despription_segundo_fragment">there is many people living or that have lived a similar life as you. Find, chat and ask/give advices to them !</string>
+    <string name="description_segundo_fragment">There is many people living or that have lived a similar life as you. Find, chat and ask/give advices to them !</string>
     <string name="Start_Onboarding">Start Now !</string>
+    <string name="tercer_fragment">Track your Checkpoints!</string>
+    <string name="description_tercer_fragment">Update creating threads of new checkpoints related to that specific aspect of your life. As also rating your Satisfaction Scale</string>
 
 </resources>

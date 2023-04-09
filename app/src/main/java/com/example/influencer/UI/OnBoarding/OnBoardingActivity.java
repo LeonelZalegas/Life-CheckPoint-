@@ -11,6 +11,7 @@ import com.example.influencer.R;
 import com.example.influencer.UI.Login.LoginActivity;
 import com.example.influencer.UI.OnBoarding.Fragments.OnboardingFragment1;
 import com.example.influencer.UI.OnBoarding.Fragments.OnboardingFragment2;
+import com.example.influencer.UI.OnBoarding.Fragments.OnboardingFragment3;
 import com.example.influencer.databinding.ActivityOnboardingBinding;
 
 public class OnBoardingActivity extends AppCompatActivity {
@@ -30,6 +31,7 @@ public class OnBoardingActivity extends AppCompatActivity {
         OnboardingPagerAdapter pagerAdapter = new OnboardingPagerAdapter(this);
         pagerAdapter.addFragment(new OnboardingFragment1());
         pagerAdapter.addFragment(new OnboardingFragment2());
+        pagerAdapter.addFragment(new OnboardingFragment3());
         binding.onboardingViewPager.setAdapter(pagerAdapter);
 
         binding.buttonStartNow.setOnClickListener(new View.OnClickListener() {
