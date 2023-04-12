@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.influencer.R;
+import com.example.influencer.UI.Home;
 import com.example.influencer.UI.Login.LoginActivity;
 import com.example.influencer.UI.OnBoarding.Fragments.OnboardingFragment1;
 import com.example.influencer.UI.OnBoarding.Fragments.OnboardingFragment2;
@@ -36,6 +37,7 @@ public class OnBoardingActivity extends AppCompatActivity {
         pagerAdapter.addFragment(new OnboardingFragment3());
         binding.onboardingViewPager.setAdapter(pagerAdapter);
 
+        //para la barrita de los dots del desplazamiento
         dotsIndicator = binding.dotsIndicator;
         dotsIndicator.attachTo(binding.onboardingViewPager);
 
@@ -54,6 +56,8 @@ public class OnBoardingActivity extends AppCompatActivity {
     }
 
     private void goTonavigateToHome() {
-        //hace algo
+        Intent intent_home = new Intent(OnBoardingActivity.this, Home.class);
+        startActivity(intent_home);
+        finish();
     }
 }
