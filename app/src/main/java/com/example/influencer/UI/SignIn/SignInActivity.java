@@ -72,9 +72,9 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void initObservers() {
-        signInViewModel.navigateToHome.observe(this, event -> {
+        signInViewModel.navigateToOnBoarding.observe(this, event -> {
             if (event != null && event.getContentIfNotHandled() != null) {
-                goTonavigateToHome();
+                goTonavigateToOnBoarding();
             }
         });
 
@@ -86,7 +86,7 @@ public class SignInActivity extends AppCompatActivity {
 
     }
 
-    private void goTonavigateToHome() {
+    private void goTonavigateToOnBoarding() {
         Intent intent_LogIn = new Intent(SignInActivity.this, OnBoardingActivity.class);
         startActivity(intent_LogIn);
         ActivityCompat.finishAffinity(this); //en vez de poner finish() nomas utilizamos este metodo par asi tambien finalizar el activity de Login (antes solo se cerraba el Signin, por ende podias ir de Home a Login de nuevo si volvias para atras)

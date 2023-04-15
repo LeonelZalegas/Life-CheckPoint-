@@ -23,8 +23,8 @@ public class SignInViewModel extends ViewModel implements CreateAccountListener 
     private final MutableLiveData<Event<Boolean>> _backToLogin = new MutableLiveData<>();
     public LiveData<Event<Boolean>> backToLogin = _backToLogin;
 
-    private final MutableLiveData<Event<Boolean>> _navigateToHome = new MutableLiveData<>();
-    public LiveData<Event<Boolean>> navigateToHome = _navigateToHome;
+    private final MutableLiveData<Event<Boolean>> _navigateToOnBoarding = new MutableLiveData<>();
+    public LiveData<Event<Boolean>> navigateToOnBoarding = _navigateToOnBoarding;
 
     public SignInViewModel(CreateAccountUseCase createAccountUseCase, Context context) {
         this.createAccountUseCase = createAccountUseCase;
@@ -45,7 +45,7 @@ public class SignInViewModel extends ViewModel implements CreateAccountListener 
 
     @Override
     public void onCreateAccountSuccess() {
-        _navigateToHome.postValue(new Event<>(true));
+        _navigateToOnBoarding.postValue(new Event<>(true));
         carga.dismiss();
     }
 

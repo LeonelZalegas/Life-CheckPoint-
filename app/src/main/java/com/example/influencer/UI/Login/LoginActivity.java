@@ -96,9 +96,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initObservers() {
-        loginViewModel.navigateToHome.observe(this, event -> {
+        loginViewModel.navigateToOnBoarding.observe(this, event -> {
             if (event != null && event.getContentIfNotHandled() != null) {
-                goTonavigateToHome();
+                goTonavigateToOnBoarding();
             }
         });
 
@@ -115,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void goTonavigateToHome() {
+    private void goTonavigateToOnBoarding() {
         Intent intent_LogIn = new Intent(LoginActivity.this, OnBoardingActivity.class);
         startActivity(intent_LogIn);
         finish();
