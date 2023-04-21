@@ -53,5 +53,9 @@ dependencies {
     // LiveData
     implementation "androidx.lifecycle:lifecycle-livedata:2.0.0"
     implementation "androidx.viewpager2:viewpager2:1.0.0"
+    //puntos de desplazamiento del Splash
     implementation "com.tbuonomo:dotsindicator:4.3"
+    //DataStore
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+    implementation "androidx.datastore:datastore-preferences-rxjava3:1.0.0"
 }

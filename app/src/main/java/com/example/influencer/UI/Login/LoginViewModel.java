@@ -26,8 +26,8 @@ public class LoginViewModel extends ViewModel implements LoginListener {
     private final MutableLiveData<Event<Boolean>> _navigateToGoogleSignIn = new MutableLiveData<>();
     public LiveData<Event<Boolean>> navigateToGoogleSignIn = _navigateToGoogleSignIn;
 
-    private final MutableLiveData<Event<Boolean>> _navigateToOnBoarding = new MutableLiveData<>();
-    public LiveData<Event<Boolean>> navigateToOnBoarding = _navigateToOnBoarding;
+    private final MutableLiveData<Event<Boolean>> _navigateToHome = new MutableLiveData<>();
+    public LiveData<Event<Boolean>> navigateToHome = _navigateToHome;
 
     public LoginViewModel(LoginUseCase loginUseCase, Context context) {
         this.loginUseCase = loginUseCase;
@@ -47,7 +47,7 @@ public class LoginViewModel extends ViewModel implements LoginListener {
 
     @Override
     public void LoginSuccess() {
-        _navigateToOnBoarding.postValue(new Event<>(true));
+        _navigateToHome.postValue(new Event<>(true));
         carga.dismiss();
     }
 

@@ -1,5 +1,7 @@
 package com.example.influencer.UI.Login;
 
+
+
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
@@ -11,6 +13,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.influencer.Data.Preferences.UserPreferences;
+import com.example.influencer.UI.Home;
 import com.example.influencer.UI.OnBoarding.OnBoardingActivity;
 import com.example.influencer.Data.Network.AuthenticationService;
 import com.example.influencer.Domain.LoginUseCase;
@@ -37,7 +41,13 @@ public class LoginActivity extends AppCompatActivity {
         splashScreen.setKeepOnScreenCondition(() -> false );
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        if(UserPreferences.getInstance(this).isSignedIn()){
+            Intent intent_Home= new Intent(LoginActivity.this, Home.class);
+            startActivity(intent_Home);
+            finish();
+        }else{
+            setContentView(R.layout.activity_main);}
 
         //Esto seria para la animacion de fondo de la pantala del LogIn
         ConstraintLayout gradiente_login = findViewById(R.id.gradiente_login);
@@ -96,9 +106,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initObservers() {
-        loginViewModel.navigateToOnBoarding.observe(this, event -> {
+        loginViewModel.navigateToHome.observe(this, event -> {
             if (event != null && event.getContentIfNotHandled() != null) {
-                goTonavigateToOnBoarding();
+                goToHome();
             }
         });
 
@@ -115,8 +125,9 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void goTonavigateToOnBoarding() {
-        Intent intent_LogIn = new Intent(LoginActivity.this, OnBoardingActivity.class);
+    private void goToHome() {
+        UserPreferences.getInstance(this).setSignedIn(true);
+        Intent intent_LogIn = new Intent(LoginActivity.this, Home.class);
         startActivity(intent_LogIn);
         finish();
     }
