@@ -16,7 +16,7 @@ import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
 
 public class UserPreferences {
-
+//https://www.notion.so/DataStore-5ff1d598536947498542c292ae3f2702
     Preferences.Key<Boolean> LOGGED_IN_KEY;
     private RxDataStore<Preferences> dataStoreInstance;
     private static UserPreferences userPreferencesinstance;
