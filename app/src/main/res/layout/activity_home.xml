@@ -26,7 +26,8 @@
         app:menu="@menu/bottom_nav_bar_menu"
         />
 
-    <androidx.fragment.app.FragmentContainerView
+    <!-- por alguna razon no funca con fragmentcontainer-->
+    <fragment
         android:id="@+id/main_tab_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
