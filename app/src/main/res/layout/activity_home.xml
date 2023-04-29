@@ -18,13 +18,12 @@
         android:id="@+id/bottomBar"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:backgroundColor="@color/white"
+        app:backgroundColor="@color/azul_suave"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:menu="@menu/bottom_nav_bar_menu"
-        app:itemIconTint="@color/azul_suave"
         />
 
     <androidx.fragment.app.FragmentContainerView
