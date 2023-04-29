@@ -12,6 +12,8 @@
     <color name="naranja_fuerte">#F57E00</color>
     <color name="naranja_suave">#FCC572</color>
     <color name="rojo_normal">#E33327</color>
+    <color name="rojo_suave">#F65348</color>
+    <color name="azul_suave">#414BB2</color>
     <color name="naranja_intermedio">#FDAB2F</color>
     //onboarding
     <color name="naranja_OnBoarding">#FABE2F</color>

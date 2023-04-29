@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/tab_nav"
+    app:startDestination="@id/checkpointTabFragment">
+
+    <fragment
+        android:id="@+id/checkpointTabFragment"
+        android:name="com.example.influencer.UI.CheckPoint_Tab.CheckpointTabFragment"
+        android:label="CheckpointTabFragment" />
+    <fragment
+        android:id="@+id/rankingTabFragment"
+        android:name="com.example.influencer.UI.Ranking_Tab.RankingTabFragment"
+        android:label="RankingTabFragment" />
+    <fragment
+        android:id="@+id/profileTabFragment"
+        android:name="com.example.influencer.UI.Profile_Tab.ProfileTabFragment"
+        android:label="ProfileTabFragment" />
+</navigation>

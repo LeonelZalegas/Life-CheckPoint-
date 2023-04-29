@@ -26,5 +26,9 @@
     <string name="Start_Onboarding">Start Now !</string>
     <string name="tercer_fragment">Track your Checkpoints!</string>
     <string name="description_tercer_fragment">Update creating threads of new checkpoints related to that specific aspect of your life</string>
+   //bottom navigation bar
+    <string name="checkpointtab">Checkpoint</string>
+    <string name="rankingtab">Ranking</string>
+    <string name="profiletab">Profile</string>
 
 </resources>

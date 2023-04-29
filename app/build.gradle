@@ -58,4 +58,10 @@ dependencies {
     //DataStore
     implementation "androidx.datastore:datastore-preferences:1.0.0"
     implementation "androidx.datastore:datastore-preferences-rxjava3:1.0.0"
+    //bottom navigation bar
+    implementation 'com.github.ibrahimsn98:SmoothBottomBar:1.7.9'
+    //navigation component
+    implementation "androidx.navigation:navigation-fragment:2.3.5"
+    implementation "androidx.navigation:navigation-ui:2.3.5"
+
 }
