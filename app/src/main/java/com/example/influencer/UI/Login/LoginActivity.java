@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
+        //para si el usuario ya esta loggeado no lo enviemos again al layout Login o al layout Signin o al Splash sino al Home
         if(UserPreferences.getInstance(this).isSignedIn()){
             Intent intent_Home= new Intent(LoginActivity.this, Home.class);
             startActivity(intent_Home);

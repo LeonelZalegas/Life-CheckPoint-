@@ -30,5 +30,8 @@
     <string name="checkpointtab">Checkpoint</string>
     <string name="rankingtab">Ranking</string>
     <string name="profiletab">Profile</string>
+    //adding
+    <string name="adding_new_checkpoint">New Checkpoint !</string>
+    <string name="adding_new_checkpoint_update">New Daily Checkpoint Update !</string>
 
 </resources>

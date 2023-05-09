@@ -18,13 +18,19 @@
         android:id="@+id/bottomBar"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:backgroundColor="@color/azul_suave"
+        app:backgroundColor="@color/azul_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:menu="@menu/bottom_nav_bar_menu"
         />
+
+   <!-- para otro estilo hacer  app:backgroundColor="@color/naranja_Home",
+   app:iconTint="@color/azul_suave"
+        app:iconTintActive="@color/white"
+        app:indicatorColor="@color/azul_suave" -->
+
 
     <!-- por alguna razon no funca con fragmentcontainer-->
     <fragment
