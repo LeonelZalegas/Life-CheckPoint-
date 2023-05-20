@@ -1,5 +1,6 @@
 package com.example.influencer.UI.CheckPoint_Tab;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,9 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.influencer.R;
+import com.example.influencer.UI.CheckpointThemeChoose.CheckpointThemeChooseActivity;
 import com.example.influencer.databinding.FragmentCheckpointTabBinding;
-import com.example.influencer.databinding.FragmentOnboarding1Binding;
 
 public class CheckpointTabFragment extends Fragment {
 
@@ -100,7 +100,8 @@ public class CheckpointTabFragment extends Fragment {
     }
 
     private void goToAddingNewCheckpoint() {
-        Toast.makeText(requireActivity(), "adding chechpoint funciona", Toast.LENGTH_LONG).show();
+        Intent intent_AddingNewCheckpoint= new Intent(getContext(), CheckpointThemeChooseActivity.class);
+        startActivity(intent_AddingNewCheckpoint);
     }
 
 
