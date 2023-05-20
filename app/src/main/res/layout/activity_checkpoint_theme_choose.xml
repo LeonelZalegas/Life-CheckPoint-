@@ -4,9 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.CheckpointThemeChoose.CheckpointThemeChooseActivity"
-    android:background="@color/naranja_Home">
-
+    tools:context=".UI.CheckpointThemeChoose.CheckpointThemeChooseActivity">
+   
+   <androidx.fragment.app.FragmentContainerView
+       android:id="@+id/checkpointchoosetheme"
+       android:layout_width="0dp"
+       android:layout_height="0dp"
+       android:name="com.example.influencer.UI.CheckpointThemeChoose.CheckpointThemeChoose_Fragment"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"/>
 
 
    </androidx.constraintlayout.widget.ConstraintLayout>
