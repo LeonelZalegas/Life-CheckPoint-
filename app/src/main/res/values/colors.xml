@@ -7,6 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="gris">#736D6D</color>
+    <color name="yellow">#FFDA1F</color>
+    <color name="blue">#0030BF</color>
 
     <!-- esto seria los colores usados en el gradient de la pantalla de Log In -->
     <color name="naranja_fuerte">#F57E00</color>

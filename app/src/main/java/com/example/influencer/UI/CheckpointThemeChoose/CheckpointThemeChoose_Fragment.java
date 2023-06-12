@@ -7,32 +7,47 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.influencer.R;
+import com.example.influencer.databinding.FragmentCheckpointThemeChooseBinding;
 
 public class CheckpointThemeChoose_Fragment extends Fragment {
 
-    private CheckpointThemeChooseViewModel mViewModel;
+    private FragmentCheckpointThemeChooseBinding binding;
+    private CheckpointThemeChooseViewModel viewModel;
 
-    public static CheckpointThemeChoose_Fragment newInstance() {
-        return new CheckpointThemeChoose_Fragment();
-    }
-
+    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_checkpoint_theme_choose_, container, false);
+        binding = FragmentCheckpointThemeChooseBinding.inflate(inflater,container,false);
+        return binding.getRoot();
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(CheckpointThemeChooseViewModel.class);
-        // TODO: Use the ViewModel
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        viewModel = new CheckpointThemeChooseViewModel(getActivity());
+
+        GridLayoutManager layoutManager = new GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false);
+        binding.checkpointThemeRV.setLayoutManager(layoutManager);
+
+        viewModel.getUserCheckpointsThemes().observe(getViewLifecycleOwner(),rowItems -> {
+            CheckpointThemeChooseAdapter adapter = new CheckpointThemeChooseAdapter(rowItems);
+            binding.checkpointThemeRV.setAdapter(adapter);
+        });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
 }

@@ -34,4 +34,13 @@
     <string name="adding_new_checkpoint">New Checkpoint !</string>
     <string name="adding_new_checkpoint_update">New Daily Checkpoint Update !</string>
 
+    <string-array name="names_checkpoint_choose">
+        <item>Create Custom</item>
+        <item>Love</item>
+        <item>Family</item>
+        <item>Friends</item>
+        <item>Mental Health</item>
+        <item>Work/Carrer</item>
+    </string-array>
+
 </resources>
