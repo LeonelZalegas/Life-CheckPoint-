@@ -33,7 +33,7 @@ public class CheckpointThemeChoose_Fragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        viewModel = new CheckpointThemeChooseViewModel(getActivity());
+        viewModel = new ViewModelProvider(requireActivity()).get(CheckpointThemeChooseViewModel.class);
 
         GridLayoutManager layoutManager = new GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false);
         binding.checkpointThemeRV.setLayoutManager(layoutManager);

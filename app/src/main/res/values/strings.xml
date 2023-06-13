@@ -41,6 +41,10 @@
         <item>Friends</item>
         <item>Mental Health</item>
         <item>Work/Carrer</item>
+        <item>Creativity</item>
+        <item>Education/Learning</item>
+        <item>Health/Fitness</item>
+        <item>Hobbies/Interests</item>
     </string-array>
 
 </resources>

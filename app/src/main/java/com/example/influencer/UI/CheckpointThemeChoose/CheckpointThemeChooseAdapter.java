@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.influencer.databinding.ItemCheckpointhemeBinding;
@@ -32,7 +33,8 @@ public class CheckpointThemeChooseAdapter extends RecyclerView.Adapter<Checkpoin
         CheckpointThemeItem currentItem = rowItems.get(position);
         holder.binding.imageCheckpointThemeChoose.setImageResource(currentItem.getImageResourceId());
         holder.binding.textCheckpointThemeChoose.setText(currentItem.getText());
-        holder.binding.maincardView.setCardBackgroundColor(currentItem.getColor());
+        holder.binding.maincardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), currentItem.getColor()));
+
     }
 
     @Override
