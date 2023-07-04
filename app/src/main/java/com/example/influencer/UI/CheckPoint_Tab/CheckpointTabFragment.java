@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.influencer.UI.CheckpointThemeChoose.CheckpointThemeChooseActivity;
+import com.example.influencer.UI.CheckpointUpdateThemeChoose.CheckpointUpdateThemeChooseActivity;
 import com.example.influencer.databinding.FragmentCheckpointTabBinding;
 
 public class CheckpointTabFragment extends Fragment {
@@ -96,7 +97,8 @@ public class CheckpointTabFragment extends Fragment {
     }
 
     private void goToAddingNewCheckpointUpdate() {
-        Toast.makeText(requireActivity(), "adding chechpoint update funciona", Toast.LENGTH_LONG).show();
+        Intent intent_AddingNewCheckpointUpdate= new Intent(getContext(), CheckpointUpdateThemeChooseActivity.class);
+        startActivity(intent_AddingNewCheckpointUpdate);
     }
 
     private void goToAddingNewCheckpoint() {

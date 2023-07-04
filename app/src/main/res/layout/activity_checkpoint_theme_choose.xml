@@ -10,11 +10,9 @@
        android:id="@+id/checkpointchoosetheme"
        android:layout_width="0dp"
        android:layout_height="0dp"
-       android:name="com.example.influencer.UI.CheckpointThemeChoose.CheckpointThemeChoose_Fragment"
        app:layout_constraintTop_toTopOf="parent"
        app:layout_constraintBottom_toBottomOf="parent"
        app:layout_constraintStart_toStartOf="parent"
        app:layout_constraintEnd_toEndOf="parent"/>
-
 
    </androidx.constraintlayout.widget.ConstraintLayout>

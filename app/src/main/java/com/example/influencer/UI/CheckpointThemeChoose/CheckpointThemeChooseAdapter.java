@@ -51,4 +51,9 @@ public class CheckpointThemeChooseAdapter extends RecyclerView.Adapter<Checkpoin
             this.binding = binding;
         }
     }
+
+    public void FilterItems(List<CheckpointThemeItem> rowItems){
+        this.rowItems = rowItems;
+        notifyDataSetChanged();
+    }
 }

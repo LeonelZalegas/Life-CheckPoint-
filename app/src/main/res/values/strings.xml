@@ -47,4 +47,9 @@
         <item>Hobbies/Interests</item>
     </string-array>
 
+    <string name="Main_title_adding_new_checkpoint">Choose a Category</string>
+    <string name="Secondary_title_adding_new_checkpoint">you can also create a custom one !</string>
+    <string name="Main_title_adding_new_checkpoint_update">Choose a CheckPoint !</string>
+    <string name="Secondary_title_adding_new_checkpoint_update">Just the last checkpoint you made of a category</string>
+
 </resources>
