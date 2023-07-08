@@ -1,7 +1,12 @@
 package com.example.influencer.UI.CheckpointThemeChoose;
 
+import static android.content.ContentValues.TAG;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,13 +14,17 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.influencer.R;
+import com.example.influencer.databinding.AlertDialogAddCategoryBinding;
 import com.example.influencer.databinding.FragmentCheckpointThemeChooseBinding;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.List;
 
@@ -68,7 +77,14 @@ public class CheckpointThemeChoose_Fragment extends Fragment {
             }else{
                 rowItems = CollectionsKt.filter(notFilteredRowItems, checkpointThemeItem -> !checkpointThemeItem.getText().equals("Create Custom")); //"Create Custom" es el nombre del string del row de "agregar nuevo item/row" q sale en la seccion de Strings del proyecto
             }
-            CheckpointThemeChooseAdapter adapter = new CheckpointThemeChooseAdapter(rowItems);
+
+            //https://www.notion.so/Activity-seleccionar-categoria-nuevo-checkpoint-update-checkpoint-2fe38f46f27f4e6f93752aa178796773?pvs=4#8a685d43c4114530aaa5b551ff209690
+            //es para la ventana de agregar el nuevo nombre de categoria
+            CheckpointThemeChooseAdapter adapter = new CheckpointThemeChooseAdapter(rowItems, item -> {
+                if (item.getText().equals("Create Custom")) {
+                    showDialogAndSaveToFireStore();
+                }
+            });
             binding.checkpointThemeRV.setAdapter(adapter);
 
             //esto es para el filtrado por busqueda del usuario
@@ -93,6 +109,29 @@ public class CheckpointThemeChoose_Fragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+
+    private void showDialogAndSaveToFireStore() {
+        AlertDialogAddCategoryBinding binding = AlertDialogAddCategoryBinding.inflate(LayoutInflater.from(getContext()));
+
+        AlertDialog alertDialog = new MaterialAlertDialogBuilder(getActivity(),R.style.CustomAlertDialog)
+                .setTitle(getString(R.string.Main_title_new_category))
+                .setView(binding.getRoot())
+                .setPositiveButton(getString(R.string.OK), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(getContext(), "Se guardo en firestrore", Toast.LENGTH_SHORT).show();
+                        dialogInterface.dismiss();
+                    }
+                }).setNegativeButton(getString(R.string.Close), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(getContext(), "Se cancelo el guardado", Toast.LENGTH_SHORT).show();
+                        dialogInterface.dismiss();
+                    }
+                }).create();
+        alertDialog.show();
     }
 
 }

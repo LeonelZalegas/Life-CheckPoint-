@@ -14,11 +14,16 @@ import java.util.List;
 public class CheckpointThemeChooseAdapter extends RecyclerView.Adapter<CheckpointThemeChooseAdapter.CheckpointThemeChooseViewHolder> {
 
     private List<CheckpointThemeItem> rowItems; // es nuestra lista de themes o categorias de checkpoints como tal
+    private OnItemClickListener onItemClickListener;
 
-    public CheckpointThemeChooseAdapter(List<CheckpointThemeItem> rowItems) {
+    public CheckpointThemeChooseAdapter(List<CheckpointThemeItem> rowItems,OnItemClickListener listener) {
         this.rowItems = rowItems;
+        this.onItemClickListener = listener;
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(CheckpointThemeItem item);
+    }
 
     @NonNull
     @Override
@@ -35,6 +40,7 @@ public class CheckpointThemeChooseAdapter extends RecyclerView.Adapter<Checkpoin
         holder.binding.textCheckpointThemeChoose.setText(currentItem.getText());
         holder.binding.maincardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), currentItem.getColor()));
 
+        holder.itemView.setOnClickListener(v -> onItemClickListener.onItemClick(currentItem));
     }
 
     @Override

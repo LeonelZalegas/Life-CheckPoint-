@@ -21,4 +21,13 @@
         <item name="postSplashScreenTheme">@style/Theme.Influencer</item>
     </style>
 
+    //para hacer el estilo de los Alert Dialog
+    <style name="CustomAlertDialog" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MyApp.Dialog.Rounded</item>
+    </style>
+    //para hacer el estilo de los Alert Dialog
+    <style name="ShapeAppearanceOverlay.MyApp.Dialog.Rounded" parent="">
+        <item name="cornerSize">30dp</item>
+    </style>
+
 </resources>

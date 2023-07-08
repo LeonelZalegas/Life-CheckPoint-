@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Influencer</string>
+
+    <string name="OK">Ok</string>
+    <string name="Close">Close</string>
+
     // Para la pantalla de registro (SignIn)
     <string name="Sign_In">Sign In c:</string>
     <string name="enter_new_password"> Enter New Password</string>
@@ -51,5 +55,9 @@
     <string name="Secondary_title_adding_new_checkpoint">you can also create a custom one !</string>
     <string name="Main_title_adding_new_checkpoint_update">Choose a CheckPoint !</string>
     <string name="Secondary_title_adding_new_checkpoint_update">Just the last checkpoint you made of a category</string>
+
+    <string name="Hint_new_category">New Checkpoint Category Name</string>
+    <string name="Main_title_new_category">Custom Checkpoint Category</string>
+
 
 </resources>
