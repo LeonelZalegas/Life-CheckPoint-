@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -113,24 +114,39 @@ public class CheckpointThemeChoose_Fragment extends Fragment {
 
 
     private void showDialogAndSaveToFireStore() {
-        AlertDialogAddCategoryBinding binding = AlertDialogAddCategoryBinding.inflate(LayoutInflater.from(getContext()));
+        AlertDialogAddCategoryBinding binding = AlertDialogAddCategoryBinding.inflate(LayoutInflater.from(getActivity()));
 
         AlertDialog alertDialog = new MaterialAlertDialogBuilder(getActivity(),R.style.CustomAlertDialog)
                 .setTitle(getString(R.string.Main_title_new_category))
                 .setView(binding.getRoot())
-                .setPositiveButton(getString(R.string.OK), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(getContext(), "Se guardo en firestrore", Toast.LENGTH_SHORT).show();
-                        dialogInterface.dismiss();
-                    }
-                }).setNegativeButton(getString(R.string.Close), new DialogInterface.OnClickListener() {
+                .setPositiveButton(getString(R.string.OK), null)         //se agrega un null como 2do parametro para denotar que vamos a customizar q ahcer cuando se clickea el OK
+                .setNegativeButton(getString(R.string.Close), new DialogInterface.OnClickListener() {   //aca como no se customiza nada, se toma todo x default, en donde independientemente de si se indica que se cierre la alert dialog o no al clickear, se va a cerrar igual si clickemaos en CLOSE
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Toast.makeText(getContext(), "Se cancelo el guardado", Toast.LENGTH_SHORT).show();
                         dialogInterface.dismiss();
                     }
                 }).create();
+
+//https://www.notion.so/Activity-seleccionar-categoria-nuevo-checkpoint-update-checkpoint-2fe38f46f27f4e6f93752aa178796773?pvs=4#afa893ed79914f338b59e13778a51d8c
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                Button button = ((AlertDialog) dialogInterface).getButton(AlertDialog.BUTTON_POSITIVE);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (viewModel.validatingNewThemeCheckpoint(binding.editTextNewTheme)) {
+                            Toast.makeText(getContext(), "Se guardo en firestrore", Toast.LENGTH_SHORT).show();
+                            dialogInterface.dismiss(); //dismiss dialog when condition is met
+                        } else {
+                            Toast.makeText(getContext(), "NOOO Se guardo en firestrore", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
+
         alertDialog.show();
     }
 

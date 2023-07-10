@@ -20,8 +20,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-               android:inputType="textPersonName"
-                android:id="@+id/editText"/>
+                android:inputType="textPersonName"
+                android:id="@+id/editTextNewTheme"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
