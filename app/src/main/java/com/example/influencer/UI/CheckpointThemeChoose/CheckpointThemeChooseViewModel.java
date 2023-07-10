@@ -43,4 +43,9 @@ public class CheckpointThemeChooseViewModel extends AndroidViewModel {
     public boolean validatingNewThemeCheckpoint(TextInputEditText editText){
         return NewCheckpointThemeValidation.invoke(editText);
     }
+
+    //https://www.notion.so/Life-Checkpoint-37dccb9dbb464169b4c9a42460f50f40?pvs=4#c843682676ae4d298b72adbd31b745ac
+    public void addCheckpointThemeName(String checkpointThemeName) {
+        userCheckpointThemeChooseUseCase.addCheckpointTheme(checkpointThemeName);
+    }
 }

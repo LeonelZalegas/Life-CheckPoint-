@@ -1,8 +1,18 @@
 package com.example.influencer.Domain;
 
+import com.example.influencer.Data.Network.AuthenticationService;
+import com.example.influencer.Data.Network.FirebaseClient;
+import com.example.influencer.Data.Network.UserService;
 import com.example.influencer.R;
 import com.example.influencer.UI.CheckpointThemeChoose.CheckpointThemeItem;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,9 +24,12 @@ public class UserCheckpointThemeChooseUseCase {
    Context context;
    String[] CheckpointChooseNames;
    private final List<CheckpointThemeItem> STATIC_ROWS;
+   private UserService userService;
 
     public UserCheckpointThemeChooseUseCase(Context context) {
         this.context = context;
+        FirebaseClient firebaseClient = FirebaseClient.getInstance();
+        this.userService = new UserService(firebaseClient);
 
         CheckpointChooseNames = context.getResources().getStringArray(R.array.names_checkpoint_choose);
         STATIC_ROWS = Arrays.asList(
@@ -39,4 +52,21 @@ public class UserCheckpointThemeChooseUseCase {
 
 //bueno...aca faltaria agregar lo que falta de la parte de firestore (de cada usuario) para luego hacer otro metodo para combinar
     //tanto la parte fija de las categorias de checkpoint como las variables de cada usuario guardadas en firestore (fijarse en phind lo q nos dio)
+
+    public void addCheckpointTheme(String checkpointThemeName){
+        String userId = AuthenticationService.getInstance().getuid();
+        if (userId != null){
+            userService.addCheckpointThemeToUser(userId,checkpointThemeName).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Log.d("ADD NEW CATEGORY", "Category successfully added!");
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(context, R.string.FireStore_Error, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
 }

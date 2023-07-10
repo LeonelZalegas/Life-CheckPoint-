@@ -28,6 +28,7 @@ import com.example.influencer.databinding.FragmentCheckpointThemeChooseBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.List;
+import java.util.Objects;
 
 import kotlin.collections.CollectionsKt;
 
@@ -137,10 +138,8 @@ public class CheckpointThemeChoose_Fragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         if (viewModel.validatingNewThemeCheckpoint(binding.editTextNewTheme)) {
-                            Toast.makeText(getContext(), "Se guardo en firestrore", Toast.LENGTH_SHORT).show();
+                            viewModel.addCheckpointThemeName(binding.editTextNewTheme.getText().toString());
                             dialogInterface.dismiss(); //dismiss dialog when condition is met
-                        } else {
-                            Toast.makeText(getContext(), "NOOO Se guardo en firestrore", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

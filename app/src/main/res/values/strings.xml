@@ -3,6 +3,7 @@
 
     <string name="OK">Ok</string>
     <string name="Close">Close</string>
+    <string name="FireStore_Error">Oops, an Error Related to FireStore occurred, either Google was taken by Aliens or their servers just blew up, at this point who knows</string>
 
     // Para la pantalla de registro (SignIn)
     <string name="Sign_In">Sign In c:</string>
