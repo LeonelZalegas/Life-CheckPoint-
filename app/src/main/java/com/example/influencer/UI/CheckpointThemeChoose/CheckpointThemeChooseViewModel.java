@@ -20,7 +20,6 @@ import java.util.List;
 
 public class CheckpointThemeChooseViewModel extends AndroidViewModel {
 
-    private MutableLiveData<List<CheckpointThemeItem>> rowItems;
     private UserCheckpointThemeChooseUseCase userCheckpointThemeChooseUseCase;
     Context context;
 
@@ -28,16 +27,11 @@ public class CheckpointThemeChooseViewModel extends AndroidViewModel {
         super(application);
         this.context = application;
 
-        rowItems = new MutableLiveData<>();
         userCheckpointThemeChooseUseCase = new UserCheckpointThemeChooseUseCase(context);
-
-        //obtenemos la lista actualizada de checkpoints(tanto fijas como la del usuario propio) y en tiempo real constantemente la ponemos en rowitems
-        List<CheckpointThemeItem> updatedRows = userCheckpointThemeChooseUseCase.fetchStaticRows(); //aca habria q despues cambiar y poner el metodo execute
-        rowItems.setValue(updatedRows);
     }
 
     public LiveData<List<CheckpointThemeItem>> getUserCheckpointsThemes(){
-        return rowItems;
+        return userCheckpointThemeChooseUseCase.execute();
     }
 
     public boolean validatingNewThemeCheckpoint(TextInputEditText editText){
