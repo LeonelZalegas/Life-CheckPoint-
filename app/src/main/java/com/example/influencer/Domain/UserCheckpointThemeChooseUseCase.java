@@ -66,15 +66,24 @@ public class UserCheckpointThemeChooseUseCase {
                     return;
                 }
 
-                // entra (aparte de si no es null y existe) si ya se creo el atributo/field CheckpointThemesNames que es el array donde guardamos todos los strings de los nombres de las categorias de checkpoint
-                // 1 snapshot es 1 documento especifico en tiempo real (nuestro caso 1 usuario), SnapshotListener escucha constantemente los cambios del documento
-                if (snapshot != null && snapshot.exists() && snapshot.contains("CheckpointThemesNames")) {
-                    List<String> checkpointThemes = (List<String>) snapshot.get("CheckpointThemesNames"); //con get obtengo justamente un field del documento
-                    List<CheckpointThemeItem> items = new ArrayList<>();
-                    for (String theme : checkpointThemes) {
-                        items.add(new CheckpointThemeItem(R.color.gris, R.drawable.vector_asset_better_flag, theme));
+                //aca es donde se soluciona el bug de que cuando el usuario aun no crea por primera vez una categoria (el field CheckpointThemesNames no existe aun) la lista de categorias no se muestra (osea las estaticas)
+                //parece q xq la creacion de "items" esta afuera del condicional inicial y x ende si el docum existe pero no el field el setValue se ejecuta igual (aunque le pasemos una lista vacia) antes el setValue estaba adentro del 2do condicional
+                //y es que Transformations.map unicamente se activa si es que sucede un cambio/modificacion en el LivaData de los paramteros que recibe(es decir a fetchFirestoreRows) es decir aplica una funcion al liveData que recibe solo si este cambia xd
+                // x ende como que al setearle una lista vacia al LiveData de CheckpointThemesNames (al liveData q devuelve) como que detecta que algo cambio y x ende Transformations.map se activa y muestra los Statics rows nomas
+                List<CheckpointThemeItem> items = new ArrayList<>();
+                if (snapshot != null && snapshot.exists()) {
+                    if (snapshot.contains("CheckpointThemesNames")) {
+                        List<String> checkpointThemes = (List<String>) snapshot.get("CheckpointThemesNames");
+                        for (String theme : checkpointThemes) {
+                            items.add(new CheckpointThemeItem(R.color.gris, R.drawable.vector_asset_better_flag, theme));
+                        }
                     }
                     firestoreRows.setValue(items);
+                    Log.d("HOLAP", "fetchFirestoreRows: snapshot si existe ");
+                } else {
+                    // Document does not exist, return static rows
+                    Log.d("HOLAP", "fetchFirestoreRows: snapshot no existe ");
+                    //firestoreRows.setValue(fetchStaticRows());
                 }
             });
         }
