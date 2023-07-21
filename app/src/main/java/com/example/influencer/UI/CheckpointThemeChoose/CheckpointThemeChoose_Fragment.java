@@ -1,11 +1,8 @@
 package com.example.influencer.UI.CheckpointThemeChoose;
 
-import static android.content.ContentValues.TAG;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
@@ -14,12 +11,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.influencer.R;
@@ -28,7 +23,6 @@ import com.example.influencer.databinding.FragmentCheckpointThemeChooseBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.List;
-import java.util.Objects;
 
 import kotlin.collections.CollectionsKt;
 
@@ -66,6 +60,13 @@ public class CheckpointThemeChoose_Fragment extends Fragment {
 
         // Retrieve arguments
         boolean showAddNewRow = getArguments().getBoolean("showAddNewRow", true);
+
+        //para mostrat toast de error de agregado de nuevo checkpoint del usuario
+        viewModel.getToastMessage().observe(getViewLifecycleOwner(), message -> {
+            if (message != null) {
+                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         //observer para que se vea reflejado cada vez que se actualize la lista de las categorias de checkpooint
         viewModel.getUserCheckpointsThemes().observe(getViewLifecycleOwner(),notFilteredRowItems -> {
@@ -145,8 +146,6 @@ public class CheckpointThemeChoose_Fragment extends Fragment {
                 });
             }
         });
-
         alertDialog.show();
     }
-
 }

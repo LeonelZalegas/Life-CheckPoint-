@@ -62,4 +62,5 @@ public class CheckpointThemeChooseAdapter extends RecyclerView.Adapter<Checkpoin
         this.rowItems = rowItems;
         notifyDataSetChanged();
     }
+
 }

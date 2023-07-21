@@ -67,6 +67,10 @@ dependencies {
     //recyclerView
     implementation "androidx.recyclerview:recyclerview:1.2.1"
     implementation 'androidx.core:core-ktx:1.7.0'
+    //RxJava (reemplazo momentaneo a las corrutinas de Kotlin)
+    implementation "io.reactivex.rxjava3:rxjava:3.1.6"
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
+    implementation 'androidx.lifecycle:lifecycle-reactivestreams:2.3.1'
 
 
 }
