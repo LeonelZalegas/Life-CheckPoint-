@@ -1,13 +1,11 @@
-package com.example.influencer.UI.CheckpointThemeChoose;
+package com.example.influencer.UI.Create_Modify_Checkpoint.CheckpointThemeChoose;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 import android.os.Bundle;
 
 import com.example.influencer.R;
-import com.example.influencer.databinding.ActivityCheckpointThemeChooseBinding;
+import com.example.influencer.UI.Create_Modify_Checkpoint.SharedComponents.CheckpointThemeChoose_Fragment;
 
 public class CheckpointThemeChooseActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.influencer.UI.CheckpointThemeChoose;
+package com.example.influencer.UI.Create_Modify_Checkpoint.SharedComponents;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.influencer.UI.Create_Modify_Checkpoint.SharedComponents.Model.CheckpointThemeItem;
 import com.example.influencer.databinding.ItemCheckpointhemeBinding;
 
 import java.util.List;
@@ -16,9 +17,8 @@ public class CheckpointThemeChooseAdapter extends RecyclerView.Adapter<Checkpoin
     private List<CheckpointThemeItem> rowItems; // es nuestra lista de themes o categorias de checkpoints como tal
     private OnItemClickListener onItemClickListener;
 
-    public CheckpointThemeChooseAdapter(List<CheckpointThemeItem> rowItems,OnItemClickListener listener) {
+    public CheckpointThemeChooseAdapter(List<CheckpointThemeItem> rowItems) {
         this.rowItems = rowItems;
-        this.onItemClickListener = listener;
     }
 
     public interface OnItemClickListener {
@@ -58,9 +58,14 @@ public class CheckpointThemeChooseAdapter extends RecyclerView.Adapter<Checkpoin
         }
     }
 
-    public void FilterItems(List<CheckpointThemeItem> rowItems){
+    public void UpdateRows(List<CheckpointThemeItem> rowItems){
         this.rowItems = rowItems;
         notifyDataSetChanged();
     }
 
+    public void UpdateRows(List<CheckpointThemeItem> rowItems,OnItemClickListener listener){
+        this.rowItems = rowItems;
+        notifyDataSetChanged();
+        this.onItemClickListener = listener;
+    }
 }

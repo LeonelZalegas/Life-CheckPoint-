@@ -1,4 +1,4 @@
-package com.example.influencer.UI.CheckpointThemeChoose;
+package com.example.influencer.UI.Create_Modify_Checkpoint.SharedComponents;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,10 +18,12 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.influencer.R;
+import com.example.influencer.UI.Create_Modify_Checkpoint.SharedComponents.Model.CheckpointThemeItem;
 import com.example.influencer.databinding.AlertDialogAddCategoryBinding;
 import com.example.influencer.databinding.FragmentCheckpointThemeChooseBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import kotlin.collections.CollectionsKt;
@@ -30,6 +32,7 @@ public class CheckpointThemeChoose_Fragment extends Fragment {
 
     private FragmentCheckpointThemeChooseBinding binding;
     private CheckpointThemeChooseViewModel viewModel;
+    private CheckpointThemeChooseAdapter adapter;
 
     @Nullable
     @Override
@@ -38,13 +41,12 @@ public class CheckpointThemeChoose_Fragment extends Fragment {
         binding = FragmentCheckpointThemeChooseBinding.inflate(inflater,container,false);
 
         // Retrieve arguments
-        String mainTitle = getArguments().getString("MainTitle", "something somehow isn't working");
-        String secondaryTitle = getArguments().getString("SecondaryTitle", "something somehow isn't working");
+        String mainTitle = getArguments().getString("MainTitle", getContext().getString(R.string.Generic_error));
+        String secondaryTitle = getArguments().getString("SecondaryTitle",  getContext().getString(R.string.Generic_error));
 
         // Update the titles
         binding.MainTitle.setText(mainTitle);
         binding.SecondaryTitle.setText(secondaryTitle);
-
 
         return binding.getRoot();
     }
@@ -55,18 +57,37 @@ public class CheckpointThemeChoose_Fragment extends Fragment {
 
         viewModel = new ViewModelProvider(requireActivity()).get(CheckpointThemeChooseViewModel.class);
 
+        setupRecyclerView();
+        setupToastMessageObserver();
+        setupUserCheckpointsThemesObserver();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
+    private void setupRecyclerView() {
         GridLayoutManager layoutManager = new GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false);
         binding.checkpointThemeRV.setLayoutManager(layoutManager);
 
-        // Retrieve arguments
-        boolean showAddNewRow = getArguments().getBoolean("showAddNewRow", true);
+        adapter = new CheckpointThemeChooseAdapter(new ArrayList<>());
+        binding.checkpointThemeRV.setAdapter(adapter);
+    }
 
-        //para mostrat toast de error de agregado de nuevo checkpoint del usuario
+    private void setupToastMessageObserver() {
+        //para mostrar toast de error de agregado de nuevo checkpoint del usuario
         viewModel.getToastMessage().observe(getViewLifecycleOwner(), message -> {
             if (message != null) {
                 Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void setupUserCheckpointsThemesObserver() {
+        // Retrieve arguments del valor booleano de si se incluye o no el "Custom Checkpoint"
+        boolean showAddNewRow = getArguments().getBoolean("showAddNewRow", true);
 
         //observer para que se vea reflejado cada vez que se actualize la lista de las categorias de checkpooint
         viewModel.getUserCheckpointsThemes().observe(getViewLifecycleOwner(),notFilteredRowItems -> {
@@ -83,37 +104,33 @@ public class CheckpointThemeChoose_Fragment extends Fragment {
 
             //https://www.notion.so/Activity-seleccionar-categoria-nuevo-checkpoint-update-checkpoint-2fe38f46f27f4e6f93752aa178796773?pvs=4#8a685d43c4114530aaa5b551ff209690
             //es para la ventana de agregar el nuevo nombre de categoria
-            CheckpointThemeChooseAdapter adapter = new CheckpointThemeChooseAdapter(rowItems, item -> {
+            adapter.UpdateRows(rowItems,item -> {
                 if (item.getText().equals("Create Custom")) {
                     showDialogAndSaveToFireStore();
                 }
             });
-            binding.checkpointThemeRV.setAdapter(adapter);
 
-            //esto es para el filtrado por busqueda del usuario
-            binding.CategoryCheckpointSearch.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    // Not needed
-                    return false;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String userFilter) {
-                    List<CheckpointThemeItem> RowItemsFiltered = CollectionsKt.filter(rowItems, checkpointThemeItem -> checkpointThemeItem.getText().toLowerCase().contains(userFilter.toLowerCase()));
-                    adapter.FilterItems(RowItemsFiltered);
-                    return true;
-                }
-            });
+            setupSearchView(rowItems);
         });
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
+    private void setupSearchView(List<CheckpointThemeItem> rowItems) {
+        //esto es para el filtrado por busqueda del usuario
+        binding.CategoryCheckpointSearch.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Not needed
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String userFilter) {
+                List<CheckpointThemeItem> RowItemsFiltered = CollectionsKt.filter(rowItems, checkpointThemeItem -> checkpointThemeItem.getText().toLowerCase().contains(userFilter.toLowerCase()));
+                adapter.UpdateRows(RowItemsFiltered);
+                return true;
+            }
+        });
+    }
 
     private void showDialogAndSaveToFireStore() {
         AlertDialogAddCategoryBinding binding = AlertDialogAddCategoryBinding.inflate(LayoutInflater.from(getActivity()));
@@ -125,7 +142,6 @@ public class CheckpointThemeChoose_Fragment extends Fragment {
                 .setNegativeButton(getString(R.string.Close), new DialogInterface.OnClickListener() {   //aca como no se customiza nada, se toma todo x default, en donde independientemente de si se indica que se cierre la alert dialog o no al clickear, se va a cerrar igual si clickemaos en CLOSE
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(getContext(), "Se cancelo el guardado", Toast.LENGTH_SHORT).show();
                         dialogInterface.dismiss();
                     }
                 }).create();

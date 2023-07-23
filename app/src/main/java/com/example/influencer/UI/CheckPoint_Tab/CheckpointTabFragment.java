@@ -10,10 +10,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.example.influencer.UI.CheckpointThemeChoose.CheckpointThemeChooseActivity;
-import com.example.influencer.UI.CheckpointUpdateThemeChoose.CheckpointUpdateThemeChooseActivity;
+import com.example.influencer.UI.Create_Modify_Checkpoint.CheckpointThemeChoose.CheckpointThemeChooseActivity;
+import com.example.influencer.UI.Create_Modify_Checkpoint.CheckpointUpdateThemeChoose.CheckpointUpdateThemeChooseActivity;
 import com.example.influencer.databinding.FragmentCheckpointTabBinding;
 
 public class CheckpointTabFragment extends Fragment {

@@ -1,22 +1,18 @@
-package com.example.influencer.UI.CheckpointThemeChoose;
+package com.example.influencer.UI.Create_Modify_Checkpoint.SharedComponents;
 
 import android.app.Application;
 import android.content.Context;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.example.influencer.Core.SingleLiveEvent;
 import com.example.influencer.Domain.UserCheckpointThemeChooseUseCase;
+import com.example.influencer.Domain.Validations.NewCheckpointThemeValidation;
 import com.example.influencer.R;
-import com.example.influencer.databinding.AlertDialogAddCategoryBinding;
+import com.example.influencer.UI.Create_Modify_Checkpoint.SharedComponents.Model.CheckpointThemeItem;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -26,6 +22,7 @@ public class CheckpointThemeChooseViewModel extends AndroidViewModel {
 
     private UserCheckpointThemeChooseUseCase userCheckpointThemeChooseUseCase;
     Context context;
+    //https://www.notion.so/Activity-seleccionar-categoria-nuevo-checkpoint-update-checkpoint-2fe38f46f27f4e6f93752aa178796773?pvs=4#4fdf8783463a4983af9d292ab5ebf3ee
     private SingleLiveEvent<String> toastMessage = new SingleLiveEvent<>();
 
     public CheckpointThemeChooseViewModel(@NonNull Application application) {
@@ -36,7 +33,7 @@ public class CheckpointThemeChooseViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<CheckpointThemeItem>> getUserCheckpointsThemes() {
-        return LiveDataReactiveStreams.fromPublisher(userCheckpointThemeChooseUseCase.execute());
+        return LiveDataReactiveStreams.fromPublisher(userCheckpointThemeChooseUseCase.getUserCheckpointsThemes());
     }
 
     public boolean validatingNewThemeCheckpoint(TextInputEditText editText){
@@ -47,13 +44,11 @@ public class CheckpointThemeChooseViewModel extends AndroidViewModel {
     public void addCheckpointThemeName(String checkpointThemeName) {
         Task<Void> task = userCheckpointThemeChooseUseCase.addCheckpointTheme(checkpointThemeName);
         if (task != null) {
-            task.addOnSuccessListener(aVoid -> toastMessage.setValue("Category successfully added!"))
-                    .addOnFailureListener(e -> toastMessage.setValue(context.getString(R.string.FireStore_Error)));
+            task.addOnFailureListener(e -> toastMessage.setValue(context.getString(R.string.FireStore_Error)));
         }
     }
 
     public SingleLiveEvent<String> getToastMessage() {
         return toastMessage;
     }
-
 }

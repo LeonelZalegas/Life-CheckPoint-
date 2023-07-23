@@ -1,4 +1,4 @@
-package com.example.influencer.UI.CheckpointThemeChoose;
+package com.example.influencer.Domain.Validations;
 
 import android.app.Activity;
 import android.content.Context;

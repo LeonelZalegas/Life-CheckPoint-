@@ -1,4 +1,4 @@
-package com.example.influencer.UI.CheckpointThemeChoose;
+package com.example.influencer.UI.Create_Modify_Checkpoint.SharedComponents.Model;
 
 public class CheckpointThemeItem {
 

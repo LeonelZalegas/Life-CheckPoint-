@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.influencer.Core.Event;
 import com.example.influencer.Domain.CreateAccountUseCase;
+import com.example.influencer.Domain.Validations.SigninValidation;
 import com.example.influencer.R;
 import com.example.influencer.UI.SignIn.Model.UsuarioSignin;
 
