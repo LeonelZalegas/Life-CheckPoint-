@@ -4,7 +4,7 @@ import com.example.influencer.Data.Network.AuthenticationService;
 import com.example.influencer.Data.Network.FirebaseClient;
 import com.example.influencer.Data.Network.UserService;
 import com.example.influencer.Data.Repositories.CheckpointChooseRowsRepo;
-import com.example.influencer.UI.Create_Modify_Checkpoint.SharedComponents.Model.CheckpointThemeItem;
+import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.SharedComponents.Model.CheckpointThemeItem;
 import com.google.android.gms.tasks.Task;
 
 import java.util.List;

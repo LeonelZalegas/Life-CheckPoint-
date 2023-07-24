@@ -18,4 +18,6 @@ public class MyApp extends Application {
     public String[] getStringArray(int resId) {
         return getResources().getStringArray(resId);
     }
+
+    public String getAString(int resId){return getResources().getString(resId);}
 }

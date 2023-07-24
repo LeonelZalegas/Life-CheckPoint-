@@ -1,7 +1,6 @@
 package com.example.influencer.UI.Login;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
@@ -9,6 +8,9 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.influencer.Core.Event;
+import com.example.influencer.Core.MyApp;
+import com.example.influencer.Core.SingleLiveEvent;
+import com.example.influencer.Data.Network.AuthenticationService;
 import com.example.influencer.Domain.LoginUseCase;
 import com.example.influencer.R;
 import com.example.influencer.UI.Login.Model.UsuarioLogin;
@@ -17,8 +19,11 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class LoginViewModel extends ViewModel implements LoginListener {
     private final LoginUseCase loginUseCase;
-    SweetAlertDialog carga;
-    Context context;
+
+    private final SingleLiveEvent<String> ToastMessage = new SingleLiveEvent<>();
+
+    private final MutableLiveData<Event<Boolean>> _Loading = new MutableLiveData<>();
+    public LiveData<Event<Boolean>> Loading = _Loading;
 
     private final MutableLiveData<Event<Boolean>> _navigateToSignIn = new MutableLiveData<>();
     public LiveData<Event<Boolean>> navigateToSignIn = _navigateToSignIn;
@@ -29,15 +34,8 @@ public class LoginViewModel extends ViewModel implements LoginListener {
     private final MutableLiveData<Event<Boolean>> _navigateToHome = new MutableLiveData<>();
     public LiveData<Event<Boolean>> navigateToHome = _navigateToHome;
 
-    public LoginViewModel(LoginUseCase loginUseCase, Context context) {
-        this.loginUseCase = loginUseCase;
-        this.context = context;
-
-        //para el cuadro de loading
-        carga = new SweetAlertDialog(context,SweetAlertDialog.PROGRESS_TYPE);
-        carga.getProgressHelper().setBarColor(Color.parseColor("#F57E00"));
-        carga.setTitleText(R.string.Loading);
-        carga.setCancelable(false);
+    public LoginViewModel() {
+        loginUseCase = new LoginUseCase(AuthenticationService.getInstance());
     }
 
     public void onLoginSelected(UsuarioLogin usuarioLogin) {
@@ -48,13 +46,13 @@ public class LoginViewModel extends ViewModel implements LoginListener {
     @Override
     public void LoginSuccess() {
         _navigateToHome.postValue(new Event<>(true));
-        carga.dismiss();
+        _Loading.setValue(new Event<>(false));
     }
 
     @Override
     public void LoginError() {
-        carga.dismiss();
-        Toast.makeText(context, R.string.error_LogIn, Toast.LENGTH_LONG).show();
+        _Loading.setValue(new Event<>(false));
+        ToastMessage.setValue(MyApp.getInstance().getAString(R.string.error_LogIn));
     }
 
     public void onSignInSelected() {
@@ -67,14 +65,17 @@ public class LoginViewModel extends ViewModel implements LoginListener {
 
 
     public boolean validatingLogin(String email, String contrasena){
-        carga.show();
+        _Loading.setValue(new Event<>(true));
         if( (email != null && !email.trim().isEmpty()) && (contrasena != null && !contrasena.trim().isEmpty()) ) {  //esto es para controlar que no se ingresen nulls (no se cargue ningun valor) y tampoco espacios
             return true;
         }else {
-            carga.dismiss();
-            Toast.makeText(context, R.string.empty_fields_LogIn, Toast.LENGTH_LONG).show();
+            _Loading.setValue(new Event<>(false));
+            ToastMessage.setValue(MyApp.getInstance().getAString(R.string.empty_fields_LogIn));
             return false;
         }
     }
 
+    public SingleLiveEvent<String> getToastMessage() {
+        return ToastMessage;
+    }
 }

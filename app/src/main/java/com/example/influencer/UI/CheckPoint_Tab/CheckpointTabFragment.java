@@ -11,8 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.influencer.UI.Create_Modify_Checkpoint.CheckpointThemeChoose.CheckpointThemeChooseActivity;
-import com.example.influencer.UI.Create_Modify_Checkpoint.CheckpointUpdateThemeChoose.CheckpointUpdateThemeChooseActivity;
+import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.CheckpointThemeChoose.CheckpointThemeChooseActivity;
+import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.CheckpointUpdateThemeChoose.CheckpointUpdateThemeChooseActivity;
 import com.example.influencer.databinding.FragmentCheckpointTabBinding;
 
 public class CheckpointTabFragment extends Fragment {

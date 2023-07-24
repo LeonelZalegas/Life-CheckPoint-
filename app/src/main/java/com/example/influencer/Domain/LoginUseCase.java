@@ -9,6 +9,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 
+//aca lo 100% ideal seria o ya sea usar RxJava (un Single (equivalante al floawble pero para 1 unica operacion asyncronica nada mas), Completable, maybe) o corrutinas de Kotlin
+//ya que al usar callBacks si bien el UseCase no maneja la implementacion de "task.isSuccessful()" si es conciente de la existencia de la interfaz (Listener), que seria un componente de
+//que lo implementa el viewmodel, aun asi, dentro de todo sigue cumpliendo un MVVM con clean Architecure ya que depsues de todo no sabe ninguna implementacion (todo lo hace el viewmodel)
 public class LoginUseCase {
     private final AuthenticationService authenticationService;
 

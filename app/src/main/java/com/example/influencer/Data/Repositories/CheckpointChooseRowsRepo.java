@@ -3,7 +3,7 @@ package com.example.influencer.Data.Repositories;
 import com.example.influencer.Data.LocalDB.CheckpointChooseStaticRows;
 import com.example.influencer.Data.Network.UserService;
 import com.example.influencer.R;
-import com.example.influencer.UI.Create_Modify_Checkpoint.SharedComponents.Model.CheckpointThemeItem;
+import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.SharedComponents.Model.CheckpointThemeItem;
 import com.google.firebase.firestore.ListenerRegistration;
 
 import java.util.ArrayList;

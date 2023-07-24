@@ -1,11 +1,11 @@
-package com.example.influencer.UI.Create_Modify_Checkpoint.CheckpointUpdateThemeChoose;
+package com.example.influencer.UI.Create_Modify_Checkpoint_Menu.CheckpointUpdateThemeChoose;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
 import com.example.influencer.R;
-import com.example.influencer.UI.Create_Modify_Checkpoint.SharedComponents.CheckpointThemeChoose_Fragment;
+import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.SharedComponents.CheckpointThemeChoose_Fragment;
 import com.example.influencer.databinding.ActivityCheckpointUpdateThemeChooseBinding;
 
 public class CheckpointUpdateThemeChooseActivity extends AppCompatActivity {

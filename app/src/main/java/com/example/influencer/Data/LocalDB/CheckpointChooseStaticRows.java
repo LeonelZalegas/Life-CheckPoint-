@@ -2,7 +2,7 @@ package com.example.influencer.Data.LocalDB;
 
 import com.example.influencer.Core.MyApp;
 import com.example.influencer.R;
-import com.example.influencer.UI.Create_Modify_Checkpoint.SharedComponents.Model.CheckpointThemeItem;
+import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.SharedComponents.Model.CheckpointThemeItem;
 
 import java.util.Arrays;
 import java.util.List;

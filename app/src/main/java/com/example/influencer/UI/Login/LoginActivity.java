@@ -1,21 +1,22 @@
 package com.example.influencer.UI.Login;
-
-
-
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.example.influencer.Core.Event;
 import com.example.influencer.Data.Preferences.UserPreferences;
 import com.example.influencer.UI.Home;
-import com.example.influencer.UI.OnBoarding.OnBoardingActivity;
 import com.example.influencer.Data.Network.AuthenticationService;
 import com.example.influencer.Domain.LoginUseCase;
 import com.example.influencer.R;
@@ -23,6 +24,8 @@ import com.example.influencer.UI.GoogleSignin.GoogleSigninActivity;
 import com.example.influencer.UI.Login.Model.UsuarioLogin;
 import com.example.influencer.UI.SignIn.SignInActivity;
 import com.google.android.gms.common.SignInButton;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -32,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText ET_poner_contrasena;
     Button B_Button_LogIn;
     SignInButton B_SignInGoogle;
+    SweetAlertDialog carga;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +63,16 @@ public class LoginActivity extends AppCompatActivity {
         animacion_login.start();
         //
 
-        LoginUseCase loginUseCase = new LoginUseCase(AuthenticationService.getInstance());
-        loginViewModel = new LoginViewModel(loginUseCase, this);
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        initLoading();
         initUI();
+    }
+
+    private void initLoading(){
+        carga = new SweetAlertDialog(this,SweetAlertDialog.PROGRESS_TYPE);
+        carga.getProgressHelper().setBarColor(Color.parseColor("#F57E00"));
+        carga.setTitleText(R.string.Loading);
+        carga.setCancelable(false);
     }
 
     private void initUI() {
@@ -124,6 +135,27 @@ public class LoginActivity extends AppCompatActivity {
                 goToSignIn();
             }
         });
+
+        loginViewModel.Loading.observe(this, new Observer<Event<Boolean>>() {
+            @Override
+            public void onChanged(Event<Boolean> event) {
+                Boolean isLoading = event.getContentIfNotHandled();
+                if (isLoading != null) {
+                    if (isLoading) {
+                        carga.show();
+                    } else {
+                        carga.dismiss();
+                    }
+                }
+            }
+        });
+
+        loginViewModel.getToastMessage().observe(this, message -> {
+            if (message != null) {
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void goToHome() {

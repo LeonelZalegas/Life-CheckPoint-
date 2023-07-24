@@ -1,4 +1,4 @@
-package com.example.influencer.UI.Create_Modify_Checkpoint.SharedComponents;
+package com.example.influencer.UI.Create_Modify_Checkpoint_Menu.SharedComponents;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.influencer.UI.Create_Modify_Checkpoint.SharedComponents.Model.CheckpointThemeItem;
+import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.SharedComponents.Model.CheckpointThemeItem;
 import com.example.influencer.databinding.ItemCheckpointhemeBinding;
 
 import java.util.List;
