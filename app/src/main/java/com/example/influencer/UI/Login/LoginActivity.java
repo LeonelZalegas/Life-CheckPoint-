@@ -17,8 +17,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.influencer.Core.Event;
 import com.example.influencer.Data.Preferences.UserPreferences;
 import com.example.influencer.UI.Home;
-import com.example.influencer.Data.Network.AuthenticationService;
-import com.example.influencer.Domain.LoginUseCase;
 import com.example.influencer.R;
 import com.example.influencer.UI.GoogleSignin.GoogleSigninActivity;
 import com.example.influencer.UI.Login.Model.UsuarioLogin;

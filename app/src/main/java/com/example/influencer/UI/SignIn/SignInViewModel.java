@@ -1,25 +1,28 @@
 package com.example.influencer.UI.SignIn;
 
-import android.content.Context;
-import android.graphics.Color;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.influencer.Core.Event;
+import com.example.influencer.Core.MyApp;
+import com.example.influencer.Core.SingleLiveEvent;
+import com.example.influencer.Data.Network.AuthenticationService;
+import com.example.influencer.Data.Network.FirebaseClient;
+import com.example.influencer.Data.Network.UserService;
 import com.example.influencer.Domain.CreateAccountUseCase;
 import com.example.influencer.Domain.Validations.SigninValidation;
 import com.example.influencer.R;
 import com.example.influencer.UI.SignIn.Model.UsuarioSignin;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
-
 public class SignInViewModel extends ViewModel implements CreateAccountListener {
     private final CreateAccountUseCase createAccountUseCase;
-    SweetAlertDialog carga;
-    Context context; //para asi poder usar los Toast
+
+    private final SingleLiveEvent<String> ToastMessage = new SingleLiveEvent<>();
+
+    private final MutableLiveData<Event<Boolean>> _Loading = new MutableLiveData<>();
+    public LiveData<Event<Boolean>> Loading = _Loading;
 
     private final MutableLiveData<Event<Boolean>> _backToLogin = new MutableLiveData<>();
     public LiveData<Event<Boolean>> backToLogin = _backToLogin;
@@ -27,32 +30,27 @@ public class SignInViewModel extends ViewModel implements CreateAccountListener 
     private final MutableLiveData<Event<Boolean>> _navigateToOnBoarding = new MutableLiveData<>();
     public LiveData<Event<Boolean>> navigateToOnBoarding = _navigateToOnBoarding;
 
-    public SignInViewModel(CreateAccountUseCase createAccountUseCase, Context context) {
-        this.createAccountUseCase = createAccountUseCase;
-        this.context = context;
-
-        //para el cuadro de loading
-        carga = new SweetAlertDialog(context,SweetAlertDialog.PROGRESS_TYPE);
-        carga.getProgressHelper().setBarColor(Color.parseColor("#F57E00"));
-        carga.setTitleText(R.string.Loading);
-        carga.setCancelable(false);
+    public SignInViewModel() {
+        createAccountUseCase = new CreateAccountUseCase(AuthenticationService.getInstance(), new UserService(FirebaseClient.getInstance()));
     }
 
     public void onSignInSelected(UsuarioSignin usuarioSignin) {
-        carga.show();
-        createAccountUseCase.invoke(usuarioSignin, this, context);
+        _Loading.setValue(new Event<>(true));
+        createAccountUseCase.invoke(usuarioSignin, this);
     }
 
 
     @Override
     public void onCreateAccountSuccess() {
+        ToastMessage.setValue(MyApp.getInstance().getAString(R.string.LogIn_successful));
         _navigateToOnBoarding.postValue(new Event<>(true));
-        carga.dismiss();
+        _Loading.setValue(new Event<>(false));
     }
 
     @Override
     public void onCreateAccountError() {
-        carga.dismiss();
+        ToastMessage.setValue(MyApp.getInstance().getAString(R.string.error_SignIn_Firestore));
+        _Loading.setValue(new Event<>(false));
     }
 
     public void backToLoginSelected() {
@@ -61,5 +59,9 @@ public class SignInViewModel extends ViewModel implements CreateAccountListener 
 
     public boolean validatingSignIn(AppCompatActivity signinContext){
         return SigninValidation.invoke(signinContext);
+    }
+
+    public SingleLiveEvent<String> getToastMessage() {
+        return ToastMessage;
     }
 }

@@ -1,8 +1,5 @@
 package com.example.influencer.UI.Login;
 
-import android.content.Context;
-import android.widget.Toast;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -15,7 +12,6 @@ import com.example.influencer.Domain.LoginUseCase;
 import com.example.influencer.R;
 import com.example.influencer.UI.Login.Model.UsuarioLogin;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class LoginViewModel extends ViewModel implements LoginListener {
     private final LoginUseCase loginUseCase;

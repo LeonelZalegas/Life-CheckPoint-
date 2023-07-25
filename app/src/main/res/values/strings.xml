@@ -18,7 +18,7 @@
     <string name="error_password_confirmacion">password does not match</string>
     <string name="Re_enter_Fields">Please, Re-Enter the fields Correctly</string>
     <string name="LogIn_successful">Log In has been successful</string>
-    <string name="error_SignIn">An Error has occurred when trying sign you up, try again</string>
+    <string name="error_SignIn_Firestore">Error creating firestore user or Signing you up,try again</string>
     //para los errores del LogIn
     <string name="error_LogIn">Email or Password are wrong, please re-enter them</string>
     <string name="empty_fields_LogIn">please, remove empty spaces or complete all the fields</string>

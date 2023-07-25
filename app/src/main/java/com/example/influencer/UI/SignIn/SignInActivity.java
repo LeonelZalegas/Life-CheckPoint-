@@ -1,22 +1,25 @@
 package com.example.influencer.UI.SignIn;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.example.influencer.Core.Event;
 import com.example.influencer.Data.Preferences.UserPreferences;
 import com.example.influencer.UI.OnBoarding.OnBoardingActivity;
-import com.example.influencer.Data.Network.AuthenticationService;
-import com.example.influencer.Data.Network.FirebaseClient;
-import com.example.influencer.Data.Network.UserService;
-import com.example.influencer.Domain.CreateAccountUseCase;
 import com.example.influencer.R;
 import com.example.influencer.UI.SignIn.Model.UsuarioSignin;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class SignInActivity extends AppCompatActivity {
     private SignInViewModel signInViewModel;
@@ -26,15 +29,23 @@ public class SignInActivity extends AppCompatActivity {
     EditText ET_poner_email;
     EditText ET_poner_contrasena;
     AppCompatActivity ActivityContext = this; //para poder hacer la validacion del Signin (y no volverla un Activity)
+    SweetAlertDialog carga;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
 
-        CreateAccountUseCase createAccountUseCase = new CreateAccountUseCase(AuthenticationService.getInstance(), new UserService(FirebaseClient.getInstance()));
-        signInViewModel = new SignInViewModel(createAccountUseCase, this);
+        signInViewModel = new ViewModelProvider(this).get(SignInViewModel.class);
+        initLoading();
         initUI();
+    }
+
+    private void initLoading(){
+        carga = new SweetAlertDialog(this,SweetAlertDialog.PROGRESS_TYPE);
+        carga.getProgressHelper().setBarColor(Color.parseColor("#F57E00"));
+        carga.setTitleText(R.string.Loading);
+        carga.setCancelable(false);
     }
 
     private void initUI() {
@@ -82,6 +93,26 @@ public class SignInActivity extends AppCompatActivity {
         signInViewModel.backToLogin.observe(this, event -> {
             if (event != null && event.getContentIfNotHandled() != null) {
                 goTobackToLogin();
+            }
+        });
+
+        signInViewModel.Loading.observe(this, new Observer<Event<Boolean>>() {
+            @Override
+            public void onChanged(Event<Boolean> event) {
+                Boolean isLoading = event.getContentIfNotHandled();
+                if (isLoading != null) {
+                    if (isLoading) {
+                        carga.show();
+                    } else {
+                        carga.dismiss();
+                    }
+                }
+            }
+        });
+
+        signInViewModel.getToastMessage().observe(this, message -> {
+            if (message != null) {
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
             }
         });
 
