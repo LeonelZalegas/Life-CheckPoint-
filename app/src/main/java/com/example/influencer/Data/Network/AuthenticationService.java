@@ -23,7 +23,7 @@ public class AuthenticationService {
         return instance;
     }
 
-    public String getuid(){
+    public String getUid(){
         FirebaseUser currentUser = firebase.getfirebaseAuth().getCurrentUser();
         if (currentUser != null) {
             return currentUser.getUid();
@@ -32,7 +32,7 @@ public class AuthenticationService {
     }
 
 
-    public String getemail(){
+    public String getEmail(){
         FirebaseUser currentUser = firebase.getfirebaseAuth().getCurrentUser();
         if (currentUser != null) {
             return currentUser.getEmail();

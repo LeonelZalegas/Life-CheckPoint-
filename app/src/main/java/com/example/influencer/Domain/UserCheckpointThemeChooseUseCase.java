@@ -25,7 +25,7 @@ public class UserCheckpointThemeChooseUseCase {
     }
 
     public Task<Void> addCheckpointTheme(String checkpointThemeName){
-        String userId = AuthenticationService.getInstance().getuid();
+        String userId = AuthenticationService.getInstance().getUid();
         if (userId != null){
             return userService.addCheckpointThemeToUser(userId,checkpointThemeName);
         }
@@ -33,7 +33,7 @@ public class UserCheckpointThemeChooseUseCase {
     }
 
     public Flowable<List<CheckpointThemeItem>> getUserCheckpointsThemes() {
-        String userId = AuthenticationService.getInstance().getuid();
+        String userId = AuthenticationService.getInstance().getUid();
         if (userId != null){
             return checkpointChooseRowsRepo.getAllCheckpointThemes(userId);
         } else {

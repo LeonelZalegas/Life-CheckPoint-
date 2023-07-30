@@ -1,57 +1,109 @@
 package com.example.influencer.UI.GoogleSignin;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.example.influencer.Core.Event;
+import com.example.influencer.Data.Network.GoogleSignInClientFactory;
 import com.example.influencer.Data.Preferences.UserPreferences;
 import com.example.influencer.UI.OnBoarding.OnBoardingActivity;
-import com.example.influencer.Data.Network.AuthenticationService;
-import com.example.influencer.Data.Network.FirebaseClient;
-import com.example.influencer.Data.Network.UserService;
-import com.example.influencer.Domain.GoogleSigninUseCase;
 import com.example.influencer.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 
-public class GoogleSigninActivity extends AppCompatActivity implements GoogleSigninListener {
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
+public class GoogleSigninActivity extends AppCompatActivity {
 
     private GoogleSignInClient mGoogleSignInClient;
     private GoogleSigninViewModel googleSigninViewModel;
-    private GoogleSigninUseCase googleSigninUseCase;
+    SweetAlertDialog carga;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        mGoogleSignInClient = GoogleSignInClientFactory.getGoogleSignInClient();
+        googleSigninViewModel = new ViewModelProvider(this).get(GoogleSigninViewModel.class);
+        initLoading();
+        initBasicObservers();
 
-        googleSigninUseCase = new GoogleSigninUseCase(AuthenticationService.getInstance(), new UserService(FirebaseClient.getInstance()),this,this);
-        googleSigninViewModel = new GoogleSigninViewModel(googleSigninUseCase, this);
+        ActivityResultLauncher<Intent> resultadoLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent intent = result.getData();
+                        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(intent);
+                        try {
+                            // Google Sign In was successful, authenticate with Firebase
+                            GoogleSignInAccount account = task.getResult(ApiException.class);
+                            Log.d("error", "firebaseAuthWithGoogle:" + account.getId());
+                            googleSigninViewModel.handleGoogleSignInResult(account.getIdToken());
 
-        googleSigninViewModel.signInWithGoogle(new Intent(mGoogleSignInClient.getSignInIntent()));
+                        } catch (ApiException e) {
+                            Log.w("error", "Google sign in failed", e);
+                            Toast.makeText(this, R.string.error_SignIn_Firestore, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+        );
 
+        resultadoLauncher.launch(mGoogleSignInClient.getSignInIntent());
+
+        googleSigninViewModel.getUserExists().observe(this, userExists -> {
+            if (userExists) {
+                goToOnBoarding();
+            }
+        });
     }
 
-    @Override
-    public void onUserAuthenticated() {
+    private void initBasicObservers() {
+        googleSigninViewModel.Loading.observe(this, new Observer<Event<Boolean>>() {
+            @Override
+            public void onChanged(Event<Boolean> event) {
+                Boolean isLoading = event.getContentIfNotHandled();
+                if (isLoading != null) {
+                    if (isLoading) {
+                        carga.show();
+                    } else {
+                        carga.dismiss();
+                    }
+                }
+            }
+        });
+
+        googleSigninViewModel.getToastMessage().observe(this, message -> {
+            if (message != null) {
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void initLoading(){
+        carga = new SweetAlertDialog(this,SweetAlertDialog.PROGRESS_TYPE);
+        carga.getProgressHelper().setBarColor(Color.parseColor("#F57E00"));
+        carga.setTitleText(R.string.Loading);
+        carga.setCancelable(false);
+    }
+
+    private void goToOnBoarding(){
         UserPreferences.getInstance(this).setSignedIn(true);
         Intent intent_LogIn = new Intent(GoogleSigninActivity.this, OnBoardingActivity.class);
         startActivity(intent_LogIn);
-        finish();
-    }
-
-    @Override
-    public void onError() {
-        Toast.makeText(GoogleSigninActivity.this, "ERROR", Toast.LENGTH_SHORT).show();
         finish();
     }
 }

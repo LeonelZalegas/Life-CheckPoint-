@@ -20,7 +20,7 @@ public class UserService {
 
     //este metodo sirve para obtener 1 usuario especifico(osea 1 document dentro de la coleccion usuarios xd) pero es para trabajar
     //unicamente para una sola lectura una sola vez(no es una lectura constante en tiempo real)ya que devuelve un Task como salida
-    public Task<DocumentSnapshot> getusuario(String id){
+    public Task<DocumentSnapshot> getUsuario(String id){
         return firebase.getDb().collection(USER_COLLECTION).document(id).get();
     }
 
