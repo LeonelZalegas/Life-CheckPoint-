@@ -1,4 +1,4 @@
-package com.example.influencer.UI.GoogleSignin;
+package com.example.influencer.UI.SignIn.GoogleSignin;
 
 import android.app.Activity;
 import android.content.Intent;

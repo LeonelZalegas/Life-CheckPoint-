@@ -1,4 +1,4 @@
-package com.example.influencer.UI.SignIn;
+package com.example.influencer.UI.SignIn.AppSignIn;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
@@ -14,6 +14,7 @@ import com.example.influencer.Data.Network.UserService;
 import com.example.influencer.Domain.CreateAccountUseCase;
 import com.example.influencer.Domain.Validations.SigninValidation;
 import com.example.influencer.R;
+import com.example.influencer.UI.SignIn.AppSignIn.CreateAccountListener;
 import com.example.influencer.UI.SignIn.Model.UsuarioSignin;
 
 public class SignInViewModel extends ViewModel implements CreateAccountListener {

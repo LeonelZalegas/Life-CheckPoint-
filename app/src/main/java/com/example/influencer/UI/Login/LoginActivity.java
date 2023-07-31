@@ -18,9 +18,9 @@ import com.example.influencer.Core.Event;
 import com.example.influencer.Data.Preferences.UserPreferences;
 import com.example.influencer.UI.Home;
 import com.example.influencer.R;
-import com.example.influencer.UI.GoogleSignin.GoogleSigninActivity;
+import com.example.influencer.UI.SignIn.GoogleSignin.GoogleSigninActivity;
 import com.example.influencer.UI.Login.Model.UsuarioLogin;
-import com.example.influencer.UI.SignIn.SignInActivity;
+import com.example.influencer.UI.SignIn.AppSignIn.SignInActivity;
 import com.google.android.gms.common.SignInButton;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;

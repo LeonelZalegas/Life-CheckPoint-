@@ -42,14 +42,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".UI.GoogleSignin.GoogleSigninActivity"
+            android:name=".UI.SignIn.GoogleSignin.GoogleSigninActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".UI.SignIn.SignInActivity"
+            android:name=".UI.SignIn.AppSignIn.SignInActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

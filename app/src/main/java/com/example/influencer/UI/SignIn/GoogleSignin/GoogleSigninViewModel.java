@@ -1,4 +1,4 @@
-package com.example.influencer.UI.GoogleSignin;
+package com.example.influencer.UI.SignIn.GoogleSignin;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -15,7 +15,7 @@ import com.example.influencer.Domain.CreateGoogleUserUseCase;
 import com.example.influencer.Domain.FirebaseAuthWithGoogleUseCase;
 import com.example.influencer.R;
 import com.google.android.gms.tasks.Tasks;
-
+//https://www.notion.so/re-factoreo-del-Google-Sign-In-5ff74b3cda2f4e7fa67e634f9bd16e20
 public class GoogleSigninViewModel extends ViewModel {
 
     private final FirebaseAuthWithGoogleUseCase firebaseAuthWithGoogleUseCase;
@@ -28,8 +28,6 @@ public class GoogleSigninViewModel extends ViewModel {
     public LiveData<Event<Boolean>> Loading = _Loading;
 
     private final SingleLiveEvent<String> ToastMessage = new SingleLiveEvent<>();
-
-
 
     public GoogleSigninViewModel() {
         AuthenticationService authService = AuthenticationService.getInstance();

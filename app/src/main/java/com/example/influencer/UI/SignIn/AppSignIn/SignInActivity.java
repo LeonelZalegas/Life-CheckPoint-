@@ -1,4 +1,4 @@
-package com.example.influencer.UI.SignIn;
+package com.example.influencer.UI.SignIn.AppSignIn;
 
 import android.content.Intent;
 import android.graphics.Color;
