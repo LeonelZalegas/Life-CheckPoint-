@@ -1,7 +1,5 @@
 package com.example.influencer.Domain.Validations;
 
-import android.content.Context;
-import android.os.Bundle;
 import android.util.Patterns;
 import android.widget.Toast;
 
@@ -12,7 +10,6 @@ import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.example.influencer.R;
 
 public class SigninValidation  {
-
     static public boolean invoke(AppCompatActivity context) {
         AwesomeValidation Validacion_piola;
         Validacion_piola = new AwesomeValidation(ValidationStyle.BASIC);

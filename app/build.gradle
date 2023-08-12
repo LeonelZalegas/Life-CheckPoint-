@@ -2,6 +2,9 @@ plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
     id 'androidx.navigation.safeargs'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
@@ -71,6 +74,13 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxjava:3.1.6"
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
     implementation 'androidx.lifecycle:lifecycle-reactivestreams:2.3.1'
+    //Dagger Hilt
+    implementation 'com.google.dagger:hilt-android:2.35'
+    kapt "com.google.dagger:hilt-compiler:2.35"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.4.10"
+}
 
-
+// Allow references to generated code
+kapt {
+    correctErrorTypes true
 }

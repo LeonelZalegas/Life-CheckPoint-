@@ -9,6 +9,8 @@ import com.google.firebase.firestore.ListenerRegistration;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.rxjava3.core.BackpressureStrategy;
 import io.reactivex.rxjava3.core.Flowable;
 
@@ -18,10 +20,12 @@ import io.reactivex.rxjava3.core.Flowable;
 //https://www.notion.so/Activity-seleccionar-categoria-nuevo-checkpoint-update-checkpoint-2fe38f46f27f4e6f93752aa178796773?pvs=4#277511b4d9ae4163914db3666b4df9d3
 public class CheckpointChooseRowsRepo {
     private final UserService userService;
-    private final CheckpointChooseStaticRows checkpointChooseStaticRows = new CheckpointChooseStaticRows();
+    private final CheckpointChooseStaticRows checkpointChooseStaticRows;
 
-    public CheckpointChooseRowsRepo(UserService userService) {
+    @Inject
+    public CheckpointChooseRowsRepo(UserService userService,CheckpointChooseStaticRows checkpointChooseStaticRows) {
         this.userService = userService;
+        this.checkpointChooseStaticRows = checkpointChooseStaticRows;
     }
 
     //https://www.notion.so/Activity-seleccionar-categoria-nuevo-checkpoint-update-checkpoint-2fe38f46f27f4e6f93752aa178796773?pvs=4#e0a982c6358c457a8d118f16034be32a

@@ -8,6 +8,9 @@ import com.example.influencer.R;
 import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.SharedComponents.CheckpointThemeChoose_Fragment;
 import com.example.influencer.databinding.ActivityCheckpointUpdateThemeChooseBinding;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class CheckpointUpdateThemeChooseActivity extends AppCompatActivity {
 
     private ActivityCheckpointUpdateThemeChooseBinding binding;

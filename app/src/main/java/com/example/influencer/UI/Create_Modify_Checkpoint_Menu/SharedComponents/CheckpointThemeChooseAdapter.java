@@ -10,15 +10,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.SharedComponents.Model.CheckpointThemeItem;
 import com.example.influencer.databinding.ItemCheckpointhemeBinding;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 public class CheckpointThemeChooseAdapter extends RecyclerView.Adapter<CheckpointThemeChooseAdapter.CheckpointThemeChooseViewHolder> {
 
     private List<CheckpointThemeItem> rowItems; // es nuestra lista de themes o categorias de checkpoints como tal
     private OnItemClickListener onItemClickListener;
 
-    public CheckpointThemeChooseAdapter(List<CheckpointThemeItem> rowItems) {
-        this.rowItems = rowItems;
+    @Inject
+    public CheckpointThemeChooseAdapter() {
+        this.rowItems = new ArrayList<>();
     }
 
     public interface OnItemClickListener {

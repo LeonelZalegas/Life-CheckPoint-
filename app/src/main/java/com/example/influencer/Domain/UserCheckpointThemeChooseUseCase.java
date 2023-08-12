@@ -9,6 +9,8 @@ import com.google.android.gms.tasks.Task;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.rxjava3.core.Flowable;
 
 //esta clase sirve unicamente para logica de negocios
@@ -18,10 +20,10 @@ public class UserCheckpointThemeChooseUseCase {
     private UserService userService;
     private CheckpointChooseRowsRepo checkpointChooseRowsRepo;
 
-    public UserCheckpointThemeChooseUseCase() {
-        FirebaseClient firebaseClient = FirebaseClient.getInstance();
-        this.userService = new UserService(firebaseClient);
-        this.checkpointChooseRowsRepo = new CheckpointChooseRowsRepo(userService);
+    @Inject
+    public UserCheckpointThemeChooseUseCase(CheckpointChooseRowsRepo checkpointChooseRowsRepo,UserService userService) {
+        this.checkpointChooseRowsRepo = checkpointChooseRowsRepo;
+        this.userService = userService;
     }
 
     public Task<Void> addCheckpointTheme(String checkpointThemeName){

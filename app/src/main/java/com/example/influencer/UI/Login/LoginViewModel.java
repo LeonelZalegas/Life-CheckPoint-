@@ -1,5 +1,7 @@
 package com.example.influencer.UI.Login;
 
+import android.content.res.Resources;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -12,9 +14,14 @@ import com.example.influencer.Domain.LoginUseCase;
 import com.example.influencer.R;
 import com.example.influencer.UI.Login.Model.UsuarioLogin;
 
+import javax.inject.Inject;
 
+import dagger.hilt.android.lifecycle.HiltViewModel;
+
+@HiltViewModel
 public class LoginViewModel extends ViewModel implements LoginListener {
     private final LoginUseCase loginUseCase;
+    private final Resources resources;
 
     private final SingleLiveEvent<String> ToastMessage = new SingleLiveEvent<>();
 
@@ -30,8 +37,10 @@ public class LoginViewModel extends ViewModel implements LoginListener {
     private final MutableLiveData<Event<Boolean>> _navigateToHome = new MutableLiveData<>();
     public LiveData<Event<Boolean>> navigateToHome = _navigateToHome;
 
-    public LoginViewModel() {
-        loginUseCase = new LoginUseCase(AuthenticationService.getInstance());
+    @Inject
+    public LoginViewModel(Resources resources, LoginUseCase loginUseCase) {
+        this.resources = resources;
+        this.loginUseCase = loginUseCase;
     }
 
     public void onLoginSelected(UsuarioLogin usuarioLogin) {
@@ -48,7 +57,7 @@ public class LoginViewModel extends ViewModel implements LoginListener {
     @Override
     public void LoginError() {
         _Loading.setValue(new Event<>(false));
-        ToastMessage.setValue(MyApp.getInstance().getAString(R.string.error_LogIn));
+        ToastMessage.setValue(resources.getString(R.string.error_LogIn));
     }
 
     public void onSignInSelected() {
@@ -66,7 +75,7 @@ public class LoginViewModel extends ViewModel implements LoginListener {
             return true;
         }else {
             _Loading.setValue(new Event<>(false));
-            ToastMessage.setValue(MyApp.getInstance().getAString(R.string.empty_fields_LogIn));
+            ToastMessage.setValue(resources.getString(R.string.empty_fields_LogIn));
             return false;
         }
     }

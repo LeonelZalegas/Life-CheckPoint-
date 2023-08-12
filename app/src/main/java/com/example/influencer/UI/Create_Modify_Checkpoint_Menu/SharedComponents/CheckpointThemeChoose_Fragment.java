@@ -23,15 +23,19 @@ import com.example.influencer.databinding.AlertDialogAddCategoryBinding;
 import com.example.influencer.databinding.FragmentCheckpointThemeChooseBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
 import kotlin.collections.CollectionsKt;
 
+@AndroidEntryPoint
 public class CheckpointThemeChoose_Fragment extends Fragment {
 
     private FragmentCheckpointThemeChooseBinding binding;
     private CheckpointThemeChooseViewModel viewModel;
+    @Inject
     private CheckpointThemeChooseAdapter adapter;
 
     @Nullable
@@ -71,8 +75,6 @@ public class CheckpointThemeChoose_Fragment extends Fragment {
     private void setupRecyclerView() {
         GridLayoutManager layoutManager = new GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false);
         binding.checkpointThemeRV.setLayoutManager(layoutManager);
-
-        adapter = new CheckpointThemeChooseAdapter(new ArrayList<>());
         binding.checkpointThemeRV.setAdapter(adapter);
     }
 

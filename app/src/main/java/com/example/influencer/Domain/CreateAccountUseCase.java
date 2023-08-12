@@ -10,11 +10,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 
+import javax.inject.Inject;
+
 //lo mismo que dije para el UseCase del Login
 public class CreateAccountUseCase {
     private final AuthenticationService authenticationService;
     private final UserService userService;
 
+    @Inject
     public CreateAccountUseCase(AuthenticationService authenticationService, UserService userService) {
         this.authenticationService = authenticationService;
         this.userService = userService;

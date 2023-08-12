@@ -23,10 +23,16 @@ import com.example.influencer.UI.Login.Model.UsuarioLogin;
 import com.example.influencer.UI.SignIn.AppSignIn.SignInActivity;
 import com.google.android.gms.common.SignInButton;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
+import javax.inject.Inject;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class LoginActivity extends AppCompatActivity {
 
+    @Inject
+    UserPreferences userPreferences;
     private LoginViewModel loginViewModel;
     TextView sign_inV;
     EditText ET_poner_email;
@@ -45,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         //para si el usuario ya esta loggeado no lo enviemos again al layout Login o al layout Signin o al Splash sino al Home
-        if(UserPreferences.getInstance(this).isSignedIn()){
+        if(userPreferences.isSignedIn()){
             Intent intent_Home= new Intent(LoginActivity.this, Home.class);
             startActivity(intent_Home);
             finish();
@@ -157,7 +163,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void goToHome() {
-        UserPreferences.getInstance(this).setSignedIn(true);
+        userPreferences.setSignedIn(true);
         Intent intent_LogIn = new Intent(LoginActivity.this, Home.class);
         startActivity(intent_LogIn);
         finish();

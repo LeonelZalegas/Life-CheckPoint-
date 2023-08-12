@@ -1,11 +1,15 @@
 package com.example.influencer.Data.LocalDB;
 
+import android.content.res.Resources;
+
 import com.example.influencer.Core.MyApp;
 import com.example.influencer.R;
 import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.SharedComponents.Model.CheckpointThemeItem;
 
 import java.util.Arrays;
 import java.util.List;
+
+import javax.inject.Inject;
 
 //esta clase se encarga de generar los items/categorias estaticos del reyclerview que van a estar siempre presentes en cualquier usuario
 //para eso se necesitaba Context (para obtener el array con los strings de los nombres de cada categoria desde strings.xml) pero como
@@ -14,9 +18,12 @@ public class CheckpointChooseStaticRows {
 
     String[] CheckpointChooseNames;
     private final List<CheckpointThemeItem> STATIC_ROWS;
+    private final Resources resources;
 
-    public CheckpointChooseStaticRows (){
-        CheckpointChooseNames = MyApp.getInstance().getStringArray(R.array.names_checkpoint_choose);
+    @Inject
+    public CheckpointChooseStaticRows (Resources resources){
+        this.resources = resources;
+        CheckpointChooseNames = resources.getStringArray(R.array.names_checkpoint_choose);
         STATIC_ROWS = Arrays.asList(
                 new CheckpointThemeItem(R.color.gris,R.drawable.vector_asset_add,CheckpointChooseNames[0]),
                 new CheckpointThemeItem(R.color.rojo_normal,R.drawable.checkpoint_choose__love,CheckpointChooseNames[1]),
