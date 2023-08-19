@@ -16,7 +16,7 @@ public class AuthenticationService {
     private final FirebaseAuth firebaseAuth;
 
     @Inject
-    private AuthenticationService(FirebaseAuth firebaseAuth) {
+    public AuthenticationService(FirebaseAuth firebaseAuth) {
         this.firebaseAuth = firebaseAuth;
     }
 

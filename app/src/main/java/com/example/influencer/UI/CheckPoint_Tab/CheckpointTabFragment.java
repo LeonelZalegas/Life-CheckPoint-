@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +14,19 @@ import android.view.ViewGroup;
 
 import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.CheckpointThemeChoose.CheckpointThemeChooseActivity;
 import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.CheckpointUpdateThemeChoose.CheckpointUpdateThemeChooseActivity;
+import com.example.influencer.UI.Login.LoginViewModel;
 import com.example.influencer.databinding.FragmentCheckpointTabBinding;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class CheckpointTabFragment extends Fragment {
 
     private FragmentCheckpointTabBinding binding;
-    private CheckpointTabViewModel checkpointTabViewModel;
     Boolean isAllFabsVisible;
+    CheckpointTabViewModel checkpointTabViewModel;
 
 
     @Override
@@ -33,7 +40,7 @@ public class CheckpointTabFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        checkpointTabViewModel = new CheckpointTabViewModel();
+        checkpointTabViewModel = new ViewModelProvider(this).get(CheckpointTabViewModel.class);
 
         binding.addingNewCheckpoint.setVisibility(View.GONE);
         binding.addingNewCheckpointUpdate.setVisibility(View.GONE);

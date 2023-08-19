@@ -47,7 +47,6 @@ public class LoginViewModel extends ViewModel implements LoginListener {
         loginUseCase.invoke(usuarioLogin, this);
     }
 
-
     @Override
     public void LoginSuccess() {
         _navigateToHome.postValue(new Event<>(true));

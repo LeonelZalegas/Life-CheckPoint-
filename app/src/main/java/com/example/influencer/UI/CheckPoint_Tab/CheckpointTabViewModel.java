@@ -7,7 +7,17 @@ import androidx.lifecycle.ViewModel;
 import com.example.influencer.Core.Event;
 import com.example.influencer.UI.Login.Model.UsuarioLogin;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.lifecycle.HiltViewModel;
+
+@HiltViewModel
 public class CheckpointTabViewModel extends ViewModel {
+
+    @Inject
+    public CheckpointTabViewModel(){
+        //no dependencies needed
+    }
 
     private final MutableLiveData<Event<Boolean>> _navigateToAddingNewCheckpoint = new MutableLiveData<>();
     public LiveData<Event<Boolean>> navigateToAddingNewCheckpoint = _navigateToAddingNewCheckpoint;

@@ -1,26 +1,31 @@
 package com.example.influencer.UI.SignIn.GoogleSignin;
 
+import android.content.res.Resources;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.influencer.Core.Event;
-import com.example.influencer.Core.MyApp;
 import com.example.influencer.Core.SingleLiveEvent;
-import com.example.influencer.Data.Network.AuthenticationService;
-import com.example.influencer.Data.Network.FirebaseClient;
-import com.example.influencer.Data.Network.UserService;
 import com.example.influencer.Domain.CheckIfUserExistsUseCase;
 import com.example.influencer.Domain.CreateGoogleUserUseCase;
 import com.example.influencer.Domain.FirebaseAuthWithGoogleUseCase;
 import com.example.influencer.R;
 import com.google.android.gms.tasks.Tasks;
+
+import javax.inject.Inject;
+
+import dagger.hilt.android.lifecycle.HiltViewModel;
+
 //https://www.notion.so/re-factoreo-del-Google-Sign-In-5ff74b3cda2f4e7fa67e634f9bd16e20
+@HiltViewModel
 public class GoogleSigninViewModel extends ViewModel {
 
     private final FirebaseAuthWithGoogleUseCase firebaseAuthWithGoogleUseCase;
     private final CheckIfUserExistsUseCase checkIfUserExistsUseCase;
     private final CreateGoogleUserUseCase createGoogleUserUseCase;
+    private final Resources resources;
 
     SingleLiveEvent<Boolean> userExists = new SingleLiveEvent<>();
 
@@ -29,13 +34,16 @@ public class GoogleSigninViewModel extends ViewModel {
 
     private final SingleLiveEvent<String> ToastMessage = new SingleLiveEvent<>();
 
-    public GoogleSigninViewModel() {
-        AuthenticationService authService = AuthenticationService.getInstance();
-        UserService userService = new UserService(FirebaseClient.getInstance());
+    @Inject
+    public GoogleSigninViewModel(FirebaseAuthWithGoogleUseCase firebaseAuthWithGoogleUseCase,
+                                 CheckIfUserExistsUseCase checkIfUserExistsUseCase,
+                                 CreateGoogleUserUseCase createGoogleUserUseCase,
+                                 Resources resources) {
 
-        firebaseAuthWithGoogleUseCase = new FirebaseAuthWithGoogleUseCase(authService);
-        checkIfUserExistsUseCase = new CheckIfUserExistsUseCase(userService, authService);
-        createGoogleUserUseCase = new CreateGoogleUserUseCase(userService, authService);
+        this.firebaseAuthWithGoogleUseCase = firebaseAuthWithGoogleUseCase;
+        this.checkIfUserExistsUseCase = checkIfUserExistsUseCase;
+        this.createGoogleUserUseCase = createGoogleUserUseCase;
+        this.resources = resources;
     }
 
     public SingleLiveEvent<Boolean> getUserExists() {
@@ -50,7 +58,7 @@ public class GoogleSigninViewModel extends ViewModel {
                         return checkIfUserExistsUseCase.execute();
                     } else {
                         _Loading.postValue(new Event<>(false));
-                        ToastMessage.setValue(MyApp.getInstance().getAString(R.string.Generic_error));
+                        ToastMessage.setValue(resources.getString(R.string.Generic_error));
                         throw new RuntimeException(task.getException());  //esto es para tirar otro error supongo xd
                     }
                 })
@@ -69,7 +77,7 @@ public class GoogleSigninViewModel extends ViewModel {
                 })
                 .addOnFailureListener(e -> {
                     _Loading.postValue(new Event<>(false));
-                    ToastMessage.setValue(MyApp.getInstance().getAString(R.string.FireStore_Error));
+                    ToastMessage.setValue(resources.getString(R.string.FireStore_Error));
                 });
     }
 

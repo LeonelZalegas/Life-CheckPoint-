@@ -36,7 +36,7 @@ public class CheckpointThemeChoose_Fragment extends Fragment {
     private FragmentCheckpointThemeChooseBinding binding;
     private CheckpointThemeChooseViewModel viewModel;
     @Inject
-    private CheckpointThemeChooseAdapter adapter;
+    CheckpointThemeChooseAdapter adapter;
 
     @Nullable
     @Override

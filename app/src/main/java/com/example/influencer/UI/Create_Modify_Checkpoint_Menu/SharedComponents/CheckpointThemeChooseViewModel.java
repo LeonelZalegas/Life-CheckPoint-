@@ -7,7 +7,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
 import androidx.lifecycle.ViewModel;
 
-import com.example.influencer.Core.MyApp;
 import com.example.influencer.Core.SingleLiveEvent;
 import com.example.influencer.Domain.UserCheckpointThemeChooseUseCase;
 import com.example.influencer.Domain.Validations.NewCheckpointThemeValidation;
@@ -27,11 +26,15 @@ public class CheckpointThemeChooseViewModel extends ViewModel {
 
     private UserCheckpointThemeChooseUseCase userCheckpointThemeChooseUseCase;
     private final Resources resources;
+    private  final NewCheckpointThemeValidation newCheckpointThemeValidation;
 
     @Inject
-    CheckpointThemeChooseViewModel(UserCheckpointThemeChooseUseCase userCheckpointThemeChooseUseCase,Resources resources){
+    CheckpointThemeChooseViewModel(UserCheckpointThemeChooseUseCase userCheckpointThemeChooseUseCase,
+                                   Resources resources,
+                                   NewCheckpointThemeValidation newCheckpointThemeValidation){
         this.userCheckpointThemeChooseUseCase = userCheckpointThemeChooseUseCase;
         this.resources = resources;
+        this.newCheckpointThemeValidation = newCheckpointThemeValidation;
     }
 
     //https://www.notion.so/Activity-seleccionar-categoria-nuevo-checkpoint-update-checkpoint-2fe38f46f27f4e6f93752aa178796773?pvs=4#4fdf8783463a4983af9d292ab5ebf3ee
@@ -42,7 +45,7 @@ public class CheckpointThemeChooseViewModel extends ViewModel {
     }
 
     public boolean validatingNewThemeCheckpoint(TextInputEditText editText){
-        return NewCheckpointThemeValidation.invoke(editText);
+        return newCheckpointThemeValidation.invokeNewCheckpointThemeValidation(editText);
     }
 
     //https://www.notion.so/Life-Checkpoint-37dccb9dbb464169b4c9a42460f50f40?pvs=4#c843682676ae4d298b72adbd31b745ac

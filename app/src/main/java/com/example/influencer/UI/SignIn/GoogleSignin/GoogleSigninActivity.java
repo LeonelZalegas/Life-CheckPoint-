@@ -14,30 +14,40 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.influencer.Core.Event;
-import com.example.influencer.Data.Network.GoogleSignInClientFactory;
+import com.example.influencer.Data.Network.GoogleSignInClientModuleDI;
 import com.example.influencer.Data.Preferences.UserPreferences;
 import com.example.influencer.UI.OnBoarding.OnBoardingActivity;
 import com.example.influencer.R;
+import com.example.influencer.databinding.ActivityMainBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
+import javax.inject.Inject;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class GoogleSigninActivity extends AppCompatActivity {
 
-    private GoogleSignInClient mGoogleSignInClient;
     private GoogleSigninViewModel googleSigninViewModel;
     SweetAlertDialog carga;
+    private ActivityMainBinding binding;
+    @Inject
+    UserPreferences userPreferences;
+    @Inject
+    GoogleSignInClient mGoogleSignInClient;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        mGoogleSignInClient = GoogleSignInClientFactory.getGoogleSignInClient();
         googleSigninViewModel = new ViewModelProvider(this).get(GoogleSigninViewModel.class);
         initLoading();
         initBasicObservers();
@@ -101,7 +111,7 @@ public class GoogleSigninActivity extends AppCompatActivity {
     }
 
     private void goToOnBoarding(){
-        UserPreferences.getInstance(this).setSignedIn(true);
+        userPreferences.setSignedIn(true);
         Intent intent_LogIn = new Intent(GoogleSigninActivity.this, OnBoardingActivity.class);
         startActivity(intent_LogIn);
         finish();

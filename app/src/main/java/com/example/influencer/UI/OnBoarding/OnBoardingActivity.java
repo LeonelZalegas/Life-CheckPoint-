@@ -16,9 +16,15 @@ import com.example.influencer.UI.OnBoarding.Fragments.OnboardingFragment3;
 import com.example.influencer.databinding.ActivityOnboardingBinding;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class OnBoardingActivity extends AppCompatActivity {
 
     private ActivityOnboardingBinding binding;
+
     private OnboardingViewModel viewModel;
     private DotsIndicator dotsIndicator;
 

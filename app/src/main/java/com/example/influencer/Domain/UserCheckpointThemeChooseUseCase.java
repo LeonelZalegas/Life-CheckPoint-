@@ -1,7 +1,6 @@
 package com.example.influencer.Domain;
 
 import com.example.influencer.Data.Network.AuthenticationService;
-import com.example.influencer.Data.Network.FirebaseClient;
 import com.example.influencer.Data.Network.UserService;
 import com.example.influencer.Data.Repositories.CheckpointChooseRowsRepo;
 import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.SharedComponents.Model.CheckpointThemeItem;
@@ -19,15 +18,19 @@ public class UserCheckpointThemeChooseUseCase {
 
     private UserService userService;
     private CheckpointChooseRowsRepo checkpointChooseRowsRepo;
+    private final AuthenticationService authenticationService;
 
     @Inject
-    public UserCheckpointThemeChooseUseCase(CheckpointChooseRowsRepo checkpointChooseRowsRepo,UserService userService) {
+    public UserCheckpointThemeChooseUseCase(CheckpointChooseRowsRepo checkpointChooseRowsRepo,
+                                            UserService userService,
+                                            AuthenticationService authenticationService) {
         this.checkpointChooseRowsRepo = checkpointChooseRowsRepo;
         this.userService = userService;
+        this.authenticationService = authenticationService;
     }
 
     public Task<Void> addCheckpointTheme(String checkpointThemeName){
-        String userId = AuthenticationService.getInstance().getUid();
+        String userId = authenticationService.getUid();
         if (userId != null){
             return userService.addCheckpointThemeToUser(userId,checkpointThemeName);
         }
@@ -35,7 +38,7 @@ public class UserCheckpointThemeChooseUseCase {
     }
 
     public Flowable<List<CheckpointThemeItem>> getUserCheckpointsThemes() {
-        String userId = AuthenticationService.getInstance().getUid();
+        String userId = authenticationService.getUid();
         if (userId != null){
             return checkpointChooseRowsRepo.getAllCheckpointThemes(userId);
         } else {

@@ -12,9 +12,11 @@ import com.example.influencer.R;
 import com.example.influencer.databinding.ActivityHomeBinding;
 import com.example.influencer.databinding.ActivityOnboardingBinding;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import me.ibrahimsn.lib.OnItemSelectedListener;
 import me.ibrahimsn.lib.SmoothBottomBar;
 
+@AndroidEntryPoint
 public class Home extends AppCompatActivity {
 
     private ActivityHomeBinding binding;

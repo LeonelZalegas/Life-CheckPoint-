@@ -1,30 +1,46 @@
 package com.example.influencer.Domain.Validations;
 
+import android.content.res.Resources;
+import android.util.Log;
 import android.util.Patterns;
+import android.widget.EditText;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.example.influencer.R;
 
-public class SigninValidation  {
-    static public boolean invoke(AppCompatActivity context) {
-        AwesomeValidation Validacion_piola;
-        Validacion_piola = new AwesomeValidation(ValidationStyle.BASIC);
-        Validacion_piola.addValidation(context,R.id.poner_usuario,"[a-zA-Z0-9]*",R.string.error_usuario);// para q solo se ponga letras (may y min) y numeros en el Usuario
-        Validacion_piola.addValidation(context,R.id.poner_usuario,".{6,}",R.string.error_usuario); // usuario tiene que tener un minimo de 6 caracteres
-        Validacion_piola.addValidation(context,R.id.poner_email, Patterns.EMAIL_ADDRESS,R.string.error_email);
-        Validacion_piola.addValidation(context,R.id.poner_contrasena,"[a-zA-Z0-9]*",R.string.error_password);// = que lo de arriva pero con la contrasena
-        Validacion_piola.addValidation(context,R.id.poner_contrasena,".{8,}",R.string.error_password);
-        Validacion_piola.addValidation(context,R.id.poner_contrasena_again,R.id.poner_contrasena,R.string.error_password_confirmacion); //controlar si las contrasenas coinciden
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
-        if (Validacion_piola.validate()) {
-            return true;
-        } else{
-            Toast.makeText(context, R.string.Re_enter_Fields, Toast.LENGTH_SHORT).show(); // saldra este error cuando algunos de los campos ingresados no cumplen el filtro que pusimos (validacion)
-            return  false;
-        }
+@Singleton
+public class SigninValidation  {
+
+    private AwesomeValidation validation;
+    private Resources resources;
+
+    @Inject
+    public SigninValidation(Resources resources) {
+        this.validation = new AwesomeValidation(ValidationStyle.BASIC);
+        this.resources = resources;
     }
+
+     public boolean invokeSigninValidation(EditText username, EditText password, EditText email, EditText passwordCheck) {
+        validation.addValidation(username,"[a-zA-Z0-9]*", resources.getString(R.string.error_usuario));// para q solo se ponga letras (may y min) y numeros en el Usuario
+        validation.addValidation(username,".{6,}", resources.getString(R.string.error_usuario)); // usuario tiene que tener un minimo de 6 caracteres
+        validation.addValidation(email, Patterns.EMAIL_ADDRESS, resources.getString(R.string.error_email));
+        validation.addValidation(password,"[a-zA-Z0-9]*", resources.getString(R.string.error_password));// = que lo de arriva pero con la contrasena
+        validation.addValidation(password,".{8,}", resources.getString(R.string.error_password));
+        validation.addValidation(passwordCheck,password, resources.getString(R.string.error_password_confirmacion)); //controlar si las contrasenas coinciden
+
+         //validation.validate() tendria que dar True si se cumplen todas las condiciones de arriva y false si no
+         //ahora...con eso en mente tiene sentido dejar a "validation.validate()" solo nomas, pero por alguna razon ni funciona
+         //por eso tuve que hacer esa cosa rara de que si es true devuelva true y si es false devuelva false
+         if (validation.validate())
+         return true;
+         else{
+             return false;}
+    }
+
+
 }

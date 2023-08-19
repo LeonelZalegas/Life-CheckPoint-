@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/naranja_intermedio"
     tools:context=".UI.SignIn.AppSignIn.SignInActivity"
-    tools:viewBindingIgnore="true">
+    >
 
     <ImageView
         android:id="@+id/imagen_fondo"

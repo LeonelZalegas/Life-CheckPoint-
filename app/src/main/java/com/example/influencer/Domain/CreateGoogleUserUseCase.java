@@ -5,11 +5,14 @@ import com.example.influencer.Data.Network.UserService;
 import com.example.influencer.UI.SignIn.Model.UsuarioSignin;
 import com.google.android.gms.tasks.Task;
 
+import javax.inject.Inject;
+
 public class CreateGoogleUserUseCase {
 
     private final UserService userService;
     private final AuthenticationService authenticationService;
 
+    @Inject
     public CreateGoogleUserUseCase(UserService userService, AuthenticationService authenticationService) {
         this.userService = userService;
         this.authenticationService = authenticationService;

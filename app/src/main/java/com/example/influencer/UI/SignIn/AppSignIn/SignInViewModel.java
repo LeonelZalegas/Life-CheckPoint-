@@ -1,24 +1,28 @@
 package com.example.influencer.UI.SignIn.AppSignIn;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.content.res.Resources;
+import android.widget.EditText;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.influencer.Core.Event;
-import com.example.influencer.Core.MyApp;
 import com.example.influencer.Core.SingleLiveEvent;
-import com.example.influencer.Data.Network.AuthenticationService;
-import com.example.influencer.Data.Network.FirebaseClient;
-import com.example.influencer.Data.Network.UserService;
 import com.example.influencer.Domain.CreateAccountUseCase;
 import com.example.influencer.Domain.Validations.SigninValidation;
 import com.example.influencer.R;
-import com.example.influencer.UI.SignIn.AppSignIn.CreateAccountListener;
 import com.example.influencer.UI.SignIn.Model.UsuarioSignin;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.lifecycle.HiltViewModel;
+
+@HiltViewModel
 public class SignInViewModel extends ViewModel implements CreateAccountListener {
     private final CreateAccountUseCase createAccountUseCase;
+    private final Resources resources;
+    private final SigninValidation signinValidation;
 
     private final SingleLiveEvent<String> ToastMessage = new SingleLiveEvent<>();
 
@@ -31,8 +35,11 @@ public class SignInViewModel extends ViewModel implements CreateAccountListener 
     private final MutableLiveData<Event<Boolean>> _navigateToOnBoarding = new MutableLiveData<>();
     public LiveData<Event<Boolean>> navigateToOnBoarding = _navigateToOnBoarding;
 
-    public SignInViewModel() {
-        createAccountUseCase = new CreateAccountUseCase(AuthenticationService.getInstance(), new UserService(FirebaseClient.getInstance()));
+    @Inject
+    public SignInViewModel(Resources resources,CreateAccountUseCase createAccountUseCase, SigninValidation signinValidation) {
+        this.createAccountUseCase = createAccountUseCase;
+        this.resources = resources;
+        this.signinValidation = signinValidation;
     }
 
     public void onSignInSelected(UsuarioSignin usuarioSignin) {
@@ -43,14 +50,14 @@ public class SignInViewModel extends ViewModel implements CreateAccountListener 
 
     @Override
     public void onCreateAccountSuccess() {
-        ToastMessage.setValue(MyApp.getInstance().getAString(R.string.LogIn_successful));
+        ToastMessage.setValue(resources.getString(R.string.LogIn_successful));
         _navigateToOnBoarding.postValue(new Event<>(true));
         _Loading.setValue(new Event<>(false));
     }
 
     @Override
     public void onCreateAccountError() {
-        ToastMessage.setValue(MyApp.getInstance().getAString(R.string.error_SignIn_Firestore));
+        ToastMessage.setValue(resources.getString(R.string.error_SignIn_Firestore));
         _Loading.setValue(new Event<>(false));
     }
 
@@ -58,8 +65,8 @@ public class SignInViewModel extends ViewModel implements CreateAccountListener 
         _backToLogin.setValue(new Event<>(true));
     }
 
-    public boolean validatingSignIn(AppCompatActivity signinContext){
-        return SigninValidation.invoke(signinContext);
+    public boolean validatingSignIn(EditText username, EditText password, EditText email, EditText passwordCheck){
+        return signinValidation.invokeSigninValidation(username,password,email,passwordCheck);
     }
 
     public SingleLiveEvent<String> getToastMessage() {

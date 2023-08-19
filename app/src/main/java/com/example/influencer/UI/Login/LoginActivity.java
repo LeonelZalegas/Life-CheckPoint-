@@ -21,6 +21,7 @@ import com.example.influencer.R;
 import com.example.influencer.UI.SignIn.GoogleSignin.GoogleSigninActivity;
 import com.example.influencer.UI.Login.Model.UsuarioLogin;
 import com.example.influencer.UI.SignIn.AppSignIn.SignInActivity;
+import com.example.influencer.databinding.ActivityMainBinding;
 import com.google.android.gms.common.SignInButton;
 
 import javax.inject.Inject;
@@ -31,14 +32,11 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class LoginActivity extends AppCompatActivity {
 
+    private LoginViewModel loginViewModel;
     @Inject
     UserPreferences userPreferences;
-    private LoginViewModel loginViewModel;
-    TextView sign_inV;
-    EditText ET_poner_email;
-    EditText ET_poner_contrasena;
-    Button B_Button_LogIn;
-    SignInButton B_SignInGoogle;
+
+    ActivityMainBinding binding;
     SweetAlertDialog carga;
 
     @Override
@@ -56,7 +54,8 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent_Home);
             finish();
         }else{
-            setContentView(R.layout.activity_main);}
+            binding = ActivityMainBinding.inflate(getLayoutInflater());
+            setContentView(binding.getRoot());}
 
         //Esto seria para la animacion de fondo de la pantala del LogIn
         ConstraintLayout gradiente_login = findViewById(R.id.gradiente_login);
@@ -87,15 +86,11 @@ public class LoginActivity extends AppCompatActivity {
     private void initListeners() {
 
         //Para hacer el LogIn
-        ET_poner_email = findViewById(R.id.poner_email);
-        ET_poner_contrasena = findViewById(R.id.poner_contrasena);
-        B_Button_LogIn = findViewById(R.id.button_LogIn);
-
-        B_Button_LogIn.setOnClickListener(new View.OnClickListener() {
+        binding.buttonLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email =  ET_poner_email.getText().toString();
-                String contrasena = ET_poner_contrasena.getText().toString();
+                String email =  binding.ponerEmail.getText().toString();
+                String contrasena = binding.ponerContrasena.getText().toString();
                 if(loginViewModel.validatingLogin(email,contrasena)) {
                     loginViewModel.onLoginSelected(new UsuarioLogin(email,contrasena));
                 }
@@ -103,22 +98,10 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         //para el boton de hacer SignIn Con Google
-        B_SignInGoogle = findViewById(R.id.buttom_signInGoogle);
-        B_SignInGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loginViewModel.onGoogleSignInSelected();
-            }
-        });
+        binding.buttomSignInGoogle.setOnClickListener(view -> loginViewModel.onGoogleSignInSelected());
 
         //para el boton de hacer SignIn manual
-        sign_inV = findViewById(R.id.sign_in);
-        sign_inV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loginViewModel.onSignInSelected();
-            }
-        });
+        binding.signIn.setOnClickListener(view -> loginViewModel.onSignInSelected());
     }
 
     private void initObservers() {

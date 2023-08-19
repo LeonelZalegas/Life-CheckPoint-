@@ -17,24 +17,28 @@ import com.example.influencer.Data.Preferences.UserPreferences;
 import com.example.influencer.UI.OnBoarding.OnBoardingActivity;
 import com.example.influencer.R;
 import com.example.influencer.UI.SignIn.Model.UsuarioSignin;
+import com.example.influencer.databinding.ActivityRegistroBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
+import javax.inject.Inject;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class SignInActivity extends AppCompatActivity {
+
     private SignInViewModel signInViewModel;
-    FloatingActionButton FAB_flecha_avanzar;
-    FloatingActionButton volver_hacia_atras;
-    EditText ET_poner_usuario;
-    EditText ET_poner_email;
-    EditText ET_poner_contrasena;
-    AppCompatActivity ActivityContext = this; //para poder hacer la validacion del Signin (y no volverla un Activity)
+    @Inject
+    UserPreferences userPreferences;
+    private ActivityRegistroBinding binding;
     SweetAlertDialog carga;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registro);
+        binding = ActivityRegistroBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         signInViewModel = new ViewModelProvider(this).get(SignInViewModel.class);
         initLoading();
@@ -56,29 +60,23 @@ public class SignInActivity extends AppCompatActivity {
     private void initListeners() {
 
         //para el boton de volver para atras
-        volver_hacia_atras = findViewById(R.id.fab_volver_atras);
-        volver_hacia_atras.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signInViewModel.backToLoginSelected();
-            }
-        });
+        binding.fabVolverAtras.setOnClickListener(view -> signInViewModel.backToLoginSelected());
 
         //boton para seguir avanzando (ir a home)
-        ET_poner_usuario = findViewById(R.id.poner_usuario);
-        ET_poner_email = findViewById(R.id.poner_email);
-        ET_poner_contrasena = findViewById(R.id.poner_contrasena);
-        FAB_flecha_avanzar = findViewById(R.id.fab_flecha_avanzar);
-        FAB_flecha_avanzar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (signInViewModel.validatingSignIn(ActivityContext)) {
-                    signInViewModel.onSignInSelected(new UsuarioSignin(
-                            ET_poner_email.getText().toString(),
-                            ET_poner_usuario.getText().toString(),
-                            ET_poner_contrasena.getText().toString()
-                    ));
-                }
+        binding.fabFlechaAvanzar.setOnClickListener(view -> {
+
+            EditText username =  binding.ponerUsuario;
+            EditText password = binding.ponerContrasena;
+            EditText email = binding.ponerEmail;
+            EditText passwordCheck = binding.ponerContrasenaAgain;
+
+            if (signInViewModel.validatingSignIn(username,password,email,passwordCheck)) {
+                signInViewModel.onSignInSelected(new UsuarioSignin(
+                        email.getText().toString(),
+                        username.getText().toString(),
+                        password.getText().toString()));
+            }else{
+                Toast.makeText(this, R.string.Re_enter_Fields, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -119,7 +117,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void goTonavigateToOnBoarding() {
-        UserPreferences.getInstance(this).setSignedIn(true);
+        userPreferences.setSignedIn(true);
         Intent intent_LogIn = new Intent(SignInActivity.this, OnBoardingActivity.class);
         startActivity(intent_LogIn);
         ActivityCompat.finishAffinity(this); //en vez de poner finish() nomas utilizamos este metodo par asi tambien finalizar el activity de Login (antes solo se cerraba el Signin, por ende podias ir de Home a Login de nuevo si volvias para atras)

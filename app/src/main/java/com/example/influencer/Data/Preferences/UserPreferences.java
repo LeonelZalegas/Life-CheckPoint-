@@ -1,21 +1,15 @@
 package com.example.influencer.Data.Preferences;
 
-import android.content.Context;
-import android.util.Log;
 
 import androidx.datastore.preferences.core.MutablePreferences;
 import androidx.datastore.preferences.core.Preferences;
 import androidx.datastore.preferences.core.PreferencesKeys;
-import androidx.datastore.preferences.rxjava3.RxPreferenceDataStoreBuilder;
 import androidx.datastore.rxjava3.RxDataStore;
 
-import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
 
 @Singleton
@@ -25,7 +19,7 @@ public class UserPreferences {
     private RxDataStore<Preferences> dataStoreInstance;
 
     @Inject
-    private UserPreferences(DataStore dataStore){
+    public UserPreferences(DataStore dataStore){
         this.dataStoreInstance = dataStore.getDataStoreInstance();
         this.LOGGED_IN_KEY = PreferencesKeys.booleanKey("signed_in_key");
     }

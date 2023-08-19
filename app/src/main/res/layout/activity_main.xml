@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".UI.Login.LoginActivity"
     android:background="@drawable/animacion_gradiente"
-    android:id="@+id/gradiente_login"
-    tools:viewBindingIgnore="true">
+    android:id="@+id/gradiente_login">
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottieAnimationView"
