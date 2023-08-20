@@ -64,6 +64,7 @@ public class CheckpointThemeChoose_Fragment extends Fragment {
         setupRecyclerView();
         setupToastMessageObserver();
         setupUserCheckpointsThemesObserver();
+        setupLoadingObserver();
     }
 
     @Override
@@ -86,6 +87,17 @@ public class CheckpointThemeChoose_Fragment extends Fragment {
             }
         });
     }
+
+    private void setupLoadingObserver() {
+        viewModel.isLoading.observe(getViewLifecycleOwner(),it ->{
+            if (it) {
+                binding.progress.setVisibility(View.VISIBLE);
+            } else {
+                binding.progress.setVisibility(View.GONE);
+            }
+        });
+    }
+
 
     private void setupUserCheckpointsThemesObserver() {
         // Retrieve arguments del valor booleano de si se incluye o no el "Custom Checkpoint"

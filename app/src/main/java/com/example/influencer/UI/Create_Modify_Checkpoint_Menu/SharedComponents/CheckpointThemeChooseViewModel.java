@@ -5,8 +5,11 @@ import android.content.res.Resources;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
+import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.influencer.Core.Event;
 import com.example.influencer.Core.SingleLiveEvent;
 import com.example.influencer.Domain.UserCheckpointThemeChooseUseCase;
 import com.example.influencer.Domain.Validations.NewCheckpointThemeValidation;
@@ -24,6 +27,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 @HiltViewModel
 public class CheckpointThemeChooseViewModel extends ViewModel {
 
+    protected MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
+    private final MediatorLiveData<List<CheckpointThemeItem>> checkpointThemesMediator = new MediatorLiveData<>();
     private UserCheckpointThemeChooseUseCase userCheckpointThemeChooseUseCase;
     private final Resources resources;
     private  final NewCheckpointThemeValidation newCheckpointThemeValidation;
@@ -41,7 +46,17 @@ public class CheckpointThemeChooseViewModel extends ViewModel {
     private SingleLiveEvent<String> toastMessage = new SingleLiveEvent<>();
 
     public LiveData<List<CheckpointThemeItem>> getUserCheckpointsThemes() {
-        return LiveDataReactiveStreams.fromPublisher(userCheckpointThemeChooseUseCase.getUserCheckpointsThemes());
+        //aca estaria bueno controlar si devuelve null (que el id del usuario no existe) pero bue xd
+        isLoading.postValue(true);
+        LiveData<List<CheckpointThemeItem>> checkpointThemes = LiveDataReactiveStreams.fromPublisher(userCheckpointThemeChooseUseCase.getUserCheckpointsThemes());
+        //usamos esto del Mediator porque LiveDataReactiveStreams es una operacion asincrona, por ende no podemos llamar a isLoading, porq sino el isLoading no esperaria a q se traiga la info 1ero para ponerse en false
+        //por ende el mediator observa ctemente a lo que se ya se observa ctemente con LiveDataReactiveStreams, pero espera a q 1ero se obtenga esa info (espera info de LiveDataReactiveStreams y recien ahi se setea con esa info el mismo) para mostrar el false, y luego devolvemos el mediator
+        //que seria lo mismo que devolver checkpointThemes, x que una observa al otro constantemente
+        checkpointThemesMediator.addSource(checkpointThemes, items -> {
+            checkpointThemesMediator.setValue(items);
+            isLoading.postValue(false);
+        });
+        return checkpointThemesMediator;
     }
 
     public boolean validatingNewThemeCheckpoint(TextInputEditText editText){
