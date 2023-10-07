@@ -30,4 +30,15 @@
         <item name="cornerSize">30dp</item>
     </style>
 
+    //para mostrar foto de perfil de usuario (imageview redondo)
+    <style name="ShapeAppearanceOverlay.MyApp.Circle" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
+
+    //para mostrar redondeo de seleccion imagen  en crear checkpoint
+    <style name="ShapeAppearanceOverlay.MyApp.CircleImageSelect" parent="">
+        <item name="cornerSize">30%</item>
+    </style>
+
+
 </resources>

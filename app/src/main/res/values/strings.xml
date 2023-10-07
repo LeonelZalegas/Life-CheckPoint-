@@ -57,11 +57,11 @@
     <string name="Secondary_title_adding_new_checkpoint">you can also create a custom one !</string>
     <string name="Main_title_adding_new_checkpoint_update">Choose a CheckPoint !</string>
     <string name="Secondary_title_adding_new_checkpoint_update">Just the last checkpoint you made of a category</string>
-// para lo de agregar nueva categoria de checkpoint
+    // para lo de agregar nueva categoria de checkpoint
     <string name="Hint_new_category">New Checkpoint Category Name</string>
     <string name="Main_title_new_category">Custom Checkpoint Category</string>
     <string name="Error_new_category">Just Letters and minimum length of 3 and maximum of 17</string>
-
-
+    <string name="Post">Post</string>
+    <string name="hint_put_checkPoint_text">Write your CheckPoint !</string>
 
 </resources>
