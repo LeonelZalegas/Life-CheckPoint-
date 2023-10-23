@@ -43,8 +43,6 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf= "@+id/guideline1"
-        android:text="Test"
-        android:backgroundTint="@color/rojo_normal"
         android:textStyle="bold"
         android:textColor="@color/white"
         />
@@ -119,17 +117,22 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/hint_put_checkPoint_text"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.2"
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:inputType="textMultiLine"
+                android:gravity="top|start"
+                android:paddingStart="25dp"
+                android:paddingEnd="25dp"
                 android:layout_marginTop="10dp"
+                android:background="@null"
+                android:hint="@string/hint_put_checkPoint_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,7 +2,6 @@ package com.example.influencer.Data.Network;
 
 import android.content.Context;
 
-import com.example.influencer.Core.MyApp;
 import com.example.influencer.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;

@@ -1,6 +1,8 @@
 package com.example.influencer.UI.Create_Modify_Checkpoint_Menu.SharedComponents.Model;
 
-public class CheckpointThemeItem {
+import java.io.Serializable;
+
+public class CheckpointThemeItem implements Serializable {
 
     private int color;
     private int imageResourceId;

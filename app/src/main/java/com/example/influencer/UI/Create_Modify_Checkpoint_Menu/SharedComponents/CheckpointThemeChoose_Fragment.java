@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.influencer.R;
 import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.SharedComponents.Model.CheckpointThemeItem;
+import com.example.influencer.UI.Upload_New_Checkpoint.UploadNewCheckpoint;
 import com.example.influencer.databinding.AlertDialogAddCategoryBinding;
 import com.example.influencer.databinding.FragmentCheckpointThemeChooseBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -119,8 +121,15 @@ public class CheckpointThemeChoose_Fragment extends Fragment {
             //https://www.notion.so/Activity-seleccionar-categoria-nuevo-checkpoint-update-checkpoint-2fe38f46f27f4e6f93752aa178796773?pvs=4#8a685d43c4114530aaa5b551ff209690
             //es para la ventana de agregar el nuevo nombre de categoria
             adapter.UpdateRows(rowItems,item -> {
-                if (item.getText().equals("Create Custom")) {
-                    showDialogAndSaveToFireStore();
+                //
+                if (showAddNewRow) {
+                    if (item.getText().equals("Create Custom")) {
+                        showDialogAndSaveToFireStore();
+                    } else {
+                        Intent intent = new Intent(getActivity(), UploadNewCheckpoint.class);
+                        intent.putExtra("SELECTED_CATEGORY", item);
+                        startActivity(intent);
+                    }
                 }
             });
 
