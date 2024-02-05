@@ -2,6 +2,7 @@ package com.example.influencer.Data.Network;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 
 import javax.inject.Singleton;
 
@@ -24,5 +25,11 @@ public class FirebaseClientModuleDI {
     @Singleton
     public FirebaseFirestore provideDB() {
         return FirebaseFirestore.getInstance();
+    }
+
+    @Provides
+    @Singleton
+    public FirebaseStorage provideFirebaseStorage() {
+        return FirebaseStorage.getInstance();
     }
 }
