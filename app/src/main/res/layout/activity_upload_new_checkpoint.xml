@@ -21,7 +21,7 @@
         />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/post"
+        android:id="@+id/postButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/azul_bar"
@@ -120,6 +120,7 @@
             android:layout_height="match_parent">
 
             <EditText
+                android:id="@+id/postTextInput"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:inputType="textMultiLine"
