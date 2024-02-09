@@ -233,77 +233,14 @@
         app:layout_constraintHeight_percent="0.05"
         app:layout_constraintHorizontal_bias="0.23"/>
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/UploadedImage1"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/TemporalImagesRV"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintWidth_percent="0.09"
-        app:layout_constraintHeight_percent="0.05"
-        app:layout_constraintDimensionRatio="H,1:1"
-        app:layout_constraintStart_toEndOf="@id/UploadLink"
         app:layout_constraintTop_toBottomOf="@id/guideline10"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/UploadedImage2"
-        android:background="@color/verde_seekBar"
-
-         />
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/deleteButton1"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:src="@drawable/vector_asset_close"
-        android:tint="@color/white"
-        android:background="@color/rojo_normal"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Circle"
-        app:layout_constraintTop_toTopOf="@+id/UploadedImage1"
-        app:layout_constraintEnd_toEndOf="@id/UploadedImage1"
-        app:layout_constraintStart_toStartOf="@id/UploadedImage1"
-        app:layout_constraintBottom_toBottomOf="@id/UploadedImage1"
-        app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintHeight_percent="0.02"
-        app:layout_constraintWidth_percent="0.04"
-        app:layout_constraintDimensionRatio="H,1:1"
-        android:layout_marginTop="-5dp"
-        android:layout_marginEnd="-5dp"
-        />
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/UploadedImage2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintWidth_percent="0.09"
-        app:layout_constraintHeight_percent="0.05"
-        app:layout_constraintDimensionRatio="H,1:1"
-        app:layout_constraintStart_toEndOf="@id/UploadedImage1"
-        app:layout_constraintTop_toBottomOf="@id/guideline10"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/guideline4"
-        android:background="@color/verde_seekBar"
-        app:layout_constraintHorizontal_bias="0.4"
-        />
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/deleteButton2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:src="@drawable/vector_asset_close"
-        android:tint="@color/white"
-        android:background="@color/rojo_normal"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Circle"
-        app:layout_constraintTop_toTopOf="@+id/UploadedImage2"
-        app:layout_constraintEnd_toEndOf="@id/UploadedImage2"
-        app:layout_constraintStart_toStartOf="@id/UploadedImage2"
-        app:layout_constraintBottom_toBottomOf="@id/UploadedImage2"
-        app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintHeight_percent="0.02"
-        app:layout_constraintWidth_percent="0.04"
-        app:layout_constraintDimensionRatio="H,1:1"
-        android:layout_marginTop="-5dp"
-        android:layout_marginEnd="-5dp"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/UploadLink"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"

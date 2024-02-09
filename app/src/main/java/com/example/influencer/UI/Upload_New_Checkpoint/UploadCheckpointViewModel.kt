@@ -1,6 +1,8 @@
 package com.example.influencer.UI.Upload_New_Checkpoint
 
 import android.net.Uri
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.influencer.Domain.SavePostUseCase
@@ -18,6 +20,9 @@ class UploadCheckpointViewModel @Inject constructor(
 
     var _tempImageUri1: Uri? = null
     var _tempImageUri2: Uri? = null
+    private val _imagesLiveData = MutableLiveData<List<Uri?>>()
+    val imagesLiveData: LiveData<List<Uri?>> = _imagesLiveData
+
 
     fun onCameraIconClicked(photoUri: Uri?){
         viewModelScope.launch{
@@ -27,6 +32,7 @@ class UploadCheckpointViewModel @Inject constructor(
                 } else {
                     _tempImageUri2 = photoUri
                 }
+                updateLiveData()
             } catch (e: Exception){
                 println(e.message)
             }
@@ -46,4 +52,18 @@ class UploadCheckpointViewModel @Inject constructor(
             savePostUseCase(post)
         }
     }
+
+    fun removeImageAt(position: Int){
+        when (position) {
+            0 -> _tempImageUri1 = null
+            1 -> _tempImageUri2 = null
+        }
+        updateLiveData()
+    }
+
+    private fun updateLiveData() {
+        _imagesLiveData.value = listOfNotNull(_tempImageUri1, _tempImageUri2)
+    }
+
+
 }

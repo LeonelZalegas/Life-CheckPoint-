@@ -17,11 +17,17 @@ import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import android.Manifest
+import android.os.Handler
+import android.os.Looper
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.influencer.R
 import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.SharedComponents.Model.CheckpointThemeItem
+import com.example.influencer.UI.Upload_New_Checkpoint.Adapter.TempImageAdapter
+import com.example.influencer.UI.Upload_New_Checkpoint.Adapter.TempImageAdapterFactory
 import com.example.influencer.databinding.ActivityUploadNewCheckpointBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.Serializable
+import javax.inject.Inject
 
 // Extension function to handle getSerializableExtra deprecation
 //https://www.notion.so/Upload-Checkpoint-1c875423235f4180a588c8453a7140e3?pvs=4#405018c8e80444e091a91d15c9bd434d
@@ -33,6 +39,10 @@ inline fun <reified T : Serializable> Intent.getSerializableExtraCompat(key: Str
 class UploadNewCheckpoint : AppCompatActivity() {
     private val viewModel: UploadCheckpointViewModel by viewModels()
     private lateinit var binding: ActivityUploadNewCheckpointBinding
+
+    @Inject
+    lateinit var tempImageAdapterFactory: TempImageAdapterFactory
+    private lateinit var tempImageAdapter: TempImageAdapter
 
     private val takePictureLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -48,6 +58,7 @@ class UploadNewCheckpoint : AppCompatActivity() {
 
         initializeUI()
         setupClickListeners()
+        setupRecyclerView()
     }
 
     private fun initializeUI() {
@@ -136,5 +147,27 @@ class UploadNewCheckpoint : AppCompatActivity() {
         private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
     }
+
+    private fun setupRecyclerView(){
+        // Use the factory to create the TempImageAdapter with the onDelete lambda
+        tempImageAdapter = tempImageAdapterFactory.create { position ->
+            tempImageAdapter.deleteItem(position)
+            Handler(Looper.getMainLooper()).postDelayed({
+                viewModel.removeImageAt(position)
+            },  300)
+            // Optionally delay this operation or use a callback to ensure the animation completes
+            // Assuming the animation takes less than 300ms to complete
+        }
+
+        val layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
+        binding.TemporalImagesRV.layoutManager = layoutManager
+        binding.TemporalImagesRV.adapter = tempImageAdapter
+
+        viewModel.imagesLiveData.observe(this){uris ->
+            tempImageAdapter.updateUriList(uris)
+        }
+    }
+
+
 
 }
