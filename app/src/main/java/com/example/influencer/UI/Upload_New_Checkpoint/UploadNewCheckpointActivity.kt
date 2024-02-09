@@ -42,7 +42,7 @@ class UploadNewCheckpoint : AppCompatActivity() {
 
 /*aca existia 1 problema, y es q no podemos injectar TempImageAdapter de 1, porq para instanciarlo necesitamos pasar un parametro
 que se procesa en tiempo de ejecucion (un runtime parameter) que seria el onDelete lambda, en especial el viewmodel.onCameraIconClicked
-por ende se creo TempImageAdapterFactory (This approach is particularly useful when you need to pass values that cannot be determined until runtime, such as UI events or configuration data.)*/
+por ende se creo TempImageAdapterFactory (This approach is particularly useful when you need to pass values that cannot be determined until runtime, such as UI events or configuration data.) hola*/
     @Inject
     lateinit var tempImageAdapterFactory: TempImageAdapterFactory
     private lateinit var tempImageAdapter: TempImageAdapter
