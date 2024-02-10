@@ -5,11 +5,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.influencer.databinding.ItemPhototakenBinding
+import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 
 // el onDelete es un metodo Lamda que pasamos como parametro al crear el Adapter (en el constructor) cuya implementacion estara
 //desarollada en la Activity, cuando se cree el Adapter
-class TempImageAdapter @AssistedInject constructor(private val onDelete: (Int) -> Unit)
+class TempImageAdapter @AssistedInject constructor( @Assisted private val onDelete: (Int) -> Unit)
     :RecyclerView.Adapter<TempImageAdapter.ViewHolder>() {
 
     private var imageUris: MutableList<Uri?> = mutableListOf()

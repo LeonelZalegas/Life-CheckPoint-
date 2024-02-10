@@ -1,4 +1,4 @@
-package com.example.influencer.Data.Repositories
+package com.example.influencer.Data.Repositories.FirestorePostRepository
 
 import com.example.influencer.UI.Upload_New_Checkpoint.Model.Post
 import com.google.android.gms.tasks.Task

@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat
 import android.Manifest
 import android.os.Handler
 import android.os.Looper
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.influencer.R
 import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.SharedComponents.Model.CheckpointThemeItem
@@ -114,15 +115,18 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
     }
 
     private fun handleCameraSelection(){
+        //Toast.makeText(this, "parece que entra nomas pero lo otro lo ignora", Toast.LENGTH_SHORT).show()
         if (allPermissionsGranted()) {
             if (viewModel.canTakeMorePictures()) {
+                //Toast.makeText(this, "y aca entra?", Toast.LENGTH_LONG).show()
                 takePicture()
             } else{
-                //toast saying that pictures have been uploaded
+                Toast.makeText(this, "no se puede tomar mas fotos, es hasta 2", Toast.LENGTH_LONG).show()
             }
         } else {
             //this code pop ups the window for asking the camera permission
             ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
+            Toast.makeText(this, "no se aceptaron los permisos", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -135,9 +139,11 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
     private fun takePicture() {
         // Create an intent to launch the camera app
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        Toast.makeText(this, "aca se ejecute despues de la drclaracion del intent", Toast.LENGTH_SHORT).show()
         // Ensure that there's a camera activity to handle the intent
         intent.resolveActivity(packageManager)?.also {
             // Launch the camera app
+            Toast.makeText(this, "aca ya entro adentro del intent.resolveActivity", Toast.LENGTH_LONG).show()
             takePictureLauncher.launch(intent)
         }
     }
@@ -170,7 +176,5 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
             tempImageAdapter.updateUriList(uris)
         }
     }
-
-
 
 }

@@ -4,6 +4,16 @@
 
     <!-- Permissions here -->
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" android:required="true"/>
+
+    <queries>
+        <intent>
+            <!--  package visibility rules introduced in Android 11 (API level 30). Starting with Android 11, apps cannot see which other
+         apps are installed on the device unless they explicitly declare which packages they need access to in their manifest file.
+         This is part of Android's increasing emphasis on privacy and security. -->
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+    </queries>
 
     <application
         android:name=".Core.MyApp"

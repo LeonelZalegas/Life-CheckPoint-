@@ -1,4 +1,4 @@
-package com.example.influencer.Data.Repositories
+package com.example.influencer.Data.Repositories.FirestorePostRepository
 
 import com.example.influencer.Data.Network.AuthenticationService
 import com.example.influencer.UI.Upload_New_Checkpoint.Model.Post
@@ -14,7 +14,7 @@ import javax.inject.Singleton
 class FirestorePostRepository @Inject constructor(
     private val db:FirebaseFirestore,
     private val authService: AuthenticationService
-): PostRepository{
+): PostRepository {
 
     override suspend fun savePost(post: Post): Task<Void> = withContext(Dispatchers.IO){
         val uid = authService.getUid()
