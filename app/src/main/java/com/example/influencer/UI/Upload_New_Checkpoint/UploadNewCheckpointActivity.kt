@@ -20,14 +20,22 @@ import android.Manifest
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
+import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.influencer.BuildConfig
+
+
 import com.example.influencer.R
 import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.SharedComponents.Model.CheckpointThemeItem
 import com.example.influencer.UI.Upload_New_Checkpoint.Adapter.TempImageAdapter
 import com.example.influencer.UI.Upload_New_Checkpoint.Adapter.TempImageAdapterFactory
 import com.example.influencer.databinding.ActivityUploadNewCheckpointBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
+import java.io.IOException
 import java.io.Serializable
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 // Extension function to handle getSerializableExtra deprecation
@@ -47,11 +55,12 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
     @Inject
     lateinit var tempImageAdapterFactory: TempImageAdapterFactory
     private lateinit var tempImageAdapter: TempImageAdapter
+    private lateinit var photoURI: Uri
 
     private val takePictureLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
-            val imageUri: Uri? = result.data?.data
-            viewModel.onCameraIconClicked(imageUri)
+            Toast.makeText(this, photoURI.toString(), Toast.LENGTH_LONG).show()
+            viewModel.onCameraIconClicked(photoURI)
         }
     }
 
@@ -115,18 +124,15 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
     }
 
     private fun handleCameraSelection(){
-        //Toast.makeText(this, "parece que entra nomas pero lo otro lo ignora", Toast.LENGTH_SHORT).show()
         if (allPermissionsGranted()) {
             if (viewModel.canTakeMorePictures()) {
-                //Toast.makeText(this, "y aca entra?", Toast.LENGTH_LONG).show()
                 takePicture()
             } else{
-                Toast.makeText(this, "no se puede tomar mas fotos, es hasta 2", Toast.LENGTH_LONG).show()
+                //TODO poner Toast avisando que ya se tomaron 2 fotos
             }
         } else {
             //this code pop ups the window for asking the camera permission
             ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
-            Toast.makeText(this, "no se aceptaron los permisos", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -139,13 +145,38 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
     private fun takePicture() {
         // Create an intent to launch the camera app
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        Toast.makeText(this, "aca se ejecute despues de la drclaracion del intent", Toast.LENGTH_SHORT).show()
         // Ensure that there's a camera activity to handle the intent
         intent.resolveActivity(packageManager)?.also {
-            // Launch the camera app
-            Toast.makeText(this, "aca ya entro adentro del intent.resolveActivity", Toast.LENGTH_LONG).show()
+            // Create the File where the photo should go
+            val photoFile: File? = try {
+                createImageFile()
+            } catch (ex: IOException) {
+                // Error occurred while creating the File
+                null
+            }
+            // Continue only if the File was successfully created
+            photoFile?.also {
+                 photoURI = FileProvider.getUriForFile(
+                    this,
+                    "${BuildConfig.APPLICATION_ID}.provider",
+                    it
+                )
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
             takePictureLauncher.launch(intent)
+           }
         }
+    }
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        // Create an image file name
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val storageDir: File? = externalCacheDir // Use cache directory
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        )
     }
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
