@@ -5,6 +5,7 @@ import com.example.influencer.UI.Upload_New_Checkpoint.Model.Post
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -16,11 +17,11 @@ class FirestorePostRepository @Inject constructor(
     private val authService: AuthenticationService
 ): PostRepository {
 
-    override suspend fun savePost(post: Post): Task<Void> = withContext(Dispatchers.IO){
+    override suspend fun savePost(post: Post): Unit = withContext(Dispatchers.IO){
         val uid = authService.getUid()
 
         val userDocRef = db.collection("Usuarios").document(uid)
         val postsCollectionRef = userDocRef.collection("Posts")
-        return@withContext postsCollectionRef.document().set(post)
+        postsCollectionRef.document().set(post).await()
     }
 }

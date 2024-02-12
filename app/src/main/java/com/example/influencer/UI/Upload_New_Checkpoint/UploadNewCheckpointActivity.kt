@@ -72,7 +72,9 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
         initializeUI()
         setupClickListeners()
         setupRecyclerView()
+        setupObservers()
     }
+
 
     private fun initializeUI() {
         handleSelectedCategory()
@@ -206,6 +208,17 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
         viewModel.imagesLiveData.observe(this){uris ->
             tempImageAdapter.updateUriList(uris)
         }
+    }
+
+    private fun setupObservers() {
+        viewModel.postSaveSuccessLiveData.observe(this){ isSuccess ->
+            if (isSuccess) {
+                Toast.makeText(this, "Post saved successfully", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Failed to save post", Toast.LENGTH_SHORT).show()
+            }
+        }
+
     }
 
 }

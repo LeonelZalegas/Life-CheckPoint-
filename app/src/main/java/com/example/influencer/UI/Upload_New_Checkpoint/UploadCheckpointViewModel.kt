@@ -18,21 +18,22 @@ class UploadCheckpointViewModel @Inject constructor(
     private val uploadImageUseCase: UploadImageUseCase
 ) : ViewModel() {
 
-    var _tempImageUri1: Uri? = null
-    var _tempImageUri2: Uri? = null
-    private val _imagesLiveData = MutableLiveData<List<Uri?>>()
-    val imagesLiveData: LiveData<List<Uri?>> = _imagesLiveData
+    private val _imagesLiveData = MutableLiveData<MutableList<Uri?>>(mutableListOf())
+    val imagesLiveData: LiveData<MutableList<Uri?>> = _imagesLiveData
+
+    private val _postSaveSuccessLiveData = MutableLiveData<Boolean>()
+    val postSaveSuccessLiveData: LiveData<Boolean> = _postSaveSuccessLiveData
 
 
     fun onCameraIconClicked(photoUri: Uri?){
         viewModelScope.launch{
             try {
-                if (_tempImageUri1 == null) {
-                    _tempImageUri1 = photoUri
-                } else {
-                    _tempImageUri2 = photoUri
+                _imagesLiveData.value?.let { images ->  //ingresamos a la lista de _imagesLiveData
+                    if (images.size <  2) {
+                        images.add(photoUri)
+                        _imagesLiveData.postValue(images)// Notify observers, esto es como el SetValue() para avisar al observer de los datos cambiados en tiempo real
+                    }
                 }
-                updateLiveData()
             } catch (e: Exception){
                 println(e.message)
             }
@@ -40,30 +41,36 @@ class UploadCheckpointViewModel @Inject constructor(
     }
 
     fun canTakeMorePictures(): Boolean {
-        return _tempImageUri1 == null || _tempImageUri2 == null
+        val images = _imagesLiveData.value
+        // Check if the list is null or empty first. If so, it can definitely take more pictures.
+        if (images.isNullOrEmpty()) {
+            return true
+        }
+        // If the list is not null or empty, check if its size is less than 2.
+        return images.size < 2
     }
 
     fun savePost(text: String, satisfactionLevel: Int){
         viewModelScope.launch {
-            val image1Url = _tempImageUri1?.let { uploadImageUseCase(it)}
-            val image2Url = _tempImageUri2?.let { uploadImageUseCase(it)}
+            try {
+                val image1Url = _imagesLiveData.value?.getOrNull(0)?.let { uploadImageUseCase(it) }
+                val image2Url = _imagesLiveData.value?.getOrNull(1)?.let { uploadImageUseCase(it) }
 
-            val post = Post(text, satisfactionLevel, image1Url, image2Url)
-            savePostUseCase(post)
+                val post = Post(text, satisfactionLevel, image1Url, image2Url) // This now suspends until completion
+                savePostUseCase(post)
+                _postSaveSuccessLiveData.postValue(true) // Post success on completion
+            }catch (e: Exception){
+                _postSaveSuccessLiveData.postValue(false) // Post failure on exception
+            }
         }
     }
 
     fun removeImageAt(position: Int){
-        when (position) {
-            0 -> _tempImageUri1 = null
-            1 -> _tempImageUri2 = null
+        _imagesLiveData.value?.let { list ->
+            list[position] = null
+            _imagesLiveData.value = list.filterNotNull().toMutableList() // Notify observers
         }
-        updateLiveData()
-    }
 
-    private fun updateLiveData() {
-        _imagesLiveData.value = listOfNotNull(_tempImageUri1, _tempImageUri2)
     }
-
 
 }

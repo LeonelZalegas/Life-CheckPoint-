@@ -5,5 +5,5 @@ import com.google.android.gms.tasks.Task
 
 // Interface defining the operations that a PostRepository should support
 interface PostRepository {
-    suspend fun savePost(post: Post) : Task<Void>
+    suspend fun savePost(post: Post)
 }
