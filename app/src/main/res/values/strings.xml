@@ -63,5 +63,8 @@
     <string name="Error_new_category">Just Letters and minimum length of 3 and maximum of 17</string>
     <string name="Post">Post</string>
     <string name="hint_put_checkPoint_text">Write your CheckPoint !</string>
+    //para el Activity de crear Post
+    <string name="toast_text_cant_empty">The Post Text cannot be Empty or have less than 20 characters</string>
+    <string name="till_2_images_uploaded_only">You can only upload up to 2 images</string>
 
 </resources>

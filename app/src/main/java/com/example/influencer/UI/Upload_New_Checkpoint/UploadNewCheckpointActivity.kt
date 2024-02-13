@@ -27,6 +27,7 @@ import com.example.influencer.BuildConfig
 
 import com.example.influencer.R
 import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.SharedComponents.Model.CheckpointThemeItem
+import com.example.influencer.UI.Home
 import com.example.influencer.UI.Upload_New_Checkpoint.Adapter.TempImageAdapter
 import com.example.influencer.UI.Upload_New_Checkpoint.Adapter.TempImageAdapterFactory
 import com.example.influencer.databinding.ActivityUploadNewCheckpointBinding
@@ -59,7 +60,6 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
 
     private val takePictureLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
-            Toast.makeText(this, photoURI.toString(), Toast.LENGTH_LONG).show()
             viewModel.onCameraIconClicked(photoURI)
         }
     }
@@ -88,6 +88,12 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
 
         binding.postButton.setOnClickListener {
             handlePostButton()
+        }
+
+        binding.close.setOnClickListener{
+            val intent = Intent(this, Home::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent) // Start home activity and clear all others
         }
     }
 
@@ -130,7 +136,7 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
             if (viewModel.canTakeMorePictures()) {
                 takePicture()
             } else{
-                //TODO poner Toast avisando que ya se tomaron 2 fotos
+                Toast.makeText(this, R.string.till_2_images_uploaded_only, Toast.LENGTH_SHORT).show()
             }
         } else {
             //this code pop ups the window for asking the camera permission
@@ -139,9 +145,13 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
     }
 
     private fun handlePostButton(){
+
         val text = binding.postTextInput.text.toString()
         val satisfactionLevel = binding.percentageBar.text.toString().toInt()
-        viewModel.savePost(text, satisfactionLevel)
+        if (text.isNotEmpty() && text.length > 20){
+            viewModel.savePost(text, satisfactionLevel)
+        }else
+            Toast.makeText(this, R.string.toast_text_cant_empty, Toast.LENGTH_SHORT).show()
     }
 
     private fun takePicture() {
@@ -214,6 +224,9 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
         viewModel.postSaveSuccessLiveData.observe(this){ isSuccess ->
             if (isSuccess) {
                 Toast.makeText(this, "Post saved successfully", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, Home::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent) // Start home activity and clear all others
             } else {
                 Toast.makeText(this, "Failed to save post", Toast.LENGTH_SHORT).show()
             }
