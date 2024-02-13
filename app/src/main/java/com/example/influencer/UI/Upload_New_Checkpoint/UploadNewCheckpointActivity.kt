@@ -105,6 +105,8 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
                 text = it.text
                 setChipBackgroundColorResource(it.color)
             }
+            selectedCategoryText = it.text  //guardamos en variable para pasar x parametro al savepost
+            selectedCategoryColor = it.color
         }
     }
 
@@ -149,7 +151,7 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
         val text = binding.postTextInput.text.toString()
         val satisfactionLevel = binding.percentageBar.text.toString().toInt()
         if (text.isNotEmpty() && text.length > 20){
-            viewModel.savePost(text, satisfactionLevel)
+            viewModel.savePost(text, satisfactionLevel, selectedCategoryText, selectedCategoryColor)
         }else
             Toast.makeText(this, R.string.toast_text_cant_empty, Toast.LENGTH_SHORT).show()
     }
@@ -198,6 +200,8 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
     companion object {
         private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+        var selectedCategoryText: String = ""
+        var selectedCategoryColor:Int = 0
     }
 
     private fun setupRecyclerView(){

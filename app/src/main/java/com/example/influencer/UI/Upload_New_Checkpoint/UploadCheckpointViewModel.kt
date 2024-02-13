@@ -50,13 +50,13 @@ class UploadCheckpointViewModel @Inject constructor(
         return images.size < 2
     }
 
-    fun savePost(text: String, satisfactionLevel: Int){
+    fun savePost(text: String, satisfactionLevel: Int,selectedCategoryText: String,selectedCategoryColor: Int){
         viewModelScope.launch {
             try {
                 val image1Url = _imagesLiveData.value?.getOrNull(0)?.let { uploadImageUseCase(it) }
                 val image2Url = _imagesLiveData.value?.getOrNull(1)?.let { uploadImageUseCase(it) }
 
-                val post = Post(text, satisfactionLevel, image1Url, image2Url) // This now suspends until completion
+                val post = Post(text, satisfactionLevel, image1Url, image2Url,selectedCategoryText,selectedCategoryColor) // This now suspends until completion
                 savePostUseCase(post)
                 _postSaveSuccessLiveData.postValue(true) // Post success on completion
             }catch (e: Exception){
