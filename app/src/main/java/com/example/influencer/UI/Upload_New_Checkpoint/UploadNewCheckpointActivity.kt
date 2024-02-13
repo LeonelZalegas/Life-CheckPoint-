@@ -52,7 +52,7 @@ class UploadNewCheckpoint : AppCompatActivity() {
 
 /*aca existia 1 problema, y es q no podemos injectar TempImageAdapter de 1, porq para instanciarlo necesitamos pasar un parametro
 que se procesa en tiempo de ejecucion (un runtime parameter) que seria el onDelete lambda, en especial el viewmodel.onCameraIconClicked
-por ende se creo TempImageAdapterFactory (This approach is particularly useful when you need to pass values that cannot be determined until runtime, such as UI events or configuration data.) hola*/
+por ende se creo TempImageAdapterFactory (This approach is particularly useful when you need to pass values that cannot be determined until runtime, such as UI events or configuration data.) */
     @Inject
     lateinit var tempImageAdapterFactory: TempImageAdapterFactory
     private lateinit var tempImageAdapter: TempImageAdapter
@@ -60,7 +60,7 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
 
     private val takePictureLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
-            viewModel.onCameraIconClicked(photoURI)
+            viewModel.onCameraIconClicked(photoURI) //https://www.notion.so/Upload-Checkpoint-1c875423235f4180a588c8453a7140e3?pvs=4#69c77e740ffd417bae63e50308fc5219
         }
     }
 
@@ -147,7 +147,6 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
     }
 
     private fun handlePostButton(){
-
         val text = binding.postTextInput.text.toString()
         val satisfactionLevel = binding.percentageBar.text.toString().toInt()
         if (text.isNotEmpty() && text.length > 20){
@@ -197,13 +196,6 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
         ContextCompat.checkSelfPermission(baseContext,it) == PackageManager.PERMISSION_GRANTED
     }
 
-    companion object {
-        private const val REQUEST_CODE_PERMISSIONS = 10
-        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
-        var selectedCategoryText: String = ""
-        var selectedCategoryColor:Int = 0
-    }
-
     private fun setupRecyclerView(){
         // Use the factory to create the TempImageAdapter with the onDelete lambda
         tempImageAdapter = tempImageAdapterFactory.create { position ->
@@ -235,7 +227,13 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
                 Toast.makeText(this, "Failed to save post", Toast.LENGTH_SHORT).show()
             }
         }
+    }
 
+    companion object {
+        private const val REQUEST_CODE_PERMISSIONS = 10
+        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+        var selectedCategoryText: String = ""
+        var selectedCategoryColor:Int = 0
     }
 
 }
