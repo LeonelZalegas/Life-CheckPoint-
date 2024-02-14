@@ -1,6 +1,7 @@
 package com.example.influencer.UI.Upload_New_Checkpoint
 
-import android.Manifest.permission.CAMERA
+
+import android.Manifest
 import android.animation.ArgbEvaluator
 import android.app.Activity
 import android.content.Intent
@@ -8,23 +9,21 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
-import android.widget.SeekBar
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import android.Manifest
 import android.os.Handler
 import android.os.Looper
+import android.provider.MediaStore
+import android.widget.SeekBar
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.influencer.BuildConfig
-
-
 import com.example.influencer.R
 import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.SharedComponents.Model.CheckpointThemeItem
 import com.example.influencer.UI.Home
@@ -57,6 +56,7 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
     lateinit var tempImageAdapterFactory: TempImageAdapterFactory
     private lateinit var tempImageAdapter: TempImageAdapter
     private lateinit var photoURI: Uri
+    private lateinit var carga: SweetAlertDialog
 
     private val takePictureLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -70,6 +70,7 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
         setContentView(binding.root)
 
         initializeUI()
+        initLoading()
         setupClickListeners()
         setupRecyclerView()
         setupObservers()
@@ -79,6 +80,13 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
     private fun initializeUI() {
         handleSelectedCategory()
         setupSeekBar()
+    }
+
+    private fun initLoading() {
+        carga = SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE)
+        carga.getProgressHelper().setBarColor(Color.parseColor("#F57E00"))
+        carga.setTitleText(R.string.Loading)
+        carga.setCancelable(false)
     }
 
     private fun setupClickListeners(){
@@ -155,6 +163,47 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
             Toast.makeText(this, R.string.toast_text_cant_empty, Toast.LENGTH_SHORT).show()
     }
 
+    private fun setupRecyclerView(){
+        // Use the factory to create the TempImageAdapter with the onDelete lambda
+        tempImageAdapter = tempImageAdapterFactory.create { position ->
+            tempImageAdapter.deleteItem(position)
+            Handler(Looper.getMainLooper()).postDelayed({
+                viewModel.removeImageAt(position)
+            },  300)
+            // Optionally delay this operation or use a callback to ensure the animation completes
+            // Assuming the animation takes less than 300ms to complete
+        }
+
+        val layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
+        binding.TemporalImagesRV.layoutManager = layoutManager
+        binding.TemporalImagesRV.adapter = tempImageAdapter
+
+        viewModel.imagesLiveData.observe(this){uris ->
+            tempImageAdapter.updateUriList(uris)
+        }
+    }
+
+    private fun setupObservers() {
+        viewModel.postSaveSuccessLiveData.observe(this){ isSuccess ->
+            if (isSuccess) {
+                Toast.makeText(this, "Post saved successfully", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, Home::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent) // Start home activity and clear all others
+            } else {
+                Toast.makeText(this, "Failed to save post", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        viewModel.loading.observe(this){isloading ->
+            if (isloading) {
+                carga.show()
+            } else {
+                carga.dismiss()
+            }
+        }
+    }
+
     private fun takePicture() {
         // Create an intent to launch the camera app
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -194,39 +243,6 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(baseContext,it) == PackageManager.PERMISSION_GRANTED
-    }
-
-    private fun setupRecyclerView(){
-        // Use the factory to create the TempImageAdapter with the onDelete lambda
-        tempImageAdapter = tempImageAdapterFactory.create { position ->
-            tempImageAdapter.deleteItem(position)
-            Handler(Looper.getMainLooper()).postDelayed({
-                viewModel.removeImageAt(position)
-            },  300)
-            // Optionally delay this operation or use a callback to ensure the animation completes
-            // Assuming the animation takes less than 300ms to complete
-        }
-
-        val layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
-        binding.TemporalImagesRV.layoutManager = layoutManager
-        binding.TemporalImagesRV.adapter = tempImageAdapter
-
-        viewModel.imagesLiveData.observe(this){uris ->
-            tempImageAdapter.updateUriList(uris)
-        }
-    }
-
-    private fun setupObservers() {
-        viewModel.postSaveSuccessLiveData.observe(this){ isSuccess ->
-            if (isSuccess) {
-                Toast.makeText(this, "Post saved successfully", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, Home::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent) // Start home activity and clear all others
-            } else {
-                Toast.makeText(this, "Failed to save post", Toast.LENGTH_SHORT).show()
-            }
-        }
     }
 
     companion object {

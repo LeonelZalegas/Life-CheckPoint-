@@ -21,6 +21,8 @@ class UploadCheckpointViewModel @Inject constructor(
     private val _imagesLiveData = MutableLiveData<MutableList<Uri?>>(mutableListOf())
     val imagesLiveData: LiveData<MutableList<Uri?>> = _imagesLiveData
 
+    val loading = MutableLiveData<Boolean>()
+
     private val _postSaveSuccessLiveData = MutableLiveData<Boolean>()
     val postSaveSuccessLiveData: LiveData<Boolean> = _postSaveSuccessLiveData
 
@@ -57,11 +59,13 @@ class UploadCheckpointViewModel @Inject constructor(
                 val image2Url = _imagesLiveData.value?.getOrNull(1)?.let { uploadImageUseCase(it) }
 
                 val post = Post(text, satisfactionLevel, image1Url, image2Url,selectedCategoryText,selectedCategoryColor) // This now suspends until completion
+                loading.postValue(true)
                 savePostUseCase(post)
                 _postSaveSuccessLiveData.postValue(true) // Post success on completion
             }catch (e: Exception){
                 _postSaveSuccessLiveData.postValue(false) // Post failure on exception
             }
+              loading.postValue(false)
         }
     }
 
