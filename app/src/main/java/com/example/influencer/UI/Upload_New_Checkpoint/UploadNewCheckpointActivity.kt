@@ -177,10 +177,6 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
         val layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
         binding.TemporalImagesRV.layoutManager = layoutManager
         binding.TemporalImagesRV.adapter = tempImageAdapter
-
-        viewModel.imagesLiveData.observe(this){uris ->
-            tempImageAdapter.updateUriList(uris)
-        }
     }
 
     private fun setupObservers() {
@@ -201,6 +197,10 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
             } else {
                 carga.dismiss()
             }
+        }
+
+        viewModel.imagesLiveData.observe(this){uris ->     //actualizamos RecyclerView en timepo real
+            tempImageAdapter.updateUriList(uris)
         }
     }
 
@@ -243,6 +243,18 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(baseContext,it) == PackageManager.PERMISSION_GRANTED
+    }
+
+    //esta funcion se activa una vez el usuario clickea una de las 3 opciones (usar, solo 1 vez, nunca) en el pop up de preguntar si se puede usar la camara
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            REQUEST_CODE_PERMISSIONS -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                        takePicture()
+                }
+            }
+        }
     }
 
     companion object {
