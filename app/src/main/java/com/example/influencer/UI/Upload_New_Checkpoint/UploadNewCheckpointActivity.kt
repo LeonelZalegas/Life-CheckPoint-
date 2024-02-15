@@ -60,7 +60,7 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
 
     private val takePictureLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
-            viewModel.onCameraIconClicked(photoURI) //https://www.notion.so/Upload-Checkpoint-1c875423235f4180a588c8453a7140e3?pvs=4#69c77e740ffd417bae63e50308fc5219
+            viewModel.uploadImageRecyclerView(photoURI) //https://www.notion.so/Upload-Checkpoint-1c875423235f4180a588c8453a7140e3?pvs=4#69c77e740ffd417bae63e50308fc5219
         }
     }
 
@@ -80,6 +80,7 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
     private fun initializeUI() {
         handleSelectedCategory()
         setupSeekBar()
+        loadLastThreeImages()
     }
 
     private fun initLoading() {
@@ -102,6 +103,14 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
             val intent = Intent(this, Home::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent) // Start home activity and clear all others
+        }
+
+        listOf(binding.ImageSelection1, binding.ImageSelection2, binding.ImageSelection3).forEachIndexed { index, imageView ->
+            imageView.setOnClickListener {
+                viewModel.lastThreeImagesLiveData.value?.get(index)?.let { uri ->
+                    viewModel.uploadImageRecyclerView(uri)
+                }
+            }
         }
     }
 
@@ -141,8 +150,28 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
         })
     }
 
+    private fun loadLastThreeImages() {    //necesario pedir permiso para mostrar 3 ultoms imagenes, luego inicializar la funcion donde esta el livedata, asi el observer comience a funcar
+        val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            Manifest.permission.READ_MEDIA_IMAGES
+        } else {
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        }
+
+        val requestCode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            REQUEST_CODE_IMAGES_PERMISSION
+        } else {
+            REQUEST_CODE_STORAGE_PERMISSION
+        }
+
+        if (ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED) {
+            viewModel.fetchLastThreeImagesUris()
+        } else {
+            ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
+        }
+    }
+
     private fun handleCameraSelection(){
-        if (allPermissionsGranted()) {
+        if (ContextCompat.checkSelfPermission(baseContext,Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             if (viewModel.canTakeMorePictures()) {
                 takePicture()
             } else{
@@ -150,7 +179,7 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
             }
         } else {
             //this code pop ups the window for asking the camera permission
-            ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA) , REQUEST_CODE_CAMERA_PERMISSIONS)
         }
     }
 
@@ -170,8 +199,8 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
             Handler(Looper.getMainLooper()).postDelayed({
                 viewModel.removeImageAt(position)
             },  300)
-            // Optionally delay this operation or use a callback to ensure the animation completes
-            // Assuming the animation takes less than 300ms to complete
+            // Optionally delay this operation to ensure the animation completes (ponemos deleteItem(position) por la animacion nomas )
+            // tenemos 2 Listas, la del Recyclerview (utiliza deleteItem y updateUriList)q se reflejan en real time y la del viewmodel (q es images y List en uploadImageRecyclerView y removeImageAt respectivamente)
         }
 
         val layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
@@ -199,8 +228,14 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
             }
         }
 
-        viewModel.imagesLiveData.observe(this){uris ->     //actualizamos RecyclerView en timepo real
+        viewModel.recyclerViewLiveData.observe(this){ uris ->     //actualizamos RecyclerView en timepo real
             tempImageAdapter.updateUriList(uris)
+        }
+
+        viewModel.lastThreeImagesLiveData.observe(this) { uris ->                   //actualizamos en real time las imagenes que se muestran en el imageview de las 3 ultimas imagenes
+            uris.getOrNull(0)?.let { binding.ImageSelection1.setImageURI(it) }
+            uris.getOrNull(1)?.let { binding.ImageSelection2.setImageURI(it) }
+            uris.getOrNull(2)?.let { binding.ImageSelection3.setImageURI(it) }
         }
     }
 
@@ -241,25 +276,41 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
         )
     }
 
-    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
-        ContextCompat.checkSelfPermission(baseContext,it) == PackageManager.PERMISSION_GRANTED
-    }
-
-    //esta funcion se activa una vez el usuario clickea una de las 3 opciones (usar, solo 1 vez, nunca) en el pop up de preguntar si se puede usar la camara
+    //esta funcion se activa una vez el usuario clickea una de las 3 opciones (usar, solo 1 vez, nunca) en el pop up de preguntar si se puede usar la camara/acceder storage
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
-            REQUEST_CODE_PERMISSIONS -> {
+            // Check if the request code matches the REQUEST_CODE_PERMISSIONS for camera
+            REQUEST_CODE_CAMERA_PERMISSIONS -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                         takePicture()
+                }
+            }
+            // Check if the request code matches the REQUEST_CODE_STORAGE_PERMISSION for storage
+            REQUEST_CODE_STORAGE_PERMISSION -> {
+                // Check if the request code matches the REQUEST_CODE_STORAGE_PERMISSION for storage
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    viewModel.fetchLastThreeImagesUris()
+                }else{
+
+                }
+            }
+
+            REQUEST_CODE_IMAGES_PERMISSION -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    viewModel.fetchLastThreeImagesUris()
+                } else {
+                    // Handle the case where image access permission is denied
+                    Toast.makeText(this, "Permission denied to access your images", Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
 
     companion object {
-        private const val REQUEST_CODE_PERMISSIONS = 10
-        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+        private const val REQUEST_CODE_CAMERA_PERMISSIONS = 10
+        private const val REQUEST_CODE_STORAGE_PERMISSION = 101
+        private const val REQUEST_CODE_IMAGES_PERMISSION = 102 // para versiones de android 11 pa adelante
         var selectedCategoryText: String = ""
         var selectedCategoryColor:Int = 0
     }

@@ -21,4 +21,11 @@ public class AppModuleDI {
     public static Resources provideResources(Application application) {
         return application.getResources();
     }
+
+    // Provide the Application context
+    @Provides
+    @Singleton
+    public static Context provideApplicationContext(Application application) {
+        return application;
+    }
 }
