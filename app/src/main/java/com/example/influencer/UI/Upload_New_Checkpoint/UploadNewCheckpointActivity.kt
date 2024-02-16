@@ -108,7 +108,11 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
         listOf(binding.ImageSelection1, binding.ImageSelection2, binding.ImageSelection3).forEachIndexed { index, imageView ->
             imageView.setOnClickListener {
                 viewModel.lastThreeImagesLiveData.value?.get(index)?.let { uri ->
-                    viewModel.uploadImageRecyclerView(uri)
+                    if (viewModel.canTakeMorePictures()) {
+                        viewModel.uploadImageRecyclerView(uri)                       //aca no controlamos q pasa si hay menos de 3 iamgenes y el user clickea el cuadrado gris que no hay nada porq no creo q pase nunca posta
+                    } else{
+                        Toast.makeText(this, R.string.till_2_images_uploaded_only, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
@@ -283,7 +287,11 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
             // Check if the request code matches the REQUEST_CODE_PERMISSIONS for camera
             REQUEST_CODE_CAMERA_PERMISSIONS -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (viewModel.canTakeMorePictures()) {
                         takePicture()
+                    } else{
+                        Toast.makeText(this, R.string.till_2_images_uploaded_only, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
             // Check if the request code matches the REQUEST_CODE_STORAGE_PERMISSION for storage
@@ -292,7 +300,7 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     viewModel.fetchLastThreeImagesUris()
                 }else{
-
+                    finish()
                 }
             }
 
@@ -300,8 +308,7 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     viewModel.fetchLastThreeImagesUris()
                 } else {
-                    // Handle the case where image access permission is denied
-                    Toast.makeText(this, "Permission denied to access your images", Toast.LENGTH_SHORT).show()
+                    finish()
                 }
             }
         }
