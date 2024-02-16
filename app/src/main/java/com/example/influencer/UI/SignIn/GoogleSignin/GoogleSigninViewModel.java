@@ -8,9 +8,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.influencer.Core.Event;
 import com.example.influencer.Core.SingleLiveEvent;
-import com.example.influencer.Domain.CheckIfUserExistsUseCase;
-import com.example.influencer.Domain.CreateGoogleUserUseCase;
-import com.example.influencer.Domain.FirebaseAuthWithGoogleUseCase;
+import com.example.influencer.Domain.GoogleSigninUSECASES.CheckIfUserExistsUseCase;
+import com.example.influencer.Domain.GoogleSigninUSECASES.CreateGoogleUserUseCase;
+import com.example.influencer.Domain.GoogleSigninUSECASES.FirebaseAuthWithGoogleUseCase;
 import com.example.influencer.R;
 import com.google.android.gms.tasks.Tasks;
 

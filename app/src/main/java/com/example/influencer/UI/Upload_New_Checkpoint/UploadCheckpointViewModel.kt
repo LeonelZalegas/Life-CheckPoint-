@@ -5,9 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.influencer.Domain.GetLastThreeImagesUseCase
-import com.example.influencer.Domain.SavePostUseCase
-import com.example.influencer.Domain.UploadImageUseCase
+import com.example.influencer.Domain.Upload_New_CheckpointUSECASES.GetLastThreeImagesUseCase
+import com.example.influencer.Domain.Upload_New_CheckpointUSECASES.SavePostUseCase
+import com.example.influencer.Domain.Upload_New_CheckpointUSECASES.UploadImageUseCase
 import com.example.influencer.UI.Upload_New_Checkpoint.Model.Post
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

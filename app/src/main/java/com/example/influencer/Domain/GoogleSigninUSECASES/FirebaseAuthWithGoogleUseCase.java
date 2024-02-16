@@ -1,4 +1,4 @@
-package com.example.influencer.Domain;
+package com.example.influencer.Domain.GoogleSigninUSECASES;
 
 import com.example.influencer.Data.Network.AuthenticationService;
 import com.google.android.gms.tasks.Task;
