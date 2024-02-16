@@ -223,19 +223,6 @@
         app:layout_constraintHeight_percent="0.05"
         app:layout_constraintHorizontal_bias="0.08"/>
 
-    <ImageView
-        android:id="@+id/UploadLink"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:src="@drawable/vector_asset_insert_link"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline10"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.08"
-        app:layout_constraintHeight_percent="0.05"
-        app:layout_constraintHorizontal_bias="0.23"/>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/TemporalImagesRV"
         android:layout_width="0dp"

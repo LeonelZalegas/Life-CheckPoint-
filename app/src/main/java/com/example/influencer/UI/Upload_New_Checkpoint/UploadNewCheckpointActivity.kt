@@ -116,6 +116,14 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
                 }
             }
         }
+
+        binding.GallerySelection.setOnClickListener {
+            if (viewModel.canTakeMorePictures()) {
+                pickImage.launch("image/*")
+            } else {
+                Toast.makeText(this, R.string.till_2_images_uploaded_only, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun handleSelectedCategory(){
@@ -194,6 +202,12 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
             viewModel.savePost(text, satisfactionLevel, selectedCategoryText, selectedCategoryColor)
         }else
             Toast.makeText(this, R.string.toast_text_cant_empty, Toast.LENGTH_SHORT).show()
+    }
+
+    private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        uri?.let {
+            viewModel.uploadImageRecyclerView(it)
+        }
     }
 
     private fun setupRecyclerView(){
