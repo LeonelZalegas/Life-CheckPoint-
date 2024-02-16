@@ -42,8 +42,10 @@
                 android:resource="@xml/file_paths"/>
         </provider>
 
+        <!-- with the adjustPan , The layout is not resized, but it pans so the current focus is visible, es decir no comprime tod0 el layout cuando aparece el teclado -->
         <activity
             android:name=".UI.Upload_New_Checkpoint.UploadNewCheckpoint"
+            android:windowSoftInputMode="stateVisible|adjustPan"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
