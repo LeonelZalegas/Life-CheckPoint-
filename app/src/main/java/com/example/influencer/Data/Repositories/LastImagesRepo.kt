@@ -9,15 +9,14 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
+//https://www.notion.so/Upload-Checkpoint-1c875423235f4180a588c8453a7140e3?pvs=4#5a44c86997f14ac888d595e96d46743b
 @Singleton
 class LastImagesRepo @Inject constructor(private val context: Context) {
     suspend fun getLastThreeImagesUri(): List<Uri> = withContext(Dispatchers.IO) {
         val imagesUriList = mutableListOf<Uri>()
         val projection = arrayOf(MediaStore.Images.Media._ID)
-        // The sortOrder does not include the LIMIT clause. Instead, sort in descending order.
-        val sortOrder = "${MediaStore.Images.Media.DATE_ADDED} DESC"
-        // Use a selection that matches all rows. No actual filtering is done here.
-        val selection = null
+        val sortOrder = "${MediaStore.Images.Media.DATE_ADDED} DESC"   // The sortOrder does not include the LIMIT clause. Instead, sort in descending order.
+        val selection = null   // Use a selection that matches all rows. No actual filtering is done here.
         val selectionArgs = null
 
         context.contentResolver.query(

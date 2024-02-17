@@ -2,6 +2,7 @@ package com.example.influencer.UI.Create_Modify_Checkpoint_Menu.SharedComponents
 
 
 import android.content.res.Resources;
+import android.os.Build;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
@@ -9,8 +10,8 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.influencer.Core.Event;
 import com.example.influencer.Core.SingleLiveEvent;
+import com.example.influencer.Data.Repositories.FirestorePostRepository.FirestorePostRepository;
 import com.example.influencer.Domain.UserCheckpointThemeChooseUseCase;
 import com.example.influencer.Domain.Validations.NewCheckpointThemeValidation;
 import com.example.influencer.R;
@@ -19,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
 
@@ -32,14 +34,18 @@ public class CheckpointThemeChooseViewModel extends ViewModel {
     private UserCheckpointThemeChooseUseCase userCheckpointThemeChooseUseCase;
     private final Resources resources;
     private  final NewCheckpointThemeValidation newCheckpointThemeValidation;
+    private final FirestorePostRepository firestorePostRepository;
+    private MutableLiveData<List<String>> categoriesLiveData = new MutableLiveData<>();
 
     @Inject
     CheckpointThemeChooseViewModel(UserCheckpointThemeChooseUseCase userCheckpointThemeChooseUseCase,
                                    Resources resources,
-                                   NewCheckpointThemeValidation newCheckpointThemeValidation){
+                                   NewCheckpointThemeValidation newCheckpointThemeValidation,
+                                   FirestorePostRepository firestorePostRepository){
         this.userCheckpointThemeChooseUseCase = userCheckpointThemeChooseUseCase;
         this.resources = resources;
         this.newCheckpointThemeValidation = newCheckpointThemeValidation;
+        this.firestorePostRepository = firestorePostRepository;
     }
 
     //https://www.notion.so/Activity-seleccionar-categoria-nuevo-checkpoint-update-checkpoint-2fe38f46f27f4e6f93752aa178796773?pvs=4#4fdf8783463a4983af9d292ab5ebf3ee
@@ -74,4 +80,12 @@ public class CheckpointThemeChooseViewModel extends ViewModel {
     public SingleLiveEvent<String> getToastMessage() {
         return toastMessage;
     }
+
+    //https://www.notion.so/Upload-Checkpoint-1c875423235f4180a588c8453a7140e3?pvs=4#77ae0184119544a59e2374b179122ade
+   public LiveData<List<String>> fetchUserPostCategories() {
+       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+           firestorePostRepository.getUserPostCategoriesFuture().thenAccept(categoriesLiveData::postValue);
+       }
+       return categoriesLiveData;
+   }
 }

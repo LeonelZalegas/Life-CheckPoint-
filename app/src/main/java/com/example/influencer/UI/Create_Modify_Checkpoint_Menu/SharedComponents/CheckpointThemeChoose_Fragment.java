@@ -107,33 +107,36 @@ public class CheckpointThemeChoose_Fragment extends Fragment {
 
         //observer para que se vea reflejado cada vez que se actualize la lista de las categorias de checkpooint
         viewModel.getUserCheckpointsThemes().observe(getViewLifecycleOwner(),notFilteredRowItems -> {
+            viewModel.fetchUserPostCategories().observe(getViewLifecycleOwner(), userCategories -> {
 
-            //lo que hacemos arriva es obtener notFilteredRowItems a traves del metodo del viewmodel y esa seria tipo la lista actualizada en cuestion de todos los items de los checkpoint (Creadas x usuario y las que no)
-            //luego abajo con el if, a esa notFilteredRowItems le vamos a qutiar el primer item/row que es el de agregar un nuevo item dependiendo del valor booleano del bundle que pasamos desde las 2 activities y la colocamos en el adapter a esa nueva lista filtrada
+                   //lo que hacemos arriva es obtener notFilteredRowItems a traves del metodo del viewmodel y esa seria tipo la lista actualizada en cuestion de todos los items de los checkpoint (Creadas x usuario y las que no)
+                   //luego abajo con el if, a esa notFilteredRowItems le vamos a qutiar el primer item/row que es el de agregar un nuevo item dependiendo del valor booleano del bundle que pasamos desde las 2 activities y la colocamos en el adapter a esa nueva lista filtrada
+                   //el 2do obserber (el anidado) basicmente observa las categorias de los post del usuario q tiene actualmente
 
-            List<CheckpointThemeItem> rowItems;
-            if (showAddNewRow){
-                rowItems = notFilteredRowItems;
-            }else{
-                rowItems = CollectionsKt.filter(notFilteredRowItems, checkpointThemeItem -> !checkpointThemeItem.getText().equals("Create Custom")); //"Create Custom" es el nombre del string del row de "agregar nuevo item/row" q sale en la seccion de Strings del proyecto
-            }
-
-            //https://www.notion.so/Activity-seleccionar-categoria-nuevo-checkpoint-update-checkpoint-2fe38f46f27f4e6f93752aa178796773?pvs=4#8a685d43c4114530aaa5b551ff209690
-            //es para la ventana de agregar el nuevo nombre de categoria
-            adapter.UpdateRows(rowItems,item -> {
-                //
-                if (showAddNewRow) {
-                    if (item.getText().equals("Create Custom")) {
-                        showDialogAndSaveToFireStore();
-                    } else {
-                        Intent intent = new Intent(getActivity(), UploadNewCheckpoint.class);
-                        intent.putExtra("SELECTED_CATEGORY", item);
-                        startActivity(intent);
+                    List<CheckpointThemeItem> rowItems;
+                    if (showAddNewRow){
+                      rowItems = notFilteredRowItems;
+                    }else{
+                         //"Create Custom" es el nombre del string del row de "agregar nuevo item/row" q sale en la seccion de Strings del proyecto
+                       rowItems = CollectionsKt.filter(notFilteredRowItems, item -> userCategories.contains(item.getText()));
                     }
-                }
-            });
 
-            setupSearchView(rowItems);
+                   //https://www.notion.so/Activity-seleccionar-categoria-nuevo-checkpoint-update-checkpoint-2fe38f46f27f4e6f93752aa178796773?pvs=4#8a685d43c4114530aaa5b551ff209690
+                   //es para la ventana de agregar el nuevo nombre de categoria
+                adapter.UpdateRows(rowItems,item -> {
+
+                    if (showAddNewRow) {
+                        if (item.getText().equals("Create Custom")) {
+                          showDialogAndSaveToFireStore();
+                       } else {
+                          Intent intent = new Intent(getActivity(), UploadNewCheckpoint.class);
+                          intent.putExtra("SELECTED_CATEGORY", item);
+                          startActivity(intent);
+                       }
+                    }
+                });
+               setupSearchView(rowItems);
+            });
         });
     }
 
