@@ -53,6 +53,7 @@
         </activity>
         <activity
             android:name=".UI.Create_Modify_Checkpoint_Menu.CheckpointUpdateThemeChoose.CheckpointUpdateThemeChooseActivity"
+            android:windowSoftInputMode="stateVisible|adjustPan"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -60,6 +61,7 @@
         </activity>
         <activity
             android:name=".UI.Create_Modify_Checkpoint_Menu.CheckpointThemeChoose.CheckpointThemeChooseActivity"
+            android:windowSoftInputMode="stateVisible|adjustPan"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

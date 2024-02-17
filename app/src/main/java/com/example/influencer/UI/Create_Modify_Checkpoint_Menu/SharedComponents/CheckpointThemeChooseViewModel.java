@@ -83,9 +83,7 @@ public class CheckpointThemeChooseViewModel extends ViewModel {
 
     //https://www.notion.so/Upload-Checkpoint-1c875423235f4180a588c8453a7140e3?pvs=4#77ae0184119544a59e2374b179122ade
    public LiveData<List<String>> fetchUserPostCategories() {
-       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-           firestorePostRepository.getUserPostCategoriesFuture().thenAccept(categoriesLiveData::postValue);
-       }
+       firestorePostRepository.getUserPostCategoriesFuture().thenAccept(categoriesLiveData::postValue);
        return categoriesLiveData;
    }
 }

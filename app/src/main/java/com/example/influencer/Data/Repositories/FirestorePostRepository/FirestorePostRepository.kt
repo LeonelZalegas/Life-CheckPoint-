@@ -48,7 +48,6 @@ class FirestorePostRepository @Inject constructor(
     }
 
    //https://www.notion.so/Upload-Checkpoint-1c875423235f4180a588c8453a7140e3?pvs=4#77ae0184119544a59e2374b179122ade
-    @RequiresApi(Build.VERSION_CODES.N)
     fun getUserPostCategoriesFuture(): CompletableFuture<List<String>> {
         val future = CompletableFuture<List<String>>()  //es como 1 variable pero q es async, no se queda colgada esperando el valor q una funcion le esta por asignar, sino que sabe el tipo de valor nomas y espera y no interrumpe el thread
         GlobalScope.launch {     // es una corrutina  pero no esta ligada al lifecycle de nada (por ej no se termina si Viewmodel termina), esta termina cuando el task termina nomas
