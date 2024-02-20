@@ -24,6 +24,7 @@ import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.influencer.BuildConfig
+import com.example.influencer.Core.Serializable.getSerializableExtraCompat
 import com.example.influencer.R
 import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.SharedComponents.Model.CheckpointThemeItem
 import com.example.influencer.UI.Home
@@ -38,12 +39,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-// Extension function to handle getSerializableExtra deprecation
-//https://www.notion.so/Upload-Checkpoint-1c875423235f4180a588c8453a7140e3?pvs=4#405018c8e80444e091a91d15c9bd434d
-inline fun <reified T : Serializable> Intent.getSerializableExtraCompat(key: String): T? = when {
-    Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> getSerializableExtra(key, T::class.java)
-    else -> @Suppress("DEPRECATION") getSerializableExtra(key) as? T
-}
 @AndroidEntryPoint
 class UploadNewCheckpoint : AppCompatActivity() {
     private val viewModel: UploadCheckpointViewModel by viewModels()
@@ -335,5 +330,4 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
         var selectedCategoryText: String = ""
         var selectedCategoryColor:Int = 0
     }
-
 }

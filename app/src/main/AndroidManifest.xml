@@ -35,8 +35,9 @@
         android:theme="@style/Theme.Influencer"
         tools:targetApi="31">
         <activity
-            android:name=".Upload_New_Update_CheckpointActivity"
-            android:exported="false">
+            android:name=".UI.Upload_New_Update_Checkpoint.Upload_New_Update_CheckpointActivity"
+            android:exported="false"
+            android:windowSoftInputMode="stateVisible|adjustPan">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

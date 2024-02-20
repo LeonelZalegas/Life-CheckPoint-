@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.influencer.R;
 import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.SharedComponents.Model.CheckpointThemeItem;
 import com.example.influencer.UI.Upload_New_Checkpoint.UploadNewCheckpoint;
+import com.example.influencer.UI.Upload_New_Update_Checkpoint.Upload_New_Update_CheckpointActivity;
 import com.example.influencer.databinding.AlertDialogAddCategoryBinding;
 import com.example.influencer.databinding.FragmentCheckpointThemeChooseBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -133,6 +134,10 @@ public class CheckpointThemeChoose_Fragment extends Fragment {
                           intent.putExtra("SELECTED_CATEGORY", item);
                           startActivity(intent);
                        }
+                    }else{
+                        Intent intent = new Intent(getActivity(), Upload_New_Update_CheckpointActivity.class);
+                        intent.putExtra("SELECTED_CATEGORY", item);
+                        startActivity(intent);
                     }
                 });
                setupSearchView(rowItems);

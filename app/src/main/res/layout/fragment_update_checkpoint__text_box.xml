@@ -10,8 +10,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/vector_asset_close"
-        app:layout_constraintWidth_percent="0.1"
-        app:layout_constraintHeight_percent="0.07"
+        app:layout_constraintWidth_percent="0.16"
+        app:layout_constraintHeight_percent="0.12"
         app:layout_constraintBottom_toTopOf="@id/guideline1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,11 +20,11 @@
 
 
     <com.google.android.material.chip.Chip
-        android:id="@+id/chip_category"
+        android:id="@+id/chip_selected_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/close"
-        app:layout_constraintEnd_toStartOf="@+id/chip_char"
+        app:layout_constraintEnd_toStartOf="@+id/remainingCharsChip"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf= "@+id/guideline1"
         android:textStyle="bold"
@@ -47,10 +47,10 @@
         />
 
     <com.google.android.material.chip.Chip
-        android:id="@+id/chip_char"
+        android:id="@+id/remainingCharsChip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/chip_category"
+        app:layout_constraintStart_toEndOf="@id/chip_selected_category"
         app:layout_constraintEnd_toStartOf="@+id/postButton"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf= "@+id/guideline1"
@@ -85,7 +85,7 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/postTextInput"
+                android:id="@+id/updateTextInput"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:inputType="textMultiLine"
@@ -110,7 +110,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.1" />
+        app:layout_constraintGuide_percent="0.25" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -131,14 +131,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.15" />
+        app:layout_constraintGuide_percent="0.32" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.95" />
+        app:layout_constraintGuide_percent="0.9" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline6"
