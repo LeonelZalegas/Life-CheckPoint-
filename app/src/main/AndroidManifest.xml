@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
     <!-- Permissions here -->
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera" android:required="true"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <queries>
         <intent>
-            <!--  package visibility rules introduced in Android 11 (API level 30). Starting with Android 11, apps cannot see which other
+
+            <!--
+         package visibility rules introduced in Android 11 (API level 30). Starting with Android 11, apps cannot see which other
          apps are installed on the device unless they explicitly declare which packages they need access to in their manifest file.
-         This is part of Android's increasing emphasis on privacy and security. -->
+         This is part of Android's increasing emphasis on privacy and security.
+            -->
             <action android:name="android.media.action.IMAGE_CAPTURE" />
         </intent>
     </queries>
@@ -29,8 +34,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Influencer"
         tools:targetApi="31">
-
-        <!-- https://www.notion.so/Upload-Checkpoint-1c875423235f4180a588c8453a7140e3?pvs=4#69c77e740ffd417bae63e50308fc5219-->
+        <activity
+            android:name=".Upload_New_Update_CheckpointActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <!-- https://www.notion.so/Upload-Checkpoint-1c875423235f4180a588c8453a7140e3?pvs=4#69c77e740ffd417bae63e50308fc5219 -->
         <!-- Providers -->
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -39,30 +50,28 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
-        </provider>
-
-        <!-- with the adjustPan , The layout is not resized, but it pans so the current focus is visible, es decir no comprime tod0 el layout cuando aparece el teclado -->
+                android:resource="@xml/file_paths" />
+        </provider> <!-- with the adjustPan , The layout is not resized, but it pans so the current focus is visible, es decir no comprime tod0 el layout cuando aparece el teclado -->
         <activity
             android:name=".UI.Upload_New_Checkpoint.UploadNewCheckpoint"
-            android:windowSoftInputMode="stateVisible|adjustPan"
-            android:exported="false">
+            android:exported="false"
+            android:windowSoftInputMode="stateVisible|adjustPan">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".UI.Create_Modify_Checkpoint_Menu.CheckpointUpdateThemeChoose.CheckpointUpdateThemeChooseActivity"
-            android:windowSoftInputMode="stateVisible|adjustPan"
-            android:exported="false">
+            android:exported="false"
+            android:windowSoftInputMode="stateVisible|adjustPan">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".UI.Create_Modify_Checkpoint_Menu.CheckpointThemeChoose.CheckpointThemeChooseActivity"
-            android:windowSoftInputMode="stateVisible|adjustPan"
-            android:exported="false">
+            android:exported="false"
+            android:windowSoftInputMode="stateVisible|adjustPan">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

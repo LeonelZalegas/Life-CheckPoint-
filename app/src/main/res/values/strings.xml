@@ -66,5 +66,7 @@
     //para el Activity de crear Post
     <string name="toast_text_cant_empty">The Post Text cannot be Empty or have less than 20 characters</string>
     <string name="till_2_images_uploaded_only">You can only upload up to 2 images</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
