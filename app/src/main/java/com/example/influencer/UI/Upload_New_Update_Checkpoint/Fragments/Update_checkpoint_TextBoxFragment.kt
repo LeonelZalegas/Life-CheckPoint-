@@ -1,7 +1,9 @@
 package com.example.influencer.UI.Upload_New_Update_Checkpoint.Fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,9 +12,10 @@ import android.view.ViewGroup
 import com.example.influencer.Core.Serializable.getSerializableCompat
 import com.example.influencer.R
 import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.SharedComponents.Model.CheckpointThemeItem
+import com.example.influencer.UI.Home
 import com.example.influencer.databinding.FragmentUpdateCheckpointTextBoxBinding
 
-const val MAX_LENGTH = 140
+const val MAX_LENGTH = 200
 
 class Update_checkpoint_TextBox : Fragment() {
 
@@ -32,6 +35,7 @@ class Update_checkpoint_TextBox : Fragment() {
 
         handleSelectedCategory()
         setupCharacterCounter()
+        setupClickListeners()
 
     }
 
@@ -40,6 +44,10 @@ class Update_checkpoint_TextBox : Fragment() {
             text = "$MAX_LENGTH Char"
             setChipBackgroundColorResource(selectedCategoryColor)
         }
+
+        // Apply the filter to limit the input length
+        val maxLengthFilter = InputFilter.LengthFilter(MAX_LENGTH)
+        binding.updateTextInput.filters = arrayOf(maxLengthFilter)
 
         binding.updateTextInput.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -61,6 +69,14 @@ class Update_checkpoint_TextBox : Fragment() {
                 text = it.text
                 setChipBackgroundColorResource(selectedCategoryColor)
             }
+        }
+    }
+
+    private fun setupClickListeners() {
+        binding.close.setOnClickListener{
+            val intent = Intent(requireActivity(), Home::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            requireActivity().startActivity(intent)  // Start home activity and clear all others
         }
     }
 
