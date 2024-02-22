@@ -224,12 +224,12 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
     private fun setupObservers() {
         viewModel.postSaveSuccessLiveData.observe(this){ isSuccess ->
             if (isSuccess) {
-                Toast.makeText(this, "Post saved successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.checkpoint_successfully_saved, Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, Home::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent) // Start home activity and clear all others
             } else {
-                Toast.makeText(this, "Failed to save post", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.checkpoint_error_saved, Toast.LENGTH_SHORT).show()
             }
         }
 

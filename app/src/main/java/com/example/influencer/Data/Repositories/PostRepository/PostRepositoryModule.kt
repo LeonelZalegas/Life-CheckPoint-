@@ -1,4 +1,4 @@
-package com.example.influencer.Data.Repositories.FirestorePostRepository
+package com.example.influencer.Data.Repositories.PostRepository
 
 import dagger.Binds
 import dagger.Module

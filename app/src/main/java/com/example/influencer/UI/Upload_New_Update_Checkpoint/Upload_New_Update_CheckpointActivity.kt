@@ -7,7 +7,9 @@ import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.SharedComponents.
 import com.example.influencer.UI.Upload_New_Update_Checkpoint.Fragments.Update_checkpoint_TextBox
 import com.example.influencer.databinding.ActivityUploadNewCheckpointBinding
 import com.example.influencer.databinding.ActivityUploadNewUpdateCheckpointBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class Upload_New_Update_CheckpointActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUploadNewUpdateCheckpointBinding
 

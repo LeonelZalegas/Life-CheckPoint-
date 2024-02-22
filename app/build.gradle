@@ -85,10 +85,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore'
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-storage'
-    //implementation 'com.google.firebase:firebase-storage:20.3.0'
-    //implementation 'com.google.firebase:firebase-firestore:24.0.2'
-   // implementation 'com.google.firebase:firebase-auth:21.1.0'
-   // implementation 'com.google.firebase:firebase-appcheck:32.7.1'
+    //fragment
+    implementation "androidx.fragment:fragment-ktx:1.5.1"
+
+
 }
 
 // Allow references to generated code

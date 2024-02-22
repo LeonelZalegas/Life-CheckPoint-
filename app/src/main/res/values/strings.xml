@@ -66,7 +66,12 @@
     //para el Activity de crear Post
     <string name="toast_text_cant_empty">The Post Text cannot be Empty or have less than 20 characters</string>
     <string name="till_2_images_uploaded_only">You can only upload up to 2 images</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    //error o se ha guardado bien los post
+    <string name="checkpoint_successfully_saved">The checkpoint has been successfully saved</string>
+    <string name="checkpoint_error_saved">Has been an Error in Saving the Checkpoint</string>
+    <string name="checkpoint_update_successfully_saved">The checkpoint Update has been successfully saved</string>
+    <string name="checkpoint_update_error_saved">Has been an Error in Saving the Checkpoint Update</string>
+
+
 
 </resources>

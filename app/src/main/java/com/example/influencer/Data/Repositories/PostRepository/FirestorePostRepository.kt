@@ -1,11 +1,8 @@
-package com.example.influencer.Data.Repositories.FirestorePostRepository
+package com.example.influencer.Data.Repositories.PostRepository
 
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import com.example.influencer.Data.Network.AuthenticationService
 import com.example.influencer.UI.Upload_New_Checkpoint.Model.Post
-import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

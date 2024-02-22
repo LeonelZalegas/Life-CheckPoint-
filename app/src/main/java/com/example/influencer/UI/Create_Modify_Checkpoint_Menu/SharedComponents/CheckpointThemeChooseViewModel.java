@@ -2,7 +2,6 @@ package com.example.influencer.UI.Create_Modify_Checkpoint_Menu.SharedComponents
 
 
 import android.content.res.Resources;
-import android.os.Build;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
@@ -11,7 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.influencer.Core.SingleLiveEvent;
-import com.example.influencer.Data.Repositories.FirestorePostRepository.FirestorePostRepository;
+import com.example.influencer.Data.Repositories.PostRepository.FirestorePostRepository;
 import com.example.influencer.Domain.UserCheckpointThemeChooseUseCase;
 import com.example.influencer.Domain.Validations.NewCheckpointThemeValidation;
 import com.example.influencer.R;
@@ -20,7 +19,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
 
