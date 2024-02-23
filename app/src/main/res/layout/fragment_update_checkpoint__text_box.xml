@@ -18,17 +18,18 @@
         app:layout_constraintEnd_toStartOf="@id/guideline3"
         />
 
-
     <com.google.android.material.chip.Chip
         android:id="@+id/chip_selected_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/close"
-        app:layout_constraintEnd_toStartOf="@+id/remainingCharsChip"
+        app:layout_constraintEnd_toStartOf="@id/postButton"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf= "@+id/guideline1"
         android:textStyle="bold"
         android:textColor="@color/white"
+        android:clickable="false"
+        android:focusable="false"
         />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -47,18 +48,6 @@
         />
 
     <com.google.android.material.chip.Chip
-        android:id="@+id/remainingCharsChip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/chip_selected_category"
-        app:layout_constraintEnd_toStartOf="@+id/postButton"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf= "@+id/guideline1"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        />
-
-    <com.google.android.material.chip.Chip
         android:id="@+id/chip_number_update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,6 +57,8 @@
         android:textStyle="bold"
         android:textColor="@color/white"
         app:chipBackgroundColor="@color/azul_bar"
+        android:clickable="false"
+        android:focusable="false"
         />
 
     <androidx.cardview.widget.CardView
@@ -99,8 +90,49 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/guidelineInsideCardView4"
                 />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/remainingCharsChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/guidelineInsideCardView"
+               app:layout_constraintStart_toEndOf="@id/guidelineInsideCardView2"
+                app:layout_constraintBottom_toTopOf="@id/guidelineInsideCardView3"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:clickable="false"
+                android:focusable="false"
+                />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineInsideCardView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.8" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineInsideCardView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.07" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineInsideCardView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.9" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineInsideCardView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.7" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -147,8 +179,5 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.9" />
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

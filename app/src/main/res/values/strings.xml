@@ -53,10 +53,12 @@
         <item>Hobbies/Interests</item>
     </string-array>
 
+    //para el Activity q muestra las categorias de checkpoint
     <string name="Main_title_adding_new_checkpoint">Choose a Category</string>
     <string name="Secondary_title_adding_new_checkpoint">you can also create a custom one !</string>
     <string name="Main_title_adding_new_checkpoint_update">Choose a CheckPoint !</string>
     <string name="Secondary_title_adding_new_checkpoint_update">Just the last checkpoint you made of a category</string>
+    <string name="NoCheckpointsUploaded">You haven\'t created any Checkpoints yet !</string>
     // para lo de agregar nueva categoria de checkpoint
     <string name="Hint_new_category">New Checkpoint Category Name</string>
     <string name="Main_title_new_category">Custom Checkpoint Category</string>
@@ -71,6 +73,7 @@
     <string name="checkpoint_error_saved">Has been an Error in Saving the Checkpoint</string>
     <string name="checkpoint_update_successfully_saved">The checkpoint Update has been successfully saved</string>
     <string name="checkpoint_update_error_saved">Has been an Error in Saving the Checkpoint Update</string>
+
 
 
 

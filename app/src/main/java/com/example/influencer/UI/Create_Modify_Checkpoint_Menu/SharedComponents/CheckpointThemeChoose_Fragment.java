@@ -67,7 +67,6 @@ public class CheckpointThemeChoose_Fragment extends Fragment {
         setupRecyclerView();
         setupToastMessageObserver();
         setupUserCheckpointsThemesObserver();
-        setupLoadingObserver();
     }
 
     @Override
@@ -91,18 +90,9 @@ public class CheckpointThemeChoose_Fragment extends Fragment {
         });
     }
 
-    private void setupLoadingObserver() {
-        viewModel.isLoading.observe(getViewLifecycleOwner(),it ->{
-            if (it) {
-                binding.progress.setVisibility(View.VISIBLE);
-            } else {
-                binding.progress.setVisibility(View.GONE);
-            }
-        });
-    }
-
-
     private void setupUserCheckpointsThemesObserver() {
+        //al final sacamos el observer del Loading q estaba en el fragment y q enviaba false/tru desde el viewmodel (especif cuando empezaba y terminaba el retrivment de los checkpoint themes items), porq tmb se demoraba un tiempo al hacer el filtrado de if (showAddNewRow) + abajo
+        binding.progress.setVisibility(View.VISIBLE);
         // Retrieve arguments del valor booleano de si se incluye o no el "Custom Checkpoint"
         boolean showAddNewRow = getArguments().getBoolean("showAddNewRow", true);
 
@@ -113,19 +103,20 @@ public class CheckpointThemeChoose_Fragment extends Fragment {
                    //lo que hacemos arriva es obtener notFilteredRowItems a traves del metodo del viewmodel y esa seria tipo la lista actualizada en cuestion de todos los items de los checkpoint (Creadas x usuario y las que no)
                    //luego abajo con el if, a esa notFilteredRowItems le vamos a qutiar el primer item/row que es el de agregar un nuevo item dependiendo del valor booleano del bundle que pasamos desde las 2 activities y la colocamos en el adapter a esa nueva lista filtrada
                    //el 2do obserber (el anidado) basicmente observa las categorias de los post del usuario q tiene actualmente
-
                     List<CheckpointThemeItem> rowItems;
                     if (showAddNewRow){
                       rowItems = notFilteredRowItems;
                     }else{
                          //"Create Custom" es el nombre del string del row de "agregar nuevo item/row" q sale en la seccion de Strings del proyecto
                        rowItems = CollectionsKt.filter(notFilteredRowItems, item -> userCategories.contains(item.getText()));
+                       if (rowItems.isEmpty())  //no se ha creado ningun checkpoint
+                           binding.NoCheckpointsUploaded.setText(R.string.NoCheckpointsUploaded);
                     }
-
+                    //se obtienen todos los rowItems y se lo muestra en la linea de abajo x ende se para la carga
+                    binding.progress.setVisibility(View.GONE);
                    //https://www.notion.so/Activity-seleccionar-categoria-nuevo-checkpoint-update-checkpoint-2fe38f46f27f4e6f93752aa178796773?pvs=4#8a685d43c4114530aaa5b551ff209690
                    //es para la ventana de agregar el nuevo nombre de categoria
                 adapter.UpdateRows(rowItems,item -> {
-
                     if (showAddNewRow) {
                         if (item.getText().equals("Create Custom")) {
                           showDialogAndSaveToFireStore();

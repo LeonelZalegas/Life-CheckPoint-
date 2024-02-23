@@ -45,6 +45,8 @@
         app:layout_constraintBottom_toBottomOf= "@+id/guideline1"
         android:textStyle="bold"
         android:textColor="@color/white"
+        android:clickable="false"
+        android:focusable="false"
         />
 
     <TextView
