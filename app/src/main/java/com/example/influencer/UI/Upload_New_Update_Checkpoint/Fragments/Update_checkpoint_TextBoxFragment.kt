@@ -1,6 +1,7 @@
 package com.example.influencer.UI.Upload_New_Update_Checkpoint.Fragments
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
@@ -11,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.influencer.Core.Serializable.getSerializableCompat
 import com.example.influencer.R
 import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.SharedComponents.Model.CheckpointThemeItem
@@ -27,7 +29,8 @@ class Update_checkpoint_TextBox : Fragment() {
     private val binding get() = _binding!!   //The get() function here is a custom getter. In Kotlin, properties can have custom getters and setters,he custom getter for binding does not store a value itself; instead, it provides the value of _binding each time binding is accessed
     private val viewModel: Checkpoint_TextBox_Viewmodel by viewModels()
     private var selectedCategoryColor: Int = 0
-    lateinit var selectedCategoryName:String
+    private lateinit var selectedCategoryName:String
+    private lateinit var carga: SweetAlertDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +43,7 @@ class Update_checkpoint_TextBox : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initializeUI()
+        initLoading()
         setupClickListeners()
         setupObservers()
     }
@@ -84,6 +88,13 @@ class Update_checkpoint_TextBox : Fragment() {
         }
     }
 
+    private fun initLoading() {
+        carga = SweetAlertDialog(activity, SweetAlertDialog.PROGRESS_TYPE)
+        carga.getProgressHelper().setBarColor(Color.parseColor("#F57E00"))
+        carga.setTitleText(R.string.Loading)
+        carga.setCancelable(false)
+    }
+
     private fun setupClickListeners() {
         binding.close.setOnClickListener{
             val intent = Intent(requireActivity(), Home::class.java)
@@ -110,6 +121,14 @@ class Update_checkpoint_TextBox : Fragment() {
                 requireActivity().startActivity(intent)  // Start home activity and clear all others
             }else{
                 Toast.makeText(activity, R.string.checkpoint_update_error_saved, Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        viewModel.loading.observe(viewLifecycleOwner){isloading ->
+            if (isloading) {
+                carga.show()
+            } else {
+                carga.dismiss()
             }
         }
     }

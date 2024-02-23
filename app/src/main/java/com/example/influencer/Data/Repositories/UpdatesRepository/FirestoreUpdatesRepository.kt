@@ -15,6 +15,7 @@ class FirestoreUpdatesRepository @Inject constructor(
     private val authService: AuthenticationService
 ): UpdatesRepository {
 
+    //devuelve el Post con = categoria (seleccionada por user) y q ha sido la ultima publicada de esa categoria
     private suspend fun getLastPostDocumentRef(selectedCategory: String):DocumentReference = withContext(Dispatchers.IO){
         val uid = authService.getUid()
         val userDocRef = db.collection("Usuarios").document(uid)
@@ -38,6 +39,7 @@ class FirestoreUpdatesRepository @Inject constructor(
          updatesCollectionRef.document().set(updateDocument).await()
     }
 
+    //se  fija si la coleccion "Updates" esta creada en el Post, si no lo esta envia un 1 (1er update del post), si ya esta creada, se fija el > valor de update_Number de todos los documentos y devuelve ese valor +1
     override suspend fun getNextUpdateNumber(selectedCategory: String): Int = withContext(Dispatchers.IO) {
         lastPostDocRefCache = getLastPostDocumentRef(selectedCategory)
         val updatesCollectionRef = lastPostDocRefCache.collection("Updates")
@@ -49,16 +51,15 @@ class FirestoreUpdatesRepository @Inject constructor(
         } else {
             updatesSnapshot.documents
                 .maxOf { document ->
-                    document.toObject(CheckPoint_Update_Item::class.java)?.update_Number ?: 0
+                    document.toObject(CheckPoint_Update_Item::class.java)?.update_Number ?: 0   //https://www.notion.so/Upload-Update-Checkpoint-23beef0772dc4bd2ab6442ce244d2580?pvs=4#9752541f872f40618b38fd93575895b3
                 } + 1
         }
-
         nextUpdateNumberCache!!
     }
 
+    //https://www.notion.so/Upload-Update-Checkpoint-23beef0772dc4bd2ab6442ce244d2580?pvs=4#d218d93ee96040beb4413aa792072fc4
     companion object{
         private lateinit var lastPostDocRefCache:DocumentReference
         private var nextUpdateNumberCache: Int? = null
     }
-
 }

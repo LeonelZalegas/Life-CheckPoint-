@@ -19,8 +19,11 @@ class Checkpoint_TextBox_Viewmodel @Inject constructor(
 
     private val _nextUpdateNumber = MutableLiveData<Int?>()
     val nextUpdateNumber = _nextUpdateNumber
+
     private val _updateSaveSuccessLiveData = MutableLiveData<Boolean>()
     val updateSaveSuccessLiveData: LiveData<Boolean> = _updateSaveSuccessLiveData
+
+    val loading = MutableLiveData<Boolean>()
 
     fun getNextUpdateNumber(selectedCategory: String){
         viewModelScope.launch {
@@ -31,13 +34,13 @@ class Checkpoint_TextBox_Viewmodel @Inject constructor(
     fun createCheckPointUpdate(updateText: String){
         viewModelScope.launch {
             try {
+                loading.postValue(true)
                 createCheckPointUpdateUseCase(updateText)
                 _updateSaveSuccessLiveData.postValue(true)
             }catch (e: Exception){
-                Log.e("jejeje", "Este error ocurrio: ", e)
                 _updateSaveSuccessLiveData.postValue(false)
             }
+            loading.postValue(false)
         }
     }
-
 }
