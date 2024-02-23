@@ -135,6 +135,6 @@ class Update_checkpoint_TextBox : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null // Clearing the reference to avoid memory leaks
+        _binding = null // Clearing the reference to avoid memory leaks l
     }
 }
