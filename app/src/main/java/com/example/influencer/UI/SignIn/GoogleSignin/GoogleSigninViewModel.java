@@ -50,7 +50,7 @@ public class GoogleSigninViewModel extends ViewModel {
         return userExists;
     }
 
-    public void handleGoogleSignInResult(String idToken) {
+    public void handleGoogleSignInResult(String idToken,String profilePictureUrl) {
         _Loading.postValue(new Event<>(true));
         firebaseAuthWithGoogleUseCase.execute(idToken)
                 .continueWithTask(task -> {
@@ -68,7 +68,7 @@ public class GoogleSigninViewModel extends ViewModel {
                         userExists.postValue(true);
                         return Tasks.forResult(null);
                     } else {
-                        return createGoogleUserUseCase.execute();
+                        return createGoogleUserUseCase.execute(profilePictureUrl);
                     }
                 })
                 .addOnSuccessListener(result -> {

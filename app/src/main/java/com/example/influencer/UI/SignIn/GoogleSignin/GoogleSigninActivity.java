@@ -62,7 +62,10 @@ public class GoogleSigninActivity extends AppCompatActivity {
                             // Google Sign In was successful, authenticate with Firebase
                             GoogleSignInAccount account = task.getResult(ApiException.class);
                             Log.d("error", "firebaseAuthWithGoogle:" + account.getId());
-                            googleSigninViewModel.handleGoogleSignInResult(account.getIdToken());
+
+                            // Get the profile picture URL
+                            String profilePictureUrl = account.getPhotoUrl() != null ? account.getPhotoUrl().toString() : null;
+                            googleSigninViewModel.handleGoogleSignInResult(account.getIdToken(),profilePictureUrl);
 
                         } catch (ApiException e) {
                             Log.w("error", "Google sign in failed", e);

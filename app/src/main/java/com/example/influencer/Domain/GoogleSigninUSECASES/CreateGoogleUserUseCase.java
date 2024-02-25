@@ -18,12 +18,13 @@ public class CreateGoogleUserUseCase {
         this.authenticationService = authenticationService;
     }
 
-    public Task<Void> execute() {
+    public Task<Void> execute(String profilePictureUrl) {
         String email = authenticationService.getEmail();
         int index = email.indexOf('@');
         String username = email.substring(0, index);
         UsuarioSignin usuarioSignin = new UsuarioSignin(email, username, "NO PASSWORD SAVED WITH GOOGLE SIGNIN");
         usuarioSignin.setId(authenticationService.getUid());
+        usuarioSignin.setProfilePictureUrl(profilePictureUrl);
         return userService.crearUsuario(usuarioSignin);
     }
 }
