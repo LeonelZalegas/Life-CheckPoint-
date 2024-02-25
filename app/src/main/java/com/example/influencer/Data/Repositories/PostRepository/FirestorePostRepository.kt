@@ -12,6 +12,7 @@ import kotlinx.coroutines.withContext
 import java.util.concurrent.CompletableFuture
 import javax.inject.Inject
 import javax.inject.Singleton
+//en este Repo vamos a poner TOD0 (guardar o traer (retrieve) Datos relacionados con Posts/Checkpoints unicamnete, ligados a un usuario o no)
 
 // Concrete implementation of PostRepository using Firebase Firestore
 @Singleton
@@ -28,6 +29,7 @@ class FirestorePostRepository @Inject constructor(
         postsCollectionRef.document().set(post).await()
     }
 
+//TODO agregar el metodo de abajo a la interfaz PostRepository
     suspend fun getUserPostCategories(): List<String> = withContext(Dispatchers.IO) {
         val uid = authService.getUid()
         val userDocRef = db.collection("Usuarios").document(uid)

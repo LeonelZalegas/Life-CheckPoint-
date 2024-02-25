@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.influencer.Domain.GetUserProfilePictureUseCase
 import com.example.influencer.Domain.Upload_New_CheckpointUSECASES.GetLastThreeImagesUseCase
 import com.example.influencer.Domain.Upload_New_CheckpointUSECASES.SavePostUseCase
 import com.example.influencer.Domain.Upload_New_CheckpointUSECASES.UploadImageUseCase
@@ -17,7 +18,8 @@ import javax.inject.Inject
 class UploadCheckpointViewModel @Inject constructor(
     private val savePostUseCase: SavePostUseCase,
     private val uploadImageUseCase: UploadImageUseCase,
-    private val getLastThreeImagesUseCase: GetLastThreeImagesUseCase
+    private val getLastThreeImagesUseCase: GetLastThreeImagesUseCase,
+    private val getUserProfilePictureUseCase: GetUserProfilePictureUseCase
 ) : ViewModel() {
 
     private val _recyclerViewLiveData = MutableLiveData<MutableList<Uri?>>(mutableListOf())
@@ -31,11 +33,14 @@ class UploadCheckpointViewModel @Inject constructor(
     private val _postSaveSuccessLiveData = MutableLiveData<Boolean>()
     val postSaveSuccessLiveData: LiveData<Boolean> = _postSaveSuccessLiveData
 
+    private val _profilePictureUrl = MutableLiveData<String>()
+    val profilePictureUrl: LiveData<String> = _profilePictureUrl
+
 
     fun uploadImageRecyclerView(photoUri: Uri?){
         viewModelScope.launch{
             try {
-                _recyclerViewLiveData.value?.let { images ->  //ingresamos a la lista de _imagesLiveData
+                _recyclerViewLiveData.value?.let { images ->  //ingresamos a la lista de interna del recyclerview
                     if (images.size <  2) {
                         images.add(photoUri)
                         _recyclerViewLiveData.postValue(images)// Notify observers, esto es como el SetValue() para avisar al observer de los datos cambiados en tiempo real
@@ -61,7 +66,7 @@ class UploadCheckpointViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 loading.postValue(true)
-                val image1Url = _recyclerViewLiveData.value?.getOrNull(0)?.let { uploadImageUseCase(it) }
+                val image1Url = _recyclerViewLiveData.value?.getOrNull(0)?.let { uploadImageUseCase(it) }   //subimos imagenes a Firebase STORAGE
                 val image2Url = _recyclerViewLiveData.value?.getOrNull(1)?.let { uploadImageUseCase(it) }
 
                 val post = Post(text, satisfactionLevel, image1Url, image2Url,selectedCategoryText,selectedCategoryColor) // This now suspends until completion
@@ -85,6 +90,13 @@ class UploadCheckpointViewModel @Inject constructor(
     fun fetchLastThreeImagesUris() {
         viewModelScope.launch {
             _lastThreeImagesLiveData.value = getLastThreeImagesUseCase()
+        }
+    }
+
+    fun fetchUserProfilePicture() {
+        viewModelScope.launch {
+            val url = getUserProfilePictureUseCase()
+            _profilePictureUrl.postValue(url)
         }
     }
 

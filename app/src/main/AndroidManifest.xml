@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools">
     <!-- Permissions here -->
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
-
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <queries>
         <intent>
@@ -33,6 +33,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Influencer"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
             android:name=".UI.Upload_New_Update_Checkpoint.Upload_New_Update_CheckpointActivity"

@@ -23,6 +23,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.pedant.SweetAlert.SweetAlertDialog
+import com.bumptech.glide.Glide
 import com.example.influencer.BuildConfig
 import com.example.influencer.Core.Serializable.getSerializableExtraCompat
 import com.example.influencer.R
@@ -76,6 +77,7 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
         handleSelectedCategory()
         setupSeekBar()
         loadLastThreeImages()
+        setupProfilePic()
     }
 
     private fun initLoading() {
@@ -177,6 +179,10 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
         }
     }
 
+    private fun setupProfilePic() {
+        viewModel.fetchUserProfilePicture()
+    }
+
     private fun handleCameraSelection(){
         if (ContextCompat.checkSelfPermission(baseContext,Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             if (viewModel.canTakeMorePictures()) {
@@ -249,6 +255,13 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
             uris.getOrNull(0)?.let { binding.ImageSelection1.setImageURI(it) }
             uris.getOrNull(1)?.let { binding.ImageSelection2.setImageURI(it) }
             uris.getOrNull(2)?.let { binding.ImageSelection3.setImageURI(it) }
+        }
+
+        viewModel.profilePictureUrl.observe(this) { url ->
+            Toast.makeText(this, url, Toast.LENGTH_SHORT).show()
+            Glide.with(this)
+                .load(url)
+                .into(binding.profilePicture)
         }
     }
 

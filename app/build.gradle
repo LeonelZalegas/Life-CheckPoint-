@@ -87,6 +87,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage'
     //fragment
     implementation "androidx.fragment:fragment-ktx:1.5.1"
+    //show images thanks to its URL
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
 
 
 }

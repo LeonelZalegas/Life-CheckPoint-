@@ -5,6 +5,7 @@ public class UsuarioSignin {
     private String Email;
     private String Username;
     private final String Contrasena; //agregamos password que es una cosa nueva
+    private String profilePictureUrl;
 
     //contructor ahora no tiene  Id
     public UsuarioSignin(String email, String username,String contrasena) {
@@ -39,4 +40,8 @@ public class UsuarioSignin {
     }
 
     public String getUsername(){return Username;}
+
+    public String getProfilePictureUrl() {return profilePictureUrl;}
+
+    public void setProfilePictureUrl(String profilePictureUrl) {this.profilePictureUrl = profilePictureUrl;}
 }

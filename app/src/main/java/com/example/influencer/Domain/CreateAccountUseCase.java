@@ -29,6 +29,12 @@ public class CreateAccountUseCase {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {  //si autenticarse tiene exito ingresa aca (para crear y guardar el usuario en firestore)
                     usuarioSignIn.setId(authenticationService.getUid());
+
+                    // Set the default profile picture URL
+                    String defaultProfilePicUrl = "https://firebasestorage.googleapis.com/v0/b/life-checkpoint.appspot.com/o/default_profile_picture.jpg?alt=media&token=e8f39ca1-adf9-4953-aa1b-6322889403fa";
+                    usuarioSignIn.setProfilePictureUrl(defaultProfilePicUrl);
+
+                    // Proceed with creating the user document in Firestore
                     userService.crearUsuario(usuarioSignIn).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
