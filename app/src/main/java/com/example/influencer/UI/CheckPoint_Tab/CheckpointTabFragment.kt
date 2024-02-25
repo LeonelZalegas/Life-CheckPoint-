@@ -1,116 +1,99 @@
-package com.example.influencer.UI.CheckPoint_Tab;
+package com.example.influencer.UI.CheckPoint_Tab
 
-import android.content.Intent;
-import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.CheckpointThemeChoose.CheckpointThemeChooseActivity;
-import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.CheckpointUpdateThemeChoose.CheckpointUpdateThemeChooseActivity;
-import com.example.influencer.UI.Login.LoginViewModel;
-import com.example.influencer.databinding.FragmentCheckpointTabBinding;
-
-import javax.inject.Inject;
-
-import dagger.hilt.android.AndroidEntryPoint;
+import dagger.hilt.android.AndroidEntryPoint
+import com.example.influencer.UI.CheckPoint_Tab.CheckpointTabViewModel
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.os.Bundle
+import androidx.lifecycle.ViewModelProvider
+import android.content.Intent
+import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import com.example.influencer.Core.Event
+import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.CheckpointUpdateThemeChoose.CheckpointUpdateThemeChooseActivity
+import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.CheckpointThemeChoose.CheckpointThemeChooseActivity
+import com.example.influencer.databinding.FragmentCheckpointTabBinding
 
 @AndroidEntryPoint
-public class CheckpointTabFragment extends Fragment {
+class CheckpointTabFragment : Fragment() {
 
-    private FragmentCheckpointTabBinding binding;
-    Boolean isAllFabsVisible;
-    CheckpointTabViewModel checkpointTabViewModel;
+    private var _binding: FragmentCheckpointTabBinding? = null
+    private val binding get() = _binding!!
+    private var isAllFabsVisible: Boolean = false
+    private val checkpointTabViewModel: CheckpointTabViewModel by viewModels()
 
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-       binding = FragmentCheckpointTabBinding.inflate(inflater,container,false);
-       return binding.getRoot();
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentCheckpointTabBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        checkpointTabViewModel = new ViewModelProvider(this).get(CheckpointTabViewModel.class);
+        binding.addingNewCheckpoint.visibility = View.GONE
+        binding.addingNewCheckpointUpdate.visibility = View.GONE
 
-        binding.addingNewCheckpoint.setVisibility(View.GONE);
-        binding.addingNewCheckpointUpdate.setVisibility(View.GONE);
-        isAllFabsVisible = false;
-
-        initUI();
+        initUI()
     }
 
-    private void initUI() {
-        initListeners();
-        initObservers();
+    private fun initUI() {
+        initListeners()
+        initObservers()
     }
 
-    private void initListeners() {
-
-        binding.addFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!isAllFabsVisible) {
-                    binding.addingNewCheckpoint.show();
-                    binding.addingNewCheckpointUpdate.show();
-                    isAllFabsVisible = true;
-                } else {
-                    binding.addingNewCheckpoint.hide();
-                    binding.addingNewCheckpointUpdate.hide();
-                    isAllFabsVisible = false;
-                }
+    private fun initListeners() {
+        binding.addFab.setOnClickListener {
+            if (!isAllFabsVisible) {
+                binding.addingNewCheckpoint.show()
+                binding.addingNewCheckpointUpdate.show()
+                isAllFabsVisible = true
+            } else {
+                binding.addingNewCheckpoint.hide()
+                binding.addingNewCheckpointUpdate.hide()
+                isAllFabsVisible = false
             }
-        });
+        }
 
-        binding.addingNewCheckpoint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                checkpointTabViewModel.onAddingNewCheckpointSelected();
-            }
-        });
+        binding.addingNewCheckpoint.setOnClickListener {
+            checkpointTabViewModel.onAddingNewCheckpointSelected()
+        }
 
-        binding.addingNewCheckpointUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                checkpointTabViewModel.onAddingNewCheckpointUpdateSelected();
-            }
-        });
-
+        binding.addingNewCheckpointUpdate.setOnClickListener {
+            checkpointTabViewModel.onAddingNewCheckpointUpdateSelected()
+        }
     }
 
-    private void initObservers() {
-
-        checkpointTabViewModel.navigateToAddingNewCheckpoint.observe(requireActivity(), event -> {
-            if (event != null && event.getContentIfNotHandled() != null) {
-                goToAddingNewCheckpoint();
+    private fun initObservers() {
+        checkpointTabViewModel.navigateToAddingNewCheckpoint.observe(requireActivity()) { event ->
+            event.contentIfNotHandled?.let {
+                goToAddingNewCheckpoint()
             }
-        });
+        }
 
-        checkpointTabViewModel.navigateToAddingNewCheckpointUpdate.observe(requireActivity(), event -> {
-            if (event != null && event.getContentIfNotHandled() != null) {
-                goToAddingNewCheckpointUpdate();
+        checkpointTabViewModel.navigateToAddingNewCheckpointUpdate.observe(requireActivity()) { event ->
+            event.contentIfNotHandled?.let {
+                goToAddingNewCheckpointUpdate()
             }
-        });
+        }
     }
 
-    private void goToAddingNewCheckpointUpdate() {
-        Intent intent_AddingNewCheckpointUpdate= new Intent(getContext(), CheckpointUpdateThemeChooseActivity.class);
-        startActivity(intent_AddingNewCheckpointUpdate);
+    private fun goToAddingNewCheckpointUpdate() {
+        val intentAddingNewCheckpointUpdate = Intent(context, CheckpointUpdateThemeChooseActivity::class.java)
+        startActivity(intentAddingNewCheckpointUpdate)
     }
 
-    private void goToAddingNewCheckpoint() {
-        Intent intent_AddingNewCheckpoint= new Intent(getContext(), CheckpointThemeChooseActivity.class);
-        startActivity(intent_AddingNewCheckpoint);
+    private fun goToAddingNewCheckpoint() {
+        val intentAddingNewCheckpoint = Intent(context, CheckpointThemeChooseActivity::class.java)
+        startActivity(intentAddingNewCheckpoint)
     }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

@@ -258,7 +258,6 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
         }
 
         viewModel.profilePictureUrl.observe(this) { url ->
-            Toast.makeText(this, url, Toast.LENGTH_SHORT).show()
             Glide.with(this)
                 .load(url)
                 .into(binding.profilePicture)
