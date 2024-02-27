@@ -1,4 +1,4 @@
-package com.example.influencer.UI.OnBoarding.Fragments;
+package com.example.influencer.UI.OnBoarding___CountryAndDateSelector.OnBoarding.Fragments;
 
 import android.os.Bundle;
 
@@ -9,16 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-import com.example.influencer.databinding.FragmentOnboarding1Binding;
+import com.example.influencer.databinding.FragmentOnboarding2Binding;
 
-public class OnboardingFragment1 extends Fragment {
+public class OnboardingFragment2 extends Fragment {
 
-    private FragmentOnboarding1Binding binding;
+    private FragmentOnboarding2Binding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentOnboarding1Binding.inflate(inflater, container, false);
+        binding = FragmentOnboarding2Binding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 }

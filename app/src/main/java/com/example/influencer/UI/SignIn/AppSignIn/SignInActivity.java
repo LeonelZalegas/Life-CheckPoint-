@@ -3,7 +3,6 @@ package com.example.influencer.UI.SignIn.AppSignIn;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -14,11 +13,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.influencer.Core.Event;
 import com.example.influencer.Data.Preferences.UserPreferences;
-import com.example.influencer.UI.OnBoarding.OnBoardingActivity;
+import com.example.influencer.UI.OnBoarding___CountryAndDateSelector.OnBoarding.OnBoardingActivity;
 import com.example.influencer.R;
 import com.example.influencer.UI.SignIn.Model.UsuarioSignin;
 import com.example.influencer.databinding.ActivityRegistroBinding;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import javax.inject.Inject;
 

@@ -73,7 +73,10 @@
     <string name="checkpoint_error_saved">Has been an Error in Saving the Checkpoint</string>
     <string name="checkpoint_update_successfully_saved">The checkpoint Update has been successfully saved</string>
     <string name="checkpoint_update_error_saved">Has been an Error in Saving the Checkpoint Update</string>
-
+    //Select Date and Country Activity
+    <string name="Date_selecting">Select your birth date and Country:</string>
+    <string name="NoDate_Country">Please pick a date and a country</string>
+    <string name="DatePicker_dialog">Select your date of birth</string>
 
 
 

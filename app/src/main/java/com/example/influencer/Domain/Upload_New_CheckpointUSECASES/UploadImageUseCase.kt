@@ -15,7 +15,7 @@ import javax.inject.Singleton
 class UploadImageUseCase @Inject constructor(private val storage: FirebaseStorage) {
     suspend operator fun invoke(imageUri: Uri):String{
         return withContext(Dispatchers.IO){
-            val ref = storage.reference.child("images/${UUID.randomUUID()}")
+            val ref = storage.reference.child("images_Posts/${UUID.randomUUID()}")
             ref.putFile(imageUri).await()
             ref.downloadUrl.await().toString()
         }

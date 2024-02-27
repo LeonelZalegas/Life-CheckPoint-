@@ -1,4 +1,4 @@
-package com.example.influencer.UI.OnBoarding;
+package com.example.influencer.UI.OnBoarding___CountryAndDateSelector.OnBoarding;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -7,16 +7,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.influencer.R;
 import com.example.influencer.UI.Home;
-import com.example.influencer.UI.Login.LoginActivity;
-import com.example.influencer.UI.OnBoarding.Fragments.OnboardingFragment1;
-import com.example.influencer.UI.OnBoarding.Fragments.OnboardingFragment2;
-import com.example.influencer.UI.OnBoarding.Fragments.OnboardingFragment3;
+import com.example.influencer.UI.OnBoarding___CountryAndDateSelector.CountryAndDateSelector.CountryDateActivity;
+import com.example.influencer.UI.OnBoarding___CountryAndDateSelector.OnBoarding.Fragments.OnboardingFragment1;
+import com.example.influencer.UI.OnBoarding___CountryAndDateSelector.OnBoarding.Fragments.OnboardingFragment2;
+import com.example.influencer.UI.OnBoarding___CountryAndDateSelector.OnBoarding.Fragments.OnboardingFragment3;
 import com.example.influencer.databinding.ActivityOnboardingBinding;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
-
-import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -62,8 +59,8 @@ public class OnBoardingActivity extends AppCompatActivity {
     }
 
     private void goTonavigateToHome() {
-        Intent intent_home = new Intent(OnBoardingActivity.this, Home.class);
-        startActivity(intent_home);
+        Intent intent_save_birthdate_country = new Intent(OnBoardingActivity.this, CountryDateActivity.class);
+        startActivity(intent_save_birthdate_country);
         finish();
     }
 }

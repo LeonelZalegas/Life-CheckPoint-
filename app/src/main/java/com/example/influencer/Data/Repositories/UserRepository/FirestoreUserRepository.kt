@@ -23,4 +23,20 @@ class FirestoreUserRepository @Inject constructor(
         val userDocSnapshot = db.collection("Usuarios").document(uid).get().await()
         return@withContext userDocSnapshot.getString("profilePictureUrl") ?: ""
     }
+
+    override suspend fun saveUserAgeMonths(age: Int, months: Int): Unit = withContext(Dispatchers.IO){
+        val uid = authService.getUid()
+
+        val userDocRef = db.collection("Usuarios").document(uid)
+        userDocRef.update("years_old", age, "months_old", months).await()
+    }
+
+    override suspend fun saveUserCountry(countryName: String, countryFlag: Int) {
+        val uid = authService.getUid()
+
+        val userDocRef = db.collection("Usuarios").document(uid)
+        userDocRef.update("countryName", countryName, "countryFlagResourceId", countryFlag).await()
+    }
+
+
 }

@@ -1,4 +1,4 @@
-package com.example.influencer.UI.OnBoarding;
+package com.example.influencer.UI.OnBoarding___CountryAndDateSelector.OnBoarding;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI.OnBoarding___CountryAndDateSelector.CountryAndDateSelector.CountryDateActivity"
+    android:background="@color/naranja_Home">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineVertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineVertical2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineVertical3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.6" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.13" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineHorizontal2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.02" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineHorizontal3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineHorizontal4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineHorizontal5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineHorizontal6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.20" />
+
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="@font/happy"
+        app:layout_constraintStart_toStartOf="@id/guidelineVertical"
+        app:layout_constraintEnd_toEndOf="@id/guidelineVertical2"
+        app:layout_constraintTop_toTopOf="@id/guidelineHorizontal2"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineHorizontal"
+        android:autoSizeTextType="uniform"
+        android:textColor="@color/black"
+        android:text="@string/Date_selecting"
+       />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/guidelineHorizontal3"
+        app:layout_constraintStart_toStartOf="@id/guidelineVertical"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineHorizontal4"
+        app:layout_constraintEnd_toStartOf="@id/guidelineVertical3"
+        app:cardCornerRadius="30dp"
+        >
+
+<!--        TODO arreglar eso de tener q seleciionar si o si un pais aunque inicialmente el pais estaba bien-->
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/ccp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:ccp_showPhoneCode="false"
+            app:ccp_useDummyEmojiForPreview="true"
+            app:ccp_showFullName="true"
+            app:ccpDialog_cornerRadius="@dimen/progress_circle_radius"
+            app:ccp_showNameCode="false"
+            app:ccpDialog_showNameCode="false"
+            app:ccp_autoDetectCountry="false"
+            />
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/chipDatePicker"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="Select Date"
+        app:chipBackgroundColor="@color/white"
+        app:chipStrokeColor="@color/black"
+        app:layout_constraintStart_toStartOf="@id/guidelineVertical"
+        app:layout_constraintTop_toTopOf="@id/guidelineHorizontal6"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineHorizontal3"
+        app:layout_constraintEnd_toStartOf="@id/guidelineVertical3"
+        app:layout_constraintHeight_percent="0.077"/>
+
+
+    <Button
+        android:id="@+id/btnContinue"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.08"
+        app:layout_constraintWidth_percent="0.65"
+        android:background="@drawable/boton_redondo"
+        android:text="Continue"
+        app:backgroundTint="@color/rojo_normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guidelineHorizontal5"
+        app:layout_constraintVertical_bias="0.75" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

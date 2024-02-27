@@ -14,9 +14,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.influencer.Core.Event;
-import com.example.influencer.Data.Network.GoogleSignInClientModuleDI;
 import com.example.influencer.Data.Preferences.UserPreferences;
-import com.example.influencer.UI.OnBoarding.OnBoardingActivity;
+import com.example.influencer.UI.OnBoarding___CountryAndDateSelector.OnBoarding.OnBoardingActivity;
 import com.example.influencer.R;
 import com.example.influencer.databinding.ActivityMainBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
