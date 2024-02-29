@@ -86,25 +86,4 @@ class FirestorePostRepository @Inject constructor(
             Result.failure(e)
         }
     }
-
-    override suspend fun getPostUpdates(postId: String): Result<List<CheckPoint_Update_Item>> = withContext(Dispatchers.IO){
-        try {
-            val updatesCollectionRef = db.collection("Posts").document(postId).collection("Updates")
-            val querySnapshot = updatesCollectionRef.get().await()
-
-            if (querySnapshot.isEmpty) {
-                Result.success(emptyList())
-            } else {
-                val updates =
-                    querySnapshot.documents.mapNotNull { it.toObject(CheckPoint_Update_Item::class.java) }
-                Result.success(updates)
-            }
-        }catch (e:Exception){
-            Result.failure(e)
-        }
-    }
-
-
-
-
 }

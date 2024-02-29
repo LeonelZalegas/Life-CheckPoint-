@@ -7,5 +7,4 @@ import com.example.influencer.UI.Upload_New_Update_Checkpoint.Model.CheckPoint_U
 interface PostRepository {
     suspend fun savePost(post: Post)
     suspend fun getRandomPostFromUser(userId: String): Result<Post>
-    suspend fun getPostUpdates(postId: String):Result<List<CheckPoint_Update_Item>>
 }
