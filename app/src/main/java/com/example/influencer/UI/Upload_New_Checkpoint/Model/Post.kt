@@ -1,6 +1,10 @@
 package com.example.influencer.UI.Upload_New_Checkpoint.Model
 
+import com.google.firebase.firestore.DocumentId
+
 data class Post(
+    @DocumentId
+    val id: String,  // Automatically populated with Firestore document ID
     var text_post: String = "",
     var satisfaction_level_value: Int = 0,
     var image_1: String? = null,

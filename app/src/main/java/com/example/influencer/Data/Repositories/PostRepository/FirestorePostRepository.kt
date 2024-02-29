@@ -3,6 +3,7 @@ package com.example.influencer.Data.Repositories.PostRepository
 import android.util.Log
 import com.example.influencer.Data.Network.AuthenticationService
 import com.example.influencer.UI.Upload_New_Checkpoint.Model.Post
+import com.example.influencer.UI.Upload_New_Update_Checkpoint.Model.CheckPoint_Update_Item
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
@@ -33,7 +34,7 @@ class FirestorePostRepository @Inject constructor(
         userDocRef.update("postCount", FieldValue.increment(1)).await()
     }
 
-//TODO agregar el metodo de abajo a la interfaz PostRepository
+    //TODO agregar el metodo de abajo a la interfaz PostRepository
     suspend fun getUserPostCategories(): List<String> = withContext(Dispatchers.IO) {
         val uid = authService.getUid()
         val userDocRef = db.collection("Usuarios").document(uid)
@@ -63,4 +64,47 @@ class FirestorePostRepository @Inject constructor(
         }
         return future
     }
+
+    override suspend fun getRandomPostFromUser(userId: String): Result<Post> = withContext(Dispatchers.IO){
+        try {
+           val postsSnapshot = db.collection("Usuarios")
+            .document(userId)
+            .collection("Posts")
+            .get()
+            .await()
+
+          if (postsSnapshot.documents.isNotEmpty()) {
+             val randomPostDoc = postsSnapshot.documents.random()
+             val post = randomPostDoc.toObject(Post::class.java)  //en data class Post hacemos @DocumentId en el ID para no tener que hacer (Post::class.java)?.apply {this.id = randomPostDoc.id}
+             post?.let {
+                 Result.success(it)
+             } ?: Result.failure(Exception("Failed to parse post document"))
+          }  else {
+            Result.failure(Exception("No posts found for user"))
+          }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun getPostUpdates(postId: String): Result<List<CheckPoint_Update_Item>> = withContext(Dispatchers.IO){
+        try {
+            val updatesCollectionRef = db.collection("Posts").document(postId).collection("Updates")
+            val querySnapshot = updatesCollectionRef.get().await()
+
+            if (querySnapshot.isEmpty) {
+                Result.success(emptyList())
+            } else {
+                val updates =
+                    querySnapshot.documents.mapNotNull { it.toObject(CheckPoint_Update_Item::class.java) }
+                Result.success(updates)
+            }
+        }catch (e:Exception){
+            Result.failure(e)
+        }
+    }
+
+
+
+
 }

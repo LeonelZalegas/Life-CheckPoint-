@@ -1,8 +1,11 @@
 package com.example.influencer.Data.Repositories.PostRepository
 
 import com.example.influencer.UI.Upload_New_Checkpoint.Model.Post
+import com.example.influencer.UI.Upload_New_Update_Checkpoint.Model.CheckPoint_Update_Item
 
 // Interface defining the operations that a PostRepository should support
 interface PostRepository {
     suspend fun savePost(post: Post)
+    suspend fun getRandomPostFromUser(userId: String): Result<Post>
+    suspend fun getPostUpdates(postId: String):Result<List<CheckPoint_Update_Item>>
 }

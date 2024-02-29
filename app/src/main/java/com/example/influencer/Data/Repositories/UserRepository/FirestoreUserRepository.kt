@@ -1,6 +1,7 @@
 package com.example.influencer.Data.Repositories.UserRepository
 
 import com.example.influencer.Data.Network.AuthenticationService
+import com.example.influencer.UI.SignIn.Model.UsuarioSignin
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
@@ -36,6 +37,30 @@ class FirestoreUserRepository @Inject constructor(
 
         val userDocRef = db.collection("Usuarios").document(uid)
         userDocRef.update("countryName", countryName, "countryFlagResourceId", countryFlag).await()
+    }
+
+    // Fetch a random user with at least one post
+    override suspend fun getRandomUserDocument(): Result<UsuarioSignin> = withContext(Dispatchers.IO){
+        try {
+
+        val usersSnapshot = db.collection("Usuarios")
+            .whereGreaterThan("postCount",0)
+            .get()
+            .await()
+
+        if (usersSnapshot.documents.isNotEmpty()) {
+            val randomUserDoc = usersSnapshot.documents.random()
+            val user = randomUserDoc.toObject(UsuarioSignin::class.java)
+            user?.let {
+                Result.success(it)
+            } ?: Result.failure(Exception("Failed to parse user document"))
+        } else {
+            Result.failure(Exception("No users with posts found"))
+        }
+
+      }catch (e: Exception){
+            Result.failure(e)
+      }
     }
 
 
