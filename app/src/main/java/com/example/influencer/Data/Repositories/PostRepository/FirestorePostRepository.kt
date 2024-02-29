@@ -3,6 +3,7 @@ package com.example.influencer.Data.Repositories.PostRepository
 import android.util.Log
 import com.example.influencer.Data.Network.AuthenticationService
 import com.example.influencer.UI.Upload_New_Checkpoint.Model.Post
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -27,6 +28,9 @@ class FirestorePostRepository @Inject constructor(
         val userDocRef = db.collection("Usuarios").document(uid)
         val postsCollectionRef = userDocRef.collection("Posts")
         postsCollectionRef.document().set(post).await()
+
+        // Atomically increment the postCount field of the user document
+        userDocRef.update("postCount", FieldValue.increment(1)).await()
     }
 
 //TODO agregar el metodo de abajo a la interfaz PostRepository

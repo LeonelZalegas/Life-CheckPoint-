@@ -10,6 +10,9 @@ public class UsuarioSignin {
     private Integer months_old;
     private String countryName;
     private Integer countryFlagResourceId;
+    private Integer postCount = 0 ;
+    private Integer followersCount = 0;
+    private Integer followingCount = 0;
 
     //contructor ahora no tiene  Id
     public UsuarioSignin(String email, String username,String contrasena) {
@@ -65,4 +68,17 @@ public class UsuarioSignin {
     public Integer getCountryFlagResourceId() {return countryFlagResourceId;}
 
     public void setCountryFlagResourceId(Integer countryFlagResourceId) {this.countryFlagResourceId = countryFlagResourceId;}
+
+    public Integer getPostCount() {return postCount;}
+
+    public void setPostCount(Integer postCount) {this.postCount = postCount;}
+
+    public Integer getFollowersCount() {return followersCount;}
+
+    public void setFollowersCount(Integer followersCount) {this.followersCount = followersCount;}
+
+    public Integer getFollowingCount() {return followingCount;}
+
+    public void setFollowingCount(Integer followingCount) {this.followingCount = followingCount;}
+
 }
