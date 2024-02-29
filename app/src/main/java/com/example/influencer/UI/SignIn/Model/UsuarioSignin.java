@@ -3,8 +3,6 @@ package com.example.influencer.UI.SignIn.Model;
 import com.google.firebase.firestore.DocumentId;
 
 public class UsuarioSignin {
-    @DocumentId         //con esto populamos el ID al pasar de documentos de Firestore del tipo UsuarioSignin a objetos en si del tipo UsuarioSignin
-    private String Id; //By default, when you use toObject() (ver FirestoreUserRepository en getRandomUserDocument) to parse a Firestore document into a Kotlin object, it only converts the fields within the document and does not include the document ID because the ID is metadata, not part of the document's content.
     private String Email;
     private String Username;
     private final String Contrasena; //agregamos password que es una cosa nueva
@@ -16,6 +14,8 @@ public class UsuarioSignin {
     private Integer postCount = 0 ;
     private Integer followersCount = 0;
     private Integer followingCount = 0;
+    @DocumentId         //con esto populamos el ID al pasar de documentos de Firestore del tipo UsuarioSignin a objetos en si del tipo UsuarioSignin
+    private String Id; //By default, when you use toObject() (ver FirestoreUserRepository en getRandomUserDocument) to parse a Firestore document into a Kotlin object, it only converts the fields within the document and does not include the document ID because the ID is metadata, not part of the document's content.
 
     //contructor ahora no tiene  Id
     public UsuarioSignin(String email, String username,String contrasena) {
