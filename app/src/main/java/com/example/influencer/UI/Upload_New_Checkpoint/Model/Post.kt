@@ -11,6 +11,7 @@ data class Post(
     var categoryColor: Int = 0, //Resource Id
     var creationDate: com.google.firebase.Timestamp = com.google.firebase.Timestamp.now(), // Automatically captures the creation timestamp
     var Likes:Int = 0,
+    var checkpointCategoryCounter:Int = 0,
     @DocumentId
     val id: String = "",  // Automatically populated with Firestore document ID
 )

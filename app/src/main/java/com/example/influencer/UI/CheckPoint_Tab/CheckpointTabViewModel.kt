@@ -10,6 +10,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.influencer.Core.Event
 import com.example.influencer.Domain.GetRandomCardDataUseCase
 import com.example.influencer.UI.CheckPoint_Tab.Model.CardData
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -37,9 +39,12 @@ class CheckpointTabViewModel @Inject constructor(
 
     private fun fetchInitialCardData() {
         viewModelScope.launch {
-            for (i in 1..10) {
-                fetchRandomCardData()
+            val fetchCards = List(10) { // Create a list of Deferred objects
+                async {
+                    fetchRandomCardData()
+                }
             }
+            fetchCards.awaitAll()
             isInitialDataFetched = true
             _cards.value = listOf(cardDataList[currentCardIndex])
         }
