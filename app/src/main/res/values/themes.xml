@@ -35,7 +35,7 @@
         <item name="cornerSize">50%</item>
     </style>
 
-    //para mostrar redondeo de seleccion imagen  en crear checkpoint
+    //para mostrar redondeo de seleccion imagen  en crear checkpoint y en el Flag icon en el post
     <style name="ShapeAppearanceOverlay.MyApp.CircleImageSelect" parent="">
         <item name="cornerSize">30%</item>
     </style>

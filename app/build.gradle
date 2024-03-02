@@ -91,6 +91,9 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.16.0'
     //country selector
     implementation 'com.hbb20:ccp:2.7.0'
+    //Cards Tab layout
+    implementation 'com.github.jd-alexander:LikeButton:0.2.3'
+    implementation "com.github.skydoves:progressview:1.1.3"
 
 
 }
