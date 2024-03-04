@@ -28,7 +28,7 @@ class CheckpointTabViewModel @Inject constructor(
     private val _cards = MutableLiveData<List<CardData>>()
     val cards: LiveData<List<CardData>> = _cards
 
-    private val cardDataList = mutableListOf<CardData>()
+    private var cardDataList = mutableListOf<CardData>()
     private var currentCardIndex = 0
     var isInitialDataFetched = false
     private val preFetchThreshold = 2  // Number of cards ahead to pre-fetch
@@ -37,18 +37,41 @@ class CheckpointTabViewModel @Inject constructor(
         fetchInitialCardData()
     }
 
+//    private fun fetchInitialCardData() {
+//        viewModelScope.launch {
+//            val fetchCards = List(10) { // Create a list of Deferred objects
+//                async {
+//                    fetchRandomCardData()
+//                }
+//            }
+//            fetchCards.awaitAll()
+//            isInitialDataFetched = true
+//            if (cardDataList.isNotEmpty()){
+//            _cards.value = listOf(cardDataList[currentCardIndex])}
+//            else{
+//                Log.e("pedruno","la lista esta vacia")
+//            }
+//        }
+//    }
+
     private fun fetchInitialCardData() {
         viewModelScope.launch {
             val fetchCards = List(10) { // Create a list of Deferred objects
                 async {
-                    fetchRandomCardData()
+                    getRandomCardDataUseCase().getOrNull() // Directly process results here
                 }
             }
-            fetchCards.awaitAll()
+            val results = fetchCards.awaitAll().filterNotNull() // Filter out any potential nulls
+            if (results.isNotEmpty()) {
+                cardDataList.addAll(results) // Assuming getContentIfNotHandled & peekContent should handle null cases
+                _cards.value = listOf(cardDataList[currentCardIndex])
+            } else {
+                Log.e("pedruno", "la lista esta vacia")
+            }
             isInitialDataFetched = true
-            _cards.value = listOf(cardDataList[currentCardIndex])
         }
     }
+
 
     private fun fetchRandomCardData() {
         viewModelScope.launch {

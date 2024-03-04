@@ -28,6 +28,7 @@ public class GoogleSigninViewModel extends ViewModel {
     private final Resources resources;
 
     SingleLiveEvent<Boolean> userExists = new SingleLiveEvent<>();
+    SingleLiveEvent<Boolean> userGetsCreated = new SingleLiveEvent<>();
 
     private final MutableLiveData<Event<Boolean>> _Loading = new MutableLiveData<>();
     public LiveData<Event<Boolean>> Loading = _Loading;
@@ -50,6 +51,11 @@ public class GoogleSigninViewModel extends ViewModel {
         return userExists;
     }
 
+    public SingleLiveEvent<Boolean> getUserGetsCreated() {
+        return userGetsCreated;
+    }
+
+
     public void handleGoogleSignInResult(String idToken,String profilePictureUrl) {
         _Loading.postValue(new Event<>(true));
         firebaseAuthWithGoogleUseCase.execute(idToken)
@@ -66,14 +72,14 @@ public class GoogleSigninViewModel extends ViewModel {
                     if (task.isSuccessful() && task.getResult().exists()) {
                         _Loading.postValue(new Event<>(false));
                         userExists.postValue(true);
-                        return Tasks.forResult(null);
+                        return Tasks.forResult(null); // Return a completed Task to avoid triggering user creation flow
                     } else {
-                        return createGoogleUserUseCase.execute(profilePictureUrl);
+                        return createGoogleUserUseCase.execute(profilePictureUrl)
+                                .addOnSuccessListener(result -> {
+                                    _Loading.postValue(new Event<>(false));
+                                    userGetsCreated.postValue(true);
+                                });
                     }
-                })
-                .addOnSuccessListener(result -> {
-                    _Loading.postValue(new Event<>(false));
-                    userExists.postValue(true);
                 })
                 .addOnFailureListener(e -> {
                     _Loading.postValue(new Event<>(false));

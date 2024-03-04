@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.influencer.Core.Event;
 import com.example.influencer.Data.Preferences.UserPreferences;
+import com.example.influencer.UI.Home;
 import com.example.influencer.UI.OnBoarding___CountryAndDateSelector.OnBoarding.OnBoardingActivity;
 import com.example.influencer.R;
 import com.example.influencer.databinding.ActivityMainBinding;
@@ -78,6 +79,12 @@ public class GoogleSigninActivity extends AppCompatActivity {
 
         googleSigninViewModel.getUserExists().observe(this, userExists -> {
             if (userExists) {
+                goToHome();
+            }
+        });
+
+        googleSigninViewModel.getUserGetsCreated().observe(this, userGetsCreated -> {
+            if (userGetsCreated) {
                 goToOnBoarding();
             }
         });
@@ -115,6 +122,13 @@ public class GoogleSigninActivity extends AppCompatActivity {
     private void goToOnBoarding(){
         userPreferences.setSignedIn(true);
         Intent intent_LogIn = new Intent(GoogleSigninActivity.this, OnBoardingActivity.class);
+        startActivity(intent_LogIn);
+        finish();
+    }
+
+    private void goToHome(){
+        userPreferences.setSignedIn(true);
+        Intent intent_LogIn = new Intent(GoogleSigninActivity.this, Home.class);
         startActivity(intent_LogIn);
         finish();
     }

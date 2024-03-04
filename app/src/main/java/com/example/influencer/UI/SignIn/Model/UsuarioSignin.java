@@ -5,7 +5,7 @@ import com.google.firebase.firestore.DocumentId;
 public class UsuarioSignin {
     private String Email;
     private String Username;
-    private final String Contrasena; //agregamos password que es una cosa nueva
+    private String Contrasena; //agregamos password que es una cosa nueva
     private String profilePictureUrl;
     private Integer years_old;
     private Integer months_old;
@@ -24,10 +24,15 @@ public class UsuarioSignin {
         Contrasena = contrasena;
     }
 
+    public UsuarioSignin() {
+    }
+
     //getters y setters
     public String getContrasena() {
         return Contrasena;
     }
+
+    public void setContrasena(String contrasena) {Contrasena = contrasena;}
 
     public String getId() {
         return Id;

@@ -94,8 +94,7 @@ dependencies {
     //Cards Tab layout
     implementation 'com.github.jd-alexander:LikeButton:0.2.3'
     implementation "com.github.skydoves:progressview:1.1.3"
-
-
+    implementation ("com.github.yuyakaido:CardStackView:v2.3.4")
 }
 
 // Allow references to generated code
