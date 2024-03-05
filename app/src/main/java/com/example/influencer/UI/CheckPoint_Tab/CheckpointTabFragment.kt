@@ -2,6 +2,7 @@ package com.example.influencer.UI.CheckPoint_Tab
 
 
 import android.content.Intent
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +27,7 @@ class CheckpointTabFragment : Fragment() {
     private var isAllFabsVisible: Boolean = false
     @Inject
     lateinit var cardstackviewAdapter: CardStackView_Adapter
+    val displayMetrics = Resources.getSystem().displayMetrics
     private val checkpointTabViewModel: CheckpointTabViewModel by viewModels()
 
     override fun onCreateView(
@@ -108,6 +110,13 @@ class CheckpointTabFragment : Fragment() {
             override fun onCardDisappeared(view: View, position: Int) {}
         })
 
+//        val paddingHorizontal = (displayMetrics.widthPixels * 0.10).toInt() // 10% of screen width for left and right padding
+//        val paddingVerticalTop = (displayMetrics.heightPixels * 0.10).toInt() // 10% of screen height for top padding
+//        val paddingVerticalBottom = (displayMetrics.heightPixels * 0.15).toInt() // 15% of screen height for bottom padding
+//
+//        binding.cardStackView.setPadding(paddingHorizontal, paddingVerticalTop, paddingHorizontal, paddingVerticalBottom)
+
+        layoutManager.setCanScrollVertical(false)
         binding.cardStackView.layoutManager = layoutManager
         binding.cardStackView.adapter = cardstackviewAdapter
     }

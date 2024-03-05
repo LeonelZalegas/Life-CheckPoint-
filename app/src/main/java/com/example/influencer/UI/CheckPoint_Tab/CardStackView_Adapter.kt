@@ -39,6 +39,8 @@ class CardStackView_Adapter @Inject constructor(
 
         fun bind(cardData: CardData,context: Context){
             with(binding){
+                MainCategory.text = cardData.post.selectedCategory
+                MainCategory.setChipBackgroundColorResource(cardData.post.categoryColor)
                 userName.text = cardData.user.username
                 PostDatePublished.text = DateTimeUtils.getTimeAgo(cardData.post.creationDate)
                 PostDatePublished.setChipBackgroundColorResource(cardData.post.categoryColor)
