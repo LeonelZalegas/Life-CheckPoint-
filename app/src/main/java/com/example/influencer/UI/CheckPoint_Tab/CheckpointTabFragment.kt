@@ -89,7 +89,6 @@ class CheckpointTabFragment : Fragment() {
         }
 
         checkpointTabViewModel.cards.observe(viewLifecycleOwner) { cards ->
-            Toast.makeText(activity, "el Observer si se ejecuta parece", Toast.LENGTH_SHORT).show()
             cardstackviewAdapter.setCards(cards)
         }
     }
@@ -110,11 +109,8 @@ class CheckpointTabFragment : Fragment() {
             override fun onCardDisappeared(view: View, position: Int) {}
         })
 
-//        val paddingHorizontal = (displayMetrics.widthPixels * 0.10).toInt() // 10% of screen width for left and right padding
-//        val paddingVerticalTop = (displayMetrics.heightPixels * 0.10).toInt() // 10% of screen height for top padding
-//        val paddingVerticalBottom = (displayMetrics.heightPixels * 0.15).toInt() // 15% of screen height for bottom padding
-//
-//        binding.cardStackView.setPadding(paddingHorizontal, paddingVerticalTop, paddingHorizontal, paddingVerticalBottom)
+        val paddingHorizontal = (displayMetrics.widthPixels * 0.07).toInt() // 7% of screen width for left and right padding
+        binding.cardStackView.setPadding(paddingHorizontal, 0, paddingHorizontal, 0)
 
         layoutManager.setCanScrollVertical(false)
         binding.cardStackView.layoutManager = layoutManager

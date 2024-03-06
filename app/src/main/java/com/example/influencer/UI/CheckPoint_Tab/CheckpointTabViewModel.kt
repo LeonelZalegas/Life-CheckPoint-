@@ -37,23 +37,7 @@ class CheckpointTabViewModel @Inject constructor(
         fetchInitialCardData()
     }
 
-//    private fun fetchInitialCardData() {
-//        viewModelScope.launch {
-//            val fetchCards = List(10) { // Create a list of Deferred objects
-//                async {
-//                    fetchRandomCardData()
-//                }
-//            }
-//            fetchCards.awaitAll()
-//            isInitialDataFetched = true
-//            if (cardDataList.isNotEmpty()){
-//            _cards.value = listOf(cardDataList[currentCardIndex])}
-//            else{
-//                Log.e("pedruno","la lista esta vacia")
-//            }
-//        }
-//    }
-
+//https://www.notion.so/fragment-mostrando-todos-los-post-de-los-usuarios-5c2cf5fac4944b24a7b77b16f5c4472e?pvs=4#21167cd1d176418290427e203e99bf4e
     private fun fetchInitialCardData() {
         viewModelScope.launch {
             val fetchCards = List(10) { // Create a list of Deferred objects

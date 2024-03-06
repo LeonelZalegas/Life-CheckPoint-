@@ -1,3 +1,4 @@
+<!--https://www.notion.so/fragment-mostrando-todos-los-post-de-los-usuarios-5c2cf5fac4944b24a7b77b16f5c4472e?pvs=4#8cb022d0e0b14ea3ae0e1ed154b31c3c-->
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -26,19 +27,23 @@
                 android:layout_height="match_parent">
 
 
-                <com.google.android.material.chip.Chip
+                <TextView
                     android:id="@+id/MainCategory"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     app:layout_constraintStart_toStartOf="@id/ProfileMainCategiryChip"
                     app:layout_constraintTop_toTopOf="parent"
-                   app:layout_constraintBottom_toTopOf="@id/profile_picture"
-                    app:layout_constraintEnd_toStartOf="@id/ProfileInfoGuideline"
+                    app:layout_constraintBottom_toTopOf="@id/profile_picture"
+                    app:layout_constraintEnd_toStartOf="@id/ProfileMainCategiryChip3"
                     android:fontFamily="@font/happy"
-                    android:clickable="false"
-                    android:focusable="false"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintHeight_percent="0.3"
+                    app:layout_constraintHeight_percent="0.17"
+                    android:textAlignment="center"
+                    android:autoSizeTextType="uniform"
+                    android:paddingStart="9dp"
+                    android:paddingEnd="9dp"
+                    android:paddingTop="4dp"
+                    android:textSize="22dp"
+                    app:layout_constraintHorizontal_bias="0.15"
                     />
 
 
@@ -47,13 +52,10 @@
                     android:id="@+id/profile_picture"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/ProfileMainCategiryChip"
                     app:layout_constraintEnd_toEndOf="@id/ProfileInfoGuideline"
-                    app:layout_constraintTop_toBottomOf="@id/ProfileInfoGuideline2"
+                    app:layout_constraintTop_toBottomOf="@id/guidlinetopprofilepic"
                     app:layout_constraintBottom_toTopOf="@id/yatusabe"
-                    app:layout_constraintWidth_percent="0.28"
-                    app:layout_constraintHeight_percent="0.51"
-                    app:layout_constraintVertical_bias="1"
                     android:scaleType="fitXY"
                     app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Circle"
                     />
@@ -65,42 +67,53 @@
                     android:fontFamily="@font/happy"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/ProfileMainCategiryChip"
                     app:layout_constraintEnd_toEndOf="@id/ProfileInfoGuideline"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/yatusabe"
-                    app:layout_constraintWidth_percent="0.27"
                     app:layout_constraintHeight_percent="0.15"
                     android:autoSizeTextType="uniform"
                     android:autoSizeMaxTextSize="21dp"
-                    app:layout_constraintVertical_bias="0.8"/>
+                    app:layout_constraintVertical_bias="0.8"
+                    android:maxLines="1"
+                    />
 
-                <com.google.android.material.chip.Chip
+                <TextView
                     android:id="@+id/PostDatePublished"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="0dp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/ProfileInfoGuidelinelikes2"
                     app:layout_constraintStart_toEndOf="@id/ProfileInfoGuideline6"
                     app:layout_constraintBottom_toTopOf="@id/ProfileInfoGuideline2"
                     android:fontFamily="@font/happy"
-                    android:clickable="false"
-                    android:focusable="false"
-
+                    android:textAlignment="center"
+                    android:autoSizeTextType="uniform"
+                    android:paddingTop="1dp"
+                    android:paddingStart="6dp"
+                    android:paddingEnd="6dp"
+                    app:layout_constraintHeight_percent="0.1"
+                    android:maxLines="1"
+                    android:autoSizeMinTextSize="10dp"
                     />
 
-                <com.google.android.material.chip.Chip
+                <TextView
                     android:id="@+id/Checkpoint_CategotyNumber"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="@id/ProfileInfoGuideline8"
+                    app:layout_constraintBottom_toBottomOf="@id/jamon"
                     app:layout_constraintStart_toStartOf="@id/ProfileInfoGuideline7"
                     app:layout_constraintEnd_toStartOf="@id/ProfileInfoGuideline4"
                     app:layout_constraintTop_toBottomOf="@id/yatusabe"
-                    android:clickable="false"
-                    android:focusable="false"
                     android:fontFamily="@font/happy"
-                    android:textColor="@color/black"
+                    android:textAlignment="center"
+                    android:autoSizeTextType="uniform"
+                    android:paddingStart="7dp"
+                    android:paddingEnd="7dp"
+                    app:layout_constraintHeight_percent="0.1"
+                    android:maxLines="1"
+                    android:autoSizeMinTextSize="10dp"
+                    app:layout_constraintVertical_bias="0.7"
                     />
 
 
@@ -191,7 +204,9 @@
                     app:layout_constraintHeight_percent="0.13"
                     app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.CircleImageSelect"
                     app:layout_constraintVertical_bias="0.95"
-                    app:layout_constraintHorizontal_chainStyle="packed"/>
+                    app:layout_constraintHorizontal_chainStyle="packed"
+
+                    />
 
                 <TextView
                     android:id="@+id/userAge"
@@ -207,7 +222,8 @@
                     android:textAlignment="center"
                     android:autoSizeTextType="uniform"
                     android:textColor="@color/black"
-                    app:layout_constraintVertical_bias="0.95"/>
+                    app:layout_constraintVertical_bias="0.95"
+                    android:layout_marginStart="8dp"/>
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/ProfileInfoGuideline"
@@ -256,7 +272,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.4" />
+                    app:layout_constraintGuide_percent="0.415" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/ProfileInfoGuideline8"
@@ -284,7 +300,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.05" />
+                    app:layout_constraintGuide_percent="0.025" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/ProfileMainCategiryChip2"
@@ -294,11 +310,32 @@
                     app:layout_constraintGuide_percent="0.02" />
 
                 <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/ProfileMainCategiryChip3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.6" />
+
+                <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/yatusabe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:layout_constraintGuide_percent="0.795" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/jamon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.94" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guidlinetopprofilepic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.28" />
 
 
 
@@ -407,22 +444,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.8" />
-
-
-<!--        <com.google.android.material.chip.Chip-->
-<!--            android:id="@+id/MainCategory"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="50dp"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            android:layout_marginTop="-25dp"-->
-<!--            android:fontFamily="@font/happy"-->
-<!--            android:autoSizeTextType="uniform"-->
-<!--            android:textAlignment="center"-->
-<!--            android:clickable="false"-->
-<!--            android:focusable="false"-->
-<!--            android:visibility="visible"-->
-<!--            android:elevation="8dp"/>-->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
