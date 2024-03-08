@@ -28,9 +28,10 @@ class CheckpointTabViewModel @Inject constructor(
     private val _cards = MutableLiveData<List<CardData>>()
     val cards: LiveData<List<CardData>> = _cards
 
+    val loading = MutableLiveData<Boolean>()
+
     private var cardDataList = mutableListOf<CardData>()
     private var currentCardIndex = 0
-    var isInitialDataFetched = false
     private val preFetchThreshold = 2  // Number of cards ahead to pre-fetch
 
     init {
@@ -40,19 +41,18 @@ class CheckpointTabViewModel @Inject constructor(
 //https://www.notion.so/fragment-mostrando-todos-los-post-de-los-usuarios-5c2cf5fac4944b24a7b77b16f5c4472e?pvs=4#21167cd1d176418290427e203e99bf4e
     private fun fetchInitialCardData() {
         viewModelScope.launch {
+            loading.postValue(true)
             val fetchCards = List(10) { // Create a list of Deferred objects
                 async {
                     getRandomCardDataUseCase().getOrNull() // Directly process results here
                 }
             }
-            val results = fetchCards.awaitAll().filterNotNull() // Filter out any potential nulls
+            val results = fetchCards.awaitAll().filterNotNull()
             if (results.isNotEmpty()) {
-                cardDataList.addAll(results) // Assuming getContentIfNotHandled & peekContent should handle null cases
-                _cards.value = listOf(cardDataList[currentCardIndex])
-            } else {
-                Log.e("pedruno", "la lista esta vacia")
+                cardDataList.addAll(results)
+                updateCardsForDisplay()
             }
-            isInitialDataFetched = true
+            loading.postValue(false)
         }
     }
 
@@ -81,10 +81,10 @@ class CheckpointTabViewModel @Inject constructor(
         }
     }
 
-    fun swipeLeft() {
-        if ((currentCardIndex < cardDataList.size - 1) && isInitialDataFetched) {
+    fun swipeNextCard() {
+        if ((currentCardIndex < cardDataList.size - 1)) {
             currentCardIndex++
-            _cards.value = listOf(cardDataList[currentCardIndex])
+            updateCardsForDisplay()
             if (currentCardIndex >= cardDataList.size - preFetchThreshold) {
                 preFetchCards()
             }
@@ -93,12 +93,22 @@ class CheckpointTabViewModel @Inject constructor(
         }
     }
 
-    fun swipeRight() {
-        if (currentCardIndex > 0) {
-            currentCardIndex--
-            _cards.value = listOf(cardDataList[currentCardIndex])
-        }
+    fun Rewind() {
+        currentCardIndex--
+        updateCardsForDisplay()
     }
+
+    fun updateCardsForDisplay() {
+        val cardsToShow = mutableListOf<CardData>()
+        cardsToShow.add(cardDataList[currentCardIndex])
+        if ((currentCardIndex + 1) < cardDataList.size) {
+            cardsToShow.add(cardDataList[currentCardIndex + 1])
+        }
+        _cards.value = cardsToShow
+    }
+
+
+    fun isLastCard(): Boolean = currentCardIndex == 0
 
     fun onAddingNewCheckpointSelected() {
         _navigateToAddingNewCheckpoint.value = Event(true)

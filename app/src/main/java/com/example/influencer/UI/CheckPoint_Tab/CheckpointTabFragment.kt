@@ -8,14 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.CheckpointThemeChoose.CheckpointThemeChooseActivity
 import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.CheckpointUpdateThemeChoose.CheckpointUpdateThemeChooseActivity
 import com.example.influencer.databinding.FragmentCheckpointTabBinding
-import com.yuyakaido.android.cardstackview.CardStackLayoutManager
-import com.yuyakaido.android.cardstackview.CardStackListener
-import com.yuyakaido.android.cardstackview.Direction
+import com.yuyakaido.android.cardstackview.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -29,6 +28,7 @@ class CheckpointTabFragment : Fragment() {
     lateinit var cardstackviewAdapter: CardStackView_Adapter
     val displayMetrics = Resources.getSystem().displayMetrics
     private val checkpointTabViewModel: CheckpointTabViewModel by viewModels()
+    private lateinit var layoutManager: CardStackLayoutManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,6 +73,15 @@ class CheckpointTabFragment : Fragment() {
         binding.addingNewCheckpointUpdate.setOnClickListener {
             checkpointTabViewModel.onAddingNewCheckpointUpdateSelected()
         }
+
+        binding.RewindCheckpoint.setOnClickListener(){
+            if (!checkpointTabViewModel.isLastCard()){
+                binding.cardStackView.smoothScrollToPosition(0)  //hacemos el rewind
+                binding.cardStackView.smoothScrollBy(120,120)    //animacion del rewind
+                checkpointTabViewModel.Rewind()
+            }else
+                Toast.makeText(activity, "Cant rewind anymore", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun initObservers() {
@@ -91,15 +100,24 @@ class CheckpointTabFragment : Fragment() {
         checkpointTabViewModel.cards.observe(viewLifecycleOwner) { cards ->
             cardstackviewAdapter.setCards(cards)
         }
+
+        checkpointTabViewModel.loading.observe(viewLifecycleOwner){isloading ->
+            if (isloading) {
+                binding.progress.visibility = View.VISIBLE
+            } else {
+                binding.progress.visibility = View.GONE
+            }
+        }
     }
 
     private fun setupCardStackView() {
-        val layoutManager = CardStackLayoutManager(requireContext(), object : CardStackListener {
+         layoutManager = CardStackLayoutManager(requireContext(), object : CardStackListener {
             override fun onCardDragging(direction: Direction, ratio: Float) {}
             override fun onCardSwiped(direction: Direction) {
+
                 when (direction) {
-                    Direction.Left -> checkpointTabViewModel.swipeLeft()
-                    Direction.Right -> checkpointTabViewModel.swipeRight()
+                    Direction.Left -> checkpointTabViewModel.swipeNextCard()
+                    Direction.Right -> checkpointTabViewModel.swipeNextCard()
                     else -> {}
                 }
             }
@@ -112,6 +130,11 @@ class CheckpointTabFragment : Fragment() {
         val paddingHorizontal = (displayMetrics.widthPixels * 0.07).toInt() // 7% of screen width for left and right padding
         binding.cardStackView.setPadding(paddingHorizontal, 0, paddingHorizontal, 0)
 
+        layoutManager.setVisibleCount(2)
+        layoutManager.setStackFrom(StackFrom.Right)
+        layoutManager.setTranslationInterval(8.0f)
+        layoutManager.setSwipeableMethod(SwipeableMethod.AutomaticAndManual);
+        layoutManager.setMaxDegree(50.0f)
         layoutManager.setCanScrollVertical(false)
         binding.cardStackView.layoutManager = layoutManager
         binding.cardStackView.adapter = cardstackviewAdapter

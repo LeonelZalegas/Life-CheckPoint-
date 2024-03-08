@@ -1,4 +1,5 @@
 <!--https://www.notion.so/fragment-mostrando-todos-los-post-de-los-usuarios-5c2cf5fac4944b24a7b77b16f5c4472e?pvs=4#8cb022d0e0b14ea3ae0e1ed154b31c3c-->
+
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -9,8 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clipChildren="false"
-        android:clipToPadding="false">
+        android:background="@drawable/border_black">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/ProfileInfo"
@@ -20,12 +20,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/Mainguidelinehorizontal"
-            android:backgroundTint="@color/light_blue">
+            android:backgroundTint="@color/light_blue"
+            android:layout_marginTop="0.5dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
+                android:layout_height="match_parent"
+                android:background="@drawable/border_black">
 
                 <TextView
                     android:id="@+id/MainCategory"
@@ -46,16 +47,14 @@
                     app:layout_constraintHorizontal_bias="0.15"
                     />
 
-
-
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/profile_picture"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintStart_toStartOf="@id/ProfileMainCategiryChip"
-                    app:layout_constraintEnd_toEndOf="@id/ProfileInfoGuideline"
+                    app:layout_constraintStart_toStartOf="@id/guidlinetopprofilepic2"
+                    app:layout_constraintEnd_toEndOf="@id/guidlinetopprofilepic3"
                     app:layout_constraintTop_toBottomOf="@id/guidlinetopprofilepic"
-                    app:layout_constraintBottom_toTopOf="@id/yatusabe"
+                    app:layout_constraintBottom_toTopOf="@id/ProfileInfoGuideline9"
                     android:scaleType="fitXY"
                     app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Circle"
                     />
@@ -70,7 +69,7 @@
                     app:layout_constraintStart_toStartOf="@id/ProfileMainCategiryChip"
                     app:layout_constraintEnd_toEndOf="@id/ProfileInfoGuideline"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/yatusabe"
+                    app:layout_constraintTop_toBottomOf="@id/ProfileInfoGuideline9"
                     app:layout_constraintHeight_percent="0.15"
                     android:autoSizeTextType="uniform"
                     android:autoSizeMaxTextSize="21dp"
@@ -101,10 +100,10 @@
                     android:id="@+id/Checkpoint_CategotyNumber"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="@id/jamon"
+                    app:layout_constraintBottom_toBottomOf="@id/BottomCategotyNumberGuideline"
                     app:layout_constraintStart_toStartOf="@id/ProfileInfoGuideline7"
                     app:layout_constraintEnd_toStartOf="@id/ProfileInfoGuideline4"
-                    app:layout_constraintTop_toBottomOf="@id/yatusabe"
+                    app:layout_constraintTop_toBottomOf="@id/ProfileInfoGuideline9"
                     android:fontFamily="@font/happy"
                     android:textAlignment="center"
                     android:autoSizeTextType="uniform"
@@ -115,7 +114,6 @@
                     android:autoSizeMinTextSize="10dp"
                     app:layout_constraintVertical_bias="0.7"
                     />
-
 
                 <com.like.LikeButton
                     app:layout_constraintHorizontal_chainStyle="packed"
@@ -128,7 +126,7 @@
                     app:layout_constraintStart_toEndOf="@id/ProfileInfoGuidelinelikes"
                     app:layout_constraintBottom_toBottomOf="@id/ProfileInfoGuideline8"
                     app:layout_constraintEnd_toStartOf="@id/Post_AmountLikes"
-                    app:layout_constraintTop_toTopOf="@id/yatusabe"
+                    app:layout_constraintTop_toTopOf="@id/ProfileInfoGuideline9"
 
                     />
 
@@ -139,7 +137,7 @@
                     app:layout_constraintBottom_toBottomOf="@id/ProfileInfoGuideline8"
                     app:layout_constraintEnd_toStartOf="@id/ProfileInfoGuidelinelikes2"
                     app:layout_constraintStart_toEndOf="@id/LikeButtom"
-                    app:layout_constraintTop_toBottomOf="@id/yatusabe"
+                    app:layout_constraintTop_toBottomOf="@id/ProfileInfoGuideline9"
                     app:layout_constraintWidth_percent="0.06"
                     android:fontFamily="@font/happy"
                     android:textAlignment="center"
@@ -282,6 +280,13 @@
                     app:layout_constraintGuide_percent="0.975" />
 
                 <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/ProfileInfoGuideline9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.795" />
+
+                <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/ProfileInfoGuidelinelikes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -317,14 +322,7 @@
                     app:layout_constraintGuide_percent="0.6" />
 
                 <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/yatusabe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.795" />
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/jamon"
+                    android:id="@+id/BottomCategotyNumberGuideline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -337,13 +335,24 @@
                     android:orientation="horizontal"
                     app:layout_constraintGuide_percent="0.28" />
 
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guidlinetopprofilepic2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.04" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guidlinetopprofilepic3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.31" />
+
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
-
-
-
 
 
         <androidx.cardview.widget.CardView
@@ -357,7 +366,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@drawable/border_black">
 
                 <TextView
                     android:id="@+id/Checkpoint_text"
@@ -417,10 +427,6 @@
         </androidx.cardview.widget.CardView>
 
 
-
-
-
-
         <androidx.cardview.widget.CardView
             android:id="@+id/CommentSection"
             android:layout_width="0dp"
@@ -429,7 +435,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:backgroundTint="@color/light_blue"/>
+            android:backgroundTint="@color/light_blue"
+            android:layout_marginBottom="0.5dp"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/border_black">
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/Mainguidelinehorizontal"
@@ -447,5 +465,4 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </ScrollView>
