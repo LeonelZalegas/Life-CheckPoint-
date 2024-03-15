@@ -27,7 +27,7 @@ class CountryDateActivity : AppCompatActivity() {
     private val viewModel: CountryAndDateSelectorViewmodel by viewModels()
     private var selectedDate: Long? = null
     private var selectedCountry:String? = null
-    private var countryFlag: Int = 0
+    private lateinit var countryFlag: String
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -85,7 +85,7 @@ class CountryDateActivity : AppCompatActivity() {
     private fun countrySelectorListener() {
         binding.ccp.setOnCountryChangeListener {
             selectedCountry = binding.ccp.selectedCountryName
-            countryFlag = binding.ccp.selectedCountryFlagResourceId
+            countryFlag = binding.ccp.selectedCountryNameCode
         }
     }
 

@@ -32,11 +32,11 @@ class FirestoreUserRepository @Inject constructor(
         userDocRef.update("years_old", age, "months_old", months).await()
     }
 
-    override suspend fun saveUserCountry(countryName: String, countryFlag: Int) {
+    override suspend fun saveUserCountry(countryName: String, countryFlag: String) {
         val uid = authService.getUid()
 
         val userDocRef = db.collection("Usuarios").document(uid)
-        userDocRef.update("countryName", countryName, "countryFlagResourceId", countryFlag).await()
+        userDocRef.update("countryName", countryName, "countryFlagCode", countryFlag).await()
     }
 
     // Fetch a random user with at least one post

@@ -8,7 +8,7 @@ data class Post(
     var image_1: String? = null,
     var image_2: String? = null,
     var selectedCategory: String = "",
-    var categoryColor: Int = 0, //Resource Id
+    var categoryColor: String = "",
     var creationDate: com.google.firebase.Timestamp = com.google.firebase.Timestamp.now(), // Automatically captures the creation timestamp
     var Likes:Int = 0,
     var checkpointCategoryCounter:Int = 0,

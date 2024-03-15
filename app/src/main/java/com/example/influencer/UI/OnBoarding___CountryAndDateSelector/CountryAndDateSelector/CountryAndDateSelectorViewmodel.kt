@@ -33,7 +33,7 @@ class CountryAndDateSelectorViewmodel @Inject constructor(
         }
     }
 
-    fun storeCountryInfo(countryName: String, countryFlag: Int) {
+    fun storeCountryInfo(countryName: String, countryFlag: String) {
         viewModelScope.launch {
             try {
                 saveCountryInfoUseCase(countryName,countryFlag)

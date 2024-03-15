@@ -10,7 +10,7 @@ public class UsuarioSignin {
     private Integer years_old;
     private Integer months_old;
     private String countryName;
-    private Integer countryFlagResourceId;
+    private String countryFlagCode;
     private Integer postCount = 0 ;
     private Integer followersCount = 0;
     private Integer followingCount = 0;
@@ -73,9 +73,9 @@ public class UsuarioSignin {
 
     public void setCountryName(String countryName) {this.countryName = countryName;}
 
-    public Integer getCountryFlagResourceId() {return countryFlagResourceId;}
+    public String getCountryFlagCode() {return countryFlagCode;}
 
-    public void setCountryFlagResourceId(Integer countryFlagResourceId) {this.countryFlagResourceId = countryFlagResourceId;}
+    public void setCountryFlagCode(String countryFlagCode) {this.countryFlagCode = countryFlagCode;}
 
     public Integer getPostCount() {return postCount;}
 

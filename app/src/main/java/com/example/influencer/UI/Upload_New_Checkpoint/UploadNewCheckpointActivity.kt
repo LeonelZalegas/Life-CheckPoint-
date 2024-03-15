@@ -132,7 +132,8 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
                 setChipBackgroundColorResource(it.color)
             }
             selectedCategoryText = it.text  //guardamos en variable para pasar x parametro al savepost
-            selectedCategoryColor = it.color
+            val intColor = ContextCompat.getColor(this, it.color)
+            selectedCategoryColor = String.format("#%06X", (0xFFFFFF and intColor)) //Convert Color Resource to Hexadecimal String
         }
     }
 
@@ -340,6 +341,6 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
         private const val REQUEST_CODE_STORAGE_PERMISSION = 101
         private const val REQUEST_CODE_IMAGES_PERMISSION = 102 // para versiones de android 11 pa adelante
         var selectedCategoryText: String = ""
-        var selectedCategoryColor:Int = 0
+        var selectedCategoryColor:String = ""
     }
 }

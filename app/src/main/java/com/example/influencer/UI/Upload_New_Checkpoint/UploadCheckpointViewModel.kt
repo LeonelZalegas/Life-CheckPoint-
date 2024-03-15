@@ -62,7 +62,7 @@ class UploadCheckpointViewModel @Inject constructor(
         return images.size < 2
     }
 
-    fun savePost(text: String, satisfactionLevel: Int,selectedCategoryText: String,selectedCategoryColor: Int){
+    fun savePost(text: String, satisfactionLevel: Int,selectedCategoryText: String,selectedCategoryColor: String){
         viewModelScope.launch {
             try {
                 loading.postValue(true)

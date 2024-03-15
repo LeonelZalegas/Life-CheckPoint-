@@ -7,22 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.influencer.Core.Utils.ChipTextColor.isColorDark
 import com.example.influencer.Core.Utils.DateTimeUtils
 import com.example.influencer.UI.CheckPoint_Tab.Model.CardData
 import com.example.influencer.databinding.CardLayoutBinding
-import com.yuyakaido.android.cardstackview.CardStackView
 import javax.inject.Inject
 
 //funcion de extencion para modificar el Textview y asi poder agregar el color del background como tambien las puntas redondeadas/color del texto en base a color del fondo
-fun View.setRoundedBackgroundColorRes(colorResId: Int, cornerRadiusDp: Float) {
+fun View.setRoundedBackgroundColor(color: Int, cornerRadiusDp: Float) {
     val density = context.resources.displayMetrics.density
     // Convert dp to pixels
     val cornerRadiusPx = cornerRadiusDp * density
-    val color = ContextCompat.getColor(context, colorResId) // Convert resource ID to actual color
     val drawable = GradientDrawable().apply {
         shape = GradientDrawable.RECTANGLE
         setColor(color)
@@ -67,19 +64,23 @@ class CardStackView_Adapter @Inject constructor(
 
         fun bind(cardData: CardData,context: Context){
             with(binding){
+                val colorString = if (cardData.post.categoryColor.isNullOrEmpty()) "#FFFFFF" else cardData.post.categoryColor // Default to white if null or empty
+                val colorInt = Color.parseColor(colorString)
                 MainCategory.text = cardData.post.selectedCategory
-                MainCategory.setRoundedBackgroundColorRes(cardData.post.categoryColor,50f)
+                MainCategory.setRoundedBackgroundColor(colorInt,50f)
                 userName.text = cardData.user.username
                 PostDatePublished.text = DateTimeUtils.getTimeAgo(cardData.post.creationDate)
-                PostDatePublished.setRoundedBackgroundColorRes(cardData.post.categoryColor,50f)
+                PostDatePublished.setRoundedBackgroundColor(colorInt,50f)
                 CheckpointCategotyNumber.text = "Checkpoint N°${cardData.post.checkpointCategoryCounter}"
-                CheckpointCategotyNumber.setRoundedBackgroundColorRes(cardData.post.categoryColor,50f)
+                CheckpointCategotyNumber.setRoundedBackgroundColor(colorInt,50f)
                 PostAmountLikes.text = cardData.post.Likes.toString()
                 SatisfactionLevelBar.progress = cardData.post.satisfaction_level_value.toFloat()
                 SatisfactionLevelValue.text = cardData.post.satisfaction_level_value.toString()
                 userAge.text = "${cardData.user.years_old} Years/ ${cardData.user.months_old} Months old" //TODO cambiar el Old y ponerlo en string.xml
                 Glide.with(context).load(cardData.user.profilePictureUrl).into(profilePicture)
-                CountryFlagIcon.setImageResource(cardData.user.countryFlagResourceId)
+                val CountryCode = cardData.user.countryFlagCode
+                val flagUrl = "https://flagsapi.com/$CountryCode/flat/64.png"
+                Glide.with(context).load(flagUrl).into(CountryFlagIcon)
                 CheckpointText.text = cardData.post.text_post
             }
         }

@@ -8,7 +8,7 @@ import javax.inject.Singleton
 
 @Singleton
 class SaveCountryInfoUseCase @Inject constructor(private val userRepository: UserRepository) {
-    suspend operator fun invoke(countryName: String, countryFlag: Int) = withContext(Dispatchers.IO){
+    suspend operator fun invoke(countryName: String, countryFlag: String) = withContext(Dispatchers.IO){
         userRepository.saveUserCountry(countryName,countryFlag)
     }
 }

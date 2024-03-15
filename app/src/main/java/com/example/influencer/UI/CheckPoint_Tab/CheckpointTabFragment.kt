@@ -4,6 +4,8 @@ package com.example.influencer.UI.CheckPoint_Tab
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +43,14 @@ class CheckpointTabFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Initial static display of the animation
+        binding.RewindCheckpoint.apply {
+            setAnimation(com.example.influencer.R.raw.rewind_checkpoint_post)
+            setFrame(0)
+            pauseAnimation()
+            speed = 1.5f
+        }
+
         binding.addingNewCheckpoint.visibility = View.GONE
         binding.addingNewCheckpointUpdate.visibility = View.GONE
 
@@ -76,13 +86,20 @@ class CheckpointTabFragment : Fragment() {
 
         binding.RewindCheckpoint.setOnClickListener(){
             if (!checkpointTabViewModel.isLastCard()){
-                binding.cardStackView.smoothScrollToPosition(0)  //hacemos el rewind
-                binding.cardStackView.smoothScrollBy(120,120)    //animacion del rewind
-                checkpointTabViewModel.Rewind()
+                with(binding.RewindCheckpoint) {
+                    setAnimation(com.example.influencer.R.raw.rewind_checkpoint_post)
+                    playAnimation()
+                }
+
+                    binding.cardStackView.smoothScrollToPosition(0)  // Perform the rewind
+                    binding.cardStackView.smoothScrollBy(120, 120)   // Animation of the rewind
+                    checkpointTabViewModel.Rewind()
+
             }else
                 Toast.makeText(activity, "Cant rewind anymore", Toast.LENGTH_SHORT).show()
         }
     }
+
 
     private fun initObservers() {
         checkpointTabViewModel.navigateToAddingNewCheckpoint.observe(requireActivity()) { event ->
@@ -109,6 +126,7 @@ class CheckpointTabFragment : Fragment() {
             }
         }
     }
+
 
     private fun setupCardStackView() {
          layoutManager = CardStackLayoutManager(requireContext(), object : CardStackListener {
