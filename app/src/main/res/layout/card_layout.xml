@@ -19,7 +19,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/Mainguidelinehorizontal"
             android:backgroundTint="@color/light_blue"
             android:layout_marginTop="0.5dp">
 
@@ -358,41 +357,32 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/CheckpointAndUpdate"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="@id/Mainguidelinehorizontal"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/barrier"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/Mainguidelinehorizontal2">
+            app:layout_constraintBottom_toTopOf="@id/Mainguidelinehorizontal2"
+            android:minHeight="450dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/border_black">
+                android:background="@drawable/border_black"
+                android:minHeight="450dp">
 
                 <TextView
                     android:id="@+id/Checkpoint_text"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="@id/CheckpointAndUpdateGuideline3"
                     app:layout_constraintEnd_toEndOf="@id/CheckpointAndUpdateGuideline4"
-                    app:layout_constraintTop_toTopOf="@id/CheckpointAndUpdateGuideline5"
-                    app:layout_constraintBottom_toBottomOf="@id/CheckpointAndUpdateGuideline"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     android:textColor="@color/black"
-                    android:textStyle="bold"/>
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/CheckpointAndUpdateGuideline"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.33" />
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/CheckpointAndUpdateGuideline2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.67" />
+                    android:textStyle="bold"
+                    app:layout_constraintVertical_bias="0"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"/>
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/CheckpointAndUpdateGuideline3"
@@ -408,20 +398,6 @@
                     android:orientation="vertical"
                     app:layout_constraintGuide_percent="0.95" />
 
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/CheckpointAndUpdateGuideline5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.05" />
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/CheckpointAndUpdateGuideline6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.95" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
@@ -431,7 +407,7 @@
             android:id="@+id/CommentSection"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="@id/Mainguidelinehorizontal2"
+            app:layout_constraintTop_toBottomOf="@id/barrier2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -448,14 +424,21 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/Mainguidelinehorizontal"
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.27" />
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="ProfileInfo" />
 
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="CheckpointAndUpdate" />
+
+        <!-- TODO eliminar luego esto junto al card q lo utiliza, lo dejaos por un sentido esteteico para q se vea la seccion comentarios aun-->
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/Mainguidelinehorizontal2"
             android:layout_width="wrap_content"

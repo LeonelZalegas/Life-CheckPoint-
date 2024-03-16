@@ -14,6 +14,7 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
 import android.widget.SeekBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -26,7 +27,9 @@ import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bumptech.glide.Glide
 import com.example.influencer.BuildConfig
 import com.example.influencer.Core.Serializable.getSerializableExtraCompat
+import com.example.influencer.Core.Utils.ChipTextColor
 import com.example.influencer.R
+import com.example.influencer.UI.CheckPoint_Tab.setRoundedBackgroundColor
 import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.SharedComponents.Model.CheckpointThemeItem
 import com.example.influencer.UI.Home
 import com.example.influencer.UI.Upload_New_Checkpoint.Adapter.TempImageAdapter
@@ -129,9 +132,14 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
         selectedCategory?.let {
             with(binding.chip) {
                 text = it.text
-                setChipBackgroundColorResource(it.color)
+                setChipBackgroundColorResource(it.color) // en este caso pasamos el CheckpointThemeItem directamente y por ende el Resource ID del color es puro y es el mismo que el del tiempo de compilacion original
+
+                // Determine if the background color is dark or light
+                val colorInt: Int = ContextCompat.getColor(context, it.color) //transforma Resource ID a un color posta
+                val isDark = ChipTextColor.isColorDark(colorInt)
+                setTextColor(if (isDark) Color.WHITE else Color.BLACK)
             }
-            selectedCategoryText = it.text  //guardamos en variable para pasar x parametro al savepost
+            selectedCategoryText = it.text  //guardamos en variable para pasar x parametro al savepost (guardar Firebase)
             val intColor = ContextCompat.getColor(this, it.color)
             selectedCategoryColor = String.format("#%06X", (0xFFFFFF and intColor)) //Convert Color Resource to Hexadecimal String
         }

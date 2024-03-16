@@ -27,7 +27,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf= "@+id/guideline1"
         android:textStyle="bold"
-        android:textColor="@color/white"
         android:clickable="false"
         android:focusable="false"
         />
@@ -101,7 +100,6 @@
                app:layout_constraintStart_toEndOf="@id/guidelineInsideCardView2"
                 app:layout_constraintBottom_toTopOf="@id/guidelineInsideCardView3"
                 android:textStyle="bold"
-                android:textColor="@color/white"
                 android:clickable="false"
                 android:focusable="false"
                 />

@@ -11,9 +11,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.influencer.Core.Serializable.getSerializableCompat
+import com.example.influencer.Core.Utils.ChipTextColor
 import com.example.influencer.R
 import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.SharedComponents.Model.CheckpointThemeItem
 import com.example.influencer.UI.Home
@@ -58,6 +60,11 @@ class Update_checkpoint_TextBox : Fragment() {
         with(binding.remainingCharsChip){
             text = "$MAX_LENGTH Char"
             setChipBackgroundColorResource(selectedCategoryColor)
+
+            // Determine if the background color is dark or light
+            val colorInt: Int = ContextCompat.getColor(context, selectedCategoryColor) //transforma Resource ID a un color posta
+            val isDark = ChipTextColor.isColorDark(colorInt)
+            setTextColor(if (isDark) Color.WHITE else Color.BLACK)
         }
 
         // Apply the filter to limit the input length
@@ -83,7 +90,12 @@ class Update_checkpoint_TextBox : Fragment() {
             selectedCategoryName = it.text
             with(binding.chipSelectedCategory){
                 text = selectedCategoryName
-                setChipBackgroundColorResource(selectedCategoryColor)
+                setChipBackgroundColorResource(selectedCategoryColor) //lo mismo q dije en UploadNewCheckpointActivity, pasamos el CheckpointThemeItem directamente por eso funca
+
+                // Determine if the background color is dark or light
+                val colorInt: Int = ContextCompat.getColor(context, selectedCategoryColor) //transforma Resource ID a un color posta
+                val isDark = ChipTextColor.isColorDark(colorInt)
+                setTextColor(if (isDark) Color.WHITE else Color.BLACK)
             }
         }
     }
