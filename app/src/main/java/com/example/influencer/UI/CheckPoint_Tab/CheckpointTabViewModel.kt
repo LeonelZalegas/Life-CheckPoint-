@@ -9,14 +9,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.influencer.Core.Event
 import com.example.influencer.Domain.GetRandomCardDataUseCase
+import com.example.influencer.Domain.LikesInteractionsUseCase
 import com.example.influencer.UI.CheckPoint_Tab.Model.CardData
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 @HiltViewModel
 class CheckpointTabViewModel @Inject constructor(
-    private val getRandomCardDataUseCase: GetRandomCardDataUseCase
+    private val getRandomCardDataUseCase: GetRandomCardDataUseCase,
+    private val likesInteractionsUseCase: LikesInteractionsUseCase
 ) : ViewModel() {
 
     private val _navigateToAddingNewCheckpoint = MutableLiveData<Event<Boolean>>()
@@ -32,7 +32,7 @@ class CheckpointTabViewModel @Inject constructor(
 
     private var cardDataList = mutableListOf<CardData>()
     private var currentCardIndex = 0
-    private val preFetchThreshold = 2  // Number of cards ahead to pre-fetch
+    private val preFetchThreshold = 3  // Number of cards ahead to pre-fetch// con 2 si el user pasa muy rapido no llega a cargar y tmb aveces no carga el card de atras x alguna razon
 
     init {
         fetchInitialCardData()
@@ -109,6 +109,33 @@ class CheckpointTabViewModel @Inject constructor(
 
 
     fun isLastCard(): Boolean = currentCardIndex == 0
+
+    fun likePost(postId: String, postOwnerId: String) {
+        viewModelScope.launch {
+            try {
+                likesInteractionsUseCase.likePost(postId,postOwnerId)
+            } catch (e: Exception) {
+                Log.e("ViewModel", "Error liking post", e)
+            }
+        }
+    }
+
+    fun unlikePost(postId: String, postOwnerId: String) {
+        viewModelScope.launch {
+            try {
+                likesInteractionsUseCase.unlikePost(postId,postOwnerId)
+            } catch (e: Exception) {
+                Log.e("ViewModel", "Error unliking post", e)
+            }
+        }
+    }
+
+    fun checkIfPostIsLiked(postId: String, callback: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            val isLiked = likesInteractionsUseCase.isPostLiked(postId)
+            callback(isLiked)
+        }
+    }
 
     fun onAddingNewCheckpointSelected() {
         _navigateToAddingNewCheckpoint.value = Event(true)

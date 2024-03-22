@@ -13,6 +13,8 @@ import com.example.influencer.Core.Utils.ChipTextColor.isColorDark
 import com.example.influencer.Core.Utils.DateTimeUtils
 import com.example.influencer.UI.CheckPoint_Tab.Model.CardData
 import com.example.influencer.databinding.CardLayoutBinding
+import com.like.LikeButton
+import com.like.OnLikeListener
 import javax.inject.Inject
 
 //funcion de extencion para modificar el Textview y asi poder agregar el color del background como tambien las puntas redondeadas/color del texto en base a color del fondo
@@ -41,6 +43,7 @@ class CardStackView_Adapter @Inject constructor(
 ): RecyclerView.Adapter<CardStackView_Adapter.ViewHolder>() {
 
     private var cardDataList: List<CardData> = emptyList()
+    var listener: CardActionsListener? = null
 
     fun setCards(cards: List<CardData>) {
         cardDataList = cards
@@ -50,7 +53,7 @@ class CardStackView_Adapter @Inject constructor(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = CardLayoutBinding.inflate(inflater, parent, false)
-        return ViewHolder(binding)
+        return ViewHolder(binding,listener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -60,7 +63,10 @@ class CardStackView_Adapter @Inject constructor(
 
     override fun getItemCount(): Int = cardDataList.size
 
-    class ViewHolder(private val binding: CardLayoutBinding) : RecyclerView.ViewHolder(binding.root){
+    class ViewHolder(
+        private val binding: CardLayoutBinding,
+        private val listener: CardActionsListener?
+        ) : RecyclerView.ViewHolder(binding.root){
 
         fun bind(cardData: CardData,context: Context){
             with(binding){
@@ -73,7 +79,7 @@ class CardStackView_Adapter @Inject constructor(
                 PostDatePublished.setRoundedBackgroundColor(colorInt,50f)
                 CheckpointCategotyNumber.text = "Checkpoint N°${cardData.post.checkpointCategoryCounter}"
                 CheckpointCategotyNumber.setRoundedBackgroundColor(colorInt,50f)
-                PostAmountLikes.text = cardData.post.Likes.toString()
+                PostAmountLikes.text = cardData.post.likes.toString()
                 SatisfactionLevelBar.progress = cardData.post.satisfaction_level_value.toFloat()
                 SatisfactionLevelValue.text = cardData.post.satisfaction_level_value.toString()
                 userAge.text = "${cardData.user.years_old} Years/ ${cardData.user.months_old} Months old" //TODO cambiar el Old y ponerlo en string.xml
@@ -82,7 +88,31 @@ class CardStackView_Adapter @Inject constructor(
                 val flagUrl = "https://flagsapi.com/$CountryCode/flat/64.png"
                 Glide.with(context).load(flagUrl).into(CountryFlagIcon)
                 CheckpointText.text = cardData.post.text_post
+                PostAmountLikes.text = cardData.post.likes.toString()
+
+
+                listener?.checkPostLiked(cardData.post.id) { isLiked ->
+                    LikeButtom.setLiked(isLiked)
+                }
+
+                LikeButtom.setOnLikeListener(object : OnLikeListener {
+                    override fun liked(likeButton: LikeButton) {
+                        listener?.onLikeClicked(cardData.post.id,cardData.user.id)
+                        PostAmountLikes.text = cardData.post.likes.toString()
+                    }
+
+                    override fun unLiked(likeButton: LikeButton) {
+                        listener?.onUnlikeClicked(cardData.post.id,cardData.user.id)
+                        PostAmountLikes.text = cardData.post.likes.toString()
+                    }
+                })
             }
         }
+    }
+
+    interface CardActionsListener {
+        fun onLikeClicked(postId: String,postOwnerId: String)
+        fun onUnlikeClicked(postId: String,postOwnerId: String)
+        fun checkPostLiked(postId: String, callback: (Boolean) -> Unit)
     }
 }

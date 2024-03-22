@@ -106,4 +106,34 @@ class FirestorePostRepository @Inject constructor(
             Result.failure(e)
         }
     }
+
+    override suspend fun likePost(postId: String, postOwnerId: String): Unit = withContext(Dispatchers.IO) {
+        //referencia al usuario al cual cuyo post le dieron like
+          val likedPostUserDocRef = db.collection("Usuarios").document(postOwnerId)
+          val likedPostRef = likedPostUserDocRef.collection("Posts").document(postId)
+
+        //referecia al usuario que esta usando su cuenta actualente en la app y bueno..aca tmb se crea la coleccion LikedPosts de ese usuario
+          val currentUserlikedPostsRef = db.collection("Usuarios").document(authService.uid).collection("LikedPosts")
+
+          currentUserlikedPostsRef.document(postId).set(mapOf("likedTime" to FieldValue.serverTimestamp())).await()
+          likedPostRef.update("likes", FieldValue.increment(1)).await()
+    }
+
+    override suspend fun unlikePost(postId: String, postOwnerId: String): Unit = withContext(Dispatchers.IO) {
+        val likedPostUserDocRef = db.collection("Usuarios").document(postOwnerId)
+        val likedPostRef = likedPostUserDocRef.collection("Posts").document(postId)
+
+        val currentUserlikedPostsRef = db.collection("Usuarios").document(authService.uid).collection("LikedPosts")
+
+        currentUserlikedPostsRef.document(postId).delete().await()
+        likedPostRef.update("likes", FieldValue.increment(-1)).await()
+    }
+
+    override suspend fun isPostLiked(postId: String): Boolean = withContext(Dispatchers.IO) {
+        val uid = authService.uid
+        val userDocRef = db.collection("Usuarios").document(uid)
+        val likedPostsRef = userDocRef.collection("LikedPosts")
+        val document = likedPostsRef.document(postId).get().await()
+        return@withContext document.exists()
+    }
 }

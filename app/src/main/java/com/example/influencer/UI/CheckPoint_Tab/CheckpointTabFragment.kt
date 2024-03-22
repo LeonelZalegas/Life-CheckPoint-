@@ -21,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class CheckpointTabFragment : Fragment() {
+class CheckpointTabFragment : Fragment(), CardStackView_Adapter.CardActionsListener {
 
     private var _binding: FragmentCheckpointTabBinding? = null
     private val binding get() = _binding!!
@@ -53,6 +53,8 @@ class CheckpointTabFragment : Fragment() {
 
         binding.addingNewCheckpoint.visibility = View.GONE
         binding.addingNewCheckpointUpdate.visibility = View.GONE
+
+        cardstackviewAdapter.listener = this
 
         initUI()
         setupCardStackView()
@@ -166,6 +168,18 @@ class CheckpointTabFragment : Fragment() {
     private fun goToAddingNewCheckpoint() {
         val intentAddingNewCheckpoint = Intent(context, CheckpointThemeChooseActivity::class.java)
         startActivity(intentAddingNewCheckpoint)
+    }
+
+    override fun onLikeClicked(postId: String, postOwnerId: String) {
+        checkpointTabViewModel.likePost(postId,postOwnerId)
+    }
+
+    override fun onUnlikeClicked(postId: String, postOwnerId: String) {
+        checkpointTabViewModel.unlikePost(postId,postOwnerId)
+    }
+
+    override fun checkPostLiked(postId: String, callback: (Boolean) -> Unit) {
+        checkpointTabViewModel.checkIfPostIsLiked(postId, callback)
     }
 
     override fun onDestroyView() {
