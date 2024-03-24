@@ -107,7 +107,7 @@ class FirestorePostRepository @Inject constructor(
         }
     }
 
-    override suspend fun likePost(postId: String, postOwnerId: String): Unit = withContext(Dispatchers.IO) {
+    override suspend fun likePost(postId: String, postOwnerId: String,currentLikes: Int): Unit = withContext(Dispatchers.IO) {
         //referencia al usuario al cual cuyo post le dieron like
           val likedPostUserDocRef = db.collection("Usuarios").document(postOwnerId)
           val likedPostRef = likedPostUserDocRef.collection("Posts").document(postId)
@@ -116,17 +116,17 @@ class FirestorePostRepository @Inject constructor(
           val currentUserlikedPostsRef = db.collection("Usuarios").document(authService.uid).collection("LikedPosts")
 
           currentUserlikedPostsRef.document(postId).set(mapOf("likedTime" to FieldValue.serverTimestamp())).await()
-          likedPostRef.update("likes", FieldValue.increment(1)).await()
+          likedPostRef.update("likes", currentLikes).await()
     }
 
-    override suspend fun unlikePost(postId: String, postOwnerId: String): Unit = withContext(Dispatchers.IO) {
+    override suspend fun unlikePost(postId: String, postOwnerId: String,currentLikes: Int): Unit = withContext(Dispatchers.IO) {
         val likedPostUserDocRef = db.collection("Usuarios").document(postOwnerId)
         val likedPostRef = likedPostUserDocRef.collection("Posts").document(postId)
 
         val currentUserlikedPostsRef = db.collection("Usuarios").document(authService.uid).collection("LikedPosts")
 
         currentUserlikedPostsRef.document(postId).delete().await()
-        likedPostRef.update("likes", FieldValue.increment(-1)).await()
+        likedPostRef.update("likes", currentLikes).await()
     }
 
     override suspend fun isPostLiked(postId: String): Boolean = withContext(Dispatchers.IO) {

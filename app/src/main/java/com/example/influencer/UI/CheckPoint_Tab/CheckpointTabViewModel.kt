@@ -28,6 +28,9 @@ class CheckpointTabViewModel @Inject constructor(
     private val _cards = MutableLiveData<List<CardData>>()
     val cards: LiveData<List<CardData>> = _cards
 
+    private val _likeUpdate = MutableLiveData<Pair<String, Int>>()
+    val likeUpdate: LiveData<Pair<String, Int>> = _likeUpdate
+
     val loading = MutableLiveData<Boolean>()
 
     private var cardDataList = mutableListOf<CardData>()
@@ -110,20 +113,22 @@ class CheckpointTabViewModel @Inject constructor(
 
     fun isLastCard(): Boolean = currentCardIndex == 0
 
-    fun likePost(postId: String, postOwnerId: String) {
+    fun likePost(postId: String, postOwnerId: String,currentLikes: Int) {
         viewModelScope.launch {
             try {
-                likesInteractionsUseCase.likePost(postId,postOwnerId)
+                likesInteractionsUseCase.likePost(postId,postOwnerId,currentLikes + 1)
+                _likeUpdate.value = postId to (currentLikes + 1)
             } catch (e: Exception) {
                 Log.e("ViewModel", "Error liking post", e)
             }
         }
     }
 
-    fun unlikePost(postId: String, postOwnerId: String) {
+    fun unlikePost(postId: String, postOwnerId: String,currentLikes: Int) {
         viewModelScope.launch {
             try {
-                likesInteractionsUseCase.unlikePost(postId,postOwnerId)
+                likesInteractionsUseCase.unlikePost(postId,postOwnerId,currentLikes -1 )
+                _likeUpdate.value = postId to (currentLikes -1 )
             } catch (e: Exception) {
                 Log.e("ViewModel", "Error unliking post", e)
             }

@@ -3,6 +3,7 @@ package com.example.influencer.UI.CheckPoint_Tab
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,6 +46,8 @@ class CardStackView_Adapter @Inject constructor(
     private var cardDataList: List<CardData> = emptyList()
     var listener: CardActionsListener? = null
 
+    private var currentLikesMap: MutableMap<String, Int> = mutableMapOf()
+
     fun setCards(cards: List<CardData>) {
         cardDataList = cards
         notifyDataSetChanged()
@@ -53,7 +56,7 @@ class CardStackView_Adapter @Inject constructor(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = CardLayoutBinding.inflate(inflater, parent, false)
-        return ViewHolder(binding,listener)
+        return ViewHolder(binding,listener,currentLikesMap)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -61,15 +64,36 @@ class CardStackView_Adapter @Inject constructor(
         holder.bind(cardData,context)
     }
 
+    override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
+        if (payloads.isNotEmpty()) {
+            val newLikes = payloads[0] as Int
+            holder.updateLikes(newLikes)
+        } else {
+            super.onBindViewHolder(holder, position, payloads)
+        }
+    }
+
     override fun getItemCount(): Int = cardDataList.size
+
+    fun updateLikes(postId: String, newLikes: Int) {
+        val position = cardDataList.indexOfFirst { it.post.id == postId }
+        if (position != -1) {
+            currentLikesMap[postId] = newLikes
+            notifyItemChanged(position, newLikes)
+        }
+    }
 
     class ViewHolder(
         private val binding: CardLayoutBinding,
-        private val listener: CardActionsListener?
+        private val listener: CardActionsListener?,
+        private val currentLikesMap: MutableMap<String, Int>
         ) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(cardData: CardData,context: Context){
+        var currentLikes : Int = 0
+
+        fun bind(cardData: CardData, context: Context){
             with(binding){
+
                 val colorString = if (cardData.post.categoryColor.isNullOrEmpty()) "#FFFFFF" else cardData.post.categoryColor // Default to white if null or empty
                 val colorInt = Color.parseColor(colorString)
                 MainCategory.text = cardData.post.selectedCategory
@@ -88,8 +112,9 @@ class CardStackView_Adapter @Inject constructor(
                 val flagUrl = "https://flagsapi.com/$CountryCode/flat/64.png"
                 Glide.with(context).load(flagUrl).into(CountryFlagIcon)
                 CheckpointText.text = cardData.post.text_post
-                PostAmountLikes.text = cardData.post.likes.toString()
 
+                currentLikes = currentLikesMap[cardData.post.id] ?: cardData.post.likes
+                PostAmountLikes.text = currentLikes.toString()
 
                 listener?.checkPostLiked(cardData.post.id) { isLiked ->
                     LikeButtom.setLiked(isLiked)
@@ -97,22 +122,29 @@ class CardStackView_Adapter @Inject constructor(
 
                 LikeButtom.setOnLikeListener(object : OnLikeListener {
                     override fun liked(likeButton: LikeButton) {
-                        listener?.onLikeClicked(cardData.post.id,cardData.user.id)
-                        PostAmountLikes.text = cardData.post.likes.toString()
+                        currentLikesMap[cardData.post.id] = currentLikes
+                        listener?.onLikeClicked(cardData.post.id,cardData.user.id, currentLikes)
+                        PostAmountLikes.text = currentLikes.toString()
                     }
 
                     override fun unLiked(likeButton: LikeButton) {
-                        listener?.onUnlikeClicked(cardData.post.id,cardData.user.id)
-                        PostAmountLikes.text = cardData.post.likes.toString()
+                        currentLikesMap[cardData.post.id] = currentLikes
+                        listener?.onUnlikeClicked(cardData.post.id,cardData.user.id, currentLikes)
+                        PostAmountLikes.text = currentLikes.toString()
                     }
                 })
             }
         }
+
+        fun updateLikes(newLikes: Int) {
+            binding.PostAmountLikes.text = newLikes.toString()
+            currentLikes = newLikes
+        }
     }
 
     interface CardActionsListener {
-        fun onLikeClicked(postId: String,postOwnerId: String)
-        fun onUnlikeClicked(postId: String,postOwnerId: String)
+        fun onLikeClicked(postId: String,postOwnerId: String,currentLikes: Int)
+        fun onUnlikeClicked(postId: String,postOwnerId: String,currentLikes: Int)
         fun checkPostLiked(postId: String, callback: (Boolean) -> Unit)
     }
 }

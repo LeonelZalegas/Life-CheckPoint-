@@ -92,7 +92,6 @@ class CheckpointTabFragment : Fragment(), CardStackView_Adapter.CardActionsListe
                     setAnimation(com.example.influencer.R.raw.rewind_checkpoint_post)
                     playAnimation()
                 }
-
                     binding.cardStackView.smoothScrollToPosition(0)  // Perform the rewind
                     binding.cardStackView.smoothScrollBy(120, 120)   // Animation of the rewind
                     checkpointTabViewModel.Rewind()
@@ -118,6 +117,10 @@ class CheckpointTabFragment : Fragment(), CardStackView_Adapter.CardActionsListe
 
         checkpointTabViewModel.cards.observe(viewLifecycleOwner) { cards ->
             cardstackviewAdapter.setCards(cards)
+        }
+
+        checkpointTabViewModel.likeUpdate.observe(viewLifecycleOwner) { (postId, newLikes) ->
+            cardstackviewAdapter.updateLikes(postId, newLikes)
         }
 
         checkpointTabViewModel.loading.observe(viewLifecycleOwner){isloading ->
@@ -170,12 +173,12 @@ class CheckpointTabFragment : Fragment(), CardStackView_Adapter.CardActionsListe
         startActivity(intentAddingNewCheckpoint)
     }
 
-    override fun onLikeClicked(postId: String, postOwnerId: String) {
-        checkpointTabViewModel.likePost(postId,postOwnerId)
+    override fun onLikeClicked(postId: String, postOwnerId: String, currentLikes: Int) {
+        checkpointTabViewModel.likePost(postId,postOwnerId,currentLikes)
     }
 
-    override fun onUnlikeClicked(postId: String, postOwnerId: String) {
-        checkpointTabViewModel.unlikePost(postId,postOwnerId)
+    override fun onUnlikeClicked(postId: String, postOwnerId: String, currentLikes: Int) {
+        checkpointTabViewModel.unlikePost(postId,postOwnerId,currentLikes)
     }
 
     override fun checkPostLiked(postId: String, callback: (Boolean) -> Unit) {
