@@ -174,11 +174,11 @@ class CheckpointTabFragment : Fragment(), CardStackView_Adapter.CardActionsListe
     }
 
     override fun onLikeClicked(postId: String, postOwnerId: String, currentLikes: Int) {
-        checkpointTabViewModel.likePost(postId,postOwnerId,currentLikes)
+        checkpointTabViewModel.likePost(postId,postOwnerId)
     }
 
     override fun onUnlikeClicked(postId: String, postOwnerId: String, currentLikes: Int) {
-        checkpointTabViewModel.unlikePost(postId,postOwnerId,currentLikes)
+        checkpointTabViewModel.unlikePost(postId,postOwnerId)
     }
 
     override fun checkPostLiked(postId: String, callback: (Boolean) -> Unit) {

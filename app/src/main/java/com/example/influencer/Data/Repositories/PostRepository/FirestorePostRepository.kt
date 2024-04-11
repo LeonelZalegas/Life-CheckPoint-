@@ -107,7 +107,8 @@ class FirestorePostRepository @Inject constructor(
         }
     }
 
-    override suspend fun likePost(postId: String, postOwnerId: String,currentLikes: Int): Unit = withContext(Dispatchers.IO) {
+    //modifica la BD en tiempo real sumando 1 al contador de likes y aparte devuelve el nuevo valor actualizado
+    override suspend fun likePost(postId: String, postOwnerId: String): Int = withContext(Dispatchers.IO) {
         //referencia al usuario al cual cuyo post le dieron like
           val likedPostUserDocRef = db.collection("Usuarios").document(postOwnerId)
           val likedPostRef = likedPostUserDocRef.collection("Posts").document(postId)
@@ -116,17 +117,38 @@ class FirestorePostRepository @Inject constructor(
           val currentUserlikedPostsRef = db.collection("Usuarios").document(authService.uid).collection("LikedPosts")
 
           currentUserlikedPostsRef.document(postId).set(mapOf("likedTime" to FieldValue.serverTimestamp())).await()
-          likedPostRef.update("likes", currentLikes).await()
+
+        // Perform a transaction to increment the likes count
+        val newLikesCount = db.runTransaction { transaction ->
+            val snapshot = transaction.get(likedPostRef)
+            val currentLikes = snapshot.getLong("likes") ?: 0
+            val newLikes = currentLikes + 1
+            transaction.update(likedPostRef, "likes", newLikes)
+            newLikes // Return the new likes count
+        }.await()
+
+        return@withContext newLikesCount.toInt()
     }
 
-    override suspend fun unlikePost(postId: String, postOwnerId: String,currentLikes: Int): Unit = withContext(Dispatchers.IO) {
+    // same que likePost pero hace -1 al contador de likes
+    override suspend fun unlikePost(postId: String, postOwnerId: String): Int = withContext(Dispatchers.IO) {
         val likedPostUserDocRef = db.collection("Usuarios").document(postOwnerId)
         val likedPostRef = likedPostUserDocRef.collection("Posts").document(postId)
 
         val currentUserlikedPostsRef = db.collection("Usuarios").document(authService.uid).collection("LikedPosts")
 
         currentUserlikedPostsRef.document(postId).delete().await()
-        likedPostRef.update("likes", currentLikes).await()
+
+        // Perform a transaction to decrement the likes count
+        val newLikesCount = db.runTransaction { transaction ->
+            val snapshot = transaction.get(likedPostRef)
+            val currentLikes = snapshot.getLong("likes") ?: 0
+            val newLikes = if (currentLikes > 0) currentLikes - 1 else 0 // Prevent negative likes
+            transaction.update(likedPostRef, "likes", newLikes)
+            newLikes // Return the new likes count
+        }.await()
+
+        return@withContext newLikesCount.toInt()
     }
 
     override suspend fun isPostLiked(postId: String): Boolean = withContext(Dispatchers.IO) {

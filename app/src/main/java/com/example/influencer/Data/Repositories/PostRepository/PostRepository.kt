@@ -7,7 +7,7 @@ import com.example.influencer.UI.Upload_New_Update_Checkpoint.Model.CheckPoint_U
 interface PostRepository {
     suspend fun savePost(post: Post)
     suspend fun getRandomPostFromUser(userId: String): Result<Post>
-    suspend fun likePost(postId: String,postOwnerId: String,currentLikes: Int)
-    suspend fun unlikePost(postId: String,postOwnerId: String,currentLikes: Int)
+    suspend fun likePost(postId: String,postOwnerId: String):Int
+    suspend fun unlikePost(postId: String,postOwnerId: String):Int
     suspend fun isPostLiked (postId: String):Boolean
 }
