@@ -64,15 +64,6 @@ class CardStackView_Adapter @Inject constructor(
         holder.bind(cardData,context)
     }
 
-//    override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
-//        if (payloads.isNotEmpty()) {
-//            val newLikes = payloads[0] as Int
-//            holder.updateLikes(newLikes)
-//        } else {
-//            super.onBindViewHolder(holder, position, payloads)
-//        }
-//    }
-
     override fun getItemCount(): Int = cardDataList.size
 
     fun updateLikes(postId: String, newLikes: Int) {
@@ -122,24 +113,15 @@ class CardStackView_Adapter @Inject constructor(
 
                 LikeButtom.setOnLikeListener(object : OnLikeListener {
                     override fun liked(likeButton: LikeButton) {
-//                        currentLikesMap[cardData.post.id] = currentLikes
                         listener?.onLikeClicked(cardData.post.id,cardData.user.id, currentLikes)
-//                        PostAmountLikes.text = currentLikes.toString()
                     }
 
                     override fun unLiked(likeButton: LikeButton) {
-//                        currentLikesMap[cardData.post.id] = currentLikes
                         listener?.onUnlikeClicked(cardData.post.id,cardData.user.id, currentLikes)
-//                        PostAmountLikes.text = currentLikes.toString()
                     }
                 })
             }
         }
-
-//        fun updateLikes(newLikes: Int) {
-//            binding.PostAmountLikes.text = newLikes.toString()
-//            currentLikes = newLikes
-//        }
     }
 
     interface CardActionsListener {
