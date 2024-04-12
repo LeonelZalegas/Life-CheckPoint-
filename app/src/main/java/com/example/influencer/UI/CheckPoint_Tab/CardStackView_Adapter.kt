@@ -120,13 +120,28 @@ class CardStackView_Adapter @Inject constructor(
                         listener?.onUnlikeClicked(cardData.post.id,cardData.user.id, currentLikes)
                     }
                 })
-            }
-        }
-    }
 
-    interface CardActionsListener {
+
+                cardData.post.image_1?.let {
+                    PostPhoto1.visibility = View.VISIBLE
+                    Glide.with(context).load(it).into(PostPhoto1)
+                }?: run { PostPhoto1.visibility = View.GONE }
+
+                cardData.post.image_2?.let {
+                    PostPhoto2.visibility = View.VISIBLE
+                    Glide.with(context).load(it).into(PostPhoto2)
+                }?: run { PostPhoto2.visibility = View.GONE }
+
+            }
+          }
+        }
+
+       interface CardActionsListener {
         fun onLikeClicked(postId: String,postOwnerId: String,currentLikes: Int)
         fun onUnlikeClicked(postId: String,postOwnerId: String,currentLikes: Int)
         fun checkPostLiked(postId: String, callback: (Boolean) -> Unit)
+       }
+
     }
-}
+
+
