@@ -364,6 +364,7 @@
             android:minHeight="450dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/pruebagg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/border_black"
@@ -381,7 +382,9 @@
                     android:textStyle="bold"
                     app:layout_constraintVertical_bias="0"
                     android:layout_marginTop="15dp"
-                    android:layout_marginBottom="15dp"/>
+                    android:layout_marginBottom="15dp"
+                    app:layout_constraintVertical_chainStyle="packed"
+                   />
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/PostPhoto1"
@@ -396,6 +399,7 @@
                     android:maxHeight="300dp"
                     android:adjustViewBounds="true"
                     android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
                     app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.postImages"
                     />
 
@@ -411,7 +415,6 @@
                     android:visibility="gone"
                     android:maxHeight="300dp"
                     android:adjustViewBounds="true"
-                    android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
                     app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.postImages"
                     />

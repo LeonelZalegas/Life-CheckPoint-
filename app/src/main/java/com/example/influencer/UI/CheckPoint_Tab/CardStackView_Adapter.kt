@@ -8,10 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.influencer.Core.Utils.ChipTextColor.isColorDark
 import com.example.influencer.Core.Utils.DateTimeUtils
+import com.example.influencer.R
 import com.example.influencer.UI.CheckPoint_Tab.Model.CardData
 import com.example.influencer.databinding.CardLayoutBinding
 import com.like.LikeButton
@@ -121,10 +123,11 @@ class CardStackView_Adapter @Inject constructor(
                     }
                 })
 
-
+//                cargar imagenes
                 cardData.post.image_1?.let {
                     PostPhoto1.visibility = View.VISIBLE
                     Glide.with(context).load(it).into(PostPhoto1)
+
                 }?: run { PostPhoto1.visibility = View.GONE }
 
                 cardData.post.image_2?.let {
