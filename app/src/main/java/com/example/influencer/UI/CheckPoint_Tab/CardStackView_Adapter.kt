@@ -18,6 +18,7 @@ import com.example.influencer.UI.CheckPoint_Tab.Model.CardData
 import com.example.influencer.databinding.CardLayoutBinding
 import com.like.LikeButton
 import com.like.OnLikeListener
+import java.util.*
 import javax.inject.Inject
 
 //funcion de extencion para modificar el Textview y asi poder agregar el color del background como tambien las puntas redondeadas/color del texto en base a color del fondo
@@ -123,7 +124,7 @@ class CardStackView_Adapter @Inject constructor(
                     }
                 })
 
-//                cargar imagenes
+                // cargar imagenes
                 cardData.post.image_1?.let {
                     PostPhoto1.visibility = View.VISIBLE
                     Glide.with(context).load(it).into(PostPhoto1)
@@ -135,6 +136,11 @@ class CardStackView_Adapter @Inject constructor(
                     Glide.with(context).load(it).into(PostPhoto2)
                 }?: run { PostPhoto2.visibility = View.GONE }
 
+                //cargar los Updates de la card que se esta mostrando actualmente
+                listener?.requestUpdates(cardData.post.id,cardData.user.id){updatesList ->
+
+                }
+
             }
           }
         }
@@ -143,6 +149,7 @@ class CardStackView_Adapter @Inject constructor(
         fun onLikeClicked(postId: String,postOwnerId: String,currentLikes: Int)
         fun onUnlikeClicked(postId: String,postOwnerId: String,currentLikes: Int)
         fun checkPostLiked(postId: String, callback: (Boolean) -> Unit)
+        fun requestUpdates(postId: String,postOwnerId: String, callback: (SortedMap<Int, String>?) -> Unit)
        }
 
     }

@@ -6,11 +6,13 @@ import com.example.influencer.UI.Upload_New_Checkpoint.Model.Post
 import com.example.influencer.UI.Upload_New_Update_Checkpoint.Model.CheckPoint_Update_Item
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import java.util.*
 import java.util.concurrent.CompletableFuture
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -158,4 +160,43 @@ class FirestorePostRepository @Inject constructor(
         val document = likedPostsRef.document(postId).get().await()
         return@withContext document.exists()
     }
+
+    override suspend fun getPostUpdates(postId: String,postOwnerId: String): SortedMap<Int, String>? = withContext(Dispatchers.IO) {
+        val updatesMap = sortedMapOf<Int, String>()
+        try {
+            // Access the specific post using postOwnerId and postId
+            val updatesSnapshot = db.collection("Usuarios")
+                .document(postOwnerId)
+                .collection("Posts")
+                .document(postId)
+                .collection("Updates")
+                .orderBy("update_Number", Query.Direction.ASCENDING)
+                .get()
+                .await()
+
+
+            Log.d("FirestoreDebug", "Updates found: ${updatesSnapshot.size()}")
+            updatesSnapshot.documents.forEach { document ->
+                Log.d("FirestoreDebug", "Update: ${document.id} => ${document.data}")
+            }
+
+//             Check if the "Updates" collection is empty or does not exist
+            if (updatesSnapshot.isEmpty) {
+                return@withContext null
+            }
+
+            for (document in updatesSnapshot.documents) {
+                val updateNumber = document.getLong("update_Number")?.toInt()
+                val updateText = document.getString("update_Text")
+                if (updateNumber != null && updateText != null) {
+                    updatesMap[updateNumber] = updateText
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("FirestorePostRepository", "Error fetching post updates", e)
+            return@withContext null
+        }
+        return@withContext updatesMap.takeIf { it.isNotEmpty() }
+    }
+
 }

@@ -18,6 +18,7 @@ import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.CheckpointUpdateT
 import com.example.influencer.databinding.FragmentCheckpointTabBinding
 import com.yuyakaido.android.cardstackview.*
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -183,6 +184,10 @@ class CheckpointTabFragment : Fragment(), CardStackView_Adapter.CardActionsListe
 
     override fun checkPostLiked(postId: String, callback: (Boolean) -> Unit) {
         checkpointTabViewModel.checkIfPostIsLiked(postId, callback)
+    }
+
+    override fun requestUpdates(postId: String, postOwnerId: String, callback: (SortedMap<Int, String>?) -> Unit) {
+        checkpointTabViewModel.fetchUpdatesForPost(postId,postOwnerId,callback)
     }
 
     override fun onDestroyView() {

@@ -8,15 +8,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.influencer.Core.Event
+import com.example.influencer.Domain.GetPostUpdatesListUseCase
 import com.example.influencer.Domain.GetRandomCardDataUseCase
 import com.example.influencer.Domain.LikesInteractionsUseCase
 import com.example.influencer.UI.CheckPoint_Tab.Model.CardData
 import kotlinx.coroutines.*
+import java.util.*
 
 @HiltViewModel
 class CheckpointTabViewModel @Inject constructor(
     private val getRandomCardDataUseCase: GetRandomCardDataUseCase,
-    private val likesInteractionsUseCase: LikesInteractionsUseCase
+    private val likesInteractionsUseCase: LikesInteractionsUseCase,
+    private val getPostUpdatesListUseCase: GetPostUpdatesListUseCase
 ) : ViewModel() {
 
     private val _navigateToAddingNewCheckpoint = MutableLiveData<Event<Boolean>>()
@@ -148,5 +151,12 @@ class CheckpointTabViewModel @Inject constructor(
 
     fun onAddingNewCheckpointUpdateSelected() {
         _navigateToAddingNewCheckpointUpdate.value = Event(true)
+    }
+
+    fun fetchUpdatesForPost(postId: String,postOwnerId: String, callback: (SortedMap<Int, String>?) -> Unit) {
+        viewModelScope.launch {
+            val updatesMap = getPostUpdatesListUseCase(postId,postOwnerId) // This should be a suspend function call
+            callback(updatesMap)
+        }
     }
 }
