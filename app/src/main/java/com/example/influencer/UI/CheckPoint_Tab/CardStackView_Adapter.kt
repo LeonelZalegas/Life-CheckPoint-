@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.influencer.Core.Utils.ChipTextColor.isColorDark
@@ -85,6 +86,15 @@ class CardStackView_Adapter @Inject constructor(
 
         var currentLikes : Int = 0
 
+        private val updatesAdapter = Updates_Adapter()
+
+        init {
+            binding.UpdatesRecyclerView.apply {
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                adapter = updatesAdapter
+            }
+        }
+
         fun bind(cardData: CardData, context: Context){
             with(binding){
 
@@ -138,7 +148,9 @@ class CardStackView_Adapter @Inject constructor(
 
                 //cargar los Updates de la card que se esta mostrando actualmente
                 listener?.requestUpdates(cardData.post.id,cardData.user.id){updatesList ->
-
+                    updatesList?.let {
+                        updatesAdapter.setUpdates(it)
+                    }
                 }
 
             }
@@ -153,5 +165,6 @@ class CardStackView_Adapter @Inject constructor(
        }
 
     }
+
 
 
