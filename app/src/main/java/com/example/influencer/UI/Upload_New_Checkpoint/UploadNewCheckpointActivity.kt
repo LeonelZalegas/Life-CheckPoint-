@@ -14,7 +14,6 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
 import android.widget.SeekBar
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -27,9 +26,8 @@ import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bumptech.glide.Glide
 import com.example.influencer.BuildConfig
 import com.example.influencer.Core.Serializable.getSerializableExtraCompat
-import com.example.influencer.Core.Utils.ChipTextColor
+import com.example.influencer.Core.Utils.BackgroundAndTextColors
 import com.example.influencer.R
-import com.example.influencer.UI.CheckPoint_Tab.setRoundedBackgroundColor
 import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.SharedComponents.Model.CheckpointThemeItem
 import com.example.influencer.UI.Home
 import com.example.influencer.UI.Upload_New_Checkpoint.Adapter.TempImageAdapter
@@ -38,7 +36,6 @@ import com.example.influencer.databinding.ActivityUploadNewCheckpointBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.IOException
-import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -136,7 +133,7 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
 
                 // Determine if the background color is dark or light
                 val colorInt: Int = ContextCompat.getColor(context, it.color) //transforma Resource ID a un color posta
-                val isDark = ChipTextColor.isColorDark(colorInt)
+                val isDark = BackgroundAndTextColors.isColorDark(colorInt)
                 setTextColor(if (isDark) Color.WHITE else Color.BLACK)
             }
             selectedCategoryText = it.text  //guardamos en variable para pasar x parametro al savepost (guardar Firebase)

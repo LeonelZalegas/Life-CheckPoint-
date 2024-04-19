@@ -1,20 +1,17 @@
 package com.example.influencer.UI.CheckPoint_Tab
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.influencer.Core.Utils.ChipTextColor.isColorDark
+import com.example.influencer.Core.Utils.BackgroundAndTextColors.setChipTextColor
+import com.example.influencer.Core.Utils.BackgroundAndTextColors.setRoundedBackgroundColor
 import com.example.influencer.Core.Utils.DateTimeUtils
-import com.example.influencer.R
 import com.example.influencer.UI.CheckPoint_Tab.Model.CardData
 import com.example.influencer.databinding.CardLayoutBinding
 import com.like.LikeButton
@@ -22,26 +19,6 @@ import com.like.OnLikeListener
 import java.util.*
 import javax.inject.Inject
 
-//funcion de extencion para modificar el Textview y asi poder agregar el color del background como tambien las puntas redondeadas/color del texto en base a color del fondo
-fun View.setRoundedBackgroundColor(color: Int, cornerRadiusDp: Float) {
-    val density = context.resources.displayMetrics.density
-    // Convert dp to pixels
-    val cornerRadiusPx = cornerRadiusDp * density
-    val drawable = GradientDrawable().apply {
-        shape = GradientDrawable.RECTANGLE
-        setColor(color)
-        cornerRadius = cornerRadiusPx
-    }
-    background = drawable
-
-    // Determine if the background color is dark or light
-    val isDark = isColorDark(color)
-
-    // If the view is a TextView (or subclass), set its text color based on the background color
-    if (this is TextView) {
-        this.setTextColor(if (isDark) Color.WHITE else Color.BLACK)
-    }
-}
 
 class CardStackView_Adapter @Inject constructor(
     private val context: Context
@@ -146,10 +123,14 @@ class CardStackView_Adapter @Inject constructor(
                     Glide.with(context).load(it).into(PostPhoto2)
                 }?: run { PostPhoto2.visibility = View.GONE }
 
+
                 //cargar los Updates de la card que se esta mostrando actualmente
+                val colorStateList = ColorStateList.valueOf(colorInt)
+                DailyCheckpointUpdatesTitle.chipBackgroundColor = colorStateList
+                DailyCheckpointUpdatesTitle.setChipTextColor(colorInt)
                 listener?.requestUpdates(cardData.post.id,cardData.user.id){updatesList ->
                     updatesList?.let {
-                        updatesAdapter.setUpdates(it)
+                        updatesAdapter.setUpdates(it,colorInt)
                     }
                 }
 

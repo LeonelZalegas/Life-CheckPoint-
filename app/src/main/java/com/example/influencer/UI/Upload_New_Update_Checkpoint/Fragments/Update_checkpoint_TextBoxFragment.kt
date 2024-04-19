@@ -15,7 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.influencer.Core.Serializable.getSerializableCompat
-import com.example.influencer.Core.Utils.ChipTextColor
+import com.example.influencer.Core.Utils.BackgroundAndTextColors
 import com.example.influencer.R
 import com.example.influencer.UI.Create_Modify_Checkpoint_Menu.SharedComponents.Model.CheckpointThemeItem
 import com.example.influencer.UI.Home
@@ -63,7 +63,7 @@ class Update_checkpoint_TextBox : Fragment() {
 
             // Determine if the background color is dark or light
             val colorInt: Int = ContextCompat.getColor(context, selectedCategoryColor) //transforma Resource ID a un color posta
-            val isDark = ChipTextColor.isColorDark(colorInt)
+            val isDark = BackgroundAndTextColors.isColorDark(colorInt)
             setTextColor(if (isDark) Color.WHITE else Color.BLACK)
         }
 
@@ -94,7 +94,7 @@ class Update_checkpoint_TextBox : Fragment() {
 
                 // Determine if the background color is dark or light
                 val colorInt: Int = ContextCompat.getColor(context, selectedCategoryColor) //transforma Resource ID a un color posta
-                val isDark = ChipTextColor.isColorDark(colorInt)
+                val isDark = BackgroundAndTextColors.isColorDark(colorInt)
                 setTextColor(if (isDark) Color.WHITE else Color.BLACK)
             }
         }
