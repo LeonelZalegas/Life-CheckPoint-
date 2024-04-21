@@ -3,6 +3,7 @@ package com.example.influencer.UI.CheckPoint_Tab
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -129,9 +130,15 @@ class CardStackView_Adapter @Inject constructor(
                 DailyCheckpointUpdatesTitle.chipBackgroundColor = colorStateList
                 DailyCheckpointUpdatesTitle.setChipTextColor(colorInt)
                 listener?.requestUpdates(cardData.post.id,cardData.user.id){updatesList ->
-                    updatesList?.let {
-                        updatesAdapter.setUpdates(it,colorInt)
+                    binding.UpdatesRecyclerView.visibility = View.GONE
+                    binding.textViewNoUpdates.visibility = View.GONE
+                    if (updatesList.isNullOrEmpty()){
+                        binding.textViewNoUpdates.visibility = View.VISIBLE
+                    }else{
+                        binding.UpdatesRecyclerView.visibility = View.VISIBLE
+                        updatesAdapter.setUpdates(updatesList,colorInt)
                     }
+
                 }
 
             }

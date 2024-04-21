@@ -77,7 +77,9 @@
     <string name="Date_selecting">Select your birth date and Country:</string>
     <string name="NoDate_Country">Please pick a date and a country</string>
     <string name="DatePicker_dialog">Select your date of birth</string>
-
+    //Checkpoint Post showing
+    <string name="DailyCheckpointUpdates_Title">Daily Checkpoint Updates</string>
+    <string name="textViewNoUpdates">There is no Updates for this Checkpoint yet</string>
 
 
 </resources>
