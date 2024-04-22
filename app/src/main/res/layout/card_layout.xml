@@ -360,7 +360,7 @@
             app:layout_constraintTop_toBottomOf="@id/barrier"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/Mainguidelinehorizontal2"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:minHeight="450dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -483,26 +483,26 @@
         </androidx.cardview.widget.CardView>
 
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/CommentSection"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/barrier2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:backgroundTint="@color/light_blue"
-            android:layout_marginBottom="0.5dp"
-            >
+<!--        <androidx.cardview.widget.CardView-->
+<!--            android:id="@+id/CommentSection"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="0dp"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/barrier2"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            android:backgroundTint="@color/light_blue"-->
+<!--            android:layout_marginBottom="0.5dp"-->
+<!--            >-->
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/border_black">
+<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:background="@drawable/border_black">-->
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
+<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--        </androidx.cardview.widget.CardView>-->
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/barrier"
@@ -519,12 +519,12 @@
             app:constraint_referenced_ids="CheckpointAndUpdate" />
 
         <!-- TODO eliminar luego esto junto al card q lo utiliza, lo dejaos por un sentido esteteico para q se vea la seccion comentarios aun-->
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/Mainguidelinehorizontal2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.8" />
+<!--        <androidx.constraintlayout.widget.Guideline-->
+<!--            android:id="@+id/Mainguidelinehorizontal2"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            app:layout_constraintGuide_percent="0.8" />-->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

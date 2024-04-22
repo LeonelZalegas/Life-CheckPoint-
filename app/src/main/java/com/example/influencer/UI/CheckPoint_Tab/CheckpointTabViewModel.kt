@@ -22,6 +22,11 @@ class CheckpointTabViewModel @Inject constructor(
     private val getPostUpdatesListUseCase: GetPostUpdatesListUseCase
 ) : ViewModel() {
 
+    companion object {
+        private const val INITIAL_CARDS_COUNT = 10
+        private const val PREFETCH_THRESHOLD = 3  // Number of cards ahead to pre-fetch// con 2 si el user pasa muy rapido no llega a cargar y tmb aveces no carga el card de atras x alguna razon
+    }
+
     private val _navigateToAddingNewCheckpoint = MutableLiveData<Event<Boolean>>()
     val navigateToAddingNewCheckpoint: LiveData<Event<Boolean>> = _navigateToAddingNewCheckpoint
 
@@ -38,7 +43,6 @@ class CheckpointTabViewModel @Inject constructor(
 
     private var cardDataList = mutableListOf<CardData>()
     private var currentCardIndex = 0
-    private val preFetchThreshold = 3  // Number of cards ahead to pre-fetch// con 2 si el user pasa muy rapido no llega a cargar y tmb aveces no carga el card de atras x alguna razon
 
     init {
         fetchInitialCardData()
@@ -48,7 +52,7 @@ class CheckpointTabViewModel @Inject constructor(
     private fun fetchInitialCardData() {
         viewModelScope.launch {
             loading.postValue(true)
-            val fetchCards = List(10) { // Create a list of Deferred objects
+            val fetchCards = List(INITIAL_CARDS_COUNT) { // Create a list of Deferred objects
                 async {
                     getRandomCardDataUseCase().getOrNull() // Directly process results here
                 }
@@ -67,7 +71,7 @@ class CheckpointTabViewModel @Inject constructor(
         viewModelScope.launch {
             getRandomCardDataUseCase().onSuccess { cardData ->
                 cardDataList.add(cardData)
-                if (cardDataList.size > 10) {
+                if (cardDataList.size > INITIAL_CARDS_COUNT) {
                     cardDataList.removeAt(0)
                     if (currentCardIndex > 0) {
                         currentCardIndex--
@@ -81,7 +85,7 @@ class CheckpointTabViewModel @Inject constructor(
 
     private fun preFetchCards() {
         viewModelScope.launch {
-            for (i in 1..preFetchThreshold) {
+            for (i in 1..PREFETCH_THRESHOLD) {
                 fetchRandomCardData()
             }
         }
@@ -91,7 +95,7 @@ class CheckpointTabViewModel @Inject constructor(
         if ((currentCardIndex < cardDataList.size - 1)) {
             currentCardIndex++
             updateCardsForDisplay()
-            if (currentCardIndex >= cardDataList.size - preFetchThreshold) {
+            if (currentCardIndex >= cardDataList.size - PREFETCH_THRESHOLD) {
                 preFetchCards()
             }
         } else {
@@ -99,7 +103,7 @@ class CheckpointTabViewModel @Inject constructor(
         }
     }
 
-    fun Rewind() {
+    fun rewind() {
         currentCardIndex--
         updateCardsForDisplay()
     }
