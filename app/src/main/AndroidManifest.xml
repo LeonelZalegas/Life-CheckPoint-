@@ -36,14 +36,14 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31" >
         <activity
-            android:name=".UI.OnBoarding___CountryAndDateSelector.CountryAndDateSelector.CountryDateActivity"
+            android:name=".LaNuevaEstr.Features.OnBoarding___CountryAndDateSelector.UI.CountryAndDateSelector.CountryDateActivity"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".UI.Upload_New_Update_Checkpoint.Upload_New_Update_CheckpointActivity"
+            android:name=".LaNuevaEstr.Features.Upload_New_Update_Checkpoint.UI.Upload_New_Update_CheckpointActivity"
             android:exported="false"
             android:windowSoftInputMode="stateVisible|adjustPan" >
             <meta-data
@@ -61,7 +61,7 @@
                 android:resource="@xml/file_paths" />
         </provider> <!-- with the adjustPan , The layout is not resized, but it pans so the current focus is visible, es decir no comprime tod0 el layout cuando aparece el teclado -->
         <activity
-            android:name=".UI.Upload_New_Checkpoint.UploadNewCheckpoint"
+            android:name=".LaNuevaEstr.Features.Upload_New_Checkpoint.UI.UploadNewCheckpoint"
             android:exported="false"
             android:windowSoftInputMode="stateVisible|adjustPan" >
             <meta-data
@@ -69,7 +69,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".UI.Create_Modify_Checkpoint_Menu.CheckpointUpdateThemeChoose.CheckpointUpdateThemeChooseActivity"
+            android:name=".Features.Create_Modify_Checkpoint_Menu.UI.CheckpointUpdateThemeChoose.CheckpointUpdateThemeChooseActivity"
             android:exported="false"
             android:windowSoftInputMode="stateVisible|adjustPan" >
             <meta-data
@@ -77,7 +77,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".UI.Create_Modify_Checkpoint_Menu.CheckpointThemeChoose.CheckpointThemeChooseActivity"
+            android:name=".Features.Create_Modify_Checkpoint_Menu.UI.CheckpointThemeChoose.CheckpointThemeChooseActivity"
             android:exported="false"
             android:windowSoftInputMode="stateVisible|adjustPan" >
             <meta-data
@@ -85,42 +85,42 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".UI.Home"
+            android:name=".Core.UI.Home"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".UI.OnBoarding___CountryAndDateSelector.OnBoarding.OnBoardingActivity"
+            android:name=".Features.OnBoarding___CountryAndDateSelector.UI.OnBoarding.OnBoardingActivity"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".UI.SignIn.GoogleSignin.GoogleSigninActivity"
+            android:name=".Features.SignIn.UI.GoogleSignin.GoogleSigninActivity"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".UI.SignIn.AppSignIn.SignInActivity"
+            android:name=".Features.SignIn.UI.AppSignIn.SignInActivity"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Domain.Validations.SigninValidation"
+            android:name=".Features.SignIn.Domain.Validation.SigninValidation"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".UI.Login.LoginActivity"
+            android:name=".Features.Login.UI.LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.App.ElSplash" >
             <intent-filter>

@@ -6,14 +6,14 @@
 
     <fragment
         android:id="@+id/checkpointTabFragment"
-        android:name="com.example.influencer.UI.CheckPoint_Tab.CheckpointTabFragment"
+        android:name="com.example.influencer.LaNuevaEstr.Features.CheckPoint_Tab.UI.CheckpointTabFragment"
         android:label="CheckpointTabFragment" />
     <fragment
         android:id="@+id/rankingTabFragment"
-        android:name="com.example.influencer.UI.Ranking_Tab.RankingTabFragment"
+        android:name="com.example.influencer.LaNuevaEstr.Features.Ranking_Tab.UI.RankingTabFragment"
         android:label="RankingTabFragment" />
     <fragment
         android:id="@+id/profileTabFragment"
-        android:name="com.example.influencer.UI.Profile_Tab.ProfileTabFragment"
+        android:name="com.example.influencer.LaNuevaEstr.Features.Profile_Tab.UI.ProfileTabFragment"
         android:label="ProfileTabFragment" />
 </navigation>

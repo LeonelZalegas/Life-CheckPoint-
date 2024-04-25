@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".UI.Create_Modify_Checkpoint_Menu.SharedComponents.CheckpointThemeChoose_Fragment"
+    tools:context=".Features.Create_Modify_Checkpoint_Menu.UI.SharedComponents.CheckpointThemeChoose_Fragment"
     android:background="@color/naranja_Home">
 
     <androidx.constraintlayout.widget.Guideline

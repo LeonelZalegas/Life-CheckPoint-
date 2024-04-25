@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/naranja_Home"
-    tools:context=".UI.Upload_New_Checkpoint.UploadNewCheckpoint">
+    tools:context=".LaNuevaEstr.Features.Upload_New_Checkpoint.UI.UploadNewCheckpoint">
 
     <ImageView
         android:id="@+id/close"
