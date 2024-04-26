@@ -189,9 +189,6 @@ class CheckpointTabFragment : Fragment(), CardStackView_Adapter.CardActionsListe
     override fun checkPostLiked(postId: String, callback: (Boolean) -> Unit) {
         checkpointTabViewModel.checkIfPostIsLiked(postId, callback)
     }
-    override fun requestUpdates(postId: String, postOwnerId: String, callback: (SortedMap<Int, String>?) -> Unit) {
-        checkpointTabViewModel.fetchUpdatesForPost(postId, postOwnerId, callback)
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -8,5 +8,5 @@ import com.example.influencer.Features.Upload_New_Update_Checkpoint.Domain.Model
 data class CardData(
     val user: UsuarioSignin,
     val post: Post,
-    val updates: List<CheckPoint_Update_Item>
+    val updates: List<CheckPoint_Update_Item>?
 )

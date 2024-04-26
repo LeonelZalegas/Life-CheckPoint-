@@ -57,26 +57,9 @@ class FirestoreUpdatesRepository @Inject constructor(
         nextUpdateNumberCache!!
     }
 
-    override suspend fun getPostUpdates(postId: String): Result<List<CheckPoint_Update_Item>> = withContext(Dispatchers.IO){
-        try {
-            val updatesCollectionRef = db.collection("Posts").document(postId).collection("Updates")
-            val querySnapshot = updatesCollectionRef.get().await()
-
-            if (querySnapshot.isEmpty) {
-                Result.success(emptyList())
-            } else {
-                val updates =
-                    querySnapshot.documents.mapNotNull { it.toObject(CheckPoint_Update_Item::class.java) }
-                Result.success(updates)
-            }
-        }catch (e:Exception){
-            Result.failure(e)
-        }
-    }
-
     //https://www.notion.so/Upload-Update-Checkpoint-23beef0772dc4bd2ab6442ce244d2580?pvs=4#d218d93ee96040beb4413aa792072fc4
     companion object{
         private lateinit var lastPostDocRefCache:DocumentReference
-        private var nextUpdateNumberCache: Int? = null
+        private var nextUpdateNumberCache: Int = 0
     }
 }

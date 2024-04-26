@@ -3,6 +3,7 @@ package com.example.influencer.Core.Data.Repositories.PostRepository
 import android.util.Log
 import com.example.influencer.Core.Data.Network.AuthenticationService
 import com.example.influencer.Features.Upload_New_Checkpoint.Domain.Model.Post
+import com.example.influencer.Features.Upload_New_Update_Checkpoint.Domain.Model.CheckPoint_Update_Item
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -55,7 +56,6 @@ class FirestorePostRepository @Inject constructor(
         }
     }
 
-    //TODO agregar el metodo de abajo a la interfaz PostRepository
     suspend fun getUserPostCategories(): List<String> = withContext(Dispatchers.IO) {
         val uid = authService.getUid()
         val userDocRef = db.collection("Usuarios").document(uid)
@@ -160,8 +160,8 @@ class FirestorePostRepository @Inject constructor(
         return@withContext document.exists()
     }
 
-    override suspend fun getPostUpdates(postId: String,postOwnerId: String): SortedMap<Int, String>? = withContext(Dispatchers.IO) {
-        val updatesMap = sortedMapOf<Int, String>()
+    override suspend fun getPostUpdates(postId: String,postOwnerId: String): List<CheckPoint_Update_Item>? = withContext(Dispatchers.IO) {
+        val updatesList = mutableListOf<CheckPoint_Update_Item>()
         try {
             // Access the specific post using postOwnerId and postId
             val updatesSnapshot = db.collection("Usuarios")
@@ -188,14 +188,14 @@ class FirestorePostRepository @Inject constructor(
                 val updateNumber = document.getLong("update_Number")?.toInt()
                 val updateText = document.getString("update_Text")
                 if (updateNumber != null && updateText != null) {
-                    updatesMap[updateNumber] = updateText
+                    updatesList.add(CheckPoint_Update_Item(updateNumber, updateText))
                 }
             }
         } catch (e: Exception) {
             Log.e("FirestorePostRepository", "Error fetching post updates", e)
             return@withContext null
         }
-        return@withContext updatesMap.takeIf { it.isNotEmpty() }
+        return@withContext updatesList.sortedBy { it.update_Number }
     }
 
 }

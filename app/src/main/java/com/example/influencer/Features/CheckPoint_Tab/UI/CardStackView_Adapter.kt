@@ -145,16 +145,18 @@ class CardStackView_Adapter @Inject constructor(
                 val colorStateList = ColorStateList.valueOf(colorInt)
                 DailyCheckpointUpdatesTitle.chipBackgroundColor = colorStateList
                 DailyCheckpointUpdatesTitle.setChipTextColor(colorInt)
-                listener?.requestUpdates(cardData.post.id, cardData.user.id) { updatesList ->
-                    binding.UpdatesRecyclerView.visibility = View.GONE
-                    binding.textViewNoUpdates.visibility = View.GONE
-                    if (updatesList.isNullOrEmpty()) {
-                        binding.textViewNoUpdates.visibility = View.VISIBLE
-                    } else {
-                        binding.UpdatesRecyclerView.visibility = View.VISIBLE
-                        updatesAdapter.setUpdates(updatesList, colorInt)
-                    }
+
+                var updatesList = cardData.updates
+
+                binding.UpdatesRecyclerView.visibility = View.GONE
+                binding.textViewNoUpdates.visibility = View.GONE
+                if (updatesList.isNullOrEmpty()) {
+                    binding.textViewNoUpdates.visibility = View.VISIBLE
+                } else {
+                    binding.UpdatesRecyclerView.visibility = View.VISIBLE
+                    updatesAdapter.setUpdates(updatesList, colorInt)
                 }
+
             }
         }
 
@@ -168,7 +170,6 @@ class CardStackView_Adapter @Inject constructor(
         fun onLikeClicked(postId: String, postOwnerId: String, currentLikes: Int)
         fun onUnlikeClicked(postId: String, postOwnerId: String, currentLikes: Int)
         fun checkPostLiked(postId: String, callback: (Boolean) -> Unit)
-        fun requestUpdates(postId: String, postOwnerId: String, callback: (SortedMap<Int, String>?) -> Unit)
     }
 }
 

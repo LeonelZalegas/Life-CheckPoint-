@@ -5,15 +5,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.influencer.Core.Utils.BackgroundAndTextColors.setChipTextColor
+import com.example.influencer.Features.Upload_New_Update_Checkpoint.Domain.Model.CheckPoint_Update_Item
 import com.example.influencer.databinding.ItemUpdateCheckpointBinding
 import java.util.SortedMap
 
 class Updates_Adapter: RecyclerView.Adapter<Updates_Adapter.ViewHolder>() {
 
-    private var updatesMap: SortedMap<Int,String> = sortedMapOf()
+    private var updatesMap: List<CheckPoint_Update_Item> = emptyList()
     private var categoryColor:Int = 0
 
-    fun setUpdates(updates: SortedMap<Int, String>,categoryColor:Int) {
+    fun setUpdates(updates: List<CheckPoint_Update_Item>, categoryColor:Int) {
         this.updatesMap = updates
         this.categoryColor = categoryColor
         notifyDataSetChanged()
@@ -25,8 +26,8 @@ class Updates_Adapter: RecyclerView.Adapter<Updates_Adapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position:Int){
-        val entry = updatesMap.entries.toList()[position]
-        holder.bind(entry.key,entry.value,categoryColor)
+        val entry = updatesMap [position]
+        holder.bind(entry.update_Number,entry.update_Text,categoryColor)
     }
 
     override fun getItemCount(): Int = updatesMap.size

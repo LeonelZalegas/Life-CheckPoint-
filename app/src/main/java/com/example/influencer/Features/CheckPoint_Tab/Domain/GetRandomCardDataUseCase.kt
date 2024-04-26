@@ -21,8 +21,7 @@ class GetRandomCardDataUseCase @Inject constructor(
             val postResult = postRepository.getRandomPostFromUser(user.id)
             val post = postResult.getOrThrow()
 
-            val updatesResult = updatesRepository.getPostUpdates(post.id)
-            val updates = updatesResult.getOrDefault(emptyList()) // Use an empty list if the operation fails
+            val updates = postRepository.getPostUpdates(post.id,user.id)
 
             Result.success(CardData(user, post, updates))
 
