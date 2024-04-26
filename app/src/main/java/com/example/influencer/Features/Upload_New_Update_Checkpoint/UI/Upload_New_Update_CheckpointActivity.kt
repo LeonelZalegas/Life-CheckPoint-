@@ -2,9 +2,9 @@ package com.example.influencer.Features.Upload_New_Update_Checkpoint.UI
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.influencer.LaNuevaEstr.Core.Utils.Serializable.getSerializableExtraCompat
+import com.example.influencer.Core.Utils.Serializable.getSerializableExtraCompat
 import com.example.influencer.Features.Create_Modify_Checkpoint_Menu.Domain.Model.CheckpointThemeItem
-import com.example.influencer.LaNuevaEstr.Features.Upload_New_Update_Checkpoint.UI.Fragments.Update_checkpoint_TextBox
+import com.example.influencer.Features.Upload_New_Update_Checkpoint.UI.Fragments.Update_checkpoint_TextBox
 import com.example.influencer.databinding.ActivityUploadNewUpdateCheckpointBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,7 +18,7 @@ class Upload_New_Update_CheckpointActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         //obtenemos la categoria seleccionada
-        val selectedCategory = intent.getSerializableExtraCompat<_root_ide_package_.com.example.influencer.Features.Create_Modify_Checkpoint_Menu.Domain.Model.CheckpointThemeItem>("SELECTED_CATEGORY")
+        val selectedCategory = intent.getSerializableExtraCompat<CheckpointThemeItem>("SELECTED_CATEGORY")
 
         val fragment = Update_checkpoint_TextBox().apply {
             arguments = Bundle().apply {

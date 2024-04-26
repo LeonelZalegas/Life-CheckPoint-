@@ -19,6 +19,7 @@ import com.example.influencer.Core.Data.Preferences.UserPreferences;
 import com.example.influencer.Core.UI.Home;
 import com.example.influencer.Features.OnBoarding___CountryAndDateSelector.UI.OnBoarding.OnBoardingActivity;
 import com.example.influencer.R;
+import com.example.influencer.databinding.ActivityMainBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;

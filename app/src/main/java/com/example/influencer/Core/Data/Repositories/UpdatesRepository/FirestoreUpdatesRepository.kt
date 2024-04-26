@@ -1,7 +1,7 @@
 package com.example.influencer.Core.Data.Repositories.UpdatesRepository
 
 import com.example.influencer.Core.Data.Network.AuthenticationService
-import com.example.influencer.LaNuevaEstr.Features.Upload_New_Update_Checkpoint.Domain.Model.CheckPoint_Update_Item
+import com.example.influencer.Features.Upload_New_Update_Checkpoint.Domain.Model.CheckPoint_Update_Item
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class FirestoreUpdatesRepository @Inject constructor(
     private val db:FirebaseFirestore,
-    private val authService: _root_ide_package_.com.example.influencer.Core.Data.Network.AuthenticationService
+    private val authService: AuthenticationService
 ): UpdatesRepository {
 
     //devuelve el Post con = categoria (seleccionada por user) y q ha sido la ultima publicada de esa categoria

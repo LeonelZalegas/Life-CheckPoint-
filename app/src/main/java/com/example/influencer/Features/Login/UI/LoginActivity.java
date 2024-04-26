@@ -18,6 +18,7 @@ import com.example.influencer.R;
 import com.example.influencer.Features.SignIn.UI.GoogleSignin.GoogleSigninActivity;
 import com.example.influencer.Features.Login.Domain.Model.UsuarioLogin;
 import com.example.influencer.Features.SignIn.UI.AppSignIn.SignInActivity;
+import com.example.influencer.databinding.ActivityMainBinding;
 
 import javax.inject.Inject;
 

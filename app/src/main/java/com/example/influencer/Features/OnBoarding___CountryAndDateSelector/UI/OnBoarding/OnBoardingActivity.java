@@ -7,10 +7,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.influencer.LaNuevaEstr.Features.OnBoarding___CountryAndDateSelector.UI.CountryAndDateSelector.CountryDateActivity;
+import com.example.influencer.Features.OnBoarding___CountryAndDateSelector.UI.CountryAndDateSelector.CountryDateActivity;
 import com.example.influencer.Features.OnBoarding___CountryAndDateSelector.UI.OnBoarding.Fragments.OnboardingFragment1;
 import com.example.influencer.Features.OnBoarding___CountryAndDateSelector.UI.OnBoarding.Fragments.OnboardingFragment2;
 import com.example.influencer.Features.OnBoarding___CountryAndDateSelector.UI.OnBoarding.Fragments.OnboardingFragment3;
+import com.example.influencer.databinding.ActivityOnboardingBinding;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 import dagger.hilt.android.AndroidEntryPoint;

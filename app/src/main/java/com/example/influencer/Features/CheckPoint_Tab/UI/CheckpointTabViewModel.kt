@@ -8,10 +8,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.influencer.Core.Utils.Event
-import com.example.influencer.LaNuevaEstr.Features.CheckPoint_Tab.Domain.GetPostUpdatesListUseCase
-import com.example.influencer.LaNuevaEstr.Features.CheckPoint_Tab.Domain.GetRandomCardDataUseCase
-import com.example.influencer.LaNuevaEstr.Features.CheckPoint_Tab.Domain.LikesInteractionsUseCase
-import com.example.influencer.LaNuevaEstr.Features.CheckPoint_Tab.Domain.Model.CardData
+import com.example.influencer.Features.CheckPoint_Tab.Domain.GetPostUpdatesListUseCase
+import com.example.influencer.Features.CheckPoint_Tab.Domain.GetRandomCardDataUseCase
+import com.example.influencer.Features.CheckPoint_Tab.Domain.LikesInteractionsUseCase
+import com.example.influencer.Features.CheckPoint_Tab.Domain.Model.CardData
 import kotlinx.coroutines.*
 import java.util.*
 
@@ -27,11 +27,11 @@ class CheckpointTabViewModel @Inject constructor(
         private const val PREFETCH_THRESHOLD = 3  // Number of cards ahead to pre-fetch// con 2 si el user pasa muy rapido no llega a cargar y tmb aveces no carga el card de atras x alguna razon
     }
 
-    private val _navigateToAddingNewCheckpoint = MutableLiveData<_root_ide_package_.com.example.influencer.Core.Utils.Event<Boolean>>()
-    val navigateToAddingNewCheckpoint: LiveData<_root_ide_package_.com.example.influencer.Core.Utils.Event<Boolean>> = _navigateToAddingNewCheckpoint
+    private val _navigateToAddingNewCheckpoint = MutableLiveData<Event<Boolean>>()
+    val navigateToAddingNewCheckpoint: LiveData<Event<Boolean>> = _navigateToAddingNewCheckpoint
 
-    private val _navigateToAddingNewCheckpointUpdate = MutableLiveData<_root_ide_package_.com.example.influencer.Core.Utils.Event<Boolean>>()
-    val navigateToAddingNewCheckpointUpdate: LiveData<_root_ide_package_.com.example.influencer.Core.Utils.Event<Boolean>> = _navigateToAddingNewCheckpointUpdate
+    private val _navigateToAddingNewCheckpointUpdate = MutableLiveData<Event<Boolean>>()
+    val navigateToAddingNewCheckpointUpdate: LiveData<Event<Boolean>> = _navigateToAddingNewCheckpointUpdate
 
     private val _cards = MutableLiveData<List<CardData>>()
     val cards: LiveData<List<CardData>> = _cards
@@ -151,12 +151,12 @@ class CheckpointTabViewModel @Inject constructor(
 
     fun onAddingNewCheckpointSelected() {
         _navigateToAddingNewCheckpoint.value =
-            _root_ide_package_.com.example.influencer.Core.Utils.Event(true)
+            Event(true)
     }
 
     fun onAddingNewCheckpointUpdateSelected() {
         _navigateToAddingNewCheckpointUpdate.value =
-            _root_ide_package_.com.example.influencer.Core.Utils.Event(true)
+            Event(true)
     }
 
     fun fetchUpdatesForPost(postId: String,postOwnerId: String, callback: (SortedMap<Int, String>?) -> Unit) {

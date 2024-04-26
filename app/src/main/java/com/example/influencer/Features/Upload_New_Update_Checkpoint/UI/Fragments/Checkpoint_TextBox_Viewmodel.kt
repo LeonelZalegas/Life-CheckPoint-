@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.influencer.LaNuevaEstr.Features.Upload_New_Update_Checkpoint.Domain.CreateCheckPointUpdateUseCase
-import com.example.influencer.LaNuevaEstr.Features.Upload_New_Update_Checkpoint.Domain.GetNextUpdateNumberUseCase
+import com.example.influencer.Features.Upload_New_Update_Checkpoint.Domain.CreateCheckPointUpdateUseCase
+import com.example.influencer.Features.Upload_New_Update_Checkpoint.Domain.GetNextUpdateNumberUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

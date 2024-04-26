@@ -14,11 +14,11 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import cn.pedant.SweetAlert.SweetAlertDialog
-import com.example.influencer.LaNuevaEstr.Core.Utils.Serializable.getSerializableCompat
-import com.example.influencer.LaNuevaEstr.Core.Utils.BackgroundAndTextColors
 import com.example.influencer.R
 import com.example.influencer.Features.Create_Modify_Checkpoint_Menu.Domain.Model.CheckpointThemeItem
 import com.example.influencer.Core.UI.Home
+import com.example.influencer.Core.Utils.BackgroundAndTextColors
+import com.example.influencer.Core.Utils.Serializable.getSerializableCompat
 import com.example.influencer.databinding.FragmentUpdateCheckpointTextBoxBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -84,7 +84,7 @@ class Update_checkpoint_TextBox : Fragment() {
     }
 
     private fun handleSelectedCategory() {
-        val selectedCategory = arguments?.getSerializableCompat("SELECTED_CATEGORY", _root_ide_package_.com.example.influencer.Features.Create_Modify_Checkpoint_Menu.Domain.Model.CheckpointThemeItem::class.java)
+        val selectedCategory = arguments?.getSerializableCompat("SELECTED_CATEGORY", CheckpointThemeItem::class.java)
         selectedCategory?.let {
             selectedCategoryColor = it.color
             selectedCategoryName = it.text
@@ -109,7 +109,7 @@ class Update_checkpoint_TextBox : Fragment() {
 
     private fun setupClickListeners() {
         binding.close.setOnClickListener{
-            val intent = Intent(requireActivity(), _root_ide_package_.com.example.influencer.Core.UI.Home::class.java)
+            val intent = Intent(requireActivity(), Home::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             requireActivity().startActivity(intent)  // Start home activity and clear all others
         }
@@ -128,7 +128,7 @@ class Update_checkpoint_TextBox : Fragment() {
         viewModel.updateSaveSuccessLiveData.observe(viewLifecycleOwner){isSuccess ->
             if (isSuccess){
                 Toast.makeText(activity, R.string.checkpoint_update_successfully_saved, Toast.LENGTH_SHORT).show()
-                val intent = Intent(requireActivity(), _root_ide_package_.com.example.influencer.Core.UI.Home::class.java)
+                val intent = Intent(requireActivity(), Home::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 requireActivity().startActivity(intent)  // Start home activity and clear all others
             }else{

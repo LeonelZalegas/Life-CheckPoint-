@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LaNuevaEstr.Features.OnBoarding___CountryAndDateSelector.UI.CountryAndDateSelector.CountryDateActivity"
+    tools:context=".Features.OnBoarding___CountryAndDateSelector.UI.CountryAndDateSelector.CountryDateActivity"
     android:background="@color/naranja_Home">
 
     <androidx.constraintlayout.widget.Guideline

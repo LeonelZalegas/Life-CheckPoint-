@@ -5,11 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.influencer.LaNuevaEstr.Features.Upload_New_Checkpoint.Domain.GetUserProfilePictureUseCase
-import com.example.influencer.LaNuevaEstr.Features.Upload_New_Checkpoint.Domain.GetLastThreeImagesUseCase
-import com.example.influencer.LaNuevaEstr.Features.Upload_New_Checkpoint.Domain.SavePostUseCase
-import com.example.influencer.LaNuevaEstr.Features.Upload_New_Checkpoint.Domain.UploadImageUseCase
-import com.example.influencer.LaNuevaEstr.Features.Upload_New_Checkpoint.Domain.Model.Post
+import com.example.influencer.Features.Upload_New_Checkpoint.Domain.GetLastThreeImagesUseCase
+import com.example.influencer.Features.Upload_New_Checkpoint.Domain.GetUserProfilePictureUseCase
+import com.example.influencer.Features.Upload_New_Checkpoint.Domain.Model.Post
+import com.example.influencer.Features.Upload_New_Checkpoint.Domain.SavePostUseCase
+import com.example.influencer.Features.Upload_New_Checkpoint.Domain.UploadImageUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

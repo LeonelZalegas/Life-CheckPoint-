@@ -4,7 +4,7 @@ import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.influencer.LaNuevaEstr.Core.Utils.BackgroundAndTextColors.setChipTextColor
+import com.example.influencer.Core.Utils.BackgroundAndTextColors.setChipTextColor
 import com.example.influencer.databinding.ItemUpdateCheckpointBinding
 import java.util.SortedMap
 

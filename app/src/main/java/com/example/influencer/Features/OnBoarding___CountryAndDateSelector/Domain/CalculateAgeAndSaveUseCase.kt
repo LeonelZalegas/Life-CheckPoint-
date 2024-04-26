@@ -2,8 +2,7 @@ package com.example.influencer.Features.OnBoarding___CountryAndDateSelector.Doma
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.example.influencer.LaNuevaEstr.Core.Data.Repositories.UserRepository.UserRepository
-import com.example.influencer.LaNuevaEstr.Features.Upload_New_Checkpoint.Domain.Model.Post
+import com.example.influencer.Core.Data.Repositories.UserRepository.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.time.Instant

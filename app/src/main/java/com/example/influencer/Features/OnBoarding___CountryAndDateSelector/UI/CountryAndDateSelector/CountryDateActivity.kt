@@ -92,7 +92,7 @@ class CountryDateActivity : AppCompatActivity() {
     private fun setupObservers() {
         viewModel.navigateToHome.observe(this) { shouldNavigate ->
             if (shouldNavigate) {
-                val intentHome = Intent(this@CountryDateActivity, _root_ide_package_.com.example.influencer.Core.UI.Home::class.java)
+                val intentHome = Intent(this@CountryDateActivity, Home::class.java)
                 startActivity(intentHome)
                 finish()
             }

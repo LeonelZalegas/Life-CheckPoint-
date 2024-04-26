@@ -25,13 +25,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bumptech.glide.Glide
 import com.example.influencer.BuildConfig
-import com.example.influencer.LaNuevaEstr.Core.Utils.Serializable.getSerializableExtraCompat
-import com.example.influencer.LaNuevaEstr.Core.Utils.BackgroundAndTextColors
 import com.example.influencer.R
 import com.example.influencer.Features.Create_Modify_Checkpoint_Menu.Domain.Model.CheckpointThemeItem
 import com.example.influencer.Core.UI.Home
-import com.example.influencer.LaNuevaEstr.Features.Upload_New_Checkpoint.UI.Adapter.TempImageAdapter
-import com.example.influencer.LaNuevaEstr.Features.Upload_New_Checkpoint.UI.Adapter.TempImageAdapterFactory
+import com.example.influencer.Core.Utils.BackgroundAndTextColors
+import com.example.influencer.Core.Utils.Serializable.getSerializableExtraCompat
+import com.example.influencer.Features.Upload_New_Checkpoint.UI.Adapter.TempImageAdapter
+import com.example.influencer.Features.Upload_New_Checkpoint.UI.Adapter.TempImageAdapterFactory
 import com.example.influencer.databinding.ActivityUploadNewCheckpointBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
@@ -97,7 +97,7 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
         }
 
         binding.close.setOnClickListener{
-            val intent = Intent(this, _root_ide_package_.com.example.influencer.Core.UI.Home::class.java)
+            val intent = Intent(this, Home::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent) // Start home activity and clear all others
         }
@@ -124,7 +124,7 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
     }
 
     private fun handleSelectedCategory(){
-        val selectedCategory = intent.getSerializableExtraCompat<_root_ide_package_.com.example.influencer.Features.Create_Modify_Checkpoint_Menu.Domain.Model.CheckpointThemeItem>("SELECTED_CATEGORY")
+        val selectedCategory = intent.getSerializableExtraCompat<CheckpointThemeItem>("SELECTED_CATEGORY")
         //https://www.notion.so/Upload-Checkpoint-1c875423235f4180a588c8453a7140e3?pvs=4#4636dc4be413463f92462daa45fa3048
         selectedCategory?.let {
             with(binding.chip) {
@@ -237,7 +237,7 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
         viewModel.postSaveSuccessLiveData.observe(this){ isSuccess ->
             if (isSuccess) {
                 Toast.makeText(this, R.string.checkpoint_successfully_saved, Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, _root_ide_package_.com.example.influencer.Core.UI.Home::class.java)
+                val intent = Intent(this, Home::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent) // Start home activity and clear all others
             } else {

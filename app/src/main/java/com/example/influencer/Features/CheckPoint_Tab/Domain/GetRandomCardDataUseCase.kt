@@ -1,9 +1,9 @@
 package com.example.influencer.Features.CheckPoint_Tab.Domain
 
-import com.example.influencer.LaNuevaEstr.Core.Data.Repositories.PostRepository.PostRepository
-import com.example.influencer.LaNuevaEstr.Core.Data.Repositories.UpdatesRepository.UpdatesRepository
-import com.example.influencer.LaNuevaEstr.Core.Data.Repositories.UserRepository.UserRepository
-import com.example.influencer.LaNuevaEstr.Features.CheckPoint_Tab.Domain.Model.CardData
+import com.example.influencer.Core.Data.Repositories.PostRepository.PostRepository
+import com.example.influencer.Core.Data.Repositories.UpdatesRepository.UpdatesRepository
+import com.example.influencer.Core.Data.Repositories.UserRepository.UserRepository
+import com.example.influencer.Features.CheckPoint_Tab.Domain.Model.CardData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

@@ -171,11 +171,11 @@ class CheckpointTabFragment : Fragment(), CardStackView_Adapter.CardActionsListe
     }
 
     private fun goToAddingNewCheckpointUpdate() {
-        val intent = Intent(context, _root_ide_package_.com.example.influencer.Features.Create_Modify_Checkpoint_Menu.UI.CheckpointUpdateThemeChoose.CheckpointUpdateThemeChooseActivity::class.java)
+        val intent = Intent(context, CheckpointUpdateThemeChooseActivity::class.java)
         startActivity(intent)
     }
     private fun goToAddingNewCheckpoint() {
-        val intent = Intent(context, _root_ide_package_.com.example.influencer.Features.Create_Modify_Checkpoint_Menu.UI.CheckpointThemeChoose.CheckpointThemeChooseActivity::class.java)
+        val intent = Intent(context, CheckpointThemeChooseActivity::class.java)
         startActivity(intent)
     }
 

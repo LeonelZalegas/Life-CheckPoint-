@@ -1,8 +1,8 @@
 package com.example.influencer.Features.OnBoarding___CountryAndDateSelector.UI.CountryAndDateSelector
 
 import androidx.lifecycle.*
-import com.example.influencer.LaNuevaEstr.Features.OnBoarding___CountryAndDateSelector.Domain.CalculateAgeAndSaveUseCase
-import com.example.influencer.LaNuevaEstr.Features.OnBoarding___CountryAndDateSelector.Domain.SaveCountryInfoUseCase
+import com.example.influencer.Features.OnBoarding___CountryAndDateSelector.Domain.CalculateAgeAndSaveUseCase
+import com.example.influencer.Features.OnBoarding___CountryAndDateSelector.Domain.SaveCountryInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

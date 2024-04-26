@@ -10,10 +10,10 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.influencer.LaNuevaEstr.Core.Utils.BackgroundAndTextColors.setChipTextColor
-import com.example.influencer.LaNuevaEstr.Core.Utils.BackgroundAndTextColors.setRoundedBackgroundColor
-import com.example.influencer.LaNuevaEstr.Core.Utils.DateTimeUtils
-import com.example.influencer.LaNuevaEstr.Features.CheckPoint_Tab.Domain.Model.CardData
+import com.example.influencer.Core.Utils.BackgroundAndTextColors.setChipTextColor
+import com.example.influencer.Core.Utils.BackgroundAndTextColors.setRoundedBackgroundColor
+import com.example.influencer.Core.Utils.DateTimeUtils
+import com.example.influencer.Features.CheckPoint_Tab.Domain.Model.CardData
 import com.example.influencer.databinding.CardLayoutBinding
 import com.like.LikeButton
 import com.like.OnLikeListener

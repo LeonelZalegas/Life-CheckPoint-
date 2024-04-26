@@ -15,6 +15,6 @@ abstract class PostRepositoryModule {
     @Binds
     @Singleton
     abstract fun bindPostRepository(
-        firestorePostRepository: _root_ide_package_.com.example.influencer.Core.Data.Repositories.PostRepository.FirestorePostRepository
+        firestorePostRepository: FirestorePostRepository
     ): PostRepository
 }

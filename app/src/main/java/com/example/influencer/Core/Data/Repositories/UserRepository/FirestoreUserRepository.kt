@@ -15,7 +15,7 @@ import javax.inject.Singleton
 @Singleton
 class FirestoreUserRepository @Inject constructor(
     private val db: FirebaseFirestore,
-    private val authService: _root_ide_package_.com.example.influencer.Core.Data.Network.AuthenticationService
+    private val authService: AuthenticationService
 ): UserRepository {
 
     override suspend fun getUserProfilePictureUrl(): String = withContext(Dispatchers.IO) {
@@ -40,7 +40,7 @@ class FirestoreUserRepository @Inject constructor(
     }
 
     // Fetch a random user with at least one post
-    override suspend fun getRandomUserDocument(): Result<_root_ide_package_.com.example.influencer.Features.SignIn.Domain.Model.UsuarioSignin> = withContext(Dispatchers.IO){
+    override suspend fun getRandomUserDocument(): Result<UsuarioSignin> = withContext(Dispatchers.IO){
         try {
 
         val usersSnapshot = db.collection("Usuarios")
@@ -50,7 +50,7 @@ class FirestoreUserRepository @Inject constructor(
 
         if (usersSnapshot.documents.isNotEmpty()) {
             val randomUserDoc = usersSnapshot.documents.random()
-            val user = randomUserDoc.toObject(_root_ide_package_.com.example.influencer.Features.SignIn.Domain.Model.UsuarioSignin::class.java)
+            val user = randomUserDoc.toObject(UsuarioSignin::class.java)
             user?.let {
                 Result.success(it)
             } ?: Result.failure(Exception("Failed to parse user document"))

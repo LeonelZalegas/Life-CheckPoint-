@@ -1,7 +1,7 @@
 package com.example.influencer.Core.Data.Repositories.PostRepository
 
-import com.example.influencer.LaNuevaEstr.Features.Upload_New_Checkpoint.Domain.Model.Post
-import com.example.influencer.LaNuevaEstr.Features.Upload_New_Update_Checkpoint.Domain.Model.CheckPoint_Update_Item
+
+import com.example.influencer.Features.Upload_New_Checkpoint.Domain.Model.Post
 import java.util.*
 
 // Interface defining the operations that a PostRepository should support

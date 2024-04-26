@@ -1,7 +1,7 @@
 package com.example.influencer.Features.Upload_New_Checkpoint.Domain
 
-import com.example.influencer.LaNuevaEstr.Core.Data.Repositories.PostRepository.PostRepository
-import com.example.influencer.LaNuevaEstr.Features.Upload_New_Checkpoint.Domain.Model.Post
+import com.example.influencer.Core.Data.Repositories.PostRepository.PostRepository
+import com.example.influencer.Features.Upload_New_Checkpoint.Domain.Model.Post
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

@@ -1,6 +1,6 @@
 package com.example.influencer.Features.CheckPoint_Tab.Domain
 
-import com.example.influencer.LaNuevaEstr.Core.Data.Repositories.PostRepository.PostRepository
+import com.example.influencer.Core.Data.Repositories.PostRepository.PostRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

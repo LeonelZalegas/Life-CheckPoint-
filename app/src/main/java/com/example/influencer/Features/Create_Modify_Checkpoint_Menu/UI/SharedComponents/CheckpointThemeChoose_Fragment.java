@@ -22,8 +22,6 @@ import com.example.influencer.Features.Upload_New_Checkpoint.UI.UploadNewCheckpo
 import com.example.influencer.Features.Upload_New_Update_Checkpoint.UI.Upload_New_Update_CheckpointActivity;
 import com.example.influencer.R;
 import com.example.influencer.Features.Create_Modify_Checkpoint_Menu.Domain.Model.CheckpointThemeItem;
-import com.example.influencer.LaNuevaEstr.Features.Upload_New_Checkpoint.UI.UploadNewCheckpoint;
-import com.example.influencer.LaNuevaEstr.Features.Upload_New_Update_Checkpoint.UI.Upload_New_Update_CheckpointActivity;
 import com.example.influencer.databinding.AlertDialogAddCategoryBinding;
 import com.example.influencer.databinding.FragmentCheckpointThemeChooseBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;

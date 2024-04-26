@@ -1,6 +1,6 @@
 package com.example.influencer.Features.OnBoarding___CountryAndDateSelector.Domain
 
-import com.example.influencer.LaNuevaEstr.Core.Data.Repositories.UserRepository.UserRepository
+import com.example.influencer.Core.Data.Repositories.UserRepository.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

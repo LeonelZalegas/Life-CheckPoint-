@@ -2,7 +2,7 @@ package com.example.influencer.Core.Data.Repositories.PostRepository
 
 import android.util.Log
 import com.example.influencer.Core.Data.Network.AuthenticationService
-import com.example.influencer.LaNuevaEstr.Features.Upload_New_Checkpoint.Domain.Model.Post
+import com.example.influencer.Features.Upload_New_Checkpoint.Domain.Model.Post
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -21,8 +21,8 @@ import javax.inject.Singleton
 @Singleton
 class FirestorePostRepository @Inject constructor(
     private val db:FirebaseFirestore,
-    private val authService: _root_ide_package_.com.example.influencer.Core.Data.Network.AuthenticationService
-): _root_ide_package_.com.example.influencer.Core.Data.Repositories.PostRepository.PostRepository {
+    private val authService: AuthenticationService
+): PostRepository {
 
     override suspend fun savePost(post: Post): Unit = withContext(Dispatchers.IO){
         val uid = authService.getUid()
