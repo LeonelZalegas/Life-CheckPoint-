@@ -1,6 +1,6 @@
 package com.example.influencer.Features.Upload_New_Update_Checkpoint.Domain
 
-import com.example.influencer.Core.Data.Repositories.UpdatesRepository.UpdatesRepository
+import com.example.influencer.Features.Upload_New_Update_Checkpoint.Data.UpdatesRepository
 import javax.inject.Inject
 
 class CreateCheckPointUpdateUseCase @Inject constructor(

@@ -1,4 +1,4 @@
-package com.example.influencer.Core.Data.Repositories.UpdatesRepository
+package com.example.influencer.Features.Upload_New_Update_Checkpoint.Data
 
 import dagger.Binds
 import dagger.Module

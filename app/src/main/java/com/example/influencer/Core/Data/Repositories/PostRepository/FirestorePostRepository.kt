@@ -2,7 +2,6 @@ package com.example.influencer.Core.Data.Repositories.PostRepository
 
 import android.util.Log
 import com.example.influencer.Core.Data.Network.AuthenticationService
-import com.example.influencer.Features.Upload_New_Checkpoint.Domain.Model.Post
 import com.example.influencer.Features.Upload_New_Update_Checkpoint.Domain.Model.CheckPoint_Update_Item
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -12,7 +11,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
-import java.util.*
 import java.util.concurrent.CompletableFuture
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -24,37 +22,6 @@ class FirestorePostRepository @Inject constructor(
     private val db:FirebaseFirestore,
     private val authService: AuthenticationService
 ): PostRepository {
-
-    override suspend fun savePost(post: Post): Unit = withContext(Dispatchers.IO){
-        val uid = authService.getUid()
-
-        val userDocRef = db.collection("Usuarios").document(uid)
-        val postsCollectionRef = userDocRef.collection("Posts")
-        try {
-            // Fetch posts with the same selectedCategory as the new post
-            val sameCategoryPosts = postsCollectionRef
-                .whereEqualTo("selectedCategory", post.selectedCategory)
-                .get()
-                .await()
-
-            // Find the highest checkpointCategoryCounter among them
-            var highestCounter = sameCategoryPosts.documents
-                .maxOfOrNull { it.getLong("checkpointCategoryCounter") ?: 0L }
-                ?: 0L // Default to 0 if no posts found
-
-            // Increment the highest counter by 1 for the new post
-            post.checkpointCategoryCounter = (highestCounter + 1).toInt()
-
-            // Now, save the new post with the updated checkpointCategoryCounter
-            postsCollectionRef.document().set(post).await()
-
-            // Atomically increment the postCount field of the user document
-            userDocRef.update("postCount", FieldValue.increment(1)).await()
-        } catch (e: Exception) {
-            // Handle possible exceptions, e.g., logging or notifying the user
-            throw e
-        }
-    }
 
     suspend fun getUserPostCategories(): List<String> = withContext(Dispatchers.IO) {
         val uid = authService.getUid()
@@ -84,28 +51,6 @@ class FirestorePostRepository @Inject constructor(
             }
         }
         return future
-    }
-
-    override suspend fun getRandomPostFromUser(userId: String): Result<Post> = withContext(Dispatchers.IO){
-        try {
-           val postsSnapshot = db.collection("Usuarios")
-            .document(userId)
-            .collection("Posts")
-            .get()
-            .await()
-
-          if (postsSnapshot.documents.isNotEmpty()) {
-             val randomPostDoc = postsSnapshot.documents.random()
-             val post = randomPostDoc.toObject(Post::class.java)  //en data class Post hacemos @DocumentId en el ID para no tener que hacer (Post::class.java)?.apply {this.id = randomPostDoc.id}
-             post?.let {
-                 Result.success(it)
-             } ?: Result.failure(Exception("Failed to parse post document"))
-          }  else {
-            Result.failure(Exception("No posts found for user"))
-          }
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
     }
 
     //modifica la BD en tiempo real sumando 1 al contador de likes y aparte devuelve el nuevo valor actualizado
