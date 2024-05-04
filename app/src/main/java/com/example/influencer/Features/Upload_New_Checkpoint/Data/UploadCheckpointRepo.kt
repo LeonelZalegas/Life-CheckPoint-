@@ -53,14 +53,46 @@ class UploadCheckpointRepo @Inject constructor(
         imagesUriList
     }
 
-    override suspend fun savePost(post: Post): Unit = withContext(Dispatchers.IO){
-        val uid = authService.getUid()
+//    override suspend fun savePost(post: Post): Unit = withContext(Dispatchers.IO){
+//        val uid = authService.getUid()
+//
+//        val userDocRef = db.collection("Usuarios").document(uid)
+//        val postsCollectionRef = userDocRef.collection("Posts")
+//        try {
+//            // Fetch posts with the same selectedCategory as the new post
+//            val sameCategoryPosts = postsCollectionRef
+//                .whereEqualTo("selectedCategory", post.selectedCategory)
+//                .get()
+//                .await()
+//
+//            // Find the highest checkpointCategoryCounter among them
+//            var highestCounter = sameCategoryPosts.documents
+//                .maxOfOrNull { it.getLong("checkpointCategoryCounter") ?: 0L }
+//                ?: 0L // Default to 0 if no posts found
+//
+//            // Increment the highest counter by 1 for the new post
+//            post.checkpointCategoryCounter = (highestCounter + 1).toInt()
+//
+//            // Now, save the new post with the updated checkpointCategoryCounter
+//            postsCollectionRef.document().set(post).await()
+//
+//            // Atomically increment the postCount field of the user document
+//            userDocRef.update("postCount", FieldValue.increment(1)).await()
+//        } catch (e: Exception) {
+//            // Handle possible exceptions, e.g., logging or notifying the user
+//            throw e
+//        }
+//    }
 
-        val userDocRef = db.collection("Usuarios").document(uid)
-        val postsCollectionRef = userDocRef.collection("Posts")
+    override suspend fun savePost(post: Post): Unit = withContext(Dispatchers.IO) {
+        val uid = authService.getUid()
+        post.userId = uid  // Set the userId of the post
+
+        val globalPostsRef = db.collection("Posts")
         try {
             // Fetch posts with the same selectedCategory as the new post
-            val sameCategoryPosts = postsCollectionRef
+            val sameCategoryPosts = globalPostsRef
+                .whereEqualTo("userId", uid)  // Ensure we're only looking at the user's own posts
                 .whereEqualTo("selectedCategory", post.selectedCategory)
                 .get()
                 .await()
@@ -74,10 +106,12 @@ class UploadCheckpointRepo @Inject constructor(
             post.checkpointCategoryCounter = (highestCounter + 1).toInt()
 
             // Now, save the new post with the updated checkpointCategoryCounter
-            postsCollectionRef.document().set(post).await()
+            globalPostsRef.document().set(post).await()
 
             // Atomically increment the postCount field of the user document
+            val userDocRef = db.collection("Usuarios").document(uid)
             userDocRef.update("postCount", FieldValue.increment(1)).await()
+
         } catch (e: Exception) {
             // Handle possible exceptions, e.g., logging or notifying the user
             throw e

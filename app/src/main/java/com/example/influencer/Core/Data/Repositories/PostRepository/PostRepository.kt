@@ -5,8 +5,8 @@ import com.example.influencer.Features.Upload_New_Update_Checkpoint.Domain.Model
 
 // Interface defining the operations that a PostRepository should support
 interface PostRepository {
-    suspend fun likePost(postId: String,postOwnerId: String):Int
-    suspend fun unlikePost(postId: String,postOwnerId: String):Int
+    suspend fun likePost(postId: String):Int
+    suspend fun unlikePost(postId: String):Int
     suspend fun isPostLiked (postId: String):Boolean
-    suspend fun getPostUpdates(postOwnerId: String, postId: String): List<CheckPoint_Update_Item>?
+    suspend fun getPostUpdates(postId: String): List<CheckPoint_Update_Item>?
 }

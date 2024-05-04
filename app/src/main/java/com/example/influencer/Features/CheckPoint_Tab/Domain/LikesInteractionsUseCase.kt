@@ -9,12 +9,12 @@ import javax.inject.Singleton
 @Singleton
 class LikesInteractionsUseCase @Inject constructor(private val repository: PostRepository) {
 
-    suspend fun likePost(postId: String,postOwnerId: String) = withContext(Dispatchers.IO) {
-        repository.likePost(postId,postOwnerId)
+    suspend fun likePost(postId: String) = withContext(Dispatchers.IO) {
+        repository.likePost(postId)
     }
 
-    suspend fun unlikePost(postId: String, postOwnerId: String) = withContext(Dispatchers.IO) {
-        repository.unlikePost(postId,postOwnerId)
+    suspend fun unlikePost(postId: String) = withContext(Dispatchers.IO) {
+        repository.unlikePost(postId)
     }
 
     suspend fun isPostLiked(postId: String): Boolean = withContext(Dispatchers.IO) {

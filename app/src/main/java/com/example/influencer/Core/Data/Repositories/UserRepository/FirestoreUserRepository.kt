@@ -37,4 +37,16 @@ class FirestoreUserRepository @Inject constructor(
         val userDocRef = db.collection("Usuarios").document(uid)
         userDocRef.update("countryName", countryName, "countryFlagCode", countryFlag).await()
     }
+
+    override suspend fun getUserById(userId: String): Result<UsuarioSignin> = withContext(Dispatchers.IO) {
+        try {
+            val userDocSnapshot = db.collection("Usuarios").document(userId).get().await()
+            val user = userDocSnapshot.toObject(UsuarioSignin::class.java)
+            user?.let {
+                Result.success(it)
+            } ?: Result.failure(Exception("Failed to parse user document"))
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 }

@@ -23,15 +23,17 @@ class FirestorePostRepository @Inject constructor(
     private val authService: AuthenticationService
 ): PostRepository {
 
-    suspend fun getUserPostCategories(): List<String> = withContext(Dispatchers.IO) {
+    private suspend fun getUserPostCategories(): List<String> = withContext(Dispatchers.IO) {
         val uid = authService.getUid()
-        val userDocRef = db.collection("Usuarios").document(uid)
-        val postsCollectionRef = userDocRef.collection("Posts")
+        val postsCollectionRef = db.collection("Posts")
 
         try {
-            val querySnapshot = postsCollectionRef.get().await()
+            val querySnapshot = postsCollectionRef
+                .whereEqualTo("userId", uid)
+                .get()
+                .await()
             return@withContext querySnapshot.documents.mapNotNull { document ->
-                document.getString("selectedCategory")    //el mapNotNull automaticamente crea una lista y va guardando el resultado de lo que va modificando en cada docu y lo guarda en ella
+                document.getString("selectedCategory")
             }.distinct()
         } catch (e: Exception) {
             Log.e("FirestorePostRepository", "Error fetching user post categories", e)
@@ -39,6 +41,7 @@ class FirestorePostRepository @Inject constructor(
         }
     }
 
+    //Para mostrar los Rows de las categorias de los posts hechas x usuario actualmente en los Updates
    //https://www.notion.so/Upload-Checkpoint-1c875423235f4180a588c8453a7140e3?pvs=4#77ae0184119544a59e2374b179122ade
     fun getUserPostCategoriesFuture(): CompletableFuture<List<String>> {
         val future = CompletableFuture<List<String>>()  //es como 1 variable pero q es async, no se queda colgada esperando el valor q una funcion le esta por asignar, sino que sabe el tipo de valor nomas y espera y no interrumpe el thread
@@ -54,15 +57,12 @@ class FirestorePostRepository @Inject constructor(
     }
 
     //modifica la BD en tiempo real sumando 1 al contador de likes y aparte devuelve el nuevo valor actualizado
-    override suspend fun likePost(postId: String, postOwnerId: String): Int = withContext(Dispatchers.IO) {
-        //referencia al usuario al cual cuyo post le dieron like
-          val likedPostUserDocRef = db.collection("Usuarios").document(postOwnerId)
-          val likedPostRef = likedPostUserDocRef.collection("Posts").document(postId)
+    override suspend fun likePost(postId: String): Int = withContext(Dispatchers.IO) {
+        val likedPostRef = db.collection("Posts").document(postId)
+        val currentUserLikedPostsRef = db.collection("Usuarios").document(authService.getUid()).collection("LikedPosts")
 
         //referecia al usuario que esta usando su cuenta actualente en la app y bueno..aca tmb se crea la coleccion LikedPosts de ese usuario
-          val currentUserlikedPostsRef = db.collection("Usuarios").document(authService.uid).collection("LikedPosts")
-
-          currentUserlikedPostsRef.document(postId).set(mapOf("likedTime" to FieldValue.serverTimestamp())).await()
+        currentUserLikedPostsRef.document(postId).set(mapOf("likedTime" to FieldValue.serverTimestamp())).await()
 
         // Perform a transaction to increment the likes count
         val newLikesCount = db.runTransaction { transaction ->
@@ -77,21 +77,18 @@ class FirestorePostRepository @Inject constructor(
     }
 
     // same que likePost pero hace -1 al contador de likes
-    override suspend fun unlikePost(postId: String, postOwnerId: String): Int = withContext(Dispatchers.IO) {
-        val likedPostUserDocRef = db.collection("Usuarios").document(postOwnerId)
-        val likedPostRef = likedPostUserDocRef.collection("Posts").document(postId)
+    override suspend fun unlikePost(postId: String): Int = withContext(Dispatchers.IO) {
+        val likedPostRef = db.collection("Posts").document(postId)
+        val currentUserLikedPostsRef = db.collection("Usuarios").document(authService.getUid()).collection("LikedPosts")
 
-        val currentUserlikedPostsRef = db.collection("Usuarios").document(authService.uid).collection("LikedPosts")
+        currentUserLikedPostsRef.document(postId).delete().await()
 
-        currentUserlikedPostsRef.document(postId).delete().await()
-
-        // Perform a transaction to decrement the likes count
         val newLikesCount = db.runTransaction { transaction ->
             val snapshot = transaction.get(likedPostRef)
             val currentLikes = snapshot.getLong("likes") ?: 0
             val newLikes = if (currentLikes > 0) currentLikes - 1 else 0 // Prevent negative likes
             transaction.update(likedPostRef, "likes", newLikes)
-            newLikes // Return the new likes count
+            newLikes
         }.await()
 
         return@withContext newLikesCount.toInt()
@@ -105,13 +102,11 @@ class FirestorePostRepository @Inject constructor(
         return@withContext document.exists()
     }
 
-    override suspend fun getPostUpdates(postId: String,postOwnerId: String): List<CheckPoint_Update_Item>? = withContext(Dispatchers.IO) {
+    override suspend fun getPostUpdates(postId: String): List<CheckPoint_Update_Item>? = withContext(Dispatchers.IO) {
         val updatesList = mutableListOf<CheckPoint_Update_Item>()
         try {
-            // Access the specific post using postOwnerId and postId
-            val updatesSnapshot = db.collection("Usuarios")
-                .document(postOwnerId)
-                .collection("Posts")
+            // Access the post using postId
+            val updatesSnapshot = db.collection("Posts")
                 .document(postId)
                 .collection("Updates")
                 .orderBy("update_Number", Query.Direction.ASCENDING)

@@ -118,10 +118,10 @@ class CheckpointTabViewModel @Inject constructor(
 
     fun isLastCard(): Boolean = currentCardIndex == 0
 
-    fun likePost(postId: String, postOwnerId: String) {
+    fun likePost(postId: String) {
         viewModelScope.launch {
             try {
-               val currentLikes = likesInteractionsUseCase.likePost(postId,postOwnerId)
+               val currentLikes = likesInteractionsUseCase.likePost(postId)
                 _likeUpdate.value = postId to (currentLikes)
             } catch (e: Exception) {
                 Log.e("ViewModel", "Error liking post", e)
@@ -129,10 +129,10 @@ class CheckpointTabViewModel @Inject constructor(
         }
     }
 
-    fun unlikePost(postId: String, postOwnerId: String) {
+    fun unlikePost(postId: String) {
         viewModelScope.launch {
             try {
-                val currentLikes = likesInteractionsUseCase.unlikePost(postId,postOwnerId)
+                val currentLikes = likesInteractionsUseCase.unlikePost(postId)
                 _likeUpdate.value = postId to (currentLikes)
             } catch (e: Exception) {
                 Log.e("ViewModel", "Error unliking post", e)

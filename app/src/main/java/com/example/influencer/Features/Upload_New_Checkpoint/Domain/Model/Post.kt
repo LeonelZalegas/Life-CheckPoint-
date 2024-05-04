@@ -14,4 +14,5 @@ data class Post(
     var checkpointCategoryCounter:Int = 0,
     @DocumentId
     val id: String = "",  // Automatically populated with Firestore document ID
+    var userId: String = "",  // ID of the user who owns the post
 )

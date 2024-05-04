@@ -1,6 +1,7 @@
 package com.example.influencer.Features.CheckPoint_Tab.Domain
 
 import com.example.influencer.Core.Data.Repositories.PostRepository.PostRepository
+import com.example.influencer.Core.Data.Repositories.UserRepository.FirestoreUserRepository
 import com.example.influencer.Features.CheckPoint_Tab.Data.CardsFilters
 import com.example.influencer.Features.CheckPoint_Tab.Domain.Model.CardData
 import kotlinx.coroutines.Dispatchers
@@ -9,17 +10,18 @@ import javax.inject.Inject
 
 class GetRandomCardDataUseCase @Inject constructor(
     private val postRepository: PostRepository,
-    private val cardsFilters: CardsFilters
+    private val cardsFilters: CardsFilters,
+    private val firestoreUserRepository: FirestoreUserRepository
 ) {
     suspend operator fun invoke():Result<CardData> = withContext(Dispatchers.IO){
         try {
-            val userResult = cardsFilters.getRandomUserDocument()
-            val user = userResult.getOrThrow() // This will throw if the operation fails
+            val postResult = cardsFilters.getRandomPost()
+            val post = postResult.getOrThrow()  // This will throw if the operation fails
 
-            val postResult = cardsFilters.getRandomPostFromUser(user.id)
-            val post = postResult.getOrThrow()
+            val userResult = firestoreUserRepository.getUserById(post.userId)
+            val user = userResult.getOrThrow()
 
-            val updates = postRepository.getPostUpdates(post.id,user.id)
+            val updates = postRepository.getPostUpdates(post.id)
 
             Result.success(CardData(user, post, updates))
 

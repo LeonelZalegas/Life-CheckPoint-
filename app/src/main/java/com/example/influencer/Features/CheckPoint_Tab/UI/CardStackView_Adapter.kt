@@ -113,11 +113,11 @@ class CardStackView_Adapter @Inject constructor(
 
                 LikeButtom.setOnLikeListener(object : OnLikeListener {
                     override fun liked(likeButton: LikeButton) {
-                        listener?.onLikeClicked(cardData.post.id, cardData.user.id, currentLikes)
+                        listener?.onLikeClicked(cardData.post.id,currentLikes)
                     }
 
                     override fun unLiked(likeButton: LikeButton) {
-                        listener?.onUnlikeClicked(cardData.post.id, cardData.user.id, currentLikes)
+                        listener?.onUnlikeClicked(cardData.post.id,currentLikes)
                     }
                 })
             }
@@ -167,8 +167,8 @@ class CardStackView_Adapter @Inject constructor(
     }
 
     interface CardActionsListener {
-        fun onLikeClicked(postId: String, postOwnerId: String, currentLikes: Int)
-        fun onUnlikeClicked(postId: String, postOwnerId: String, currentLikes: Int)
+        fun onLikeClicked(postId: String,currentLikes: Int)
+        fun onUnlikeClicked(postId: String,currentLikes: Int)
         fun checkPostLiked(postId: String, callback: (Boolean) -> Unit)
     }
 }

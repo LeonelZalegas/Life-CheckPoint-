@@ -16,14 +16,31 @@ class FirestoreUpdatesRepository @Inject constructor(
 ): UpdatesRepository {
 
     //devuelve el Post con = categoria (seleccionada por user) y q ha sido la ultima publicada de esa categoria
-    private suspend fun getLastPostDocumentRef(selectedCategory: String):DocumentReference = withContext(Dispatchers.IO){
+//    private suspend fun getLastPostDocumentRef(selectedCategory: String):DocumentReference = withContext(Dispatchers.IO){
+//        val uid = authService.getUid()
+//        val userDocRef = db.collection("Usuarios").document(uid)
+//        val postsCollectionRef = userDocRef.collection("Posts")
+//
+//        return@withContext postsCollectionRef
+//            .whereEqualTo("selectedCategory", selectedCategory)
+//            .orderBy("creationDate", Query.Direction.DESCENDING)
+//            .limit(1)
+//            .get()
+//            .await()
+//            .documents
+//            .first()
+//            .reference
+//    }
+
+    //devuelve el Post con = categoria (seleccionada por user) y q ha sido la ultima publicada de esa categoria
+    private suspend fun getLastPostDocumentRef(selectedCategory: String): DocumentReference = withContext(Dispatchers.IO) {
         val uid = authService.getUid()
-        val userDocRef = db.collection("Usuarios").document(uid)
-        val postsCollectionRef = userDocRef.collection("Posts")
+        val postsCollectionRef = db.collection("Posts")
 
         return@withContext postsCollectionRef
+            .whereEqualTo("userId", uid)
             .whereEqualTo("selectedCategory", selectedCategory)
-            .orderBy("creationDate", Query.Direction.DESCENDING)
+            .orderBy("checkpointCategoryCounter", Query.Direction.DESCENDING)
             .limit(1)
             .get()
             .await()
