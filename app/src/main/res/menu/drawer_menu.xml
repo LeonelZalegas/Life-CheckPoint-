@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/Love"
+        android:title="Love" />
+    <item
+        android:id="@+id/Family"
+        android:title="Family" />
+    <item
+        android:id="@+id/Friends"
+        android:title="Friends" />
+    <item
+        android:id="@+id/Mental_Health"
+        android:title="Mental Health" />
+    <item
+        android:id="@+id/Work_Carrer"
+        android:title="Work/Carrer" />
+    <item
+        android:id="@+id/Creativity"
+        android:title="Creativity" />
+    <item
+        android:id="@+id/Education_Learning"
+        android:title="Education/Learning" />
+    <item
+        android:id="@+id/Health_Fitness"
+        android:title="Health/Fitness" />
+    <item
+        android:id="@+id/Hobbies_Interests"
+        android:title="Hobbies/Interests" />
+    <item
+        android:id="@+id/Others"
+        android:title="Others" />
+
+
+</menu>

@@ -40,9 +40,13 @@
         <item name="cornerSize">30%</item>
     </style>
 
-    /para mostrar redondeo de seleccion imagen  en crear checkpoint y en el Flag icon en el post
+    //para mostrar redondeo de seleccion imagen  en crear checkpoint y en el Flag icon en el post
     <style name="ShapeAppearanceOverlay.MyApp.postImages" parent="">
         <item name="cornerSize">15dp</item>
+    </style>
+
+    //para que el Navigation Drawer del filtrado de categorias tenga el estilo de Material Design 3
+    <style name="Theme.Influencer.MD3" parent="Theme.Material3.Light.NoActionBar">
     </style>
 
 
