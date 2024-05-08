@@ -49,5 +49,15 @@
     <style name="Theme.Influencer.MD3" parent="Theme.Material3.Light.NoActionBar">
     </style>
 
+    //
+    <style name="DrawerItemNormal">
+        <item name="android:textSize">16dp</item>
+    </style>
+
+    <style name="DrawerItemSelected">
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/rojo_suave</item> <!-- Change to your desired red color -->
+    </style>
+
 
 </resources>

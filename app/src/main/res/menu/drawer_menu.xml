@@ -3,34 +3,41 @@
 
     <item
         android:id="@+id/Love"
-        android:title="Love" />
+        android:title="Love"
+        android:icon="@drawable/checkpoint_choose__love"/>
     <item
         android:id="@+id/Family"
-        android:title="Family" />
+        android:title="Family"
+        android:icon="@drawable/checkpoint_choose__family"/>
     <item
         android:id="@+id/Friends"
-        android:title="Friends" />
+        android:title="Friends"
+        android:icon="@drawable/checkpoint_choose__friends"/>
     <item
         android:id="@+id/Mental_Health"
-        android:title="Mental Health" />
+        android:title="Mental Health"
+        android:icon="@drawable/checkpoint_choose__mentalhealth"/>
     <item
         android:id="@+id/Work_Carrer"
-        android:title="Work/Carrer" />
+        android:title="Work/Carrer"
+        android:icon="@drawable/checkpoint_choose__work"/>
     <item
         android:id="@+id/Creativity"
-        android:title="Creativity" />
+        android:title="Creativity"
+        android:icon="@drawable/checkpoint_choose__creativity"/>
     <item
         android:id="@+id/Education_Learning"
-        android:title="Education/Learning" />
+        android:title="Education/Learning"
+        android:icon="@drawable/checkpoint_choose__education_learning"/>
     <item
         android:id="@+id/Health_Fitness"
-        android:title="Health/Fitness" />
+        android:title="Health/Fitness"
+        android:icon="@drawable/checkpoint_choose__health_fitness"/>
     <item
         android:id="@+id/Hobbies_Interests"
-        android:title="Hobbies/Interests" />
+        android:title="Hobbies/Interests"
+        android:icon="@drawable/checkpoint_choose__hobbies_interest"/>
     <item
         android:id="@+id/Others"
         android:title="Others" />
-
-
 </menu>

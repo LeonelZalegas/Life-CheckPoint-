@@ -213,6 +213,7 @@
         android:backgroundTint="@color/light_blue"
         app:headerLayout="@layout/header_navigation_drawer"
         android:theme="@style/Theme.Influencer.MD3"
+        app:itemTextAppearance="@style/DrawerItemNormal"
         />
 
 </androidx.drawerlayout.widget.DrawerLayout>

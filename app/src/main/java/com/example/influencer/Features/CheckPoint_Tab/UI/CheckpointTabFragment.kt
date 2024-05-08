@@ -1,14 +1,25 @@
 package com.example.influencer.Features.CheckPoint_Tab.UI
 
 
+import android.app.Activity
 import android.content.Intent
 import android.content.res.Resources
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.core.widget.TextViewCompat
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -50,6 +61,9 @@ class CheckpointTabFragment : Fragment(), CardStackView_Adapter.CardActionsListe
         binding.menuIcon.setOnClickListener {
             toggleDrawer()
         }
+
+
+        setupNavigationDrawer()
     }
 
     private fun toggleDrawer() {
@@ -57,6 +71,32 @@ class CheckpointTabFragment : Fragment(), CardStackView_Adapter.CardActionsListe
             binding.drawerLayout.closeDrawer(GravityCompat.START)
         } else {
             binding.drawerLayout.openDrawer(GravityCompat.START)
+        }
+    }
+
+    private fun updateMenuItemAppearance(menuItem: MenuItem) {
+        val spannableTitle = SpannableString(menuItem.title.toString())
+        val color = context?.let { ContextCompat.getColor(it, R.color.rojo_pastel) }
+        if (menuItem.isChecked) {
+            // Set text color to red and make it bold when checked
+            spannableTitle.setSpan(color?.let { ForegroundColorSpan(it) }, 0, spannableTitle.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+            spannableTitle.setSpan(StyleSpan(Typeface.BOLD), 0, spannableTitle.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+        } else {
+            // Set text color to default (black) and make it normal when unchecked
+            spannableTitle.setSpan(ForegroundColorSpan(Color.BLACK), 0, spannableTitle.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+            spannableTitle.setSpan(StyleSpan(Typeface.NORMAL), 0, spannableTitle.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+        }
+        menuItem.title = spannableTitle
+    }
+
+    private fun setupNavigationDrawer() {
+        binding.navView.setNavigationItemSelectedListener { menuItem ->
+            // Toggle the selection state of the item
+            menuItem.isChecked = !menuItem.isChecked
+
+            updateMenuItemAppearance(menuItem)
+
+            true // Return true to display the item as the selected item
         }
     }
 
