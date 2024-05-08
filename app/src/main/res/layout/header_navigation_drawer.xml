@@ -16,6 +16,6 @@
         android:textSize="19dp"
         android:textStyle="italic"
         android:textColor="?attr/colorOnSurface"
-        android:text="Filter by Category" />
+        android:text="@string/category_Filter_Title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

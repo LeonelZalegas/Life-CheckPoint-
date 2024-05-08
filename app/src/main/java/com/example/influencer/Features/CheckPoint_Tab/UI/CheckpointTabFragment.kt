@@ -1,7 +1,6 @@
 package com.example.influencer.Features.CheckPoint_Tab.UI
 
 
-import android.app.Activity
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Color
@@ -15,11 +14,9 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
-import androidx.core.widget.TextViewCompat
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -29,7 +26,6 @@ import com.example.influencer.Features.Create_Modify_Checkpoint_Menu.UI.Checkpoi
 import com.example.influencer.databinding.FragmentCheckpointTabBinding
 import com.yuyakaido.android.cardstackview.*
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -56,53 +52,12 @@ class CheckpointTabFragment : Fragment(), CardStackView_Adapter.CardActionsListe
         initListeners()
         initObservers()
         setupCardStackView()
-
-        // Setup menu icon listener
-        binding.menuIcon.setOnClickListener {
-            toggleDrawer()
-        }
-
-
-        setupNavigationDrawer()
-    }
-
-    private fun toggleDrawer() {
-        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            binding.drawerLayout.closeDrawer(GravityCompat.START)
-        } else {
-            binding.drawerLayout.openDrawer(GravityCompat.START)
-        }
-    }
-
-    private fun updateMenuItemAppearance(menuItem: MenuItem) {
-        val spannableTitle = SpannableString(menuItem.title.toString())
-        val color = context?.let { ContextCompat.getColor(it, R.color.rojo_pastel) }
-        if (menuItem.isChecked) {
-            // Set text color to red and make it bold when checked
-            spannableTitle.setSpan(color?.let { ForegroundColorSpan(it) }, 0, spannableTitle.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
-            spannableTitle.setSpan(StyleSpan(Typeface.BOLD), 0, spannableTitle.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
-        } else {
-            // Set text color to default (black) and make it normal when unchecked
-            spannableTitle.setSpan(ForegroundColorSpan(Color.BLACK), 0, spannableTitle.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
-            spannableTitle.setSpan(StyleSpan(Typeface.NORMAL), 0, spannableTitle.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
-        }
-        menuItem.title = spannableTitle
-    }
-
-    private fun setupNavigationDrawer() {
-        binding.navView.setNavigationItemSelectedListener { menuItem ->
-            // Toggle the selection state of the item
-            menuItem.isChecked = !menuItem.isChecked
-
-            updateMenuItemAppearance(menuItem)
-
-            true // Return true to display the item as the selected item
-        }
     }
 
     private fun setupInitialUI() {
         setupAnimation()
         hideFabButtons()
+        setupNavigationDrawer()
         cardstackviewAdapter.listener = this //the CardActionsListener interface is implemented in this Fragment
     }
 
@@ -120,10 +75,36 @@ class CheckpointTabFragment : Fragment(), CardStackView_Adapter.CardActionsListe
         binding.addingNewCheckpointUpdate.visibility = View.GONE
     }
 
+    private fun setupNavigationDrawer() {
+        binding.navView.setNavigationItemSelectedListener { menuItem ->
+            // Toggle the selection state of the item
+            menuItem.isChecked = !menuItem.isChecked
+            updateMenuItemAppearance(menuItem)
+
+            true // Return true to display the item as the selected item
+        }
+    }
+
+    private fun updateMenuItemAppearance(menuItem: MenuItem) {
+        val spannableTitle = SpannableString(menuItem.title.toString())
+        val color = ContextCompat.getColor(requireContext(), R.color.rojo_oscuro)
+        if (menuItem.isChecked) {
+            // Set text color to red and make it bold when checked
+            spannableTitle.setSpan(ForegroundColorSpan(color), 0, spannableTitle.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+            spannableTitle.setSpan(StyleSpan(Typeface.BOLD), 0, spannableTitle.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+        } else {
+            // Set text color to default (black) and make it normal when unchecked
+            spannableTitle.setSpan(ForegroundColorSpan(Color.BLACK), 0, spannableTitle.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+            spannableTitle.setSpan(StyleSpan(Typeface.NORMAL), 0, spannableTitle.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+        }
+        menuItem.title = spannableTitle
+    }
+
     private fun initListeners() {
         setupFabListener()
         setupCheckpointListeners()
         setupRewindListener()
+        setupFilterIconListener()
     }
 
     private fun setupFabListener() {
@@ -162,6 +143,16 @@ class CheckpointTabFragment : Fragment(), CardStackView_Adapter.CardActionsListe
                 checkpointTabViewModel.rewind()
             } else {
                 Toast.makeText(activity, R.string.NoRewind, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun setupFilterIconListener(){
+        binding.filterIcon.setOnClickListener {
+            if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                binding.drawerLayout.closeDrawer(GravityCompat.START)
+            } else {
+                binding.drawerLayout.openDrawer(GravityCompat.START)
             }
         }
     }

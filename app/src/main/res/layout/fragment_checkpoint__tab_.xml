@@ -6,7 +6,6 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:openDrawer="left"
     android:background="@color/naranja_Home">
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -84,14 +83,28 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <ImageView
-        android:id="@+id/menu_icon"
+        android:id="@+id/filter_icon"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/guidelineMenu2"
-        app:layout_constraintBottom_toBottomOf="@id/guidelineMenu1"
+        app:layout_constraintStart_toEndOf="@id/guideline_Filter"
+        app:layout_constraintEnd_toStartOf="@id/guideline_Filter2"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineCardTop"
         android:src="@drawable/vector_asset_menu"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_Filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_Filter2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.15" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -213,7 +226,6 @@
         android:backgroundTint="@color/light_blue"
         app:headerLayout="@layout/header_navigation_drawer"
         android:theme="@style/Theme.Influencer.MD3"
-        app:itemTextAppearance="@style/DrawerItemNormal"
         />
 
 </androidx.drawerlayout.widget.DrawerLayout>
