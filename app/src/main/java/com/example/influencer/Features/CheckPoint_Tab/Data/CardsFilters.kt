@@ -4,5 +4,5 @@ import com.example.influencer.Features.SignIn.Domain.Model.UsuarioSignin
 import com.example.influencer.Features.Upload_New_Checkpoint.Domain.Model.Post
 
 interface CardsFilters {
-   suspend fun getRandomPost():Result<Post>
+   suspend fun getRandomPost(categories: Set<String>):Result<Post>
 }

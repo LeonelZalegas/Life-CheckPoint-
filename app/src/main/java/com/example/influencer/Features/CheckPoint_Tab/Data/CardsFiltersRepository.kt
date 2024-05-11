@@ -2,7 +2,10 @@ package com.example.influencer.Features.CheckPoint_Tab.Data
 
 import com.example.influencer.Features.SignIn.Domain.Model.UsuarioSignin
 import com.example.influencer.Features.Upload_New_Checkpoint.Domain.Model.Post
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -16,17 +19,50 @@ class CardsFiltersRepository @Inject constructor(
 ):CardsFilters {
 
     // Fetch a random post from the global posts collection
-    override suspend fun getRandomPost(): Result<Post> = withContext(Dispatchers.IO) {
+//    override suspend fun getRandomPost(): Result<Post> = withContext(Dispatchers.IO) {
+//        try {
+//            val postsSnapshot = db.collection("Posts").get().await()
+//            if (postsSnapshot.documents.isNotEmpty()) {
+//                val randomPostDoc = postsSnapshot.documents.random()
+//                val post = randomPostDoc.toObject(Post::class.java)   //en data class Post hacemos @DocumentId en el ID para no tener que hacer (Post::class.java)?.apply {this.id = randomPostDoc.id}
+//                post?.let {
+//                    Result.success(it)
+//                } ?: Result.failure(Exception("Failed to parse post document"))
+//            } else {
+//                Result.failure(Exception("No posts found"))
+//            }
+//        } catch (e: Exception) {
+//            Result.failure(e)
+//        }
+//    }
+
+    override suspend fun getRandomPost(categories: Set<String>): Result<Post> = withContext(Dispatchers.IO) {
         try {
-            val postsSnapshot = db.collection("Posts").get().await()
-            if (postsSnapshot.documents.isNotEmpty()) {
-                val randomPostDoc = postsSnapshot.documents.random()
-                val post = randomPostDoc.toObject(Post::class.java)   //en data class Post hacemos @DocumentId en el ID para no tener que hacer (Post::class.java)?.apply {this.id = randomPostDoc.id}
+            val knownCategories = listOf("Love", "Family", "Friends", "Mental Health", "Work/Carrer", "Creativity", "Education/Learning", "Health/Fitness", "Hobbies/Interests")
+            val tasks = mutableListOf<Task<QuerySnapshot>>()
+
+            if ("Others" in categories) {
+                val specificCategories = categories - "Others"
+                tasks.add(db.collection("Posts").whereNotIn("selectedCategory", knownCategories).get())
+                if (specificCategories.isNotEmpty()) {
+                    tasks.add(db.collection("Posts").whereIn("selectedCategory", specificCategories.toList()).get())
+                }
+            } else {
+                tasks.add(db.collection("Posts").whereIn("selectedCategory", categories.toList()).get())
+            }
+
+            // Await all tasks and combine results
+            val results = Tasks.whenAllSuccess<QuerySnapshot>(tasks).await().flatMap { it.documents }
+
+            // Apply randomness to select one document snapshot from the filtered results
+            if (results.isNotEmpty()) {
+                val randomDocumentSnapshot = results.random()
+                val post = randomDocumentSnapshot.toObject(Post::class.java)
                 post?.let {
                     Result.success(it)
                 } ?: Result.failure(Exception("Failed to parse post document"))
             } else {
-                Result.failure(Exception("No posts found"))
+                Result.failure(Exception("No posts found matching criteria"))
             }
         } catch (e: Exception) {
             Result.failure(e)

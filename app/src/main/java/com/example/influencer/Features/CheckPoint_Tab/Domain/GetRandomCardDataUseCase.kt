@@ -13,9 +13,9 @@ class GetRandomCardDataUseCase @Inject constructor(
     private val cardsFilters: CardsFilters,
     private val firestoreUserRepository: FirestoreUserRepository
 ) {
-    suspend operator fun invoke():Result<CardData> = withContext(Dispatchers.IO){
+    suspend operator fun invoke(categories: Set<String>):Result<CardData> = withContext(Dispatchers.IO){
         try {
-            val postResult = cardsFilters.getRandomPost()
+            val postResult = cardsFilters.getRandomPost(categories)
             val post = postResult.getOrThrow()  // This will throw if the operation fails
 
             val userResult = firestoreUserRepository.getUserById(post.userId)

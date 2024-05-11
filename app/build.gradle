@@ -81,7 +81,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:1.4.10"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.2'
     //FireBase
-    implementation platform('com.google.firebase:firebase-bom:24.0.2') // Use the latest version
+    implementation platform('com.google.firebase:firebase-bom:30.0.0') // Use the latest version
     implementation 'com.google.firebase:firebase-firestore'
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-storage'

@@ -10,6 +10,7 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -17,6 +18,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -34,6 +36,7 @@ class CheckpointTabFragment : Fragment(), CardStackView_Adapter.CardActionsListe
     private var _binding: FragmentCheckpointTabBinding? = null
     private val binding get() = _binding!!
     private var isAllFabsVisible: Boolean = false
+    private val selectedCategories = mutableSetOf<String>()
 
     @Inject
     lateinit var cardstackviewAdapter: CardStackView_Adapter
@@ -76,16 +79,53 @@ class CheckpointTabFragment : Fragment(), CardStackView_Adapter.CardActionsListe
     }
 
     private fun setupNavigationDrawer() {
+        val menu = binding.navView.menu
+        var initialSelectedCategories = setOf<String>()
+
+        for (i in 0 until menu.size()) {
+            val menuItem = menu.getItem(i)
+            menuItem.isChecked = true  // Set all items to checked by default
+            selectedCategories.add(menuItem.title as String)
+            updateMenuItemAppearance(menuItem)
+        }
+
         binding.navView.setNavigationItemSelectedListener { menuItem ->
-            // Toggle the selection state of the item
+            val category = menuItem.title.toString()
+
+            // Prevent unselecting the last item if it's the only one selected
+            if (selectedCategories.size == 1 && selectedCategories.contains(category)) {
+                return@setNavigationItemSelectedListener false // Ignore the click
+            }
+
+            //multiple icon selection is done
             menuItem.isChecked = !menuItem.isChecked
             updateMenuItemAppearance(menuItem)
 
+            if (menuItem.isChecked) {
+                selectedCategories.add(category)
+            } else {
+                selectedCategories.remove(category)
+            }
+
             true // Return true to display the item as the selected item
         }
+
+        binding.drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
+            override fun onDrawerOpened(drawerView: View) {
+                initialSelectedCategories = selectedCategories.toSet()  // Store the initial selections
+            }
+            override fun onDrawerClosed(drawerView: View) {
+                if (initialSelectedCategories != selectedCategories) {  // Check if selections have changed
+                    checkpointTabViewModel.updateSelectedCategories(selectedCategories)
+                }
+            }
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
+            override fun onDrawerStateChanged(newState: Int) {}
+        })
     }
 
     private fun updateMenuItemAppearance(menuItem: MenuItem) {
+        //"spans" Unlike styles or themes that apply globally, spans enable you to format specific portions of text within a TextView. include changing the text's color,etc.
         val spannableTitle = SpannableString(menuItem.title.toString())
         val color = ContextCompat.getColor(requireContext(), R.color.rojo_oscuro)
         if (menuItem.isChecked) {

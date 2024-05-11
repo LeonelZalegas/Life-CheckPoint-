@@ -23,6 +23,7 @@ class CheckpointTabViewModel @Inject constructor(
     companion object {
         private const val INITIAL_CARDS_COUNT = 10
         private const val PREFETCH_THRESHOLD = 3  // Number of cards ahead to pre-fetch// con 2 si el user pasa muy rapido no llega a cargar y tmb aveces no carga el card de atras x alguna razon
+        private val ALL_CATEGORIES = setOf("Love", "Family", "Friends", "Mental Health", "Work/Carrer", "Creativity", "Education/Learning", "Health/Fitness", "Hobbies/Interests", "Others")
     }
 
     private val _navigateToAddingNewCheckpoint = MutableLiveData<Event<Boolean>>()
@@ -41,6 +42,7 @@ class CheckpointTabViewModel @Inject constructor(
 
     private var cardDataList = mutableListOf<CardData>()
     private var currentCardIndex = 0
+    private var selectedCategories = ALL_CATEGORIES
 
     init {
         fetchInitialCardData()
@@ -52,7 +54,8 @@ class CheckpointTabViewModel @Inject constructor(
             loading.postValue(true)
             val fetchCards = List(INITIAL_CARDS_COUNT) { // Create a list of Deferred objects
                 async {
-                    getRandomCardDataUseCase().getOrNull() // Directly process results here
+                    Log.w("fetchInitialCardData", "al final si se ejecuta parece $selectedCategories")
+                    getRandomCardDataUseCase(selectedCategories).getOrNull() // Directly process results here
                 }
             }
             val results = fetchCards.awaitAll().filterNotNull()
@@ -67,7 +70,7 @@ class CheckpointTabViewModel @Inject constructor(
 
     private fun fetchRandomCardData() {
         viewModelScope.launch {
-            getRandomCardDataUseCase().onSuccess { cardData ->
+            getRandomCardDataUseCase(selectedCategories).onSuccess { cardData ->
                 cardDataList.add(cardData)
                 if (cardDataList.size > INITIAL_CARDS_COUNT) {
                     cardDataList.removeAt(0)
@@ -155,5 +158,12 @@ class CheckpointTabViewModel @Inject constructor(
     fun onAddingNewCheckpointUpdateSelected() {
         _navigateToAddingNewCheckpointUpdate.value =
             Event(true)
+    }
+
+    fun updateSelectedCategories(newCategories: Set<String>) {
+        selectedCategories = newCategories
+        cardDataList.clear()  // Clear existing data
+        _cards.postValue(emptyList())
+        fetchInitialCardData() // Refetch data with new categories
     }
 }
