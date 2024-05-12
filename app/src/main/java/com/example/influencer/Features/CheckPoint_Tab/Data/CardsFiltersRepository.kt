@@ -18,24 +18,6 @@ class CardsFiltersRepository @Inject constructor(
     private val db: FirebaseFirestore
 ):CardsFilters {
 
-    // Fetch a random post from the global posts collection
-//    override suspend fun getRandomPost(): Result<Post> = withContext(Dispatchers.IO) {
-//        try {
-//            val postsSnapshot = db.collection("Posts").get().await()
-//            if (postsSnapshot.documents.isNotEmpty()) {
-//                val randomPostDoc = postsSnapshot.documents.random()
-//                val post = randomPostDoc.toObject(Post::class.java)   //en data class Post hacemos @DocumentId en el ID para no tener que hacer (Post::class.java)?.apply {this.id = randomPostDoc.id}
-//                post?.let {
-//                    Result.success(it)
-//                } ?: Result.failure(Exception("Failed to parse post document"))
-//            } else {
-//                Result.failure(Exception("No posts found"))
-//            }
-//        } catch (e: Exception) {
-//            Result.failure(e)
-//        }
-//    }
-
     override suspend fun getRandomPost(categories: Set<String>): Result<Post> = withContext(Dispatchers.IO) {
         try {
             val knownCategories = listOf("Love", "Family", "Friends", "Mental Health", "Work/Carrer", "Creativity", "Education/Learning", "Health/Fitness", "Hobbies/Interests")
