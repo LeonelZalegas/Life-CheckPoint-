@@ -1,0 +1,288 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/naranja_Home">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/ProfileInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@id/verticalGuideline"
+        app:layout_constraintEnd_toEndOf="@id/verticalGuideline2"
+        android:backgroundTint="@color/light_blue"
+        android:layout_marginTop="0.5dp"
+        android:background="@drawable/border_black">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/border_black">
+
+            <TextView
+                android:id="@+id/PostDatePublished"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/ProfileInfoEnd"
+                app:layout_constraintStart_toEndOf="@id/VerticalSeparation"
+                app:layout_constraintBottom_toTopOf="@id/Checkpoint_CategotyNumber"
+                android:fontFamily="@font/happy"
+                android:textAlignment="center"
+                android:autoSizeTextType="uniform"
+                android:paddingTop="1dp"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                app:layout_constraintHeight_percent="0.1"
+                android:maxLines="1"
+                android:autoSizeMinTextSize="10dp"
+                />
+
+            <TextView
+                android:id="@+id/Checkpoint_CategotyNumber"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@id/ProfileInfoGuidelineBottom"
+                app:layout_constraintStart_toStartOf="@id/VerticalSeparation"
+                app:layout_constraintEnd_toEndOf="@+id/ProfileInfoEnd"
+                app:layout_constraintTop_toBottomOf="@id/PostDatePublished"
+                android:fontFamily="@font/happy"
+                android:textAlignment="center"
+                android:autoSizeTextType="uniform"
+                android:paddingStart="7dp"
+                android:paddingEnd="7dp"
+                app:layout_constraintHeight_percent="0.1"
+                android:maxLines="1"
+                android:autoSizeMinTextSize="10dp"
+                app:layout_constraintVertical_bias="0.7"
+                />
+
+            <com.skydoves.progressview.ProgressView
+                android:id="@+id/SatisfactionLevel_Bar"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@id/ProfileInfoGuidelineBottom"
+                app:layout_constraintTop_toBottomOf="@id/SatisfactionLevel_Text"
+                android:layout_marginStart="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintWidth_percent="0.55"
+                app:layout_constraintHeight_percent="0.05"
+                app:layout_constraintVertical_bias="0.82"
+                />
+
+            <TextView
+                android:id="@+id/SatisfactionLevel_Text"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/SatisfactionLevel_Bar"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.4"
+                app:layout_constraintHeight_percent="0.1"
+                android:layout_marginStart="15dp"
+                android:text="@string/Satisfaction_scale_text"
+                android:fontFamily="@font/happy"
+                android:textAlignment="center"
+                android:autoSizeTextType="uniform"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/SatisfactionLevel_Value"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/VerticalSeparation"
+                app:layout_constraintStart_toEndOf="@id/SatisfactionLevel_Text"
+                app:layout_constraintBottom_toTopOf="@id/SatisfactionLevel_Bar"
+                app:layout_constraintWidth_percent="0.06"
+                app:layout_constraintHeight_percent="0.12"
+                android:fontFamily="@font/happy"
+                android:textAlignment="center"
+                android:autoSizeTextType="uniform"
+                android:textColor="@color/black"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/ProfileInfoGuidelineBottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.35" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/VerticalSeparation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.63" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/ProfileInfoEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.95" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/CheckpointAndUpdate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/barrier"
+        app:layout_constraintStart_toStartOf="@id/verticalGuideline"
+        app:layout_constraintEnd_toEndOf="@id/verticalGuideline2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:minHeight="450dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/CheckpointAndUpdateConstraint"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/border_black"
+            android:minHeight="450dp">
+
+            <TextView
+                android:id="@+id/Checkpoint_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/CheckpointAndUpdateGuideline3"
+                app:layout_constraintEnd_toEndOf="@id/CheckpointAndUpdateGuideline4"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/PostPhoto1"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintVertical_bias="0"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                app:layout_constraintVertical_chainStyle="packed"
+                />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/PostPhoto1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/Checkpoint_text"
+                app:layout_constraintStart_toStartOf="@id/CheckpointAndUpdateGuideline3"
+                app:layout_constraintEnd_toEndOf="@id/CheckpointAndUpdateGuideline4"
+                app:layout_constraintBottom_toTopOf="@id/PostPhoto2"
+                android:scaleType="fitXY"
+                android:visibility="gone"
+                android:maxHeight="300dp"
+                android:adjustViewBounds="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.postImages"
+                />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/PostPhoto2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/PostPhoto1"
+                app:layout_constraintStart_toStartOf="@id/CheckpointAndUpdateGuideline3"
+                app:layout_constraintEnd_toEndOf="@id/CheckpointAndUpdateGuideline4"
+                app:layout_constraintBottom_toTopOf="@id/DailyCheckpointUpdates_Title"
+                android:scaleType="fitXY"
+                android:visibility="gone"
+                android:maxHeight="300dp"
+                android:adjustViewBounds="true"
+                android:layout_marginBottom="20dp"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.postImages"
+                />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/DailyCheckpointUpdates_Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/PostPhoto2"
+                app:layout_constraintStart_toStartOf="@id/CheckpointAndUpdateGuideline3"
+                app:layout_constraintEnd_toEndOf="@id/CheckpointAndUpdateGuideline4"
+                app:layout_constraintBottom_toTopOf="@id/Updates_RecyclerView"
+                android:text="@string/DailyCheckpointUpdates_Title"
+                android:textSize="12dp"
+                app:chipMinHeight="25dp"
+                android:fontFamily="@font/happy"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/Updates_RecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/DailyCheckpointUpdates_Title"
+                app:layout_constraintStart_toStartOf="@id/CheckpointAndUpdateGuideline3"
+                app:layout_constraintEnd_toEndOf="@id/CheckpointAndUpdateGuideline4"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:overScrollMode="never"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintVertical_bias="0"
+                />
+
+            <TextView
+                android:id="@+id/textViewNoUpdates"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/textViewNoUpdates"
+                app:layout_constraintTop_toBottomOf="@id/DailyCheckpointUpdates_Title"
+                app:layout_constraintStart_toStartOf="@id/CheckpointAndUpdateGuideline3"
+                app:layout_constraintEnd_toEndOf="@id/CheckpointAndUpdateGuideline4"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0"
+                android:textAlignment="center"
+                android:autoSizeTextType="uniform"
+                android:visibility="gone"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/CheckpointAndUpdateGuideline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.05" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/CheckpointAndUpdateGuideline4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.95" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="ProfileInfo" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="CheckpointAndUpdate" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/verticalGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/verticalGuideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

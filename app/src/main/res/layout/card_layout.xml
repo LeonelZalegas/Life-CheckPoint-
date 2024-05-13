@@ -81,9 +81,9 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="@id/ProfileInfoGuidelinelikes2"
-                    app:layout_constraintStart_toEndOf="@id/ProfileInfoGuideline6"
-                    app:layout_constraintBottom_toTopOf="@id/ProfileInfoGuideline2"
+                    app:layout_constraintEnd_toEndOf="@id/ProfileInfoEnd"
+                    app:layout_constraintStart_toEndOf="@id/VerticalSeparation"
+                    app:layout_constraintBottom_toTopOf="@id/ProfileInfoGuidelineBottom"
                     android:fontFamily="@font/happy"
                     android:textAlignment="center"
                     android:autoSizeTextType="uniform"
@@ -133,7 +133,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     app:layout_constraintBottom_toBottomOf="@id/ProfileInfoGuideline8"
-                    app:layout_constraintEnd_toStartOf="@id/ProfileInfoGuidelinelikes2"
+                    app:layout_constraintEnd_toStartOf="@id/ProfileInfoEnd"
                     app:layout_constraintStart_toEndOf="@id/LikeButtom"
                     app:layout_constraintTop_toBottomOf="@id/ProfileInfoGuideline9"
                     app:layout_constraintWidth_percent="0.06"
@@ -144,12 +144,11 @@
                     app:layout_constraintHeight_percent="0.12"/>
 
                 <com.skydoves.progressview.ProgressView
-
                     android:id="@+id/SatisfactionLevel_Bar"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     app:layout_constraintBottom_toBottomOf="@id/ProfileInfoGuideline3"
-                    app:layout_constraintTop_toBottomOf="@id/ProfileInfoGuideline2"
+                    app:layout_constraintTop_toBottomOf="@id/ProfileInfoGuidelineBottom"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/ProfileInfoGuideline"
                     app:layout_constraintWidth_percent="0.55"
@@ -167,7 +166,7 @@
                     app:layout_constraintEnd_toStartOf="@id/SatisfactionLevel_Value"
                     app:layout_constraintWidth_percent="0.4"
                     app:layout_constraintHeight_percent="0.1"
-                    android:text="Satisfation Scale"
+                    android:text="@string/Satisfaction_scale_text"
                     android:fontFamily="@font/happy"
                     android:textAlignment="center"
                     android:autoSizeTextType="uniform"
@@ -192,7 +191,7 @@
                     android:id="@+id/CountryFlag_icon"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintTop_toBottomOf="@id/ProfileInfoGuideline2"
+                    app:layout_constraintTop_toBottomOf="@id/ProfileInfoGuidelineBottom"
                     app:layout_constraintStart_toStartOf="@id/ProfileInfoGuideline"
                     app:layout_constraintBottom_toTopOf="@id/ProfileInfoGuideline5"
                     app:layout_constraintEnd_toStartOf="@id/userAge"
@@ -210,7 +209,7 @@
                     android:layout_height="0dp"
                     app:layout_constraintBottom_toTopOf="@id/ProfileInfoGuideline5"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ProfileInfoGuideline2"
+                    app:layout_constraintTop_toBottomOf="@id/ProfileInfoGuidelineBottom"
                     app:layout_constraintStart_toEndOf="@id/CountryFlag_icon"
                     app:layout_constraintWidth_percent="0.5"
                     app:layout_constraintHeight_percent="0.11"
@@ -229,7 +228,7 @@
                     app:layout_constraintGuide_percent="0.35" />
 
                 <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/ProfileInfoGuideline2"
+                    android:id="@+id/ProfileInfoGuidelineBottom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -257,7 +256,7 @@
                     app:layout_constraintGuide_percent="0.47" />
 
                 <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/ProfileInfoGuideline6"
+                    android:id="@+id/VerticalSeparation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -292,7 +291,7 @@
                     app:layout_constraintGuide_percent="0.82" />
 
                 <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/ProfileInfoGuidelinelikes2"
+                    android:id="@+id/ProfileInfoEnd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -364,7 +363,7 @@
             android:minHeight="450dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/pruebagg"
+                android:id="@+id/CheckpointAndUpdateConstraint"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/border_black"

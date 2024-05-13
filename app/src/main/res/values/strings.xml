@@ -79,6 +79,7 @@
     <string name="DatePicker_dialog">Select your date of birth</string>
     //Checkpoint Post showing
     <string name="DailyCheckpointUpdates_Title">Daily Checkpoint Updates</string>
+    <string name="Satisfaction_scale_text">Satisfaction Scale</string>
     <string name="textViewNoUpdates">There is no Updates for this Checkpoint yet</string>
     <string name="NoRewind">Can\'t rewind anymore</string>
     <string name="category_Filter_Title">Filter by Category</string>
