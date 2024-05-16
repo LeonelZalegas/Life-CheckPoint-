@@ -1,4 +1,4 @@
-package com.example.influencer.Features.CheckPoint_Tab.UI
+package com.example.influencer.Core.UI
 
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.influencer.Core.Utils.BackgroundAndTextColors.setChipTextColor
 import com.example.influencer.Features.Upload_New_Update_Checkpoint.Domain.Model.CheckPoint_Update_Item
 import com.example.influencer.databinding.ItemUpdateCheckpointBinding
-import java.util.SortedMap
 
 class Updates_Adapter: RecyclerView.Adapter<Updates_Adapter.ViewHolder>() {
 

@@ -12,7 +12,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="@id/verticalGuideline"
         app:layout_constraintEnd_toEndOf="@id/verticalGuideline2"
-
         android:backgroundTint="@color/light_blue"
         android:layout_marginTop="20dp"
         android:background="@drawable/border_black">
@@ -36,8 +35,6 @@
                 android:paddingTop="1dp"
                 android:paddingStart="13dp"
                 android:paddingEnd="13dp"
-
-
                 android:maxLines="1"
                 android:autoSizeMinTextSize="10dp"
                 />
@@ -52,8 +49,6 @@
                 app:layout_constraintTop_toBottomOf="@id/Horizontal2Top"
                 android:fontFamily="@font/happy"
                 android:textAlignment="center"
-
-
                 android:maxLines="1"
                 android:autoSizeMinTextSize="10dp"
                 android:autoSizeTextType="uniform"
@@ -69,7 +64,6 @@
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="@id/Horizontal2Top"
                 app:layout_constraintTop_toBottomOf="@id/SatisfactionMiddle"
-
                 app:layout_constraintStart_toStartOf="@id/ProfileInfoStart"
                 app:layout_constraintEnd_toEndOf="@id/VerticalSeparation"
                 app:layout_constraintWidth_percent="0.55"
@@ -87,8 +81,6 @@
                 app:layout_constraintEnd_toEndOf="@id/SatisfactionTextSeparation"
                 app:layout_constraintWidth_percent="0.33"
                 app:layout_constraintHeight_percent="0.2"
-
-
                 android:text="@string/Satisfaction_scale_text"
                 android:fontFamily="@font/happy"
                 android:textAlignment="center"
@@ -103,9 +95,8 @@
                 app:layout_constraintStart_toEndOf="@id/SatisfactionTextSeparation"
                 app:layout_constraintBottom_toTopOf="@id/SatisfactionMiddle"
                 app:layout_constraintTop_toTopOf="@id/SatisfactionTop"
-                app:layout_constraintWidth_percent="0.06"
-                app:layout_constraintHeight_percent="0.16"
-
+                app:layout_constraintWidth_percent="0.08"
+                app:layout_constraintHeight_percent="0.2"
                 android:fontFamily="@font/happy"
                 android:textAlignment="center"
                 android:autoSizeTextType="uniform"
@@ -191,7 +182,7 @@
         android:id="@+id/CheckpointAndUpdate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/barrier"
+        app:layout_constraintTop_toBottomOf="@id/ProfileInfo"
         app:layout_constraintStart_toStartOf="@id/verticalGuideline"
         app:layout_constraintEnd_toEndOf="@id/verticalGuideline2"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -315,20 +306,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="ProfileInfo" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="CheckpointAndUpdate" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/verticalGuideline"

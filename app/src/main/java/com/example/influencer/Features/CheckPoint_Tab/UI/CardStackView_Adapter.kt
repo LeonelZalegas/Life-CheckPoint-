@@ -10,6 +10,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.influencer.Core.UI.Updates_Adapter
 import com.example.influencer.Core.Utils.BackgroundAndTextColors.setChipTextColor
 import com.example.influencer.Core.Utils.BackgroundAndTextColors.setRoundedBackgroundColor
 import com.example.influencer.Core.Utils.DateTimeUtils
@@ -17,7 +18,6 @@ import com.example.influencer.Features.CheckPoint_Tab.Domain.Model.CardData
 import com.example.influencer.databinding.CardLayoutBinding
 import com.like.LikeButton
 import com.like.OnLikeListener
-import java.util.*
 import javax.inject.Inject
 
 class CardStackView_Adapter @Inject constructor(

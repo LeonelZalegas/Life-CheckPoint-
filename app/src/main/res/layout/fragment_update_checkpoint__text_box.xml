@@ -85,7 +85,7 @@
                 android:paddingEnd="25dp"
                 android:layout_marginTop="10dp"
                 android:background="@null"
-                android:hint="@string/hint_put_checkPoint_text"
+                android:hint="@string/hint_checkpoint_update"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

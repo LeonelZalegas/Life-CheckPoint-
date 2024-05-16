@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide
 import com.example.influencer.Core.Utils.BackgroundAndTextColors.setChipTextColor
 import com.example.influencer.Core.Utils.BackgroundAndTextColors.setRoundedBackgroundColor
 import com.example.influencer.Core.Utils.DateTimeUtils
-import com.example.influencer.Features.CheckPoint_Tab.UI.Updates_Adapter
+import com.example.influencer.Core.UI.Updates_Adapter
 import com.example.influencer.Features.Upload_New_Checkpoint.Domain.Model.Post
 import com.example.influencer.Features.Upload_New_Update_Checkpoint.Domain.Model.CheckPoint_Update_Item
 import com.example.influencer.databinding.FragmentUpdateCheckpointCardInfoBinding
@@ -70,7 +70,7 @@ class Update_checkpoint_CardInfo : Fragment() {
             CheckpointCategoryNumber.text = "Checkpoint N°${post.checkpointCategoryCounter}" //TODO
             CheckpointCategoryNumber.setRoundedBackgroundColor(colorInt, 50f)
             SatisfactionLevelBar.progress = post.satisfaction_level_value.toFloat()
-            SatisfactionLevelValue.text = post.satisfaction_level_value.toString()
+            SatisfactionLevelValue.text = "${post.satisfaction_level_value.toString()}%"
 
             CheckpointText.text = post.text_post
             with(post) {
