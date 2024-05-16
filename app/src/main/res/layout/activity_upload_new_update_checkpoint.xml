@@ -10,6 +10,7 @@
         android:layout_height="wrap_content">
 
         <View
+            android:id="@+id/Gray_Bar"
             android:layout_width="0dp"
             android:layout_height="4dp"
             android:background="@color/gris"
@@ -32,6 +33,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/guideline"/>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/Fragment_update_CardInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/Gray_Bar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline2"

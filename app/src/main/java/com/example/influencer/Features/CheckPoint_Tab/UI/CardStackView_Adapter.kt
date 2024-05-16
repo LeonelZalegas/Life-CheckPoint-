@@ -90,8 +90,8 @@ class CardStackView_Adapter @Inject constructor(
                 userName.text = cardData.user.username
                 PostDatePublished.text = DateTimeUtils.getTimeAgo(cardData.post.creationDate)
                 PostDatePublished.setRoundedBackgroundColor(colorInt, 50f)
-                CheckpointCategotyNumber.text = "Checkpoint N°${cardData.post.checkpointCategoryCounter}"
-                CheckpointCategotyNumber.setRoundedBackgroundColor(colorInt, 50f)
+                CheckpointCategoryNumber.text = "Checkpoint N°${cardData.post.checkpointCategoryCounter}"
+                CheckpointCategoryNumber.setRoundedBackgroundColor(colorInt, 50f)
                 PostAmountLikes.text = cardData.post.likes.toString()
                 SatisfactionLevelBar.progress = cardData.post.satisfaction_level_value.toFloat()
                 SatisfactionLevelValue.text = cardData.post.satisfaction_level_value.toString()
@@ -148,15 +148,14 @@ class CardStackView_Adapter @Inject constructor(
 
                 var updatesList = cardData.updates
 
-                binding.UpdatesRecyclerView.visibility = View.GONE
-                binding.textViewNoUpdates.visibility = View.GONE
+                UpdatesRecyclerView.visibility = View.GONE
+                textViewNoUpdates.visibility = View.GONE
                 if (updatesList.isNullOrEmpty()) {
-                    binding.textViewNoUpdates.visibility = View.VISIBLE
+                    textViewNoUpdates.visibility = View.VISIBLE
                 } else {
-                    binding.UpdatesRecyclerView.visibility = View.VISIBLE
+                    UpdatesRecyclerView.visibility = View.VISIBLE
                     updatesAdapter.setUpdates(updatesList, colorInt)
                 }
-
             }
         }
 

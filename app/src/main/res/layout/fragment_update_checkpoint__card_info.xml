@@ -8,12 +8,13 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/ProfileInfo"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="@id/verticalGuideline"
         app:layout_constraintEnd_toEndOf="@id/verticalGuideline2"
+
         android:backgroundTint="@color/light_blue"
-        android:layout_marginTop="0.5dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/border_black">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,63 +26,69 @@
                 android:id="@+id/PostDatePublished"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@id/Horizontal1Top"
                 app:layout_constraintEnd_toEndOf="@id/ProfileInfoEnd"
                 app:layout_constraintStart_toEndOf="@id/VerticalSeparation"
-                app:layout_constraintBottom_toTopOf="@id/Checkpoint_CategotyNumber"
+                app:layout_constraintBottom_toBottomOf="@id/Horizontal1Bottom"
                 android:fontFamily="@font/happy"
                 android:textAlignment="center"
                 android:autoSizeTextType="uniform"
                 android:paddingTop="1dp"
-                android:paddingStart="6dp"
-                android:paddingEnd="6dp"
-                app:layout_constraintHeight_percent="0.1"
+                android:paddingStart="13dp"
+                android:paddingEnd="13dp"
+
+
                 android:maxLines="1"
                 android:autoSizeMinTextSize="10dp"
                 />
 
             <TextView
-                android:id="@+id/Checkpoint_CategotyNumber"
+                android:id="@+id/Checkpoint_CategoryNumber"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="@id/ProfileInfoGuidelineBottom"
+                app:layout_constraintBottom_toBottomOf="@id/Horizontal2Bottom"
                 app:layout_constraintStart_toStartOf="@id/VerticalSeparation"
                 app:layout_constraintEnd_toEndOf="@+id/ProfileInfoEnd"
-                app:layout_constraintTop_toBottomOf="@id/PostDatePublished"
+                app:layout_constraintTop_toBottomOf="@id/Horizontal2Top"
                 android:fontFamily="@font/happy"
                 android:textAlignment="center"
-                android:autoSizeTextType="uniform"
-                android:paddingStart="7dp"
-                android:paddingEnd="7dp"
-                app:layout_constraintHeight_percent="0.1"
+
+
                 android:maxLines="1"
                 android:autoSizeMinTextSize="10dp"
-                app:layout_constraintVertical_bias="0.7"
+                android:autoSizeTextType="uniform"
+                android:paddingTop="2dp"
+                android:paddingStart="9dp"
+                android:paddingEnd="9dp"
+
                 />
 
             <com.skydoves.progressview.ProgressView
                 android:id="@+id/SatisfactionLevel_Bar"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="@id/ProfileInfoGuidelineBottom"
-                app:layout_constraintTop_toBottomOf="@id/SatisfactionLevel_Text"
-                android:layout_marginStart="15dp"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/Horizontal2Top"
+                app:layout_constraintTop_toBottomOf="@id/SatisfactionMiddle"
+
+                app:layout_constraintStart_toStartOf="@id/ProfileInfoStart"
+                app:layout_constraintEnd_toEndOf="@id/VerticalSeparation"
                 app:layout_constraintWidth_percent="0.55"
-                app:layout_constraintHeight_percent="0.05"
-                app:layout_constraintVertical_bias="0.82"
+                app:layout_constraintHeight_percent="0.1"
+                app:layout_constraintHorizontal_bias="0"
                 />
 
             <TextView
                 android:id="@+id/SatisfactionLevel_Text"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/SatisfactionLevel_Bar"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.4"
-                app:layout_constraintHeight_percent="0.1"
-                android:layout_marginStart="15dp"
+                app:layout_constraintStart_toStartOf="@id/ProfileInfoStart"
+                app:layout_constraintBottom_toTopOf="@id/SatisfactionMiddle"
+                app:layout_constraintTop_toTopOf="@id/SatisfactionTop"
+                app:layout_constraintEnd_toEndOf="@id/SatisfactionTextSeparation"
+                app:layout_constraintWidth_percent="0.33"
+                app:layout_constraintHeight_percent="0.2"
+
+
                 android:text="@string/Satisfaction_scale_text"
                 android:fontFamily="@font/happy"
                 android:textAlignment="center"
@@ -92,30 +99,32 @@
                 android:id="@+id/SatisfactionLevel_Value"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/VerticalSeparation"
-                app:layout_constraintStart_toEndOf="@id/SatisfactionLevel_Text"
-                app:layout_constraintBottom_toTopOf="@id/SatisfactionLevel_Bar"
+                app:layout_constraintStart_toEndOf="@id/SatisfactionTextSeparation"
+                app:layout_constraintBottom_toTopOf="@id/SatisfactionMiddle"
+                app:layout_constraintTop_toTopOf="@id/SatisfactionTop"
                 app:layout_constraintWidth_percent="0.06"
-                app:layout_constraintHeight_percent="0.12"
+                app:layout_constraintHeight_percent="0.16"
+
                 android:fontFamily="@font/happy"
                 android:textAlignment="center"
                 android:autoSizeTextType="uniform"
-                android:textColor="@color/black"/>
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/ProfileInfoGuidelineBottom"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.35" />
+                android:textColor="@color/black"
+                app:layout_constraintHorizontal_bias="0.2"/>
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/VerticalSeparation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.63" />
+                app:layout_constraintGuide_percent="0.67" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/SatisfactionTextSeparation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.52" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/ProfileInfoEnd"
@@ -123,6 +132,55 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.95" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/ProfileInfoStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.05" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/Horizontal1Bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.33" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/Horizontal1Top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.14" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/Horizontal2Top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.66" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/Horizontal2Bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.86" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/SatisfactionMiddle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/SatisfactionTop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.25" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -137,7 +195,8 @@
         app:layout_constraintStart_toStartOf="@id/verticalGuideline"
         app:layout_constraintEnd_toEndOf="@id/verticalGuideline2"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:minHeight="450dp">
+        android:minHeight="450dp"
+        android:layout_marginBottom="20dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/CheckpointAndUpdateConstraint"

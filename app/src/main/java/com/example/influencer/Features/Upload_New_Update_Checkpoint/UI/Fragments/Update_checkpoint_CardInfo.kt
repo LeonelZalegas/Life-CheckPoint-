@@ -1,60 +1,114 @@
 package com.example.influencer.Features.Upload_New_Update_Checkpoint.UI.Fragments
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.influencer.R
+import android.widget.ImageView
+import android.widget.Toast
+import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.example.influencer.Core.Utils.BackgroundAndTextColors.setChipTextColor
+import com.example.influencer.Core.Utils.BackgroundAndTextColors.setRoundedBackgroundColor
+import com.example.influencer.Core.Utils.DateTimeUtils
+import com.example.influencer.Features.CheckPoint_Tab.UI.Updates_Adapter
+import com.example.influencer.Features.Upload_New_Checkpoint.Domain.Model.Post
+import com.example.influencer.Features.Upload_New_Update_Checkpoint.Domain.Model.CheckPoint_Update_Item
+import com.example.influencer.databinding.FragmentUpdateCheckpointCardInfoBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [Update_checkpoint_CardInfo.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class Update_checkpoint_CardInfo : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private var _binding: FragmentUpdateCheckpointCardInfoBinding? = null
+    private val binding get() = _binding!!
+
+    private val sharedViewModel: SharedViewmodel by activityViewModels()
+    private val updatesAdapter = Updates_Adapter()
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
+        _binding = FragmentUpdateCheckpointCardInfoBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupRecyclerView()
+
+        sharedViewModel.loadPostAndUpdates()
+
+        sharedViewModel.postAndUpdates.observe(viewLifecycleOwner) { result ->
+            if (result.isSuccess) {
+                val (post, updates) = result.getOrNull()!!
+                updateUI(post, updates)
+            } else {
+                // Handle error TODO
+                Toast.makeText(context, "Failed to load post and updates", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_update_checkpoint__card_info, container, false)
+    private fun setupRecyclerView() {
+        binding.UpdatesRecyclerView.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = updatesAdapter
+        }
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Update_checkpoint_CardInfo.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Update_checkpoint_CardInfo().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    private fun updateUI(post: Post, updates: List<CheckPoint_Update_Item>) {
+        binding.apply {
+            val colorString = if (post.categoryColor.isNullOrEmpty()) "#FFFFFF" else post.categoryColor // Default to white if null or empty
+            val colorInt = Color.parseColor(colorString)
+
+            PostDatePublished.text = DateTimeUtils.getTimeAgo(post.creationDate)
+            PostDatePublished.setRoundedBackgroundColor(colorInt, 50f)
+            CheckpointCategoryNumber.text = "Checkpoint N°${post.checkpointCategoryCounter}" //TODO
+            CheckpointCategoryNumber.setRoundedBackgroundColor(colorInt, 50f)
+            SatisfactionLevelBar.progress = post.satisfaction_level_value.toFloat()
+            SatisfactionLevelValue.text = post.satisfaction_level_value.toString()
+
+            CheckpointText.text = post.text_post
+            with(post) {
+                setImageVisibility(image_1, binding.PostPhoto1)
+                setImageVisibility(image_2, binding.PostPhoto2) // Assuming you meant PostPhoto2 for image_2
+            }
+            with(binding) {
+                val colorStateList = ColorStateList.valueOf(colorInt)
+                DailyCheckpointUpdatesTitle.chipBackgroundColor = colorStateList
+                DailyCheckpointUpdatesTitle.setChipTextColor(colorInt)
+
+                var updatesList = updates
+
+                UpdatesRecyclerView.visibility = View.GONE
+                textViewNoUpdates.visibility = View.GONE
+                if (updatesList.isNullOrEmpty()) {
+                    textViewNoUpdates.visibility = View.VISIBLE
+                } else {
+                    UpdatesRecyclerView.visibility = View.VISIBLE
+                    updatesAdapter.setUpdates(updatesList, colorInt)
                 }
             }
+        }
+    }
+
+    private fun setImageVisibility(imageUrl: String?, imageView: ImageView) {
+        imageUrl?.let { imageUrl->
+            imageView.apply {
+                visibility = View.VISIBLE
+                Glide.with(context).load(imageUrl).into(this)
+            }
+        } ?: run {
+            imageView.visibility = View.GONE
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

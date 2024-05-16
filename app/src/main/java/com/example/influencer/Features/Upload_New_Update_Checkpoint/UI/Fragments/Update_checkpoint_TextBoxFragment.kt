@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.influencer.R
@@ -29,9 +30,7 @@ class Update_checkpoint_TextBox : Fragment() {
 
     private var _binding: FragmentUpdateCheckpointTextBoxBinding? = null
     private val binding get() = _binding!!   //The get() function here is a custom getter. In Kotlin, properties can have custom getters and setters,he custom getter for binding does not store a value itself; instead, it provides the value of _binding each time binding is accessed
-    private val viewModel: Checkpoint_TextBox_Viewmodel by viewModels()
-    private var selectedCategoryColor: Int = 0
-    private lateinit var selectedCategoryName:String
+    private val viewModel: SharedViewmodel by activityViewModels()
     private lateinit var carga: SweetAlertDialog
 
     override fun onCreateView(
@@ -51,12 +50,16 @@ class Update_checkpoint_TextBox : Fragment() {
     }
 
     private fun initializeUI() {
-        handleSelectedCategory()
-        setupCharacterCounter()
-        viewModel.getNextUpdateNumber(selectedCategoryName)
+        viewModel.selectedCategory.observe(viewLifecycleOwner) { selectedCategory ->
+            selectedCategory?.let {
+                handleSelectedCategory(it.color, it.text)
+                setupCharacterCounter(it.color)
+                viewModel.getNextUpdateNumber(it.text)
+            }
+        }
     }
 
-    private fun setupCharacterCounter() {
+    private fun setupCharacterCounter(selectedCategoryColor: Int) {
         with(binding.remainingCharsChip){
             text = "$MAX_LENGTH Char"
             setChipBackgroundColorResource(selectedCategoryColor)
@@ -83,11 +86,7 @@ class Update_checkpoint_TextBox : Fragment() {
         })
     }
 
-    private fun handleSelectedCategory() {
-        val selectedCategory = arguments?.getSerializableCompat("SELECTED_CATEGORY", CheckpointThemeItem::class.java)
-        selectedCategory?.let {
-            selectedCategoryColor = it.color
-            selectedCategoryName = it.text
+    private fun handleSelectedCategory(selectedCategoryColor: Int,selectedCategoryName:String) {
             with(binding.chipSelectedCategory){
                 text = selectedCategoryName
                 setChipBackgroundColorResource(selectedCategoryColor) //lo mismo q dije en UploadNewCheckpointActivity, pasamos el CheckpointThemeItem directamente por eso funca
@@ -97,7 +96,6 @@ class Update_checkpoint_TextBox : Fragment() {
                 val isDark = BackgroundAndTextColors.isColorDark(colorInt)
                 setTextColor(if (isDark) Color.WHITE else Color.BLACK)
             }
-        }
     }
 
     private fun initLoading() {

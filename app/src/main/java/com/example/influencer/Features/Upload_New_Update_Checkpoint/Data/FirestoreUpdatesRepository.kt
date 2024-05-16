@@ -1,6 +1,7 @@
 package com.example.influencer.Features.Upload_New_Update_Checkpoint.Data
 
 import com.example.influencer.Core.Data.Network.AuthenticationService
+import com.example.influencer.Features.Upload_New_Checkpoint.Domain.Model.Post
 import com.example.influencer.Features.Upload_New_Update_Checkpoint.Domain.Model.CheckPoint_Update_Item
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -55,6 +56,22 @@ class FirestoreUpdatesRepository @Inject constructor(
                 } + 1
         }
         nextUpdateNumberCache!!
+    }
+
+    //getLastPostDocumentRef solo te devuelve la referencia al post (no el post en si, solo como que el query) aca te devuelve el post posta
+    suspend fun getLastPost(selectedCategory: String): Result<Post> = withContext(Dispatchers.IO){
+        return@withContext try{
+            val lastPostDocRef = getLastPostDocumentRef(selectedCategory)
+            val postSnapshot = lastPostDocRef.get().await()
+            val post = postSnapshot.toObject(Post::class.java)
+            if (post != null) {
+                Result.success(post)
+            } else {
+                Result.failure(Exception("Post not found"))
+            }
+        }catch (e:Exception){
+            Result.failure(e)
+        }
     }
 
     //https://www.notion.so/Upload-Update-Checkpoint-23beef0772dc4bd2ab6442ce244d2580?pvs=4#d218d93ee96040beb4413aa792072fc4
