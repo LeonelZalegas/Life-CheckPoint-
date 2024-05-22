@@ -28,7 +28,6 @@
         android:scaleType="fitXY"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Circle"
         app:layout_constraintVertical_bias="0.2"
-        android:background="@color/rojo_normal"
         />
 
     <ImageView
@@ -46,7 +45,7 @@
     <TextView
         android:text="leonel1999"
         android:id="@+id/userName"
-        android:layout_width="200dp"
+        android:layout_width="160dp"
         android:layout_height="30dp"
         android:fontFamily="@font/happy"
         android:textAlignment="center"
@@ -92,13 +91,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/guideline_blue_square"
         app:layout_constraintVertical_bias="0.6"
-        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintHorizontal_bias="0.25"
         app:chipBackgroundColor="@color/white"
         app:chipIcon="@drawable/vector_asset_add"
-        android:text="Follow"
+        android:text="@string/Follow"
         android:checkable="true"
         app:checkedIconVisible="true"
-        app:checkedIcon="@drawable/vector_asset_check"
+
         app:checkedIconEnabled="true"/>
 
     <androidx.cardview.widget.CardView
@@ -133,12 +132,12 @@
             <TextView
                 android:id="@+id/Checkpoints_created"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/guidelineCardview1"
                 app:layout_constraintBottom_toBottomOf="@id/guidelineCardviewBottom"
                 app:layout_constraintTop_toBottomOf="@id/guidelineCardviewMiddle"
-                android:text="CheckPoints Created"
+                android:text="@string/CheckPoints_Created"
                 android:textAlignment="center"
                 android:autoSizeTextType="uniform"
                 />
@@ -163,9 +162,8 @@
                 app:layout_constraintEnd_toStartOf="@id/guidelineCardview2"
                 app:layout_constraintBottom_toBottomOf="@id/guidelineCardviewBottom"
                 app:layout_constraintTop_toBottomOf="@id/guidelineCardviewMiddle"
-                android:text="Followers"
+                android:text="@string/Followers"
                 android:textAlignment="center"
-
                 />
 
             <TextView
@@ -188,9 +186,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="@id/guidelineCardviewBottom"
                 app:layout_constraintTop_toBottomOf="@id/guidelineCardviewMiddle"
-                android:text="Following"
+                android:text="@string/Following"
                 android:textAlignment="center"
-
                 />
 
             <TextView

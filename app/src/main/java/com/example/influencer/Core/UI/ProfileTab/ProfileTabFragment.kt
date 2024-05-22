@@ -1,10 +1,14 @@
 package com.example.influencer.Core.UI.ProfileTab
 
+import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.content.res.AppCompatResources.getDrawable
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
@@ -12,6 +16,7 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.example.influencer.R
 import com.example.influencer.databinding.FragmentProfileTabBinding
+import com.google.firebase.database.collection.LLRBNode.Color
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -56,6 +61,11 @@ class ProfileTabFragment : Fragment() {
         // Use the userId to load the user data
         viewModel.loadUser(userId)
 
+        setUpUI()
+        handlingFollowButton()
+    }
+
+    private fun setUpUI() {
         // Observe the user data and update the UI
         viewModel.user.observe(viewLifecycleOwner) { result ->
             result.onSuccess { user ->
@@ -81,12 +91,31 @@ class ProfileTabFragment : Fragment() {
                     NumCheckpointsCreated.text = user.postCount.toString()
                     NumFollowers.text = user.followersCount.toString()
                     NumFollowing.text = user.followingCount.toString()
-
-
                 }
 
             }.onFailure {
                 // Handle the error
+            }
+        }
+    }
+
+    private fun handlingFollowButton() {
+        val chipColor = ContextCompat.getColor(requireContext(), R.color.verde_seekBar)
+
+        binding.apply {
+            FollowButton.isCheckable = true
+            FollowButton.isClickable = true
+
+            FollowButton.setOnCheckedChangeListener { buttonView, isChecked ->
+                if (isChecked) {
+                    FollowButton.text = getString(R.string.Following)
+                    FollowButton.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.vector_asset_check)
+                    FollowButton.chipBackgroundColor = ColorStateList.valueOf(chipColor)
+                } else {
+                    FollowButton.text = getString(R.string.Follow)
+                    FollowButton.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.vector_asset_add)
+                    FollowButton.chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.white))
+                }
             }
         }
     }

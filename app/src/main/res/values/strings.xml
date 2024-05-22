@@ -85,5 +85,10 @@
     <string name="category_Filter_Title">Filter by Category</string>
     //Checkpoint Update
     <string name="hint_checkpoint_update">Write your CheckPoint Update!</string>
+    //Checkpoint profile info
+    <string name="Follow">Follow</string>
+    <string name="Following">Following</string>
+    <string name="CheckPoints_Created">CheckPoints Created</string>
+    <string name="Followers">Following</string>
 
 </resources>
