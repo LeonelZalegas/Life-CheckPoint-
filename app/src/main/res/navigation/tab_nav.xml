@@ -14,6 +14,12 @@
         android:label="RankingTabFragment" />
     <fragment
         android:id="@+id/profileTabFragment"
-        android:name="com.example.influencer.Features.Profile_Tab.UI.ProfileTabFragment"
-        android:label="ProfileTabFragment" />
+        android:name="com.example.influencer.Core.UI.ProfileTab.ProfileTabFragment"
+        android:label="ProfileTabFragment" >
+        <argument
+            android:name="userId"
+            app:argType="string"
+            android:defaultValue="@null"
+            app:nullable="true"/>
+    </fragment>
 </navigation>

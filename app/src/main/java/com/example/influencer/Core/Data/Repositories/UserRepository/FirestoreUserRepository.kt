@@ -38,9 +38,10 @@ class FirestoreUserRepository @Inject constructor(
         userDocRef.update("countryName", countryName, "countryFlagCode", countryFlag).await()
     }
 
-    override suspend fun getUserById(userId: String): Result<UsuarioSignin> = withContext(Dispatchers.IO) {
+    override suspend fun getUserById(userId: String?): Result<UsuarioSignin> = withContext(Dispatchers.IO) {
         try {
-            val userDocSnapshot = db.collection("Usuarios").document(userId).get().await()
+            val uid = userId ?: authService.getUid()
+            val userDocSnapshot = db.collection("Usuarios").document(uid).get().await()
             val user = userDocSnapshot.toObject(UsuarioSignin::class.java)
             user?.let {
                 Result.success(it)

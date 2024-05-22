@@ -27,6 +27,8 @@
 
     //cards
     <color name="light_blue">#B5BEFD</color>
+    //chip profile tab
+    <color name="water_green">#0CA789</color>
 
     <color name="pink">#E91E63</color>
     <color name="off_yellow">#E1B73D</color>
