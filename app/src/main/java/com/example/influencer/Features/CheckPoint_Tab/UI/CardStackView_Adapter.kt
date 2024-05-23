@@ -79,6 +79,7 @@ class CardStackView_Adapter @Inject constructor(
             val colorInt = Color.parseColor(colorString)
             setupCardData(cardData,colorInt)
             setupLikes(cardData)
+            setupProfileClick(cardData)
             setupImages(cardData)
             loadUpdates(cardData,colorInt)
         }
@@ -120,6 +121,18 @@ class CardStackView_Adapter @Inject constructor(
                         listener?.onUnlikeClicked(cardData.post.id,currentLikes)
                     }
                 })
+            }
+        }
+
+        private fun setupProfileClick(cardData: CardData) {
+            binding.apply {
+                profilePicture.setOnClickListener {
+                    listener?.onProfilePictureClicked(cardData.user.id)
+                }
+
+                userName.setOnClickListener {
+                    listener?.onProfilePictureClicked(cardData.user.id)
+                }
             }
         }
 
@@ -169,6 +182,7 @@ class CardStackView_Adapter @Inject constructor(
         fun onLikeClicked(postId: String,currentLikes: Int)
         fun onUnlikeClicked(postId: String,currentLikes: Int)
         fun checkPostLiked(postId: String, callback: (Boolean) -> Unit)
+        fun onProfilePictureClicked(userId: String)
     }
 }
 

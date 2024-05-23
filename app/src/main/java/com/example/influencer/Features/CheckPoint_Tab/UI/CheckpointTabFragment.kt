@@ -25,6 +25,7 @@ import androidx.fragment.app.viewModels
 import com.example.influencer.R
 import com.example.influencer.Features.Create_Modify_Checkpoint_Menu.UI.CheckpointThemeChoose.CheckpointThemeChooseActivity
 import com.example.influencer.Features.Create_Modify_Checkpoint_Menu.UI.CheckpointUpdateThemeChoose.CheckpointUpdateThemeChooseActivity
+import com.example.influencer.Features.User_Profile.UI.UserProfileActivity
 import com.example.influencer.databinding.FragmentCheckpointTabBinding
 import com.yuyakaido.android.cardstackview.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -273,6 +274,12 @@ class CheckpointTabFragment : Fragment(), CardStackView_Adapter.CardActionsListe
     }
     override fun checkPostLiked(postId: String, callback: (Boolean) -> Unit) {
         checkpointTabViewModel.checkIfPostIsLiked(postId, callback)
+    }
+
+    override fun onProfilePictureClicked(userId: String) {
+        val intent = Intent(requireContext(), UserProfileActivity::class.java)
+        intent.putExtra("userId", userId)
+        startActivity(intent)
     }
 
     override fun onDestroyView() {

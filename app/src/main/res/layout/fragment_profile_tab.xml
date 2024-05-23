@@ -150,7 +150,6 @@
                 app:layout_constraintEnd_toStartOf="@id/guidelineCardview1"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/guidelineCardviewMiddle"
-                android:text="34"
                 android:textAlignment="center"
                 android:autoSizeTextType="uniform"/>
 
@@ -174,7 +173,6 @@
                 app:layout_constraintEnd_toStartOf="@id/guidelineCardview2"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/guidelineCardviewMiddle"
-                android:text="37"
                 android:textAlignment="center"
                 android:autoSizeTextType="uniform"/>
 
@@ -198,7 +196,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/guidelineCardviewMiddle"
-                android:text="37"
                 android:textAlignment="center"
                 android:autoSizeTextType="uniform"/>
 

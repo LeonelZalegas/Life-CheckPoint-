@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools">
     <!-- Permissions here -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -34,10 +34,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Influencer"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31" >
+        tools:targetApi="31">
+
+        <activity
+            android:name=".Features.User_Profile.UI.UserProfileActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".Features.OnBoarding___CountryAndDateSelector.UI.CountryAndDateSelector.CountryDateActivity"
-            android:exported="false" >
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -45,7 +53,7 @@
         <activity
             android:name=".Features.Upload_New_Update_Checkpoint.UI.Upload_New_Update_CheckpointActivity"
             android:exported="false"
-            android:windowSoftInputMode="stateVisible|adjustPan" >
+            android:windowSoftInputMode="stateVisible|adjustPan">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -55,7 +63,7 @@
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
-            android:grantUriPermissions="true" >
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
@@ -63,7 +71,7 @@
         <activity
             android:name=".Features.Upload_New_Checkpoint.UI.UploadNewCheckpoint"
             android:exported="false"
-            android:windowSoftInputMode="stateVisible|adjustPan" >
+            android:windowSoftInputMode="stateVisible|adjustPan">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -71,7 +79,7 @@
         <activity
             android:name=".Features.Create_Modify_Checkpoint_Menu.UI.CheckpointUpdateThemeChoose.CheckpointUpdateThemeChooseActivity"
             android:exported="false"
-            android:windowSoftInputMode="stateVisible|adjustPan" >
+            android:windowSoftInputMode="stateVisible|adjustPan">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -79,42 +87,42 @@
         <activity
             android:name=".Features.Create_Modify_Checkpoint_Menu.UI.CheckpointThemeChoose.CheckpointThemeChooseActivity"
             android:exported="false"
-            android:windowSoftInputMode="stateVisible|adjustPan" >
+            android:windowSoftInputMode="stateVisible|adjustPan">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".Core.UI.Home"
-            android:exported="false" >
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".Features.OnBoarding___CountryAndDateSelector.UI.OnBoarding.OnBoardingActivity"
-            android:exported="false" >
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".Features.SignIn.UI.GoogleSignin.GoogleSigninActivity"
-            android:exported="false" >
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".Features.SignIn.UI.AppSignIn.SignInActivity"
-            android:exported="false" >
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".Features.SignIn.Domain.Validation.SigninValidation"
-            android:exported="false" >
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -122,7 +130,7 @@
         <activity
             android:name=".Features.Login.UI.LoginActivity"
             android:exported="true"
-            android:theme="@style/Theme.App.ElSplash" >
+            android:theme="@style/Theme.App.ElSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
