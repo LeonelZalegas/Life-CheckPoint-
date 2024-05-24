@@ -1,11 +1,13 @@
 package com.example.influencer.Features.SignIn.UI.GoogleSignin;
 
 import android.content.res.Resources;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.influencer.Core.Data.Network.AuthenticationService;
 import com.example.influencer.Core.Utils.Event;
 import com.example.influencer.Core.Utils.SingleLiveEvent;
 import com.example.influencer.Features.SignIn.Domain.CheckIfUserExistsUseCase;
@@ -25,6 +27,7 @@ public class GoogleSigninViewModel extends ViewModel {
     private final FirebaseAuthWithGoogleUseCase firebaseAuthWithGoogleUseCase;
     private final CheckIfUserExistsUseCase checkIfUserExistsUseCase;
     private final CreateGoogleUserUseCase createGoogleUserUseCase;
+    private final AuthenticationService authenticationService; //eliminar luego de ver q bug esta solucionado
     private final Resources resources;
 
     SingleLiveEvent<Boolean> userExists = new SingleLiveEvent<>();
@@ -39,11 +42,13 @@ public class GoogleSigninViewModel extends ViewModel {
     public GoogleSigninViewModel(FirebaseAuthWithGoogleUseCase firebaseAuthWithGoogleUseCase,
                                  CheckIfUserExistsUseCase checkIfUserExistsUseCase,
                                  CreateGoogleUserUseCase createGoogleUserUseCase,
+                                 AuthenticationService authenticationService,//eliminar luego de ver q bug esta solucionado
                                  Resources resources) {
 
         this.firebaseAuthWithGoogleUseCase = firebaseAuthWithGoogleUseCase;
         this.checkIfUserExistsUseCase = checkIfUserExistsUseCase;
         this.createGoogleUserUseCase = createGoogleUserUseCase;
+        this.authenticationService = authenticationService; //eliminar luego de ver q bug esta solucionado
         this.resources = resources;
     }
 
@@ -69,16 +74,24 @@ public class GoogleSigninViewModel extends ViewModel {
                     }
                 })
                 .continueWithTask(task -> {
-                    if (task.isSuccessful() && task.getResult().exists()) {
-                        _Loading.postValue(new Event<>(false));
-                        userExists.postValue(true);
-                        return Tasks.forResult(null); // Return a completed Task to avoid triggering user creation flow
+                    if (task.isSuccessful()) {
+                        if (task.getResult().exists()) {
+                            _Loading.postValue(new Event<>(false));
+                            userExists.postValue(true);
+                            return Tasks.forResult(null); // Avoid triggering user creation flow
+                        } else {
+                            Log.d("GoogleSigninViewModel", "User does not exist in Firestore, creating new user. UID: " + authenticationService.getUid()); //eliminar luego de ver q bug esta solucionado
+                            return createGoogleUserUseCase.execute(profilePictureUrl)
+                                    .addOnSuccessListener(result -> {
+                                        _Loading.postValue(new Event<>(false));
+                                        userGetsCreated.postValue(true);
+                                    });
+                        }
                     } else {
-                        return createGoogleUserUseCase.execute(profilePictureUrl)
-                                .addOnSuccessListener(result -> {
-                                    _Loading.postValue(new Event<>(false));
-                                    userGetsCreated.postValue(true);
-                                });
+                        _Loading.postValue(new Event<>(false));
+                        ToastMessage.setValue(resources.getString(R.string.FireStore_Error));
+                        Log.e("GoogleSigninViewModel", "Error checking user existence in Firestore.", task.getException()); //eliminar luego de ver q bug esta solucionado
+                        throw new RuntimeException(task.getException());
                     }
                 })
                 .addOnFailureListener(e -> {
