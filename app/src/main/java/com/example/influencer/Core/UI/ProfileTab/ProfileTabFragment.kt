@@ -97,6 +97,11 @@ class ProfileTabFragment : Fragment() {
                 // Handle the error
             }
         }
+        //hacemos distincion de que mostrar en la UI en base a si el profile user es el dueno usando la app o es el perfil de otro usuario
+        viewModel.isCurrentUser.observe(viewLifecycleOwner) { isCurrentUser ->
+            binding.Configurations.visibility = if (isCurrentUser) View.VISIBLE else View.GONE
+            binding.FollowButton.visibility = if (isCurrentUser) View.GONE else View.VISIBLE
+        }
     }
 
     private fun handlingFollowButton() {

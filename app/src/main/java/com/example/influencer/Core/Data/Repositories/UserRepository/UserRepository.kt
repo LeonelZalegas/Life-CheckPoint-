@@ -7,4 +7,5 @@ interface UserRepository {
     suspend fun saveUserAgeMonths(age:Int,months:Int)
     suspend fun saveUserCountry(countryName:String,countryFlag:String)
     suspend fun getUserById(userId: String?): Result<UsuarioSignin>
+    suspend fun getCurrentUserId():String
 }

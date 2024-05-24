@@ -31,21 +31,21 @@
         />
 
     <ImageView
+        android:id="@+id/Configurations"
         android:layout_width="30dp"
         android:layout_height="30dp"
         app:layout_constraintStart_toEndOf="@id/profile_picture"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/guideline_blue_square"
-        app:layout_constraintVertical_bias="0.32"
-        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintVertical_bias="0.28"
+        app:layout_constraintHorizontal_bias="0.1"
         android:src="@drawable/vector_asset_settings"
         />
 
     <TextView
-        android:text="leonel1999"
         android:id="@+id/userName"
-        android:layout_width="160dp"
+        android:layout_width="200dp"
         android:layout_height="30dp"
         android:fontFamily="@font/happy"
         android:textAlignment="center"
@@ -67,7 +67,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/userName"
         app:layout_constraintBottom_toTopOf="@id/guideline_blue_square"
-        app:layout_constraintEnd_toStartOf="@id/userAge"
+        app:layout_constraintEnd_toStartOf="@id/guidelineverticalMiddle"
         app:layout_constraintVertical_bias="0.2"
         app:chipBackgroundColor="@color/water_green"/>
 
@@ -78,26 +78,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/userName"
         app:layout_constraintBottom_toTopOf="@id/guideline_blue_square"
-        app:layout_constraintStart_toEndOf="@id/city"
+        app:layout_constraintStart_toEndOf="@id/guidelineverticalMiddle"
         app:layout_constraintVertical_bias="0.2"
         app:chipBackgroundColor="@color/water_green"/>
+
 
     <com.google.android.material.chip.Chip
         android:id="@+id/Follow_button"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
-        app:layout_constraintStart_toEndOf="@id/userName"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/profile_picture"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/guideline_blue_square"
-        app:layout_constraintVertical_bias="0.6"
-        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintVertical_bias="0.27"
+        app:layout_constraintHorizontal_bias="0.3"
         app:chipBackgroundColor="@color/white"
         app:chipIcon="@drawable/vector_asset_add"
         android:text="@string/Follow"
         android:checkable="true"
         app:checkedIconVisible="true"
-
         app:checkedIconEnabled="true"/>
 
     <androidx.cardview.widget.CardView
@@ -269,7 +269,12 @@
         app:layout_constraintGuide_percent="0.89"
         android:orientation="vertical" />
 
-
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineverticalMiddle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="0.5"
+        android:orientation="vertical" />
 
 
 
