@@ -25,6 +25,9 @@ class UserProfileViewModel @Inject constructor(
     private val _isCurrentUser = MutableLiveData<Boolean>()
     val isCurrentUser: LiveData<Boolean> = _isCurrentUser
 
+    private val _isFollowing = MutableLiveData<Boolean>()
+    val isFollowing: LiveData<Boolean> = _isFollowing
+
     fun loadUser(userId: String?) {
         viewModelScope.launch {
             val currentUserId = userRepository.getCurrentUserId()
@@ -33,6 +36,28 @@ class UserProfileViewModel @Inject constructor(
 
             val result = getUserByIdUseCase(userId)
             _user.value = result
+
+            if (userId != null && userId != currentUserId) {
+                _isFollowing.value = userRepository.isFollowing(currentUserId, userId)
+            }
+        }
+    }
+
+    fun followUser(targetUserId: String?) {
+        viewModelScope.launch {
+            targetUserId?.let {
+                userRepository.followUser(targetUserId)
+                _isFollowing.value = true
+            }
+        }
+    }
+
+    fun unfollowUser(targetUserId: String?) {
+        viewModelScope.launch {
+            targetUserId?.let {
+                userRepository.unfollowUser(targetUserId)
+                _isFollowing.value = false
+            }
         }
     }
 }

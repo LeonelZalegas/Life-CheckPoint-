@@ -44,7 +44,7 @@ class ProfileTabFragment : Fragment() {
         super.onCreate(savedInstanceState)
         //a traves de este codigo obtenemos el argument pasado ya sea a traves de newInstance() o de navig component
         arguments?.let {
-            userId = it.getString(ARG_USER_ID)
+            userId = it.getString(ARG_USER_ID)  //el userId del usuario que vamos a mostrar a continuacion en el profile Fragment
         }
     }
 
@@ -102,6 +102,10 @@ class ProfileTabFragment : Fragment() {
             binding.Configurations.visibility = if (isCurrentUser) View.VISIBLE else View.GONE
             binding.FollowButton.visibility = if (isCurrentUser) View.GONE else View.VISIBLE
         }
+
+        viewModel.isFollowing.observe(viewLifecycleOwner) { isFollowing ->
+           if (isFollowing) FollowingButtonState()
+        }
     }
 
     private fun handlingFollowButton() {
@@ -112,16 +116,28 @@ class ProfileTabFragment : Fragment() {
             FollowButton.isClickable = true
 
             FollowButton.setOnCheckedChangeListener { buttonView, isChecked ->
-                if (isChecked) {
-                    FollowButton.text = getString(R.string.Following)
-                    FollowButton.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.vector_asset_check)
-                    FollowButton.chipBackgroundColor = ColorStateList.valueOf(chipColor)
-                } else {
-                    FollowButton.text = getString(R.string.Follow)
-                    FollowButton.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.vector_asset_add)
-                    FollowButton.chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.white))
+                if (buttonView.isPressed) {
+                    if (isChecked) {
+                        FollowingButtonState()
+                        viewModel.followUser(userId)
+                    } else {
+                        FollowButton.text = getString(R.string.Follow)
+                        FollowButton.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.vector_asset_add)
+                        FollowButton.chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.white))
+                        viewModel.unfollowUser(userId)
+                    }
                 }
             }
+        }
+    }
+
+    private fun FollowingButtonState(){
+        val chipColor = ContextCompat.getColor(requireContext(), R.color.verde_seekBar)
+        binding.apply {
+            FollowButton.isChecked = true
+            FollowButton.text = getString(R.string.Following)
+            FollowButton.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.vector_asset_check)
+            FollowButton.chipBackgroundColor = ColorStateList.valueOf(chipColor)
         }
     }
 
