@@ -11,6 +11,7 @@ import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
@@ -39,6 +40,7 @@ class ProfileTabFragment : Fragment() {
     private val viewModel: UserProfileViewModel by viewModels()
     private var _binding: FragmentProfileTabBinding? = null
     private val binding get() = _binding!!
+    private lateinit var carga: SweetAlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,8 +63,16 @@ class ProfileTabFragment : Fragment() {
         // Use the userId to load the user data
         viewModel.loadUser(userId)
 
+        initLoading()
         setUpUI()
         handlingFollowButton()
+    }
+
+    private fun initLoading() {
+        carga = SweetAlertDialog(requireContext(), SweetAlertDialog.PROGRESS_TYPE)
+        carga.getProgressHelper().setBarColor(android.graphics.Color.parseColor("#F57E00"))
+        carga.setTitleText(R.string.Loading)
+        carga.setCancelable(false)
     }
 
     private fun setUpUI() {
@@ -102,15 +112,21 @@ class ProfileTabFragment : Fragment() {
             binding.Configurations.visibility = if (isCurrentUser) View.VISIBLE else View.GONE
             binding.FollowButton.visibility = if (isCurrentUser) View.GONE else View.VISIBLE
         }
-
+        //checkeamos al abrir un perfil de algun usuario, si este esta siendo seguido o no por l current user/owner user
         viewModel.isFollowing.observe(viewLifecycleOwner) { isFollowing ->
            if (isFollowing) FollowingButtonState()
+        }
+
+        viewModel.loading.observe(viewLifecycleOwner){isloading ->
+            if (isloading) {
+                carga.show()
+            } else {
+                carga.dismiss()
+            }
         }
     }
 
     private fun handlingFollowButton() {
-        val chipColor = ContextCompat.getColor(requireContext(), R.color.verde_seekBar)
-
         binding.apply {
             FollowButton.isCheckable = true
             FollowButton.isClickable = true

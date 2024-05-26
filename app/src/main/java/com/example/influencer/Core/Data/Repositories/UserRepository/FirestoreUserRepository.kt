@@ -68,6 +68,8 @@ class FirestoreUserRepository @Inject constructor(
         return@withContext false
     }
 
+    //https://www.notion.so/ProfileTabFragment-26cfd73f6c2c4576b680f713ad431eaf?pvs=4#14054dcb1fa5488d90d1a78f3c2a8c5a
+    //https://www.notion.so/ProfileTabFragment-26cfd73f6c2c4576b680f713ad431eaf?pvs=4#b2abd42a668c44e79a7c44748aedfa2b
     override suspend fun followUser(targetUserId: String) = withContext(Dispatchers.IO) {
         val currentUserId = authService.getUid()
         addUserToChunk(currentUserId, targetUserId, "following")
@@ -84,21 +86,19 @@ class FirestoreUserRepository @Inject constructor(
 
     private suspend fun addUserToChunk(userId: String, targetUserId: String, collection: String) {
         val userRef = db.collection("Usuarios").document(userId)
-        val chunkSize = 500
+        val chunkSize = 200 //cant de usersId q se pueden guardar en cada chunk
 
         val chunks = userRef.collection(collection).get().await().documents
-        var lastChunkRef = userRef.collection(collection).document("chunk_${chunks.size}")
+        var lastChunkRef = if (chunks.isNotEmpty()) chunks.last().reference else userRef.collection(collection).document("chunk_1")
 
         if (chunks.isNotEmpty()) {
-            val lastChunkUserIds = chunks.last().get("userIds") as? List<String>
-            if (lastChunkUserIds != null && lastChunkUserIds.size >= chunkSize) {
+            val lastChunkUserIds = lastChunkRef.get().await().get("userIds") as? List<String>
+            if (lastChunkUserIds != null && lastChunkUserIds.size >= chunkSize) { //checkamos si llegamos al limite de 200 y si es asi creamos un nuevo chunk
                 lastChunkRef = userRef.collection(collection).document("chunk_${chunks.size + 1}")
             }
         }else{
-            lastChunkRef = userRef.collection(collection).document("chunk_1")
-            db.runTransaction { transaction ->
+            db.runTransaction { transaction -> //si aun no existe ningun chunk, creamos uno que posea un field userIds que es un array
                 transaction.set(lastChunkRef, mapOf("userIds" to listOf<String>()), SetOptions.merge())
-                transaction.update(lastChunkRef, "userIds", FieldValue.arrayUnion(targetUserId))
             }.await()
         }
 
@@ -113,8 +113,8 @@ class FirestoreUserRepository @Inject constructor(
         val chunks = userRef.collection(collection).get().await().documents
         db.runTransaction { transaction ->
             for (document in chunks) {
-                val userIds = document.get("userIds") as List<String>
-                if (userIds.contains(targetUserId)) {
+                val userIds = document.get("userIds") as? List<String>
+                if (userIds != null && userIds.contains(targetUserId)) {
                     transaction.update(document.reference, "userIds", FieldValue.arrayRemove(targetUserId))
                     break
                 }

@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class UserProfileViewModel @Inject constructor(
     private val getUserByIdUseCase: GetUserByIdUseCase,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository  //https://www.notion.so/ProfileTabFragment-26cfd73f6c2c4576b680f713ad431eaf?pvs=4#9b7af75af45f4b5694f2bd4fded4ab36
 ) : ViewModel() {
 
     private val _user = SingleLiveEvent<Result<UsuarioSignin>>()
@@ -28,14 +28,15 @@ class UserProfileViewModel @Inject constructor(
     private val _isFollowing = MutableLiveData<Boolean>()
     val isFollowing: LiveData<Boolean> = _isFollowing
 
+    val loading = MutableLiveData<Boolean>()
+
     fun loadUser(userId: String?) {
         viewModelScope.launch {
-            val currentUserId = userRepository.getCurrentUserId()
-            Log.w("paloma", "el userID es: $userId y el currentUserId es: $currentUserId ")
-            _isCurrentUser.value = (userId == currentUserId || userId == null )
-
             val result = getUserByIdUseCase(userId)
             _user.value = result
+
+            val currentUserId = userRepository.getCurrentUserId()
+            _isCurrentUser.value = (userId == currentUserId || userId == null ) //recordar q si userId == null entonces se trata del Id del owner user
 
             if (userId != null && userId != currentUserId) {
                 _isFollowing.value = userRepository.isFollowing(currentUserId, userId)
@@ -46,8 +47,10 @@ class UserProfileViewModel @Inject constructor(
     fun followUser(targetUserId: String?) {
         viewModelScope.launch {
             targetUserId?.let {
+                loading.postValue(true)
                 userRepository.followUser(targetUserId)
                 _isFollowing.value = true
+                loading.postValue(false)
             }
         }
     }
@@ -55,8 +58,10 @@ class UserProfileViewModel @Inject constructor(
     fun unfollowUser(targetUserId: String?) {
         viewModelScope.launch {
             targetUserId?.let {
+                loading.postValue(true)
                 userRepository.unfollowUser(targetUserId)
                 _isFollowing.value = false
+                loading.postValue(false)
             }
         }
     }

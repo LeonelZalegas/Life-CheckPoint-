@@ -89,6 +89,6 @@
     <string name="Follow">Follow</string>
     <string name="Following">Following</string>
     <string name="CheckPoints_Created">CheckPoints Created</string>
-    <string name="Followers">Following</string>
+    <string name="Followers">Followers</string>
 
 </resources>
