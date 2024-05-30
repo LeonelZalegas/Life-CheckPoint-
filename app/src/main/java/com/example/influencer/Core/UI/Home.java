@@ -17,45 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 import me.ibrahimsn.lib.OnItemSelectedListener;
 import me.ibrahimsn.lib.SmoothBottomBar;
 
-//@AndroidEntryPoint
-//public class Home extends AppCompatActivity {
-//
-//    private ActivityHomeBinding binding;
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        binding = ActivityHomeBinding.inflate(getLayoutInflater());
-//        setContentView(binding.getRoot());
-//
-//        NavController nav = Navigation.findNavController(this,  R.id.main_tab_container);
-//        //nos pedian hacer esto en la docu de la liberia de Smoothnavbar, osea inflar el menu en vez del Bar (como sucede en bottom navigation view)
-//        PopupMenu popupMenu = new PopupMenu(this, null);
-//        popupMenu.inflate(R.menu.bottom_nav_bar_menu);
-//
-//        binding.bottomBar.setupWithNavController(popupMenu.getMenu(),nav);
-//
-//        // navigating to ProfileTabFragment with a userId
-////        String userId = null; // This is null for the current user
-////        Bundle bundle = new Bundle();
-////        bundle.putString("userId", userId);
-////        nav.navigate(R.id.profileTabFragment, bundle);
-//
-////        binding.bottomBar.setOnItemSelectedListener((OnItemSelectedListener) item -> {
-////            if (item.getItemId() == R.id.profileTabFragment) {
-////                String userId = null; // This is null for the current user
-////                Bundle bundle = new Bundle();
-////                bundle.putString("userId", userId);
-////                nav.navigate(R.id.profileTabFragment, bundle);
-////                return true;
-////            }
-////            return false;
-////        });
-//
-//
-//    }
-//}
-
 @AndroidEntryPoint
 public class Home extends AppCompatActivity {
 
