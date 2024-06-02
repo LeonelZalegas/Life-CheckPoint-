@@ -11,12 +11,15 @@ import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.example.influencer.Core.UI.ProfileTab.PostsAndLikesFragment.PostsAndLikesFragment
 import com.example.influencer.R
 import com.example.influencer.databinding.FragmentProfileTabBinding
+import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.database.collection.LLRBNode.Color
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -40,6 +43,7 @@ class ProfileTabFragment : Fragment() {
     private val viewModel: UserProfileViewModel by viewModels()
     private var _binding: FragmentProfileTabBinding? = null
     private val binding get() = _binding!!
+    private lateinit var viewPagerAdapter: ViewPagerAdapter
     private lateinit var carga: SweetAlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,6 +66,17 @@ class ProfileTabFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         // Use the userId to load the user data
         viewModel.loadUser(userId)
+
+        viewPagerAdapter = ViewPagerAdapter(this)
+        binding.viewPager.adapter = viewPagerAdapter
+
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            tab.text = when (position) {
+                0 -> "Checkpoints"
+                1 -> "Likes"
+                else -> null
+            }
+        }.attach()
 
         initLoading()
         setUpUI()
@@ -161,4 +176,13 @@ class ProfileTabFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    class ViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+        override fun getItemCount(): Int = 2
+
+        override fun createFragment(position: Int): Fragment {
+            return PostsAndLikesFragment.newInstance(position)
+        }
+    }
 }
+

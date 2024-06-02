@@ -2,7 +2,9 @@ package com.example.influencer.Core.Data.Repositories.PostRepository
 
 import android.util.Log
 import com.example.influencer.Core.Data.Network.AuthenticationService
+import com.example.influencer.Features.Upload_New_Checkpoint.Domain.Model.Post
 import com.example.influencer.Features.Upload_New_Update_Checkpoint.Domain.Model.CheckPoint_Update_Item
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -138,4 +140,58 @@ class FirestorePostRepository @Inject constructor(
         return@withContext updatesList.sortedBy { it.update_Number }
     }
 
+    override suspend fun getUserPostsByCategory(userId: String, category: String): List<Post>? = withContext(Dispatchers.IO) {
+        try {
+            val querySnapshot = db.collection("Posts")
+                .whereEqualTo("userId", userId)
+                .whereEqualTo("selectedCategory", category)
+                .orderBy("creationDate", Query.Direction.DESCENDING)
+                .get()
+                .await()
+
+            if (querySnapshot.isEmpty) {
+                return@withContext null
+            }
+
+            return@withContext querySnapshot.documents.mapNotNull { document ->
+                document.toObject(Post::class.java)
+            }
+        } catch (e: Exception) {
+            Log.e("FirestorePostRepository", "Error fetching user posts by category", e)
+            return@withContext null
+        }
+    }
+
+    override suspend fun getUserLikedPosts(userId: String): List<Post>? = withContext(Dispatchers.IO) {
+        try {
+            val likedPostsSnapshot = db.collection("Usuarios")
+                .document(userId)
+                .collection("LikedPosts")
+                .orderBy("likedTime", Query.Direction.DESCENDING)
+                .get()
+                .await()
+
+            if (likedPostsSnapshot.isEmpty) {
+                return@withContext null
+            }
+
+            val likedPostIds = likedPostsSnapshot.documents.map { it.id }
+
+            if (likedPostIds.isEmpty()) {
+                return@withContext null
+            }
+
+            val postsSnapshot = db.collection("Posts")
+                .whereIn(FieldPath.documentId(), likedPostIds)
+                .get()
+                .await()
+
+            return@withContext postsSnapshot.documents.mapNotNull { document ->
+                document.toObject(Post::class.java)
+            }
+        } catch (e: Exception) {
+            Log.e("FirestorePostRepository", "Error fetching user liked posts", e)
+            return@withContext null
+        }
+    }
 }

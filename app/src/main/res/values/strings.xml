@@ -53,6 +53,19 @@
         <item>Hobbies/Interests</item>
     </string-array>
 
+    <string-array name="Checkpoint_categories_list">
+        <item>Love</item>
+        <item>Family</item>
+        <item>Friends</item>
+        <item>Mental Health</item>
+        <item>Work/Carrer</item>
+        <item>Creativity</item>
+        <item>Education/Learning</item>
+        <item>Health/Fitness</item>
+        <item>Hobbies/Interests</item>
+        <item>Others</item>
+    </string-array>
+
     //para el Activity q muestra las categorias de checkpoint
     <string name="Main_title_adding_new_checkpoint">Choose a Category</string>
     <string name="Secondary_title_adding_new_checkpoint">you can also create a custom one !</string>
@@ -90,5 +103,7 @@
     <string name="Following">Following</string>
     <string name="CheckPoints_Created">CheckPoints Created</string>
     <string name="Followers">Followers</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
