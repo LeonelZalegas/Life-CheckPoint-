@@ -1,6 +1,7 @@
 package com.example.influencer.Core.UI.ProfileTab.PostsAndLikesFragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -53,25 +54,50 @@ class PostsAndLikesFragment : Fragment(), CategoriesAdapter.OnCategoryClickListe
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.w("noPosts", "el position es:$tabPosition ")
         setupRecyclerViews()
 
-        if (tabPosition == 0) {
-            viewModel.checkpointsPosts.observe(viewLifecycleOwner) { checkpoints ->
-                if (checkpoints != null) {
-                    (binding.postsRecyclerView.adapter as PostsAndLikesAdapter).submitList(checkpoints)
+        viewModel.profileTabUserId.observe(viewLifecycleOwner) { userId ->
+            userId?.let {
+                if (tabPosition == 0) {
+                    viewModel.loadCheckpointsByCategory(checkpointsCategoriesList.categories.first().text)
+                } else {
+                    viewModel.loadLikes()
                 }
             }
-            // Select the first category by default
-            val firstCategory = checkpointsCategoriesList.categories.first().text
-            viewModel.loadCheckpointsByCategory("Work/Carrer")
-        } else {
-            viewModel.likesPosts.observe(viewLifecycleOwner) { likes ->
-                if (likes != null) {
-                    (binding.postsRecyclerView.adapter as PostsAndLikesAdapter).submitList(likes)
-                }
-            }
-            viewModel.loadLikes()
         }
+
+        viewModel.checkpointsPosts.observe(viewLifecycleOwner) { checkpoints ->
+            if (checkpoints != null && tabPosition == 0) {
+                (binding.postsRecyclerView.adapter as PostsAndLikesAdapter).submitList(checkpoints)
+            }
+        }
+
+        viewModel.likesPosts.observe(viewLifecycleOwner) { likes ->
+            if (likes != null && tabPosition == 1) {
+                (binding.postsRecyclerView.adapter as PostsAndLikesAdapter).submitList(likes)
+            }
+        }
+
+//        if (tabPosition == 0) {
+//            viewModel.checkpointsPosts.observe(viewLifecycleOwner) { checkpoints ->
+//                Log.w("noPosts", "la lista de checkpoints devuelta es:$checkpoints ")
+//                if (checkpoints != null) {
+//                    (binding.postsRecyclerView.adapter as PostsAndLikesAdapter).submitList(checkpoints)
+//                }
+//            }
+//            // Select the first category by default
+//            val firstCategory = checkpointsCategoriesList.categories.first().text
+//            viewModel.loadCheckpointsByCategory("Work/Carrer")
+//        } else {
+//            viewModel.likesPosts.observe(viewLifecycleOwner) { likes ->
+//                Log.w("noPosts", "la lista de likes posts devuelta es:$likes ")
+//                if (likes != null) {
+//                    (binding.postsRecyclerView.adapter as PostsAndLikesAdapter).submitList(likes)
+//                }
+//            }
+//            viewModel.loadLikes()
+//        }
     }
 
     private fun setupRecyclerViews() {

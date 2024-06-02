@@ -1,6 +1,7 @@
 package com.example.influencer.Core.UI.ProfileTab.PostsAndLikesFragment
 
 import android.content.res.ColorStateList
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat

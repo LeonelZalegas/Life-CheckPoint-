@@ -37,13 +37,12 @@ class UserProfileViewModel @Inject constructor(
     private val _likesPosts = MutableLiveData<List<Post>?>()
     val likesPosts: LiveData<List<Post>?> get() = _likesPosts
 
-    private var profileTabUserId: String? = null
+    private val _profileTabUserId = MutableLiveData<String?>()
+    val profileTabUserId: LiveData<String?> get() = _profileTabUserId
 
     val loading = MutableLiveData<Boolean>()
 
     fun loadUser(userId: String?) {
-        profileTabUserId = userId
-
         viewModelScope.launch {
             val result = getUserByIdUseCase(userId)
             _user.value = result
@@ -54,6 +53,11 @@ class UserProfileViewModel @Inject constructor(
             if (userId != null && userId != currentUserId) {
                 _isFollowing.value = userRepository.isFollowing(currentUserId, userId)
             }
+
+            if (userId == currentUserId || userId == null)
+                _profileTabUserId.value = currentUserId  //userId es el id del perfil que clickeamos, necesitamos cargar este en profileTabUserId para avisar q ya se ejecuto loadUser y hay 1 valor en userId para utilizarlo en loadCheckpointsByCategory
+                else
+                    _profileTabUserId.value = userId  //userId es el id del perfil que clickeamos, necesitamos cargar este en profileTabUserId para avisar q ya se ejecuto loadUser y hay 1 valor en userId para utilizarlo en loadCheckpointsByCategory
         }
     }
 
@@ -81,8 +85,8 @@ class UserProfileViewModel @Inject constructor(
 
     fun loadCheckpointsByCategory(category: String) {
         viewModelScope.launch {
-            profileTabUserId?.let { profileTabUserId ->
-                val result = checkpointLikesTabUseCase.getUserPostsByCategory(profileTabUserId, category)
+            profileTabUserId.value?.let { UserId ->
+                val result = checkpointLikesTabUseCase.getUserPostsByCategory(UserId, category)
                 _checkpointsPosts.value = result
             }
         }
@@ -90,8 +94,9 @@ class UserProfileViewModel @Inject constructor(
 
     fun loadLikes() {
         viewModelScope.launch {
-            profileTabUserId?.let { profileTabUserId ->
-                val result = checkpointLikesTabUseCase.getUserLikedPosts(profileTabUserId)
+            profileTabUserId.value?.let { UserId ->
+                val result = checkpointLikesTabUseCase.getUserLikedPosts(UserId)
+                Log.w("noPosts", "el resultado de los likes es:$result ")
                 _likesPosts.value = result
             }
         }

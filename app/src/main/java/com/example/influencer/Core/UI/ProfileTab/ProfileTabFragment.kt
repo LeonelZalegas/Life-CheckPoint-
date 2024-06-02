@@ -69,6 +69,7 @@ class ProfileTabFragment : Fragment() {
 
         viewPagerAdapter = ViewPagerAdapter(this)
         binding.viewPager.adapter = viewPagerAdapter
+        binding.viewPager.isUserInputEnabled = false  // Disable swiping
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = when (position) {
