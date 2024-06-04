@@ -103,7 +103,7 @@
     <string name="Following">Following</string>
     <string name="CheckPoints_Created">CheckPoints Created</string>
     <string name="Followers">Followers</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="No_Checkpoints_category">There is no Checkpoints for this category yet !</string>
+    <string name="No_Checkpoints_like">There is no Given likes yet !</string>
 
 </resources>

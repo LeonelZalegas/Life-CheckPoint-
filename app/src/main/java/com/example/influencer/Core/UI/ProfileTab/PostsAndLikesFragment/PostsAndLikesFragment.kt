@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.influencer.Core.UI.ProfileTab.UserProfileViewModel
@@ -68,52 +69,59 @@ class PostsAndLikesFragment : Fragment(), CategoriesAdapter.OnCategoryClickListe
         }
 
         viewModel.checkpointsPosts.observe(viewLifecycleOwner) { checkpoints ->
-            if (checkpoints != null && tabPosition == 0) {
-                (binding.postsRecyclerView.adapter as PostsAndLikesAdapter).submitList(checkpoints)
+            if(tabPosition == 0) { //https://www.notion.so/ProfileTabFragment-26cfd73f6c2c4576b680f713ad431eaf?pvs=4#cbd26b4e29de4ee8807bcc0c322cd2d6
+                if (checkpoints != null) {
+                    binding.postsRecyclerView.visibility = View.VISIBLE
+                    binding.NoCheckpointsCategory.visibility = View.GONE
+
+                    (binding.postsRecyclerView.adapter as PostsAndLikesAdapter).submitList(checkpoints)
+                } else {
+                    binding.postsRecyclerView.visibility = View.GONE
+                    binding.NoCheckpointsCategory.visibility = View.VISIBLE
+                }
             }
         }
 
         viewModel.likesPosts.observe(viewLifecycleOwner) { likes ->
-            if (likes != null && tabPosition == 1) {
-                (binding.postsRecyclerView.adapter as PostsAndLikesAdapter).submitList(likes)
+            if(tabPosition == 1) { //https://www.notion.so/ProfileTabFragment-26cfd73f6c2c4576b680f713ad431eaf?pvs=4#cbd26b4e29de4ee8807bcc0c322cd2d6
+                if (likes != null) {
+                    (binding.postsRecyclerView.adapter as PostsAndLikesAdapter).submitList(likes)
+                } else {
+                    binding.postsRecyclerView.visibility = View.GONE
+                    binding.NoCheckpointsLike.visibility = View.VISIBLE
+                }
             }
         }
-
-//        if (tabPosition == 0) {
-//            viewModel.checkpointsPosts.observe(viewLifecycleOwner) { checkpoints ->
-//                Log.w("noPosts", "la lista de checkpoints devuelta es:$checkpoints ")
-//                if (checkpoints != null) {
-//                    (binding.postsRecyclerView.adapter as PostsAndLikesAdapter).submitList(checkpoints)
-//                }
-//            }
-//            // Select the first category by default
-//            val firstCategory = checkpointsCategoriesList.categories.first().text
-//            viewModel.loadCheckpointsByCategory("Work/Carrer")
-//        } else {
-//            viewModel.likesPosts.observe(viewLifecycleOwner) { likes ->
-//                Log.w("noPosts", "la lista de likes posts devuelta es:$likes ")
-//                if (likes != null) {
-//                    (binding.postsRecyclerView.adapter as PostsAndLikesAdapter).submitList(likes)
-//                }
-//            }
-//            viewModel.loadLikes()
-//        }
     }
 
     private fun setupRecyclerViews() {
+        val constraintLayout = binding.constraintLayout
+        val constraintSet = ConstraintSet() //This class allows you to programmatically manipulate constraints of the ConstraintLayout. You clone the current layout's constraints, modify them, and then apply them back to the layout.
+        constraintSet.clone(constraintLayout)
+
         if (tabPosition == 0) {
             // Checkpoints tab
             binding.categoriesRecyclerView.visibility = View.VISIBLE
             binding.categoriesRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             binding.categoriesRecyclerView.adapter = CategoriesAdapter(checkpointsCategoriesList.categories, this)
             binding.postsRecyclerView.adapter = PostsAndLikesAdapter(true)
+
+            // Set postsRecyclerView top constraint to the bottom of the guideline
+            constraintSet.connect(binding.postsRecyclerView.id, ConstraintSet.TOP, binding.guideline.id, ConstraintSet.BOTTOM, 0)
         } else {
             // Likes tab
             binding.categoriesRecyclerView.visibility = View.GONE
             binding.postsRecyclerView.adapter = PostsAndLikesAdapter(false)
+
+            // Set postsRecyclerView top constraint to the top of the parent
+            constraintSet.connect(binding.postsRecyclerView.id, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 0)
         }
 
         binding.postsRecyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+
+        // Apply the constraints
+        constraintSet.applyTo(constraintLayout)
+        binding.postsRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
 
     override fun onCategoryClick(category: String) {
