@@ -1,6 +1,6 @@
 package com.example.influencer.Features.Create_Modify_Checkpoint_Menu.Data.Repositories;
 
-import com.example.influencer.Features.Create_Modify_Checkpoint_Menu.Data.LocalDB.CheckpointChooseStaticRows;
+import com.example.influencer.Core.Utils.CheckpointsCategoriesList;
 import com.example.influencer.Core.Data.Network.UserService;
 import com.example.influencer.R;
 import com.example.influencer.Features.Create_Modify_Checkpoint_Menu.Domain.Model.CheckpointThemeItem;
@@ -20,12 +20,12 @@ import io.reactivex.rxjava3.core.Flowable;
 //https://www.notion.so/Activity-seleccionar-categoria-nuevo-checkpoint-update-checkpoint-2fe38f46f27f4e6f93752aa178796773?pvs=4#277511b4d9ae4163914db3666b4df9d3
 public class CheckpointChooseRowsRepo {
     private final UserService userService;
-    private final CheckpointChooseStaticRows checkpointChooseStaticRows;
+    private final CheckpointsCategoriesList checkpointsCategoriesList;;
 
     @Inject
-    public CheckpointChooseRowsRepo(UserService userService,CheckpointChooseStaticRows checkpointChooseStaticRows) {
+    public CheckpointChooseRowsRepo(UserService userService,CheckpointsCategoriesList checkpointsCategoriesList) {
         this.userService = userService;
-        this.checkpointChooseStaticRows = checkpointChooseStaticRows;
+        this.checkpointsCategoriesList = checkpointsCategoriesList;
     }
 
     //https://www.notion.so/Activity-seleccionar-categoria-nuevo-checkpoint-update-checkpoint-2fe38f46f27f4e6f93752aa178796773?pvs=4#e0a982c6358c457a8d118f16034be32a
@@ -54,7 +54,7 @@ public class CheckpointChooseRowsRepo {
     public Flowable<List<CheckpointThemeItem>> getAllCheckpointThemes(String id) {
         return getCheckpointThemesRealTime(id)
                 .map(firestoreRows -> {
-                    List<CheckpointThemeItem> combinedRows = new ArrayList<>(checkpointChooseStaticRows.fetchStaticRows());
+                    List<CheckpointThemeItem> combinedRows = new ArrayList<>(checkpointsCategoriesList.getCategories_CheckpointChooseRowsRepo());
                     combinedRows.addAll(firestoreRows);
                     return combinedRows;
                 });

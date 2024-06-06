@@ -2,6 +2,7 @@ package com.example.influencer.Core.Data.Repositories.PostRepository
 
 import android.util.Log
 import com.example.influencer.Core.Data.Network.AuthenticationService
+import com.example.influencer.Core.Utils.CheckpointsCategoriesList
 import com.example.influencer.Features.Upload_New_Checkpoint.Domain.Model.Post
 import com.example.influencer.Features.Upload_New_Update_Checkpoint.Domain.Model.CheckPoint_Update_Item
 import com.google.firebase.firestore.FieldPath
@@ -22,7 +23,8 @@ import javax.inject.Singleton
 @Singleton
 class FirestorePostRepository @Inject constructor(
     private val db:FirebaseFirestore,
-    private val authService: AuthenticationService
+    private val authService: AuthenticationService,
+    private val checkpointsCategoriesList: CheckpointsCategoriesList
 ): PostRepository {
 
     private suspend fun getUserPostCategories(): List<String> = withContext(Dispatchers.IO) {
@@ -142,12 +144,21 @@ class FirestorePostRepository @Inject constructor(
 
     override suspend fun getUserPostsByCategory(userId: String, category: String): List<Post>? = withContext(Dispatchers.IO) {
         try {
-            val querySnapshot = db.collection("Posts")
+            val postsQuery = db.collection("Posts")
                 .whereEqualTo("userId", userId)
-                .whereEqualTo("selectedCategory", category)
-                .orderBy("creationDate", Query.Direction.DESCENDING)
-                .get()
-                .await()
+
+            val query = if (category == "Others") {
+                val knownCategories = checkpointsCategoriesList.categories.map { it.text }
+                postsQuery
+                    .whereNotIn("selectedCategory", knownCategories)
+                    .orderBy("selectedCategory") // Required for whereNotIn to work efficiently (si o si firebase te pide esto aunque logicamente no sea necesario)
+            } else {
+                postsQuery.whereEqualTo("selectedCategory", category)
+            }
+
+            val querySnapshot = query
+                .orderBy("creationDate", Query.Direction.DESCENDING) // Common ordering for all queries
+                .get().await()
 
             if (querySnapshot.isEmpty) {
                 return@withContext null
