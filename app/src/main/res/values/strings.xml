@@ -105,5 +105,6 @@
     <string name="Followers">Followers</string>
     <string name="No_Checkpoints_category">There is no Checkpoints for this category yet !</string>
     <string name="No_Checkpoints_like">There is no Given likes yet !</string>
+    <string name="Checkpoint_Updates"> Checkpoint Updates</string>
 
 </resources>

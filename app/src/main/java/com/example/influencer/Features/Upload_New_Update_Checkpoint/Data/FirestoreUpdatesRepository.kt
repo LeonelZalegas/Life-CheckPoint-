@@ -4,6 +4,7 @@ import com.example.influencer.Core.Data.Network.AuthenticationService
 import com.example.influencer.Features.Upload_New_Checkpoint.Domain.Model.Post
 import com.example.influencer.Features.Upload_New_Update_Checkpoint.Domain.Model.CheckPoint_Update_Item
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.Dispatchers
@@ -38,6 +39,9 @@ class FirestoreUpdatesRepository @Inject constructor(
 
          val updateDocument = CheckPoint_Update_Item(nextUpdateNumberCache, updateText)
          updatesCollectionRef.document().set(updateDocument).await()
+
+        // Atomically increment the UpdatesAmount field in the Post document
+        lastPostDocRefCache.update("UpdatesAmount", FieldValue.increment(1))
     }
 
     //se  fija si la coleccion "Updates" esta creada en el Post, si no lo esta envia un 1 (1er update del post), si ya esta creada, se fija el > valor de update_Number de todos los documentos y devuelve ese valor +1
