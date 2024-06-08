@@ -266,10 +266,10 @@ class CheckpointTabFragment : Fragment(), CardStackView_Adapter.CardActionsListe
     }
 
     //This code is the implementation functions of the "CardActionsListener" from the CardStackView_Adapter
-    override fun onLikeClicked(postId: String,currentLikes: Int) {
+    override fun onLikeClicked(postId: String) {
         checkpointTabViewModel.likePost(postId)
     }
-    override fun onUnlikeClicked(postId: String,currentLikes: Int) {
+    override fun onUnlikeClicked(postId: String) {
         checkpointTabViewModel.unlikePost(postId)
     }
     override fun checkPostLiked(postId: String, callback: (Boolean) -> Unit) {
