@@ -12,4 +12,5 @@ interface PostRepository {
     suspend fun getPostUpdates(postId: String): List<CheckPoint_Update_Item>?
     suspend fun getUserPostsByCategory(userId: String, category: String): List<Post>?
     suspend fun getUserLikedPosts(userId: String): List<Post>?
+    suspend fun deletePost(postId: String)
 }

@@ -13,11 +13,12 @@ import com.example.influencer.Core.UI.ProfileTab.UserProfileViewModel
 import com.example.influencer.Core.Utils.CheckpointsCategoriesList
 import com.example.influencer.R
 import com.example.influencer.databinding.FragmentPostsAndLikesBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class PostsAndLikesFragment : Fragment(), CategoriesAdapter.OnCategoryClickListener, PostsAndLikesAdapter.OnLikeIconClickListener {
+class PostsAndLikesFragment : Fragment(), CategoriesAdapter.OnCategoryClickListener, PostsAndLikesAdapter.OnPostInteractionListener {
 
     companion object {
         private const val ARG_TAB_POSITION = "tab_position"
@@ -137,7 +138,6 @@ class PostsAndLikesFragment : Fragment(), CategoriesAdapter.OnCategoryClickListe
         }
     }
 
-
     override fun onCategoryClick(category: String) {
         viewModel.loadCheckpointsByCategory(category)
     }
@@ -149,6 +149,17 @@ class PostsAndLikesFragment : Fragment(), CategoriesAdapter.OnCategoryClickListe
     override fun onUnlikeClicked(postId: String) {
         Log.w("dadoLike", "se llama dentro del fragment al unlike")
         viewModel.unlikePost(postId)
+    }
+
+    override fun onDeleteClicked(postId: String) {
+        MaterialAlertDialogBuilder(requireContext(), R.style.CustomAlertDialog)
+            .setTitle("Delete Post")
+            .setMessage("Are you sure you want to delete this post?")
+            .setNegativeButton("No", null)
+            .setPositiveButton("Yes") { _, _ ->
+                viewModel.deletePost(postId)
+            }
+            .show()
     }
 
 }

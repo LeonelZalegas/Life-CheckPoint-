@@ -9,16 +9,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.influencer.Core.Utils.BackgroundAndTextColors.setChipTextColor
 import com.example.influencer.Core.Utils.DateTimeUtils
-import com.example.influencer.Features.CheckPoint_Tab.UI.CardStackView_Adapter
 import com.example.influencer.Features.Upload_New_Checkpoint.Domain.Model.Post
 import com.example.influencer.databinding.ItemProfileCheckpointsBinding
 import com.like.LikeButton
 import com.like.OnLikeListener
-import javax.inject.Inject
 
 class PostsAndLikesAdapter(
     private val isCheckpoints: Boolean,
-    private var listener: OnLikeIconClickListener
+    private var listener: OnPostInteractionListener
 ) : RecyclerView.Adapter<PostsAndLikesAdapter.ViewHolder>() {
 
     private var posts: List<Post> = emptyList()
@@ -58,12 +56,12 @@ class PostsAndLikesAdapter(
             if (isCheckpoints) {
                 binding.apply {
                     LikeButton.visibility = View.GONE
-                    deleteCheckppint.visibility = View.VISIBLE
+                    deleteCheckpoint.visibility = View.VISIBLE
                 }
 
             } else {
                 binding.LikeButton.visibility = View.VISIBLE
-                binding.deleteCheckppint.visibility = View.GONE
+                binding.deleteCheckpoint.visibility = View.GONE
             }
 
             binding.LikeButton.setOnLikeListener(object : OnLikeListener {
@@ -77,6 +75,10 @@ class PostsAndLikesAdapter(
                     listener.onUnlikeClicked(post.id)
                 }
             })
+
+            binding.deleteCheckpoint.setOnClickListener {
+                listener.onDeleteClicked(post.id)
+            }
 
             // Determine visibility of the line and point views
             binding.TopLine.visibility =
@@ -105,8 +107,9 @@ class PostsAndLikesAdapter(
     }
 
 
-    interface OnLikeIconClickListener {
+    interface OnPostInteractionListener {
         fun onLikeClicked(postId: String)
         fun onUnlikeClicked(postId: String)
+        fun onDeleteClicked(postId: String)
     }
 }

@@ -9,6 +9,7 @@ import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -64,6 +65,10 @@ class FirestorePostRepository @Inject constructor(
     override suspend fun likePost(postId: String): Int = withContext(Dispatchers.IO) {
         val likedPostRef = db.collection("Posts").document(postId)
         val currentUserLikedPostsRef = db.collection("Usuarios").document(authService.getUid()).collection("LikedPosts")
+        val likersRef = likedPostRef.collection("Likers").document(authService.getUid())
+
+        // Set the likedTime when adding the user to the Likers subcollection
+        likersRef.set(mapOf("likedTime" to FieldValue.serverTimestamp())).await()
 
         //referecia al usuario que esta usando su cuenta actualente en la app y bueno..aca tmb se crea la coleccion LikedPosts de ese usuario
         currentUserLikedPostsRef.document(postId).set(mapOf("likedTime" to FieldValue.serverTimestamp())).await()
@@ -84,6 +89,10 @@ class FirestorePostRepository @Inject constructor(
     override suspend fun unlikePost(postId: String): Int = withContext(Dispatchers.IO) {
         val likedPostRef = db.collection("Posts").document(postId)
         val currentUserLikedPostsRef = db.collection("Usuarios").document(authService.getUid()).collection("LikedPosts")
+        val likersRef = likedPostRef.collection("Likers").document(authService.getUid())
+
+        // Remove the user from the Likers subcollection
+        likersRef.delete().await()
 
         currentUserLikedPostsRef.document(postId).delete().await()
 
@@ -205,4 +214,48 @@ class FirestorePostRepository @Inject constructor(
             return@withContext null
         }
     }
+
+    override suspend fun deletePost(postId: String): Unit = withContext(Dispatchers.IO) {
+        val postRef = db.collection("Posts").document(postId)
+        val storage = FirebaseStorage.getInstance()
+
+        // Retrieve the post to get image URLs before deleting
+        val postSnapshot = postRef.get().await()
+        val image1 = postSnapshot.getString("image_1")
+        val image2 = postSnapshot.getString("image_2")
+
+        // Get all users who liked the post
+        val likersRef = postRef.collection("Likers")
+        val likersSnapshot = likersRef.get().await()
+        val userIds = likersSnapshot.documents.map { it.id }
+
+        // Start a batch to delete all related data
+        val batch = db.batch()
+        batch.delete(postRef)
+
+        // Delete the liked post entries in each user's profile
+        userIds.forEach { userId ->
+            val likedPostRef = db.collection("Usuarios").document(userId).collection("LikedPosts").document(postId)
+            batch.delete(likedPostRef)
+        }
+
+        // Commit the batch and proceed with deleting images if successful
+        try {
+            batch.commit().await()
+
+            // Delete images from Firebase Storage if they exist and batch was successful
+            image1?.let {
+                val imageRef = storage.getReferenceFromUrl(it)
+                imageRef.delete().await()
+            }
+
+            image2?.let {
+                val imageRef = storage.getReferenceFromUrl(it)
+                imageRef.delete().await()
+            }
+        } catch (e: Exception) {
+            throw Exception("Failed to delete post and related data: ${e.message}")
+        }
+    }
+
 }

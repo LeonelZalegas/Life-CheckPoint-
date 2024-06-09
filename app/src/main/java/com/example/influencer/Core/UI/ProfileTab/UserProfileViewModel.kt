@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.influencer.Core.Data.Repositories.UserRepository.UserRepository
 import com.example.influencer.Core.Domain.CheckpointLikesTabUseCase
+import com.example.influencer.Core.Domain.DeletePostUseCase
 import com.example.influencer.Core.Domain.GetUserByIdUseCase
 import com.example.influencer.Core.Utils.SingleLiveEvent
 import com.example.influencer.Features.CheckPoint_Tab.Domain.LikesInteractionsUseCase
@@ -21,7 +22,8 @@ class UserProfileViewModel @Inject constructor(
     private val getUserByIdUseCase: GetUserByIdUseCase,
     private val userRepository: UserRepository, //https://www.notion.so/ProfileTabFragment-26cfd73f6c2c4576b680f713ad431eaf?pvs=4#9b7af75af45f4b5694f2bd4fded4ab36
     private val checkpointLikesTabUseCase: CheckpointLikesTabUseCase,
-    private val likesInteractionsUseCase: LikesInteractionsUseCase
+    private val likesInteractionsUseCase: LikesInteractionsUseCase,
+    private val deletePostUseCase: DeletePostUseCase
 ) : ViewModel() {
 
     private val _user = SingleLiveEvent<Result<UsuarioSignin>>()
@@ -130,4 +132,9 @@ class UserProfileViewModel @Inject constructor(
         }
     }
 
+    fun deletePost(postId: String) {
+        viewModelScope.launch {
+                deletePostUseCase(postId)
+        }
+    }
 }
