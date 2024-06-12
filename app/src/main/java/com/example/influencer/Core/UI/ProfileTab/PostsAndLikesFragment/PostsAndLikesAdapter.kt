@@ -15,6 +15,7 @@ import com.like.LikeButton
 import com.like.OnLikeListener
 
 class PostsAndLikesAdapter(
+    private val isOwnProfile: Boolean,
     private val isCheckpoints: Boolean,
     private var listener: OnPostInteractionListener
 ) : RecyclerView.Adapter<PostsAndLikesAdapter.ViewHolder>() {
@@ -51,14 +52,18 @@ class PostsAndLikesAdapter(
                 UpdateChipNumber.setChipTextColor(colorInt)
                 UpdateChipNumber.text = post.UpdatesAmount.toString()
             }
+            if (isOwnProfile) {
+                if (isCheckpoints) {
+                    binding.LikeButton.visibility = View.GONE
+                    binding.deleteCheckpoint.visibility = View.VISIBLE
 
-
-            if (isCheckpoints) {
+                } else {
+                    binding.LikeButton.visibility = View.VISIBLE
+                    binding.deleteCheckpoint.visibility = View.GONE
+                }
+            }else{
+                //hiding trash and like icons because we are in someone else profile
                 binding.LikeButton.visibility = View.GONE
-                binding.deleteCheckpoint.visibility = View.VISIBLE
-
-            } else {
-                binding.LikeButton.visibility = View.VISIBLE
                 binding.deleteCheckpoint.visibility = View.GONE
             }
 
@@ -95,6 +100,7 @@ class PostsAndLikesAdapter(
                 binding.BottomLine.visibility = View.GONE
                 binding.BottomPoint.visibility = View.GONE
             }
+
         }
 
     }

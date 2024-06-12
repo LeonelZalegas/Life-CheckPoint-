@@ -35,7 +35,13 @@
         android:theme="@style/Theme.Influencer"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
+        <activity
+            android:name=".IndividualCheckpointActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".Features.User_Profile.UI.UserProfileActivity"
             android:exported="false">

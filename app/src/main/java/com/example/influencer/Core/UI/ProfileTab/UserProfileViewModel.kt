@@ -50,6 +50,9 @@ class UserProfileViewModel @Inject constructor(
 
     private var lastCategory: String? = null
 
+    private val _isOwnProfile = MutableLiveData<Boolean>()
+    val isOwnProfile: LiveData<Boolean> get() = _isOwnProfile
+
     fun loadUser(userId: String?) {
         viewModelScope.launch {
             val result = getUserByIdUseCase(userId)
@@ -62,10 +65,14 @@ class UserProfileViewModel @Inject constructor(
                 _isFollowing.value = userRepository.isFollowing(currentUserId, userId)
             }
 
-            if (userId == currentUserId || userId == null)
+            if (userId == currentUserId || userId == null) {
                 _profileTabUserId.value = currentUserId  //userId es el id del perfil que clickeamos, necesitamos cargar este en profileTabUserId para avisar q ya se ejecuto loadUser y hay 1 valor en userId para utilizarlo en loadCheckpointsByCategory
-                else
-                    _profileTabUserId.value = userId  //userId es el id del perfil que clickeamos, en esta parte entramos si userId es distinto a currentUserId, es decir entramos al perfil de alguien mas,no el nuestro
+                _isOwnProfile.value = true
+
+            }else {
+                _profileTabUserId.value = userId  //userId es el id del perfil que clickeamos, en esta parte entramos si userId es distinto a currentUserId, es decir entramos al perfil de alguien mas,no el nuestro
+                _isOwnProfile.value = false
+            }
         }
     }
 

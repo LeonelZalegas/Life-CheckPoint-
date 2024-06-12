@@ -64,30 +64,47 @@ class PostsAndLikesFragment : Fragment(), CategoriesAdapter.OnCategoryClickListe
         val constraintLayout = binding.constraintLayout
         val constraintSet = ConstraintSet() //This class allows you to programmatically manipulate constraints of the ConstraintLayout. You clone the current layout's constraints, modify them, and then apply them back to the layout.
         constraintSet.clone(constraintLayout)
+        viewModel.isOwnProfile.observe(viewLifecycleOwner) {isOwnProfile ->
+            if (tabPosition == 0) {
+                // Checkpoints tab
+                binding.categoriesRecyclerView.visibility = View.VISIBLE
+                binding.categoriesRecyclerView.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                binding.categoriesRecyclerView.adapter =
+                    CategoriesAdapter(checkpointsCategoriesList.categories, this)
+                binding.postsRecyclerView.adapter = PostsAndLikesAdapter(isOwnProfile,true, this)
 
-        if (tabPosition == 0) {
-            // Checkpoints tab
-            binding.categoriesRecyclerView.visibility = View.VISIBLE
-            binding.categoriesRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            binding.categoriesRecyclerView.adapter = CategoriesAdapter(checkpointsCategoriesList.categories, this)
-            binding.postsRecyclerView.adapter = PostsAndLikesAdapter(true,this)
+                // Set postsRecyclerView top constraint to the bottom of the guideline
+                constraintSet.connect(
+                    binding.postsRecyclerView.id,
+                    ConstraintSet.TOP,
+                    binding.guideline.id,
+                    ConstraintSet.BOTTOM,
+                    0
+                )
+            } else {
+                // Likes tab
+                binding.categoriesRecyclerView.visibility = View.GONE
+                binding.postsRecyclerView.adapter = PostsAndLikesAdapter(isOwnProfile,false, this)
 
-            // Set postsRecyclerView top constraint to the bottom of the guideline
-            constraintSet.connect(binding.postsRecyclerView.id, ConstraintSet.TOP, binding.guideline.id, ConstraintSet.BOTTOM, 0)
-        } else {
-            // Likes tab
-            binding.categoriesRecyclerView.visibility = View.GONE
-            binding.postsRecyclerView.adapter = PostsAndLikesAdapter(false,this)
+                // Set postsRecyclerView top constraint to the top of the parent
+                constraintSet.connect(
+                    binding.postsRecyclerView.id,
+                    ConstraintSet.TOP,
+                    ConstraintSet.PARENT_ID,
+                    ConstraintSet.TOP,
+                    0
+                )
+            }
 
-            // Set postsRecyclerView top constraint to the top of the parent
-            constraintSet.connect(binding.postsRecyclerView.id, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 0)
+            binding.postsRecyclerView.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
+            // Apply the constraints
+            constraintSet.applyTo(constraintLayout)
+            binding.postsRecyclerView.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
-
-        binding.postsRecyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
-
-        // Apply the constraints
-        constraintSet.applyTo(constraintLayout)
-        binding.postsRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
 
     private fun initObservers() {
@@ -96,6 +113,10 @@ class PostsAndLikesFragment : Fragment(), CategoriesAdapter.OnCategoryClickListe
 
         viewModel.progress.observe(viewLifecycleOwner) { isLoading ->
             binding.progress.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+
+        viewModel.isOwnProfile.observe(viewLifecycleOwner){
+
         }
     }
 
