@@ -54,10 +54,8 @@ class PostsAndLikesAdapter(
 
 
             if (isCheckpoints) {
-                binding.apply {
-                    LikeButton.visibility = View.GONE
-                    deleteCheckpoint.visibility = View.VISIBLE
-                }
+                binding.LikeButton.visibility = View.GONE
+                binding.deleteCheckpoint.visibility = View.VISIBLE
 
             } else {
                 binding.LikeButton.visibility = View.VISIBLE

@@ -48,6 +48,8 @@ class UserProfileViewModel @Inject constructor(
 
     val progress = MutableLiveData<Boolean>()
 
+    private var lastCategory: String? = null
+
     fun loadUser(userId: String?) {
         viewModelScope.launch {
             val result = getUserByIdUseCase(userId)
@@ -63,7 +65,7 @@ class UserProfileViewModel @Inject constructor(
             if (userId == currentUserId || userId == null)
                 _profileTabUserId.value = currentUserId  //userId es el id del perfil que clickeamos, necesitamos cargar este en profileTabUserId para avisar q ya se ejecuto loadUser y hay 1 valor en userId para utilizarlo en loadCheckpointsByCategory
                 else
-                    _profileTabUserId.value = userId  //userId es el id del perfil que clickeamos, necesitamos cargar este en profileTabUserId para avisar q ya se ejecuto loadUser y hay 1 valor en userId para utilizarlo en loadCheckpointsByCategory
+                    _profileTabUserId.value = userId  //userId es el id del perfil que clickeamos, en esta parte entramos si userId es distinto a currentUserId, es decir entramos al perfil de alguien mas,no el nuestro
         }
     }
 
@@ -90,6 +92,7 @@ class UserProfileViewModel @Inject constructor(
     }
 
     fun loadCheckpointsByCategory(category: String) {
+        lastCategory = category
         viewModelScope.launch {
             progress.postValue(true)
             profileTabUserId.value?.let { UserId ->
@@ -134,7 +137,10 @@ class UserProfileViewModel @Inject constructor(
 
     fun deletePost(postId: String) {
         viewModelScope.launch {
-                deletePostUseCase(postId)
+            deletePostUseCase(postId)
+            lastCategory?.let {
+                loadCheckpointsByCategory(it)
+            }
         }
     }
 }

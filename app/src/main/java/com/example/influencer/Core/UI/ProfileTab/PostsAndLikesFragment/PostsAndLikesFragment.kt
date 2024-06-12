@@ -129,6 +129,7 @@ class PostsAndLikesFragment : Fragment(), CategoriesAdapter.OnCategoryClickListe
         viewModel.likesPosts.observe(viewLifecycleOwner) { likedPosts ->
             if(tabPosition == 1) { //https://www.notion.so/ProfileTabFragment-26cfd73f6c2c4576b680f713ad431eaf?pvs=4#cbd26b4e29de4ee8807bcc0c322cd2d6
                 if (likedPosts != null) {
+//                    binding.postsRecyclerView.visibility = View.VISIBLE
                     (binding.postsRecyclerView.adapter as PostsAndLikesAdapter).submitList(likedPosts)
                 } else {
                     binding.postsRecyclerView.visibility = View.GONE
@@ -139,6 +140,9 @@ class PostsAndLikesFragment : Fragment(), CategoriesAdapter.OnCategoryClickListe
     }
 
     override fun onCategoryClick(category: String) {
+        binding.postsRecyclerView.visibility = View.GONE
+        binding.NoCheckpointsCategory.visibility = View.GONE
+
         viewModel.loadCheckpointsByCategory(category)
     }
 

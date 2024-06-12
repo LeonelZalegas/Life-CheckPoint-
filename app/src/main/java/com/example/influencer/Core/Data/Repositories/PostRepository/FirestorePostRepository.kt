@@ -217,6 +217,7 @@ class FirestorePostRepository @Inject constructor(
 
     override suspend fun deletePost(postId: String): Unit = withContext(Dispatchers.IO) {
         val postRef = db.collection("Posts").document(postId)
+        val userRef = db.collection("Usuarios").document(authService.getUid())
         val storage = FirebaseStorage.getInstance()
 
         // Retrieve the post to get image URLs before deleting
@@ -239,6 +240,14 @@ class FirestorePostRepository @Inject constructor(
             batch.delete(likedPostRef)
         }
 
+        // Delete each document in the "Likers" subcollection
+        likersSnapshot.documents.forEach { doc ->
+            batch.delete(likersRef.document(doc.id))
+        }
+
+        // Decrement the post count in the user's document
+        batch.update(userRef, "postCount", FieldValue.increment(-1))
+
         // Commit the batch and proceed with deleting images if successful
         try {
             batch.commit().await()
@@ -253,6 +262,7 @@ class FirestorePostRepository @Inject constructor(
                 val imageRef = storage.getReferenceFromUrl(it)
                 imageRef.delete().await()
             }
+
         } catch (e: Exception) {
             throw Exception("Failed to delete post and related data: ${e.message}")
         }
