@@ -11,6 +11,7 @@ import com.example.influencer.Core.Utils.Event
 import com.example.influencer.Features.CheckPoint_Tab.Domain.GetRandomCardDataUseCase
 import com.example.influencer.Features.CheckPoint_Tab.Domain.LikesInteractionsUseCase
 import com.example.influencer.Features.CheckPoint_Tab.Domain.Model.CardData
+import com.example.influencer.Features.Individual_Checkpoint.Domain.GetCardDataUseCase
 import kotlinx.coroutines.*
 import java.util.*
 
@@ -18,6 +19,7 @@ import java.util.*
 class CheckpointTabViewModel @Inject constructor(
     private val getRandomCardDataUseCase: GetRandomCardDataUseCase,
     private val likesInteractionsUseCase: LikesInteractionsUseCase,
+    private val getCardDataUseCase: GetCardDataUseCase
 ) : ViewModel() {
 
     companion object {
@@ -43,6 +45,12 @@ class CheckpointTabViewModel @Inject constructor(
     private var cardDataList = mutableListOf<CardData>()
     private var currentCardIndex = 0
     private var selectedCategories = ALL_CATEGORIES
+
+    //Single Card related methods
+    private val _singleCardData = MutableLiveData<CardData>()
+    val singleCardData: LiveData<CardData> = _singleCardData
+    private val _isPostLiked = MutableLiveData<Boolean>()
+    val isPostLiked: LiveData<Boolean> = _isPostLiked
 
     init {
         fetchInitialCardData()
@@ -166,4 +174,23 @@ class CheckpointTabViewModel @Inject constructor(
         _cards.postValue(emptyList())
         fetchInitialCardData() // Refetch data with new categories
     }
+
+    //Single Card related methods
+
+    fun loadSingleCardData(userId: String, postId: String) {
+        viewModelScope.launch {
+            val result = getCardDataUseCase(userId, postId)
+            result.onSuccess { cardData ->
+                _singleCardData.value = cardData
+            }
+        }
+    }
+
+    fun checkIfPostIsLiked(postId: String) {
+        viewModelScope.launch {
+            val result = likesInteractionsUseCase.isPostLiked(postId)
+            _isPostLiked.postValue(result)
+        }
+    }
+
 }

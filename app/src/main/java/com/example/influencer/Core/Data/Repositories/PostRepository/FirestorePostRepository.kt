@@ -267,4 +267,18 @@ class FirestorePostRepository @Inject constructor(
             throw Exception("Failed to delete post and related data: ${e.message}")
         }
     }
+
+    override suspend fun getPost(postId: String): Result<Post> = withContext(Dispatchers.IO) {
+        try {
+            val documentSnapshot = db.collection("Posts").document(postId).get().await()
+            val post = documentSnapshot.toObject(Post::class.java)
+            if (post != null) {
+                Result.success(post)
+            } else {
+                Result.failure(Exception("Post not found"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 }

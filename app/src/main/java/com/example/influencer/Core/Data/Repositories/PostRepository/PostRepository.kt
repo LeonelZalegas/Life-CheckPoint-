@@ -13,4 +13,5 @@ interface PostRepository {
     suspend fun getUserPostsByCategory(userId: String, category: String): List<Post>?
     suspend fun getUserLikedPosts(userId: String): List<Post>?
     suspend fun deletePost(postId: String)
+    suspend fun getPost(postId: String): Result<Post>
 }

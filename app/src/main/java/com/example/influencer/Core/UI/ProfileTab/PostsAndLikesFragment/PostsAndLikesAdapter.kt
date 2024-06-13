@@ -83,6 +83,10 @@ class PostsAndLikesAdapter(
                 listener.onDeleteClicked(post.id)
             }
 
+            binding.maincardView.setOnClickListener {
+                listener.onCardClicked(post.userId, post.id)
+            }
+
             // Determine visibility of the line and point views
             binding.TopLine.visibility =
                 if (bindingAdapterPosition == 0) View.GONE else View.VISIBLE
@@ -115,5 +119,6 @@ class PostsAndLikesAdapter(
         fun onLikeClicked(postId: String)
         fun onUnlikeClicked(postId: String)
         fun onDeleteClicked(postId: String)
+        fun onCardClicked(userId: String, postId: String)
     }
 }

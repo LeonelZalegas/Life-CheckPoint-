@@ -1,5 +1,6 @@
 package com.example.influencer.Core.UI.ProfileTab.PostsAndLikesFragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.influencer.Core.UI.ProfileTab.UserProfileViewModel
 import com.example.influencer.Core.Utils.CheckpointsCategoriesList
+import com.example.influencer.Features.Individual_Checkpoint.UI.IndividualCheckpointActivity
 import com.example.influencer.R
 import com.example.influencer.databinding.FragmentPostsAndLikesBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -187,4 +189,10 @@ class PostsAndLikesFragment : Fragment(), CategoriesAdapter.OnCategoryClickListe
             .show()
     }
 
+    override fun onCardClicked(userId: String, postId: String) {
+        val intent = Intent(requireContext(), IndividualCheckpointActivity::class.java)
+        intent.putExtra("userId", userId)
+        intent.putExtra("postId", postId)
+        startActivity(intent)
+    }
 }

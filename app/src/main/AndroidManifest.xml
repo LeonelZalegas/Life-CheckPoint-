@@ -36,7 +36,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".IndividualCheckpointActivity"
+            android:name=".Features.Individual_Checkpoint.UI.IndividualCheckpointActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
