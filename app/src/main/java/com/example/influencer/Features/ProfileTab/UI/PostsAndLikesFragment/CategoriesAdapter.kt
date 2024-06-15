@@ -1,15 +1,13 @@
-package com.example.influencer.Core.UI.ProfileTab.PostsAndLikesFragment
+package com.example.influencer.Features.ProfileTab.UI.PostsAndLikesFragment
 
 import android.content.res.ColorStateList
 import android.graphics.Typeface
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.influencer.Core.Utils.BackgroundAndTextColors.setChipTextColor
 import com.example.influencer.Features.Create_Modify_Checkpoint_Menu.Domain.Model.CheckpointThemeItem
-import com.example.influencer.R
 import com.example.influencer.databinding.ItemChipHorizontalListBinding
 
 class CategoriesAdapter(

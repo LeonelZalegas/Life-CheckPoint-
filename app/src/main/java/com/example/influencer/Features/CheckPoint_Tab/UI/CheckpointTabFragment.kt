@@ -10,7 +10,6 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -25,7 +24,7 @@ import androidx.fragment.app.viewModels
 import com.example.influencer.R
 import com.example.influencer.Features.Create_Modify_Checkpoint_Menu.UI.CheckpointThemeChoose.CheckpointThemeChooseActivity
 import com.example.influencer.Features.Create_Modify_Checkpoint_Menu.UI.CheckpointUpdateThemeChoose.CheckpointUpdateThemeChooseActivity
-import com.example.influencer.Features.User_Profile.UI.UserProfileActivity
+import com.example.influencer.Features.General_User_Profile.UI.UserProfileActivity
 import com.example.influencer.databinding.FragmentCheckpointTabBinding
 import com.yuyakaido.android.cardstackview.*
 import dagger.hilt.android.AndroidEntryPoint

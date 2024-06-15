@@ -1,4 +1,4 @@
-package com.example.influencer.Core.UI.ProfileTab
+package com.example.influencer.Features.ProfileTab.UI
 
 import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,11 +14,10 @@ import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-import com.example.influencer.Core.UI.ProfileTab.PostsAndLikesFragment.PostsAndLikesFragment
+import com.example.influencer.Features.ProfileTab.UI.PostsAndLikesFragment.PostsAndLikesFragment
 import com.example.influencer.R
 import com.example.influencer.databinding.FragmentProfileTabBinding
 import com.google.android.material.tabs.TabLayoutMediator
-import com.google.firebase.database.collection.LLRBNode.Color
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

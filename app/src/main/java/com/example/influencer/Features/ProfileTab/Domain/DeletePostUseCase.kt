@@ -1,4 +1,4 @@
-package com.example.influencer.Core.Domain
+package com.example.influencer.Features.ProfileTab.Domain
 
 import com.example.influencer.Core.Data.Repositories.PostRepository.PostRepository
 import javax.inject.Inject

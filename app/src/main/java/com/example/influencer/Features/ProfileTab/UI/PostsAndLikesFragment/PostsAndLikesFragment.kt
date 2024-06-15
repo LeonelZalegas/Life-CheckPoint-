@@ -1,4 +1,4 @@
-package com.example.influencer.Core.UI.ProfileTab.PostsAndLikesFragment
+package com.example.influencer.Features.ProfileTab.UI.PostsAndLikesFragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,9 +10,9 @@ import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.influencer.Core.UI.ProfileTab.UserProfileViewModel
+import com.example.influencer.Features.ProfileTab.UI.UserProfileViewModel
 import com.example.influencer.Core.Utils.CheckpointsCategoriesList
-import com.example.influencer.Features.Individual_Checkpoint.UI.IndividualCheckpointActivity
+import com.example.influencer.Features.General_Individual_Checkpoint.UI.IndividualCheckpointActivity
 import com.example.influencer.R
 import com.example.influencer.databinding.FragmentPostsAndLikesBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -20,7 +20,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class PostsAndLikesFragment : Fragment(), CategoriesAdapter.OnCategoryClickListener, PostsAndLikesAdapter.OnPostInteractionListener {
+class PostsAndLikesFragment : Fragment(), CategoriesAdapter.OnCategoryClickListener,
+    PostsAndLikesAdapter.OnPostInteractionListener {
 
     companion object {
         private const val ARG_TAB_POSITION = "tab_position"

@@ -1,8 +1,7 @@
-package com.example.influencer.Core.UI.ProfileTab.PostsAndLikesFragment
+package com.example.influencer.Features.ProfileTab.UI.PostsAndLikesFragment
 
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

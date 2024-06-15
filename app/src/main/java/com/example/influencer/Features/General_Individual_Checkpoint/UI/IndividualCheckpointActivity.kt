@@ -1,4 +1,4 @@
-package com.example.influencer.Features.Individual_Checkpoint.UI
+package com.example.influencer.Features.General_Individual_Checkpoint.UI
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

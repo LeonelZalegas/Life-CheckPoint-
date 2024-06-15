@@ -1,4 +1,4 @@
-package com.example.influencer.Features.Individual_Checkpoint.UI
+package com.example.influencer.Features.General_Individual_Checkpoint.UI
 
 import android.content.Intent
 import android.content.res.ColorStateList
@@ -18,8 +18,7 @@ import com.example.influencer.Core.Utils.BackgroundAndTextColors.setRoundedBackg
 import com.example.influencer.Core.Utils.DateTimeUtils
 import com.example.influencer.Features.CheckPoint_Tab.Domain.Model.CardData
 import com.example.influencer.Features.CheckPoint_Tab.UI.CheckpointTabViewModel
-import com.example.influencer.Features.User_Profile.UI.UserProfileActivity
-import com.example.influencer.R
+import com.example.influencer.Features.General_User_Profile.UI.UserProfileActivity
 import com.example.influencer.databinding.CardLayoutBinding
 import com.like.LikeButton
 import com.like.OnLikeListener

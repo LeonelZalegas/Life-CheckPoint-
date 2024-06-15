@@ -1,4 +1,4 @@
-package com.example.influencer.Core.Domain
+package com.example.influencer.Features.ProfileTab.Domain
 
 import com.example.influencer.Core.Data.Repositories.UserRepository.FirestoreUserRepository
 import com.example.influencer.Features.SignIn.Domain.Model.UsuarioSignin

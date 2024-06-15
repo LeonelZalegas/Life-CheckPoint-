@@ -1,4 +1,4 @@
-package com.example.influencer.Core.UI.ProfileTab
+package com.example.influencer.Features.ProfileTab.UI
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.influencer.Core.Data.Repositories.UserRepository.UserRepository
 import com.example.influencer.Core.Domain.CheckpointLikesTabUseCase
-import com.example.influencer.Core.Domain.DeletePostUseCase
-import com.example.influencer.Core.Domain.GetUserByIdUseCase
+import com.example.influencer.Features.ProfileTab.Domain.DeletePostUseCase
+import com.example.influencer.Features.ProfileTab.Domain.GetUserByIdUseCase
 import com.example.influencer.Core.Utils.SingleLiveEvent
 import com.example.influencer.Features.CheckPoint_Tab.Domain.LikesInteractionsUseCase
 import com.example.influencer.Features.SignIn.Domain.Model.UsuarioSignin

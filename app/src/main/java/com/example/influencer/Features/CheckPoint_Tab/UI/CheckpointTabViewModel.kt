@@ -11,9 +11,8 @@ import com.example.influencer.Core.Utils.Event
 import com.example.influencer.Features.CheckPoint_Tab.Domain.GetRandomCardDataUseCase
 import com.example.influencer.Features.CheckPoint_Tab.Domain.LikesInteractionsUseCase
 import com.example.influencer.Features.CheckPoint_Tab.Domain.Model.CardData
-import com.example.influencer.Features.Individual_Checkpoint.Domain.GetCardDataUseCase
+import com.example.influencer.Features.General_Individual_Checkpoint.Domain.GetCardDataUseCase
 import kotlinx.coroutines.*
-import java.util.*
 
 @HiltViewModel
 class CheckpointTabViewModel @Inject constructor(

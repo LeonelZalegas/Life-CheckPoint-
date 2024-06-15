@@ -1,8 +1,7 @@
-package com.example.influencer.Features.Individual_Checkpoint.Domain
+package com.example.influencer.Features.General_Individual_Checkpoint.Domain
 
 import com.example.influencer.Core.Data.Repositories.PostRepository.PostRepository
 import com.example.influencer.Core.Data.Repositories.UserRepository.FirestoreUserRepository
-import com.example.influencer.Features.CheckPoint_Tab.Data.CardsFilters
 import com.example.influencer.Features.CheckPoint_Tab.Domain.Model.CardData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

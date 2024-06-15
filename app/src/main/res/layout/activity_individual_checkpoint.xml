@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Features.Individual_Checkpoint.UI.IndividualCheckpointActivity"
+    tools:context=".Features.General_Individual_Checkpoint.UI.IndividualCheckpointActivity"
     android:background="@color/naranja_Home">
 
     <androidx.fragment.app.FragmentContainerView
