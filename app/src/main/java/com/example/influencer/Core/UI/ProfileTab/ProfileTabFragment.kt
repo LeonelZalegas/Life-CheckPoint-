@@ -67,21 +67,10 @@ class ProfileTabFragment : Fragment() {
         // Use the userId to load the user data
         viewModel.loadUser(userId)
 
-        viewPagerAdapter = ViewPagerAdapter(this)
-        binding.viewPager.adapter = viewPagerAdapter
-        binding.viewPager.isUserInputEnabled = false  // Disable swiping
-
-        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-            tab.text = when (position) {
-                0 -> "Checkpoints"
-                1 -> "Likes"
-                else -> null
-            }
-        }.attach()
-
         initLoading()
-        setUpUI()
+        setUpUpperUI()
         handlingFollowButton()
+        setUpLowerUI()
     }
 
     private fun initLoading() {
@@ -89,9 +78,17 @@ class ProfileTabFragment : Fragment() {
         carga.getProgressHelper().setBarColor(android.graphics.Color.parseColor("#F57E00"))
         carga.setTitleText(R.string.Loading)
         carga.setCancelable(false)
+
+        viewModel.loading.observe(viewLifecycleOwner){isloading ->
+            if (isloading) {
+                carga.show()
+            } else {
+                carga.dismiss()
+            }
+        }
     }
 
-    private fun setUpUI() {
+    private fun setUpUpperUI() {
         // Observe the user data and update the UI
         viewModel.user.observe(viewLifecycleOwner) { result ->
             result.onSuccess { user ->
@@ -123,22 +120,16 @@ class ProfileTabFragment : Fragment() {
                 // Handle the error
             }
         }
+
         //hacemos distincion de que mostrar en la UI en base a si el profile user es el dueno usando la app o es el perfil de otro usuario
         viewModel.isCurrentUser.observe(viewLifecycleOwner) { isCurrentUser ->
             binding.Configurations.visibility = if (isCurrentUser) View.VISIBLE else View.GONE
             binding.FollowButton.visibility = if (isCurrentUser) View.GONE else View.VISIBLE
         }
+
         //checkeamos al abrir un perfil de algun usuario, si este esta siendo seguido o no por l current user/owner user
         viewModel.isFollowing.observe(viewLifecycleOwner) { isFollowing ->
            if (isFollowing) FollowingButtonState()
-        }
-
-        viewModel.loading.observe(viewLifecycleOwner){isloading ->
-            if (isloading) {
-                carga.show()
-            } else {
-                carga.dismiss()
-            }
         }
     }
 
@@ -161,6 +152,20 @@ class ProfileTabFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun setUpLowerUI() {
+        viewPagerAdapter = ViewPagerAdapter(this)
+        binding.viewPager.adapter = viewPagerAdapter
+        binding.viewPager.isUserInputEnabled = false  // Disable swiping
+
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            tab.text = when (position) {
+                0 -> "Checkpoints"
+                1 -> "Likes"
+                else -> null
+            }
+        }.attach()
     }
 
     private fun FollowingButtonState(){

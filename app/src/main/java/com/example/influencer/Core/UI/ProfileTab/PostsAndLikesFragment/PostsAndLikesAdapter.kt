@@ -37,8 +37,13 @@ class PostsAndLikesAdapter(
     inner class ViewHolder(private val binding: ItemProfileCheckpointsBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(post: Post) {
-            val colorString =
-                if (post.categoryColor.isNullOrEmpty()) "#FFFFFF" else post.categoryColor // Default to white if null or empty
+            setupPostAppearance(post)
+            setupInteractionListeners(post)
+            setupVisibilityControls()
+        }
+
+        private fun setupPostAppearance(post: Post) {
+            val colorString = if (post.categoryColor.isNullOrEmpty()) "#FFFFFF" else post.categoryColor // Default to white if null or empty
             val colorInt = Color.parseColor(colorString)
 
             binding.apply {
@@ -52,6 +57,29 @@ class PostsAndLikesAdapter(
                 UpdateChipNumber.setChipTextColor(colorInt)
                 UpdateChipNumber.text = post.UpdatesAmount.toString()
             }
+        }
+
+        private fun setupInteractionListeners(post: Post) {
+            binding.LikeButton.setOnLikeListener(object : OnLikeListener {
+                override fun liked(likeButton: LikeButton) {
+                    listener.onLikeClicked(post.id)
+                }
+
+                override fun unLiked(likeButton: LikeButton) {
+                    listener.onUnlikeClicked(post.id)
+                }
+            })
+
+            binding.deleteCheckpoint.setOnClickListener {
+                listener.onDeleteClicked(post.id)
+            }
+
+            binding.maincardView.setOnClickListener {
+                listener.onCardClicked(post.userId, post.id)
+            }
+        }
+
+        private fun setupVisibilityControls() {
             if (isOwnProfile) {
                 if (isCheckpoints) {
                     binding.LikeButton.visibility = View.GONE
@@ -65,26 +93,6 @@ class PostsAndLikesAdapter(
                 //hiding trash and like icons because we are in someone else profile
                 binding.LikeButton.visibility = View.GONE
                 binding.deleteCheckpoint.visibility = View.GONE
-            }
-
-            binding.LikeButton.setOnLikeListener(object : OnLikeListener {
-                override fun liked(likeButton: LikeButton) {
-                    Log.w("dadoLike", "se detecto que se dio like ")
-                    listener.onLikeClicked(post.id)
-                }
-
-                override fun unLiked(likeButton: LikeButton) {
-                    Log.w("dadoLike", "se detecto que se dio unlike ")
-                    listener.onUnlikeClicked(post.id)
-                }
-            })
-
-            binding.deleteCheckpoint.setOnClickListener {
-                listener.onDeleteClicked(post.id)
-            }
-
-            binding.maincardView.setOnClickListener {
-                listener.onCardClicked(post.userId, post.id)
             }
 
             // Determine visibility of the line and point views
@@ -104,9 +112,7 @@ class PostsAndLikesAdapter(
                 binding.BottomLine.visibility = View.GONE
                 binding.BottomPoint.visibility = View.GONE
             }
-
         }
-
     }
 
     fun submitList(newItems: List<Post>) {

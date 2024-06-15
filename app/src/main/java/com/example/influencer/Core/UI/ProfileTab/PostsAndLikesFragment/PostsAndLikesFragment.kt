@@ -66,6 +66,7 @@ class PostsAndLikesFragment : Fragment(), CategoriesAdapter.OnCategoryClickListe
         val constraintLayout = binding.constraintLayout
         val constraintSet = ConstraintSet() //This class allows you to programmatically manipulate constraints of the ConstraintLayout. You clone the current layout's constraints, modify them, and then apply them back to the layout.
         constraintSet.clone(constraintLayout)
+
         viewModel.isOwnProfile.observe(viewLifecycleOwner) {isOwnProfile ->
             if (tabPosition == 0) {
                 // Checkpoints tab
@@ -116,10 +117,6 @@ class PostsAndLikesFragment : Fragment(), CategoriesAdapter.OnCategoryClickListe
         viewModel.progress.observe(viewLifecycleOwner) { isLoading ->
             binding.progress.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
-
-        viewModel.isOwnProfile.observe(viewLifecycleOwner){
-
-        }
     }
 
     private fun tabLayoutDataLoad() {
@@ -161,6 +158,8 @@ class PostsAndLikesFragment : Fragment(), CategoriesAdapter.OnCategoryClickListe
             }
         }
     }
+
+    //Interface implementations about the interactions in the adapter
 
     override fun onCategoryClick(category: String) {
         binding.postsRecyclerView.visibility = View.GONE

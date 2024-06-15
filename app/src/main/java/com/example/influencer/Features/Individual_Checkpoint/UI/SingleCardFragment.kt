@@ -33,13 +33,6 @@ class SingleCardFragment : Fragment() {
     private var currentLikes : Int? = null
     private val updatesAdapter = Updates_Adapter()
 
-    private fun setupNestedRecyclerView() {
-        binding.UpdatesRecyclerView.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            adapter = updatesAdapter
-        }
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = CardLayoutBinding.inflate(inflater, container, false)
         return binding.root
@@ -50,26 +43,34 @@ class SingleCardFragment : Fragment() {
         val userId = arguments?.getString("userId") ?: throw IllegalArgumentException("UserId required")
         val postId = arguments?.getString("postId") ?: throw IllegalArgumentException("PostId required")
 
-        // Use the same ViewModel as CheckpointTabFragment
+        initializeViewModel(userId, postId)
+        setupNestedRecyclerView()
+        setupProfileClickListeners(userId)
+    }
+
+    private fun initializeViewModel(userId: String, postId: String) {
         val viewModel: CheckpointTabViewModel by viewModels()
         viewModel.loadSingleCardData(userId, postId)
-
         viewModel.checkIfPostIsLiked(postId)
+        observeViewModel(viewModel)
+        setupLikeButtonListener(viewModel, postId)
+    }
 
-        setupNestedRecyclerView()
-
+    private fun observeViewModel(viewModel: CheckpointTabViewModel) {
         viewModel.singleCardData.observe(viewLifecycleOwner) { cardData ->
             bindCardData(cardData)
         }
 
-        viewModel.likeUpdate.observe(viewLifecycleOwner) { (postId, newLikes) ->
+        viewModel.likeUpdate.observe(viewLifecycleOwner) { (_, newLikes) ->
             currentLikes = newLikes
         }
 
         viewModel.isPostLiked.observe(viewLifecycleOwner) { isLiked ->
             binding.LikeButtom.setLiked(isLiked)
         }
+    }
 
+    private fun setupLikeButtonListener(viewModel: CheckpointTabViewModel, postId: String) {
         binding.LikeButtom.setOnLikeListener(object : OnLikeListener {
             override fun liked(likeButton: LikeButton) {
                 viewModel.likePost(postId)
@@ -78,33 +79,41 @@ class SingleCardFragment : Fragment() {
                 viewModel.unlikePost(postId)
             }
         })
+    }
 
-        binding.apply {
-            profilePicture.setOnClickListener {
-                val intent = Intent(requireContext(), UserProfileActivity::class.java)
-                intent.putExtra("userId", userId)
-                startActivity(intent)
-            }
+    private fun setupProfileClickListeners(userId: String) {
+        binding.profilePicture.setOnClickListener {
+            navigateToUserProfile(userId)
+        }
 
-            userName.setOnClickListener {
-                val intent = Intent(requireContext(), UserProfileActivity::class.java)
-                intent.putExtra("userId", userId)
-                startActivity(intent)
-            }
+        binding.userName.setOnClickListener {
+            navigateToUserProfile(userId)
+        }
+    }
+
+    private fun navigateToUserProfile(userId: String) {
+        val intent = Intent(requireContext(), UserProfileActivity::class.java)
+        intent.putExtra("userId", userId)
+        startActivity(intent)
+    }
+
+    private fun setupNestedRecyclerView() {
+        binding.UpdatesRecyclerView.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = updatesAdapter
         }
     }
 
     private fun bindCardData(cardData: CardData) {
-        val colorString = if (cardData.post.categoryColor.isNullOrEmpty()) "#FFFFFF" else cardData.post.categoryColor // Default to white if null or empty
-        val colorInt = Color.parseColor(colorString)
-
-        setupCardData(cardData,colorInt)
+        val colorInt = Color.parseColor(cardData.post.categoryColor ?: "#FFFFFF")
+        setupCardData(cardData, colorInt)
         setupLikes(cardData)
         setupImages(cardData)
-        loadUpdates(cardData,colorInt)
+        loadUpdates(cardData, colorInt)
     }
 
-    private fun setupCardData(cardData: CardData, colorInt:Int) {
+    private fun setupCardData(cardData: CardData, colorInt: Int) {
+        val colorStateList = ColorStateList.valueOf(colorInt)
         binding.apply {
             MainCategory.text = cardData.post.selectedCategory
             MainCategory.setRoundedBackgroundColor(colorInt, 50f)
@@ -113,10 +122,12 @@ class SingleCardFragment : Fragment() {
             PostDatePublished.setRoundedBackgroundColor(colorInt, 50f)
             CheckpointCategoryNumber.text = "Checkpoint N°${cardData.post.checkpointCategoryCounter}"
             CheckpointCategoryNumber.setRoundedBackgroundColor(colorInt, 50f)
+            DailyCheckpointUpdatesTitle.chipBackgroundColor = colorStateList
+            DailyCheckpointUpdatesTitle.setChipTextColor(colorInt)
             PostAmountLikes.text = cardData.post.likes.toString()
             SatisfactionLevelBar.progress = cardData.post.satisfaction_level_value.toFloat()
             SatisfactionLevelValue.text = cardData.post.satisfaction_level_value.toString()
-            userAge.text = "${cardData.user.years_old} Years/ ${cardData.user.months_old} Months old" //TODO cambiar el Old y ponerlo en string.xml
+            userAge.text = "${cardData.user.years_old} Years/ ${cardData.user.months_old} Months old"
             Glide.with(profilePicture.context).load(cardData.user.profilePictureUrl).into(profilePicture)
             CountryFlagIcon.loadFlag(cardData.user.countryFlagCode)
             CheckpointText.text = cardData.post.text_post
@@ -124,51 +135,45 @@ class SingleCardFragment : Fragment() {
     }
 
     private fun setupLikes(cardData: CardData) {
-        binding.apply {
-            currentLikes = currentLikes ?: cardData.post.likes
-            PostAmountLikes.text = currentLikes.toString()
-        }
+        binding.PostAmountLikes.text = (currentLikes ?: cardData.post.likes).toString()
     }
 
     private fun setupImages(cardData: CardData) {
-        with(cardData.post) {
-            setImageVisibility(image_1, binding.PostPhoto1)
-            setImageVisibility(image_2, binding.PostPhoto2) // Assuming you meant PostPhoto2 for image_2
-        }
+        setImageVisibility(cardData.post.image_1, binding.PostPhoto1)
+        setImageVisibility(cardData.post.image_2, binding.PostPhoto2)
     }
+
     private fun setImageVisibility(imageUrl: String?, imageView: ImageView) {
-        imageUrl?.let { imageUrl->
-            imageView.apply {
-                visibility = View.VISIBLE
-                Glide.with(context).load(imageUrl).into(this)
-            }
-        } ?: run {
+        if (imageUrl != null) {
+            imageView.visibility = View.VISIBLE
+            Glide.with(imageView.context).load(imageUrl).into(imageView)
+        } else {
             imageView.visibility = View.GONE
         }
     }
 
     private fun loadUpdates(cardData: CardData, colorInt: Int) {
-        with(binding) {
-            val colorStateList = ColorStateList.valueOf(colorInt)
-            DailyCheckpointUpdatesTitle.chipBackgroundColor = colorStateList
-            DailyCheckpointUpdatesTitle.setChipTextColor(colorInt)
-
-            var updatesList = cardData.updates
-
-            UpdatesRecyclerView.visibility = View.GONE
-            textViewNoUpdates.visibility = View.GONE
-            if (updatesList.isNullOrEmpty()) {
-                textViewNoUpdates.visibility = View.VISIBLE
-            } else {
-                UpdatesRecyclerView.visibility = View.VISIBLE
-                updatesAdapter.setUpdates(updatesList, colorInt)
-            }
+        val updatesList = cardData.updates
+        if (updatesList.isNullOrEmpty()) {
+            binding.textViewNoUpdates.visibility = View.VISIBLE
+            binding.UpdatesRecyclerView.visibility = View.GONE
+        } else {
+            binding.UpdatesRecyclerView.visibility = View.VISIBLE
+            binding.textViewNoUpdates.visibility = View.GONE
+            updatesAdapter.setUpdates(updatesList, colorInt)
         }
     }
 
     private fun ImageView.loadFlag(countryCode: String?) {
-        val flagUrl = "https://flagsapi.com/$countryCode/flat/64.png"
-        Glide.with(context).load(flagUrl).into(this)
+        countryCode?.let {
+            val flagUrl = "https://flagsapi.com/$countryCode/flat/64.png"
+            Glide.with(this).load(flagUrl).into(this)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {
@@ -180,10 +185,5 @@ class SingleCardFragment : Fragment() {
             fragment.arguments = args
             return fragment
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

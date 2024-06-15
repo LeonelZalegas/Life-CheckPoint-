@@ -54,7 +54,8 @@
                     app:layout_constraintEnd_toEndOf="@id/guidlinetopprofilepic3"
                     app:layout_constraintTop_toBottomOf="@id/guidlinetopprofilepic"
                     app:layout_constraintBottom_toTopOf="@id/ProfileInfoGuideline9"
-                    android:scaleType="fitXY"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintDimensionRatio="1:1"
                     app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Circle"
                     />
 
@@ -360,14 +361,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:minHeight="450dp">
+            android:minHeight="530dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/CheckpointAndUpdateConstraint"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/border_black"
-                android:minHeight="450dp">
+                android:minHeight="530dp">
 
                 <TextView
                     android:id="@+id/Checkpoint_text"
