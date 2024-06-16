@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/maincardView"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintTop_toTopOf="@id/guidelineTop"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineBottom"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:cardBackgroundColor="@color/naranja_Home">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/profile_picture"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="@id/guidelineProfilePicTop"
+            app:layout_constraintBottom_toBottomOf="@id/guidelineProfilePicBottom"
+            app:layout_constraintStart_toEndOf="@id/guidelineProfilePicStart"
+            app:layout_constraintEnd_toEndOf="@id/guidelineProfilePicEnd"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="1:1"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Circle"
+            android:background="@color/rojo_normal"
+            />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/Follow_button"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                app:layout_constraintTop_toBottomOf="@id/guidelineProfilePicBottom"
+                app:layout_constraintStart_toStartOf="@id/guidelineProfilePicStart"
+                app:layout_constraintEnd_toEndOf="@id/guidelineProfilePicEnd"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:chipBackgroundColor="@color/white"
+                app:chipIcon="@drawable/vector_asset_add"
+                android:text="@string/Follow"
+                android:checkable="true"
+                app:checkedIconVisible="true"
+                app:checkedIconEnabled="true"/>
+
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="145dp"
+                android:layout_height="23dp"
+                android:fontFamily="@font/happy"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guidelineCenter1"
+                app:layout_constraintBottom_toTopOf="@id/city"
+                android:layout_marginTop="10dp"
+                android:autoSizeTextType="uniform"
+                android:maxWidth="250dp"
+                android:maxLines="1"
+                />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/city"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintTop_toBottomOf="@id/userName"
+                app:layout_constraintStart_toEndOf="@id/guidelineCenter1"
+                app:layout_constraintBottom_toTopOf="@id/userAge"
+                app:layout_constraintEnd_toEndOf="@id/guidelineCenter2"
+                app:chipBackgroundColor="@color/water_green"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/userAge"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintTop_toBottomOf="@id/city"
+                app:layout_constraintStart_toEndOf="@id/guidelineCenter1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guidelineCenter2"
+                app:chipBackgroundColor="@color/water_green"/>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guidelineCenter2"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/circle_border"
+                android:padding="10dp">
+                
+                <TextView
+                    android:id="@+id/Checkpoints_Created_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Checkpoints Created"
+                    android:autoSizeTextType="uniform"
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+                <TextView
+                    android:id="@+id/Checkpoints_Created_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="30dp"
+                    android:textAlignment="center"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineProfilePicTop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.05" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineProfilePicBottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.6" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineProfilePicStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.07" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineProfilePicEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.25" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineCenter1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.3" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineCenter2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.7" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.85" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
