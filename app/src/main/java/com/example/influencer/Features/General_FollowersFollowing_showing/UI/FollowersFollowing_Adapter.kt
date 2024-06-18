@@ -16,12 +16,12 @@ import com.example.influencer.R
 import com.example.influencer.databinding.ItemFollowersFollowingBinding
 
 class FollowersFollowing_Adapter constructor (
-    private val FollowingOptionSelected: Boolean,
     private val ownerUserId: String,
     private var listener: OnItemInteractionListener
 ) : RecyclerView.Adapter<FollowersFollowing_Adapter.ViewHolder>() {
 
     private var users: List<UsuarioSignin> = emptyList()
+    private var followLoading: Boolean = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowersFollowing_Adapter.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -40,25 +40,22 @@ class FollowersFollowing_Adapter constructor (
         val context = itemView.context
 
         fun bind(user: UsuarioSignin) {
-
             checkItemisCurrentUser(user)
-
-            if (FollowingOptionSelected){
-                FollowingButtonUIState()
+            if (ownerUserId != user.id) {  //tenemos q hacer eso xq si ejecutamos esas fun y es el mismo usuario entonces se muestra igual el boton de follow
+                handlingFollowButton(user)
+                handlingFollowLoading()
             }
-            else{
-                listener.checkIfFollowing(user.id){ isTargetUserFollowing->
-                    if (isTargetUserFollowing) FollowingButtonUIState() else NotFollowingButtonUIState()
-                }
-            }
-
-            handlingFollowButton(user)
             setUpItemData(user)
         }
 
         private fun checkItemisCurrentUser(user:UsuarioSignin) {
             if (ownerUserId == user.id){
                 binding.FollowButton.visibility = View.GONE
+            }else{
+                //si el item no es el mismo usuario entonces mostramos el boton de follow y actualizamos el UI en base a si le seguimos o no
+                listener.checkIfFollowing(user.id){ isTargetUserFollowing->
+                    if (isTargetUserFollowing) FollowingButtonUIState() else NotFollowingButtonUIState()
+                }
             }
         }
 
@@ -74,6 +71,7 @@ class FollowersFollowing_Adapter constructor (
 
         private fun NotFollowingButtonUIState(){
             binding.apply {
+                FollowButton.isChecked = false
             FollowButton.text = context.getString(R.string.Follow)
             FollowButton.chipIcon = ContextCompat.getDrawable(context, R.drawable.vector_asset_add)
             FollowButton.chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.white))
@@ -87,11 +85,14 @@ class FollowersFollowing_Adapter constructor (
 
                 FollowButton.setOnCheckedChangeListener { buttonView, isChecked ->
                     if (buttonView.isPressed) {
+                        val position = bindingAdapterPosition
+                        if (position == RecyclerView.NO_POSITION) return@setOnCheckedChangeListener
+
                         if (isChecked) {
-                            listener.followUser(user.id)
+                            listener.followUser(user.id,position)
                             FollowingButtonUIState()
                         } else {
-                            listener.unfollowUser(user.id)
+                            listener.unfollowUser(user.id,position)
                             NotFollowingButtonUIState()
                         }
                     }
@@ -119,6 +120,16 @@ class FollowersFollowing_Adapter constructor (
                 Glide.with(profilePicture.context).load(user.profilePictureUrl).into(profilePicture)
             }
         }
+
+        private fun handlingFollowLoading() {
+            if (followLoading) {
+                binding.FollowProgress.visibility = View.VISIBLE
+                binding.FollowButton.visibility = View.GONE
+            }else{
+                binding.FollowProgress.visibility = View.GONE
+                binding.FollowButton.visibility = View.VISIBLE
+            }
+        }
     }
 
     fun uploadUsersList(newItems: List<UsuarioSignin>) {
@@ -126,9 +137,15 @@ class FollowersFollowing_Adapter constructor (
         notifyDataSetChanged()
     }
 
+    fun followLoading(isLoading:Boolean,position: Int){
+        followLoading = isLoading
+        notifyItemChanged(position)
+    }
+
+
     interface OnItemInteractionListener {
-        fun followUser(UserId: String?)
-        fun unfollowUser(UserId: String?)
+        fun followUser(UserId: String?,position: Int)
+        fun unfollowUser(UserId: String?,position: Int)
         fun checkIfFollowing(targetUserId:String, callback: (Boolean) -> Unit )
     }
 }

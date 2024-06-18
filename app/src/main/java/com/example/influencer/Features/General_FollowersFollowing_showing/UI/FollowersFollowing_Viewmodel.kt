@@ -19,6 +19,7 @@ class FollowersFollowing_Viewmodel @Inject constructor(
 ) : ViewModel() {
 
     val loading = MutableLiveData<Boolean>()
+    val progressLoading = MutableLiveData<Pair<Boolean, Int>>()
 
     private val _usersList = MutableLiveData<List<UsuarioSignin>>()
     val usersList: LiveData<List<UsuarioSignin>> = _usersList
@@ -48,22 +49,22 @@ class FollowersFollowing_Viewmodel @Inject constructor(
         }
     }
 
-    fun followUser(targetUserId: String?) {
+    fun followUser(targetUserId: String?,position: Int) {
         viewModelScope.launch {
             targetUserId?.let {
-                loading.postValue(true)
+                progressLoading.postValue(Pair(true, position))
                 userRepository.followUser(targetUserId)
-                loading.postValue(false)
+                progressLoading.postValue(Pair(false, position))
             }
         }
     }
 
-    fun unfollowUser(targetUserId: String?) {
+    fun unfollowUser(targetUserId: String?,position: Int) {
         viewModelScope.launch {
             targetUserId?.let {
-                loading.postValue(true)
+                progressLoading.postValue(Pair(true, position))
                 userRepository.unfollowUser(targetUserId)
-                loading.postValue(false)
+                progressLoading.postValue(Pair(false, position))
             }
         }
     }

@@ -30,7 +30,7 @@ class FollowersFollowing_Activity : AppCompatActivity(),FollowersFollowing_Adapt
         FollowingOptionSelected = intent.getBooleanExtra("FollowingOptionSelected",true)
 
         viewModel.ownerUserId.observe(this) { ownerUserId ->
-            followersfollowingAdapter = FollowersFollowing_Adapter(FollowingOptionSelected, ownerUserId, this)
+            followersfollowingAdapter = FollowersFollowing_Adapter(ownerUserId, this)
             setupRecyclerView()
         }
 
@@ -48,21 +48,29 @@ class FollowersFollowing_Activity : AppCompatActivity(),FollowersFollowing_Adapt
         viewModel.usersList.observe(this){ usersList->
             if (!usersList.isNullOrEmpty())
             followersfollowingAdapter.uploadUsersList(usersList)
-            else
-                Log.w("ListaVaciaFollows", "por alguna la lista es vacia" )
+            else{
+                if(FollowingOptionSelected)
+                    binding.noFollowingUsers.visibility = View.VISIBLE
+                else
+                    binding.noFollowersUsers.visibility = View.VISIBLE
+            }
         }
 
         viewModel.loading.observe(this) { isLoading ->
             binding.progress.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
+
+        viewModel.progressLoading.observe(this){ loadingInfo ->
+            followersfollowingAdapter.followLoading(loadingInfo.first,  loadingInfo.second)
+        }
     }
 
-    override fun followUser(UserId: String?) {
-        viewModel.followUser(UserId)
+    override fun followUser(UserId: String?,position: Int) {
+        viewModel.followUser(UserId,position)
     }
 
-    override fun unfollowUser(UserId: String?) {
-        viewModel.unfollowUser(UserId)
+    override fun unfollowUser(UserId: String?,position: Int) {
+        viewModel.unfollowUser(UserId,position)
     }
 
     override fun checkIfFollowing(targetUserId:String, callback: (Boolean) -> Unit) {
