@@ -5,11 +5,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.influencer.Features.CheckPoint_Tab.UI.CardStackView_Adapter
 import com.example.influencer.databinding.ActivityFollowersFollowingBinding
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class FollowersFollowing_Activity : AppCompatActivity(),FollowersFollowing_Adapter.OnItemInteractionListener {
@@ -25,12 +24,16 @@ class FollowersFollowing_Activity : AppCompatActivity(),FollowersFollowing_Adapt
         binding = ActivityFollowersFollowingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        currentUserId = intent.getStringExtra("userId").toString()
+        viewModel.getOwnerUserId()
+
+        currentUserId = intent.getStringExtra("userId").toString() //userId del perfil del cual estamos haciendo click el textoiew de follower o following
         FollowingOptionSelected = intent.getBooleanExtra("FollowingOptionSelected",true)
 
-        followersfollowingAdapter= FollowersFollowing_Adapter(FollowingOptionSelected, this)
+        viewModel.ownerUserId.observe(this) { ownerUserId ->
+            followersfollowingAdapter = FollowersFollowing_Adapter(FollowingOptionSelected, ownerUserId, this)
+            setupRecyclerView()
+        }
 
-        setupRecyclerView()
         loadAndObserveUsers()
     }
 

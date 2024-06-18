@@ -54,7 +54,7 @@ class FirestoreUserRepository @Inject constructor(
         }
     }
 
-    override suspend fun getCurrentUserId():String = withContext(Dispatchers.IO) {
+    override suspend fun getOwnerUserId():String = withContext(Dispatchers.IO) {
         authService.getUid()
     }
 

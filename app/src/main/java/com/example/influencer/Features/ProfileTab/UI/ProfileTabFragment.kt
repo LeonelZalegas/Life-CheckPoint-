@@ -4,7 +4,6 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -68,7 +67,6 @@ class ProfileTabFragment : Fragment() {
         // Use the userId to load the user data
         viewModel.loadUser(userId)
 
-        Log.w("valor_currentUserId", "el valor de currentUserId en ViewCreated a ver si tmb es null: ${userId}" )
         initLoading()
         setUpUpperUI()
         handlingFollowButton()
@@ -126,9 +124,9 @@ class ProfileTabFragment : Fragment() {
         }
 
         //hacemos distincion de que mostrar en la UI en base a si el profile user es el dueno usando la app o es el perfil de otro usuario
-        viewModel.isCurrentUser.observe(viewLifecycleOwner) { isCurrentUser ->
-            binding.Configurations.visibility = if (isCurrentUser) View.VISIBLE else View.GONE
-            binding.FollowButton.visibility = if (isCurrentUser) View.GONE else View.VISIBLE
+        viewModel.isOwnerUser.observe(viewLifecycleOwner) { isOwnerUser ->
+            binding.Configurations.visibility = if (isOwnerUser) View.VISIBLE else View.GONE
+            binding.FollowButton.visibility = if (isOwnerUser) View.GONE else View.VISIBLE
         }
 
         //checkeamos al abrir un perfil de algun usuario, si este esta siendo seguido o no por l current user/owner user

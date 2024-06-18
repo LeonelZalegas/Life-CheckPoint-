@@ -23,6 +23,8 @@ class FollowersFollowing_Viewmodel @Inject constructor(
     private val _usersList = MutableLiveData<List<UsuarioSignin>>()
     val usersList: LiveData<List<UsuarioSignin>> = _usersList
 
+    val ownerUserId: MutableLiveData<String> = MutableLiveData()
+
     fun getFollowingUsers(currentUserId: String){
         viewModelScope.launch {
             loading.postValue(true)
@@ -63,6 +65,12 @@ class FollowersFollowing_Viewmodel @Inject constructor(
                 userRepository.unfollowUser(targetUserId)
                 loading.postValue(false)
             }
+        }
+    }
+
+    fun getOwnerUserId(){
+        viewModelScope.launch {
+            ownerUserId.postValue( userRepository.getOwnerUserId())
         }
     }
 

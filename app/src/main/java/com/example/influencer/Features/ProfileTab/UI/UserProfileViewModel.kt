@@ -29,8 +29,8 @@ class UserProfileViewModel @Inject constructor(
     private val _user = SingleLiveEvent<Result<UsuarioSignin>>()
     val user: LiveData<Result<UsuarioSignin>> get() = _user
 
-    private val _isCurrentUser = MutableLiveData<Boolean>()
-    val isCurrentUser: LiveData<Boolean> = _isCurrentUser
+    private val _isOwnertUser = MutableLiveData<Boolean>()
+    val isOwnerUser: LiveData<Boolean> = _isOwnertUser
 
     private val _isFollowing = MutableLiveData<Boolean>()
     val isFollowing: LiveData<Boolean> = _isFollowing
@@ -55,18 +55,18 @@ class UserProfileViewModel @Inject constructor(
 
     fun loadUser(userId: String?) {
         viewModelScope.launch {
-            val result = getUserByIdUseCase(userId) //devuelve el User posta (aunque el userId sea null ya que es el mismo usuario) te va a seguir devolvoendo el usuario owner o el q usa ahora la app y NO null ni nada
+            val result = getUserByIdUseCase(userId) //si entramos a nuestro perfil devuelve el User posta (aunque el userId sea null ya que es el mismo usuario) te va a seguir devolvoendo el usuario owner o el q usa ahora la app y NO null ni nada
             _user.value = result
 
-            val currentUserId = userRepository.getCurrentUserId()  // es el Id del usuario que esta logeado y esta usando la app como tal
-            _isCurrentUser.value = (userId == currentUserId || userId == null ) //recordar q si userId == null entonces se trata del Id del owner user
+            val ownerUserId = userRepository.getOwnerUserId()  // es el Id del usuario que esta logeado y esta usando la app como tal
+            _isOwnertUser.value = (userId == ownerUserId || userId == null ) //recordar q si userId == null entonces se trata del Id del owner user
 
-            if (userId != null && userId != currentUserId) {
-                _isFollowing.value = userRepository.isFollowing(currentUserId, userId)
+            if (userId != null && userId != ownerUserId) {
+                _isFollowing.value = userRepository.isFollowing(ownerUserId, userId)
             }
 
-            if (userId == currentUserId || userId == null) {
-                _profileTabUserId.value = currentUserId  //userId es el id del perfil que clickeamos, necesitamos cargar este en profileTabUserId para avisar q ya se ejecuto loadUser y hay 1 valor en userId para utilizarlo en loadCheckpointsByCategory
+            if (userId == ownerUserId || userId == null) {
+                _profileTabUserId.value = ownerUserId  //userId es el id del perfil que clickeamos, necesitamos cargar este en profileTabUserId para avisar q ya se ejecuto loadUser y hay 1 valor en userId para utilizarlo en loadCheckpointsByCategory
                 _isOwnProfile.value = true
 
             }else {

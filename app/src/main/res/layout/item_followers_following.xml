@@ -29,7 +29,6 @@
             android:scaleType="centerCrop"
             app:layout_constraintDimensionRatio="1:1"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Circle"
-            android:background="@color/rojo_normal"
             />
 
             <com.google.android.material.chip.Chip
@@ -48,8 +47,7 @@
                 app:checkedIconVisible="true"
                 app:checkedIconEnabled="true"
                 android:textSize="12dp"
-                android:maxWidth="95dp"
-                android:background="@drawable/border_black"/>
+                android:maxWidth="95dp" />
 
             <TextView
                 android:id="@+id/userName"
@@ -77,7 +75,8 @@
                 app:layout_constraintEnd_toEndOf="@id/guidelineCenter2"
                 app:chipBackgroundColor="@color/water_green"
                 android:textSize="12dp"
-                android:maxWidth="160dp"/>
+                android:maxWidth="160dp"
+                android:clickable="false"/>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/userAge"
@@ -90,7 +89,8 @@
                 app:layout_constraintEnd_toEndOf="@id/guidelineCenter2"
                 app:chipBackgroundColor="@color/water_green"
                 android:textSize="12dp"
-                android:maxWidth="160dp"/>
+                android:maxWidth="160dp"
+                android:clickable="false"/>
 
 
             <androidx.constraintlayout.widget.ConstraintLayout

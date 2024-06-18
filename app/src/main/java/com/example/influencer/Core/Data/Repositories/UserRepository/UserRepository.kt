@@ -7,7 +7,7 @@ interface UserRepository {
     suspend fun saveUserAgeMonths(age:Int,months:Int)
     suspend fun saveUserCountry(countryName:String,countryFlag:String)
     suspend fun getUserById(userId: String?): Result<UsuarioSignin>
-    suspend fun getCurrentUserId():String
+    suspend fun getOwnerUserId():String
     suspend fun isFollowing(currentUserId: String, targetUserId: String): Boolean
     suspend fun followUser(targetUserId: String)
     suspend fun unfollowUser(targetUserId: String)

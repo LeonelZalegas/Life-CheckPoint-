@@ -2,24 +2,22 @@ package com.example.influencer.Features.General_FollowersFollowing_showing.UI
 
 import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-import com.example.influencer.Features.ProfileTab.UI.PostsAndLikesFragment.PostsAndLikesAdapter
 import com.example.influencer.Features.SignIn.Domain.Model.UsuarioSignin
-import com.example.influencer.Features.Upload_New_Checkpoint.Domain.Model.Post
 import com.example.influencer.R
 import com.example.influencer.databinding.ItemFollowersFollowingBinding
-import com.example.influencer.databinding.ItemProfileCheckpointsBinding
-import com.google.firebase.firestore.auth.User
-import javax.inject.Inject
 
 class FollowersFollowing_Adapter constructor (
     private val FollowingOptionSelected: Boolean,
+    private val ownerUserId: String,
     private var listener: OnItemInteractionListener
 ) : RecyclerView.Adapter<FollowersFollowing_Adapter.ViewHolder>() {
 
@@ -42,6 +40,9 @@ class FollowersFollowing_Adapter constructor (
         val context = itemView.context
 
         fun bind(user: UsuarioSignin) {
+
+            checkItemisCurrentUser(user)
+
             if (FollowingOptionSelected){
                 FollowingButtonUIState()
             }
@@ -53,6 +54,12 @@ class FollowersFollowing_Adapter constructor (
 
             handlingFollowButton(user)
             setUpItemData(user)
+        }
+
+        private fun checkItemisCurrentUser(user:UsuarioSignin) {
+            if (ownerUserId == user.id){
+                binding.FollowButton.visibility = View.GONE
+            }
         }
 
         private fun FollowingButtonUIState(){
