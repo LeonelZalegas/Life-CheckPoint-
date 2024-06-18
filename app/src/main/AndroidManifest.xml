@@ -36,6 +36,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".Features.General_FollowersFollowing_showing.UI.FollowersFollowing_Activity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".Features.General_Individual_Checkpoint.UI.IndividualCheckpointActivity"
             android:exported="false">
             <meta-data

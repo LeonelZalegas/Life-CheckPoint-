@@ -55,7 +55,7 @@ class UserProfileViewModel @Inject constructor(
 
     fun loadUser(userId: String?) {
         viewModelScope.launch {
-            val result = getUserByIdUseCase(userId)
+            val result = getUserByIdUseCase(userId) //devuelve el User posta (aunque el userId sea null ya que es el mismo usuario) te va a seguir devolvoendo el usuario owner o el q usa ahora la app y NO null ni nada
             _user.value = result
 
             val currentUserId = userRepository.getCurrentUserId()  // es el Id del usuario que esta logeado y esta usando la app como tal

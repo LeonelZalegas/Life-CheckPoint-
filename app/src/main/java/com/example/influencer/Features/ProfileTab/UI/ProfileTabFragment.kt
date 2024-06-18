@@ -1,8 +1,10 @@
 package com.example.influencer.Features.ProfileTab.UI
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +16,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.example.influencer.Features.General_FollowersFollowing_showing.UI.FollowersFollowing_Activity
 import com.example.influencer.Features.ProfileTab.UI.PostsAndLikesFragment.PostsAndLikesFragment
 import com.example.influencer.R
 import com.example.influencer.databinding.FragmentProfileTabBinding
@@ -42,6 +45,7 @@ class ProfileTabFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var viewPagerAdapter: ViewPagerAdapter
     private lateinit var carga: SweetAlertDialog
+    private lateinit var currentlyShowingUserId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,12 +68,13 @@ class ProfileTabFragment : Fragment() {
         // Use the userId to load the user data
         viewModel.loadUser(userId)
 
+        Log.w("valor_currentUserId", "el valor de currentUserId en ViewCreated a ver si tmb es null: ${userId}" )
         initLoading()
         setUpUpperUI()
         handlingFollowButton()
+        handlingFollowingFollowers()
         setUpLowerUI()
     }
-
     private fun initLoading() {
         carga = SweetAlertDialog(requireContext(), SweetAlertDialog.PROGRESS_TYPE)
         carga.getProgressHelper().setBarColor(android.graphics.Color.parseColor("#F57E00"))
@@ -113,6 +118,8 @@ class ProfileTabFragment : Fragment() {
                     NumFollowing.text = user.followingCount.toString()
                 }
 
+                currentlyShowingUserId = user.id
+
             }.onFailure {
                 // Handle the error
             }
@@ -126,7 +133,7 @@ class ProfileTabFragment : Fragment() {
 
         //checkeamos al abrir un perfil de algun usuario, si este esta siendo seguido o no por l current user/owner user
         viewModel.isFollowing.observe(viewLifecycleOwner) { isFollowing ->
-           if (isFollowing) FollowingButtonState()
+           if (isFollowing) FollowingButtonUIState()
         }
     }
 
@@ -138,7 +145,7 @@ class ProfileTabFragment : Fragment() {
             FollowButton.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (buttonView.isPressed) {
                     if (isChecked) {
-                        FollowingButtonState()
+                        FollowingButtonUIState()
                         viewModel.followUser(userId)
                     } else {
                         FollowButton.text = getString(R.string.Follow)
@@ -149,6 +156,25 @@ class ProfileTabFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun handlingFollowingFollowers() {
+        binding.NumFollowers.setOnClickListener {
+            val intent = Intent(context, FollowersFollowing_Activity::class.java).apply {
+                putExtra("userId", currentlyShowingUserId)
+                putExtra("FollowingOptionSelected", false)
+            }
+            startActivity(intent)
+        }
+
+        binding.NumFollowing.setOnClickListener {
+            val intent = Intent(context, FollowersFollowing_Activity::class.java).apply {
+                putExtra("userId", currentlyShowingUserId)
+                putExtra("FollowingOptionSelected", true)
+            }
+            startActivity(intent)
+        }
+
     }
 
     private fun setUpLowerUI() {
@@ -165,7 +191,7 @@ class ProfileTabFragment : Fragment() {
         }.attach()
     }
 
-    private fun FollowingButtonState(){
+    private fun FollowingButtonUIState(){
         val chipColor = ContextCompat.getColor(requireContext(), R.color.verde_seekBar)
         binding.apply {
             FollowButton.isChecked = true

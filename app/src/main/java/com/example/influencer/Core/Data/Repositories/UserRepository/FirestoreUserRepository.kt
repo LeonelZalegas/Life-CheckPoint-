@@ -1,5 +1,6 @@
 package com.example.influencer.Core.Data.Repositories.UserRepository
 
+import android.util.Log
 import com.example.influencer.Core.Data.Network.AuthenticationService
 import com.example.influencer.Features.SignIn.Domain.Model.UsuarioSignin
 import com.google.firebase.firestore.FieldValue
@@ -140,4 +141,40 @@ class FirestoreUserRepository @Inject constructor(
             transaction.update(targetUserRef, "followersCount", newTargetUserFollowersCount)
         }.await()
     }
+
+    override suspend fun getFollowers(currentUserId: String): List<UsuarioSignin> = withContext(Dispatchers.IO) {
+        val followersRef = db.collection("Usuarios").document(currentUserId).collection("followers")
+        val chunks = followersRef.get().await()
+        val userIds = mutableListOf<String>()
+
+        if (chunks.isEmpty) return@withContext emptyList()
+
+        chunks.documents.forEach { document ->
+            val chunkUserIds = document.get("userIds") as? List<String> ?: listOf()
+            userIds.addAll(chunkUserIds)
+        }
+
+        userIds.mapNotNull { userId ->
+            getUserById(userId).getOrNull()
+        }
+    }
+
+    override suspend fun getFollowing(currentUserId: String): List<UsuarioSignin> = withContext(Dispatchers.IO) {
+        val followingRef = db.collection("Usuarios").document(currentUserId).collection("following")
+        val chunks = followingRef.get().await()
+        val userIds = mutableListOf<String>()
+
+        if (chunks.isEmpty) return@withContext emptyList()
+
+        chunks.documents.forEach { document ->
+            val chunkUserIds = document.get("userIds") as? List<String> ?: listOf()
+            userIds.addAll(chunkUserIds)
+        }
+
+        userIds.mapNotNull { userId ->
+            getUserById(userId).getOrNull()
+        }
+    }
+
+
 }
