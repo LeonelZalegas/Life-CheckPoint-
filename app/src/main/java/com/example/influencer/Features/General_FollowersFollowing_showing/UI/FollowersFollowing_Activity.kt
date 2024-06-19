@@ -1,5 +1,6 @@
 package com.example.influencer.Features.General_FollowersFollowing_showing.UI
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.influencer.Features.General_User_Profile.UI.UserProfileActivity
 import com.example.influencer.databinding.ActivityFollowersFollowingBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -75,6 +77,12 @@ class FollowersFollowing_Activity : AppCompatActivity(),FollowersFollowing_Adapt
 
     override fun checkIfFollowing(targetUserId:String, callback: (Boolean) -> Unit) {
         viewModel.checkIfFollowing(currentUserId,targetUserId,callback)
+    }
+
+    override fun goToSelectedProfile(userId: String) {
+        val intent = Intent(this, UserProfileActivity::class.java)
+        intent.putExtra("userId", userId)
+        startActivity(intent)
     }
 
 

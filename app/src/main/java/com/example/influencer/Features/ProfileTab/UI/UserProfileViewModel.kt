@@ -44,9 +44,11 @@ class UserProfileViewModel @Inject constructor(
     private val _profileTabUserId = MutableLiveData<String?>()
     val profileTabUserId: LiveData<String?> get() = _profileTabUserId
 
-    val loading = MutableLiveData<Boolean>()
+    val progressFollow = MutableLiveData<Boolean>()
 
-    val progress = MutableLiveData<Boolean>()
+    val loadingProfile = MutableLiveData<Boolean>()
+
+    val progress = MutableLiveData<Boolean>() //el de la carga de los checkpoints
 
     private var lastCategory: String? = null
 
@@ -55,8 +57,11 @@ class UserProfileViewModel @Inject constructor(
 
     fun loadUser(userId: String?) {
         viewModelScope.launch {
+
+            loadingProfile.postValue(true)
             val result = getUserByIdUseCase(userId) //si entramos a nuestro perfil devuelve el User posta (aunque el userId sea null ya que es el mismo usuario) te va a seguir devolvoendo el usuario owner o el q usa ahora la app y NO null ni nada
             _user.value = result
+            loadingProfile.postValue(false)
 
             val ownerUserId = userRepository.getOwnerUserId()  // es el Id del usuario que esta logeado y esta usando la app como tal
             _isOwnertUser.value = (userId == ownerUserId || userId == null ) //recordar q si userId == null entonces se trata del Id del owner user
@@ -79,10 +84,10 @@ class UserProfileViewModel @Inject constructor(
     fun followUser(targetUserId: String?) {
         viewModelScope.launch {
             targetUserId?.let {
-                loading.postValue(true)
+                progressFollow.postValue(true)
                 userRepository.followUser(targetUserId)
                 _isFollowing.value = true
-                loading.postValue(false)
+                progressFollow.postValue(false)
             }
         }
     }
@@ -90,10 +95,10 @@ class UserProfileViewModel @Inject constructor(
     fun unfollowUser(targetUserId: String?) {
         viewModelScope.launch {
             targetUserId?.let {
-                loading.postValue(true)
+                progressFollow.postValue(true)
                 userRepository.unfollowUser(targetUserId)
                 _isFollowing.value = false
-                loading.postValue(false)
+                progressFollow.postValue(false)
             }
         }
     }

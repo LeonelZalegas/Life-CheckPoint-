@@ -46,6 +46,7 @@ class FollowersFollowing_Adapter constructor (
                 handlingFollowLoading()
             }
             setUpItemData(user)
+            setClickOnItem(user)
         }
 
         private fun checkItemisCurrentUser(user:UsuarioSignin) {
@@ -130,6 +131,13 @@ class FollowersFollowing_Adapter constructor (
                 binding.FollowButton.visibility = View.VISIBLE
             }
         }
+
+        private fun setClickOnItem(user:UsuarioSignin) {
+            binding.maincardView.setOnClickListener {
+                listener.goToSelectedProfile(user.id)
+            }
+        }
+
     }
 
     fun uploadUsersList(newItems: List<UsuarioSignin>) {
@@ -147,5 +155,6 @@ class FollowersFollowing_Adapter constructor (
         fun followUser(UserId: String?,position: Int)
         fun unfollowUser(UserId: String?,position: Int)
         fun checkIfFollowing(targetUserId:String, callback: (Boolean) -> Unit )
+        fun goToSelectedProfile(userId:String)
     }
 }

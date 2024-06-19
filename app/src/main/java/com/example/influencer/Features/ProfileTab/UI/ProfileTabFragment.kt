@@ -79,12 +79,18 @@ class ProfileTabFragment : Fragment() {
         carga.setTitleText(R.string.Loading)
         carga.setCancelable(false)
 
-        viewModel.loading.observe(viewLifecycleOwner){isloading ->
+        viewModel.progressFollow.observe(viewLifecycleOwner){ isloading ->
             if (isloading) {
-                carga.show()
+                binding.FollowProgress.visibility = View.VISIBLE
+                binding.FollowButton.visibility = View.GONE
             } else {
-                carga.dismiss()
+                binding.FollowProgress.visibility = View.GONE
+                binding.FollowButton.visibility = View.VISIBLE
             }
+        }
+
+        viewModel.loadingProfile.observe(viewLifecycleOwner){isLoading->
+            if (isLoading) carga.show() else carga.dismiss()
         }
     }
 
@@ -157,22 +163,30 @@ class ProfileTabFragment : Fragment() {
     }
 
     private fun handlingFollowingFollowers() {
+
         binding.NumFollowers.setOnClickListener {
-            val intent = Intent(context, FollowersFollowing_Activity::class.java).apply {
-                putExtra("userId", currentlyShowingUserId)
-                putExtra("FollowingOptionSelected", false)
-            }
-            startActivity(intent)
+            commonFollowersListener(false)
+        }
+        binding.followers.setOnClickListener{
+            commonFollowersListener(false)
         }
 
         binding.NumFollowing.setOnClickListener {
-            val intent = Intent(context, FollowersFollowing_Activity::class.java).apply {
-                putExtra("userId", currentlyShowingUserId)
-                putExtra("FollowingOptionSelected", true)
-            }
-            startActivity(intent)
+            commonFollowersListener(true)
         }
 
+        binding.following.setOnClickListener{
+            commonFollowersListener(true)
+        }
+
+    }
+
+    private fun commonFollowersListener(isFollowers:Boolean){
+        val intent = Intent(context, FollowersFollowing_Activity::class.java).apply {
+            putExtra("userId", currentlyShowingUserId)
+            putExtra("FollowingOptionSelected", isFollowers)
+        }
+        startActivity(intent)
     }
 
     private fun setUpLowerUI() {
