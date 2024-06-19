@@ -17,6 +17,7 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.example.influencer.Features.General_FollowersFollowing_showing.UI.FollowersFollowing_Activity
 import com.example.influencer.Features.ProfileTab.UI.PostsAndLikesFragment.PostsAndLikesFragment
+import com.example.influencer.Features.Settings.UI.settingsActivity
 import com.example.influencer.R
 import com.example.influencer.databinding.FragmentProfileTabBinding
 import com.google.android.material.tabs.TabLayoutMediator
@@ -71,8 +72,10 @@ class ProfileTabFragment : Fragment() {
         setUpUpperUI()
         handlingFollowButton()
         handlingFollowingFollowers()
+        handlingSettings()
         setUpLowerUI()
     }
+
     private fun initLoading() {
         carga = SweetAlertDialog(requireContext(), SweetAlertDialog.PROGRESS_TYPE)
         carga.getProgressHelper().setBarColor(android.graphics.Color.parseColor("#F57E00"))
@@ -187,6 +190,13 @@ class ProfileTabFragment : Fragment() {
             putExtra("FollowingOptionSelected", isFollowers)
         }
         startActivity(intent)
+    }
+
+    private fun handlingSettings() {
+        binding.Configurations.setOnClickListener {
+            val intent = Intent(context, settingsActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun setUpLowerUI() {

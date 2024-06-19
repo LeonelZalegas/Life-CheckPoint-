@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Features.Settings.UI.settingsActivity"
+    android:background="@color/naranja_Home">
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guidelineTitle"
+        android:background="@color/light_blue"/>
+
+    <TextView
+        android:id="@+id/settingsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guidelineTitle"
+        android:fontFamily="@font/happy"
+        android:textAlignment="center"
+        android:textSize="25dp"
+        android:textColor="@color/black"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/vector_asset_volver_atras"
+        app:tint="@android:color/black"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guidelineTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/settingsTitle"
+        app:layout_constraintHorizontal_bias="0.2"
+        />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="@id/guidelineMainCarTop"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineMainCarBottom"
+        app:layout_constraintStart_toStartOf="@id/guidelineMainCarStart"
+        app:layout_constraintEnd_toEndOf="@id/guidelineMainCarEnd"
+        app:cardCornerRadius="40dp">
+        
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/changeUsernameGuidelineTop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="Personal Profile"
+                android:fontFamily="@font/happy"
+                android:textAlignment="center"
+                app:layout_constraintHorizontal_bias="0.1"
+                android:textSize="20dp"
+                android:lines="1"
+                android:textColor="@color/black"
+                />
+
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toTopOf="@id/changeUsernameGuidelineTop"
+                    app:layout_constraintBottom_toBottomOf="@id/changeUsernameGuidelineBottom"
+                    app:layout_constraintStart_toStartOf="@id/generalGuidelineStart"
+                    app:layout_constraintEnd_toEndOf="@id/generalGuidelineEnd">
+
+                    <ImageView
+                        android:id="@+id/ChangeUsernameIcon"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/vector_asset_full_body_person"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/vector_asset_arrow_forward"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/ChangeUsernameIcon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:text="Change Username"
+                        android:textSize="25dp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/happy"
+                        app:layout_constraintHorizontal_bias="0.2"
+                        />
+
+                    <View
+                        android:layout_width="200dp"
+                        android:layout_height="2dp"
+                        android:background="@color/gris"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/changeUsernameGuidelineBottom"
+                    app:layout_constraintBottom_toBottomOf="@id/changePictureGuidelineBottom"
+                    app:layout_constraintStart_toStartOf="@id/generalGuidelineStart"
+                    app:layout_constraintEnd_toEndOf="@id/generalGuidelineEnd">
+
+                    <ImageView
+                        android:id="@+id/ChangePictureIcon"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/vector_asset_image"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/vector_asset_arrow_forward"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/ChangePictureIcon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:text="Change Profile picture"
+                        android:textSize="25dp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/happy"
+                        app:layout_constraintHorizontal_bias="0.2"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/changePictureGuidelineBottom"
+                app:layout_constraintBottom_toBottomOf="@id/othersGuidelineBottom"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="Others"
+                android:fontFamily="@font/happy"
+                android:textAlignment="center"
+                app:layout_constraintHorizontal_bias="0.1"
+                android:textSize="20dp"
+                android:lines="1"
+                android:textColor="@color/black"
+                />
+
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/othersGuidelineBottom"
+                    app:layout_constraintBottom_toBottomOf="@id/logOutGuidelineBottom"
+                    app:layout_constraintStart_toStartOf="@id/generalGuidelineStart"
+                    app:layout_constraintEnd_toEndOf="@id/generalGuidelineEnd">
+
+                    <ImageView
+                        android:id="@+id/LogOutIcon"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/vector_asset_logout"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:tint="@color/purple_500"/>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/vector_asset_arrow_forward"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/LogOutIcon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:text="Log Out"
+                        android:textSize="25dp"
+                        android:textColor="@color/purple_500"
+                        android:fontFamily="@font/happy"
+                        app:layout_constraintHorizontal_bias="0.2"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <TextView
+                android:id="@+id/CoolText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/logOutGuidelineBottom"
+                android:text="A Small Cool Project by Leonel Zalegas"
+                android:fontFamily="@font/happy"
+                android:textAlignment="center"
+                android:textSize="17dp"
+                android:lines="1"
+                android:textColor="@color/black"
+                app:layout_constraintHorizontal_bias="0.3"
+                app:layout_constraintVertical_bias="0.95"
+                />
+
+            <com.like.LikeButton
+                android:id="@+id/Heart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/CoolText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/logOutGuidelineBottom"
+                app:liked="true"
+                app:icon_size="8dp"
+                app:anim_scale_factor="4.3"
+                app:layout_constraintHorizontal_bias="0.2"
+                app:layout_constraintVertical_bias="0.97"
+                />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/changeUsernameGuidelineTop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.07" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/changeUsernameGuidelineBottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.17" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/changePictureGuidelineBottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.27" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/othersGuidelineBottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.32" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/logOutGuidelineBottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.42" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/generalGuidelineStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.06" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/generalGuidelineEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.94" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.07" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineMainCarTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.12" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineMainCarBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.97" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineMainCarStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineMainCarEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
