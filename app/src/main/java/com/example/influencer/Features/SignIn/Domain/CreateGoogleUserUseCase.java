@@ -25,6 +25,9 @@ public class CreateGoogleUserUseCase {
         String email = authenticationService.getEmail();
         int index = email.indexOf('@');
         String username = email.substring(0, index);
+        if (username.length() > 16) {
+            username = username.substring(0, 16);
+        }
         UsuarioSignin usuarioSignin = new UsuarioSignin(email, username, "NO PASSWORD SAVED WITH GOOGLE SIGNIN");
         usuarioSignin.setId(authenticationService.getUid());
         usuarioSignin.setProfilePictureUrl(profilePictureUrl);

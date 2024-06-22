@@ -27,7 +27,7 @@ public class SigninValidation  {
 
      public boolean invokeSigninValidation(EditText username, EditText password, EditText email, EditText passwordCheck) {
         validation.addValidation(username,"[a-zA-Z0-9]*", resources.getString(R.string.error_usuario));// para q solo se ponga letras (may y min) y numeros en el Usuario
-        validation.addValidation(username,".{6,}", resources.getString(R.string.error_usuario)); // usuario tiene que tener un minimo de 6 caracteres
+        validation.addValidation(username,".{6,16}", resources.getString(R.string.error_usuario)); // usuario tiene que tener un minimo de 6 caracteres
         validation.addValidation(email, Patterns.EMAIL_ADDRESS, resources.getString(R.string.error_email));
         validation.addValidation(password,"[a-zA-Z0-9]*", resources.getString(R.string.error_password));// = que lo de arriva pero con la contrasena
         validation.addValidation(password,".{8,}", resources.getString(R.string.error_password));
