@@ -3,6 +3,7 @@ package com.example.influencer.Features.Settings.Data
 import android.net.Uri
 import android.util.Log
 import com.example.influencer.Core.Data.Network.AuthenticationService
+import com.example.influencer.Core.Data.Preferences.UserPreferences
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +15,8 @@ import javax.inject.Singleton
 @Singleton
 class FirestoreSettingsRepository @Inject constructor(
     private val db: FirebaseFirestore,
-    private val authService: AuthenticationService
+    private val authService: AuthenticationService,
+    private val userPreferences: UserPreferences
 ): SettingsRepository {
 
     override suspend fun updateUsername(newUsername: String): Unit = withContext(Dispatchers.IO) {
@@ -45,6 +47,15 @@ class FirestoreSettingsRepository @Inject constructor(
                 val oldImageRef = FirebaseStorage.getInstance().getReferenceFromUrl(currentProfileUrl)
                 oldImageRef.delete().await()
             }
+        }
+    }
+
+    override suspend fun logoutUser() = withContext(Dispatchers.IO) {
+        try {
+            authService.signOut()
+            userPreferences.isSignedIn = false
+        } catch (e: Exception) {
+            throw e
         }
     }
 }

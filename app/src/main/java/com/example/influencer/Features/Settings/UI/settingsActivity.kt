@@ -1,5 +1,6 @@
 package com.example.influencer.Features.Settings.UI
 
+import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,6 +12,7 @@ import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import cn.pedant.SweetAlert.SweetAlertDialog
+import com.example.influencer.Features.Login.UI.LoginActivity
 import com.example.influencer.Features.ProfileTab.UI.UserProfileViewModel
 import com.example.influencer.R
 import com.example.influencer.databinding.ActivitySettingsBinding
@@ -45,6 +47,7 @@ class settingsActivity : AppCompatActivity() {
     private fun setupClickListeners() {
         setupChangeUsername()
         setupChangeProfilePicture()
+        setupLogoutButton()
     }
 
     private fun setupChangeUsername() {
@@ -102,9 +105,35 @@ class settingsActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupLogoutButton() {
+        binding.LogOutButton.setOnClickListener{
+            MaterialAlertDialogBuilder(this,R.style.CustomAlertDialog)
+                .setTitle("Logout")
+                .setMessage("Are you sure you want to log out?")
+                .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+                .setPositiveButton("Yes") { _, _ -> viewModel.logout() }
+                .show()
+        }
+    }
+
     private fun setupObservers() {
         viewModel.statusMessage.observe(this) { message ->
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        }
+
+        viewModel.loading.observe(this){isLoading->
+            if (isLoading) carga.show() else carga.dismiss()
+        }
+
+        viewModel.logoutStatus.observe(this) { success ->
+            if (success) {
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
+            } else {
+                Toast.makeText(this, "Logout failed", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -113,10 +142,6 @@ class settingsActivity : AppCompatActivity() {
         carga.getProgressHelper().setBarColor(android.graphics.Color.parseColor("#F57E00"))
         carga.setTitleText(R.string.Loading)
         carga.setCancelable(false)
-
-        viewModel.loading.observe(this){isLoading->
-            if (isLoading) carga.show() else carga.dismiss()
-        }
     }
 
 }

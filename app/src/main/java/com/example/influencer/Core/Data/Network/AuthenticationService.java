@@ -48,5 +48,9 @@ public class AuthenticationService {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         return firebaseAuth.signInWithCredential(credential);
     }
+
+    public void signOut() {
+        firebaseAuth.signOut();
+    }
 }
 

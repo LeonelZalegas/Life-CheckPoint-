@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.influencer.Features.Settings.Domain.LogoutUseCase
 import com.example.influencer.Features.Settings.Domain.SaveNewUsernameUseCase
 import com.example.influencer.Features.Settings.Domain.UpdateProfilePictureUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,11 +15,15 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val saveNewUsernameUseCase: SaveNewUsernameUseCase,
-    private val updateProfilePictureUseCase: UpdateProfilePictureUseCase
+    private val updateProfilePictureUseCase: UpdateProfilePictureUseCase,
+    private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
 
     private val _statusMessage = MutableLiveData<String>()
     val statusMessage: LiveData<String> = _statusMessage
+
+    private val _logoutStatus = MutableLiveData<Boolean>()
+    val logoutStatus: LiveData<Boolean> = _logoutStatus
 
     val loading = MutableLiveData<Boolean>()
 
@@ -44,6 +49,17 @@ class SettingsViewModel @Inject constructor(
                 _statusMessage.postValue("Profile picture updated successfully")
             } catch (e: Exception) {
                 _statusMessage.postValue("Failed to update profile picture: ${e.message}")
+            }
+        }
+    }
+
+    fun logout() {
+        viewModelScope.launch {
+            try {
+                logoutUseCase()
+                _logoutStatus.postValue(true)
+            } catch (e: Exception) {
+                _logoutStatus.postValue(false)
             }
         }
     }
