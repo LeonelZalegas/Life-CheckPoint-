@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.PopupMenu;
 
+import com.example.influencer.Core.Data.Network.NetworkConnectivity.NetworkActivity;
 import com.example.influencer.R;
 import com.example.influencer.databinding.ActivityHomeBinding;
 import com.example.influencer.databinding.ActivityOnboardingBinding;
@@ -18,7 +19,7 @@ import me.ibrahimsn.lib.OnItemSelectedListener;
 import me.ibrahimsn.lib.SmoothBottomBar;
 
 @AndroidEntryPoint
-public class Home extends AppCompatActivity {
+public class Home extends NetworkActivity {
 
     private ActivityHomeBinding binding;
 

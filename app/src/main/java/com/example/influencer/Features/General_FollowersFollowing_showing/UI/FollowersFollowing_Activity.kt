@@ -8,13 +8,14 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.influencer.Core.Data.Network.NetworkConnectivity.NetworkActivity
 import com.example.influencer.Features.General_User_Profile.UI.UserProfileActivity
 import com.example.influencer.R
 import com.example.influencer.databinding.ActivityFollowersFollowingBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FollowersFollowing_Activity : AppCompatActivity(),FollowersFollowing_Adapter.OnItemInteractionListener {
+class FollowersFollowing_Activity : NetworkActivity(),FollowersFollowing_Adapter.OnItemInteractionListener {
 
     private lateinit var binding: ActivityFollowersFollowingBinding
     private var FollowingOptionSelected : Boolean = true

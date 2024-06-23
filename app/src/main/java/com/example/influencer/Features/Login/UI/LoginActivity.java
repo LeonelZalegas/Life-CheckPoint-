@@ -11,6 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.influencer.Core.Data.Network.NetworkConnectivity.NetworkActivity;
 import com.example.influencer.Core.Utils.Event;
 import com.example.influencer.Core.Data.Preferences.UserPreferences;
 import com.example.influencer.Core.UI.Home;
@@ -26,7 +27,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends NetworkActivity {
 
     private LoginViewModel loginViewModel;
     @Inject

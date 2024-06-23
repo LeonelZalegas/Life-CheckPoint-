@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bumptech.glide.Glide
 import com.example.influencer.BuildConfig
+import com.example.influencer.Core.Data.Network.NetworkConnectivity.NetworkActivity
 import com.example.influencer.R
 import com.example.influencer.Features.Create_Modify_Checkpoint_Menu.Domain.Model.CheckpointThemeItem
 import com.example.influencer.Core.UI.Home
@@ -41,7 +42,7 @@ import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class UploadNewCheckpoint : AppCompatActivity() {
+class UploadNewCheckpoint : NetworkActivity() {
     private val viewModel: UploadCheckpointViewModel by viewModels()
     private lateinit var binding: ActivityUploadNewCheckpointBinding
 

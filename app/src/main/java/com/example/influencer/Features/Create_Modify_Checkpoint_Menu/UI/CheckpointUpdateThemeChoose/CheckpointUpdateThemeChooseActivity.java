@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.example.influencer.Core.Data.Network.NetworkConnectivity.NetworkActivity;
 import com.example.influencer.R;
 import com.example.influencer.Features.Create_Modify_Checkpoint_Menu.UI.SharedComponents.CheckpointThemeChoose_Fragment;
 import com.example.influencer.databinding.ActivityCheckpointUpdateThemeChooseBinding;
@@ -11,7 +12,7 @@ import com.example.influencer.databinding.ActivityCheckpointUpdateThemeChooseBin
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class CheckpointUpdateThemeChooseActivity extends AppCompatActivity {
+public class CheckpointUpdateThemeChooseActivity extends NetworkActivity {
 
     private ActivityCheckpointUpdateThemeChooseBinding binding;
 

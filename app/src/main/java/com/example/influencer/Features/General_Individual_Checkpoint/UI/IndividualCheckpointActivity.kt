@@ -3,12 +3,13 @@ package com.example.influencer.Features.General_Individual_Checkpoint.UI
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.commit
+import com.example.influencer.Core.Data.Network.NetworkConnectivity.NetworkActivity
 import com.example.influencer.R
 import com.example.influencer.databinding.ActivityIndividualCheckpointBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class IndividualCheckpointActivity : AppCompatActivity() {
+class IndividualCheckpointActivity : NetworkActivity() {
     private lateinit var binding:ActivityIndividualCheckpointBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

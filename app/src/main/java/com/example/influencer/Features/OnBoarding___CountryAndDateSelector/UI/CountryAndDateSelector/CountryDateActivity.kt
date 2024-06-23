@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.example.influencer.Core.Data.Network.NetworkConnectivity.NetworkActivity
 import com.example.influencer.R
 import com.example.influencer.Core.UI.Home
 import com.example.influencer.databinding.ActivityCountryDateBinding
@@ -21,7 +22,7 @@ import java.time.format.DateTimeFormatter
 
 //TODO tratar de hacer una unica Activity y hacer 2 fragments, uno el OnBoarding y el otro esta
 @AndroidEntryPoint
-class CountryDateActivity : AppCompatActivity() {
+class CountryDateActivity : NetworkActivity() {
 
     private lateinit var binding: ActivityCountryDateBinding
     private val viewModel: CountryAndDateSelectorViewmodel by viewModels()

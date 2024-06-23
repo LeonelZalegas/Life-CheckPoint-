@@ -3,6 +3,7 @@ package com.example.influencer.Features.Upload_New_Update_Checkpoint.UI
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import com.example.influencer.Core.Data.Network.NetworkConnectivity.NetworkActivity
 import com.example.influencer.Core.Utils.Serializable.getSerializableExtraCompat
 import com.example.influencer.Features.Create_Modify_Checkpoint_Menu.Domain.Model.CheckpointThemeItem
 import com.example.influencer.Features.Upload_New_Update_Checkpoint.UI.Fragments.Update_checkpoint_TextBox
@@ -12,7 +13,7 @@ import com.example.influencer.databinding.ActivityUploadNewUpdateCheckpointBindi
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class Upload_New_Update_CheckpointActivity : AppCompatActivity() {
+class Upload_New_Update_CheckpointActivity : NetworkActivity() {
     private lateinit var binding: ActivityUploadNewUpdateCheckpointBinding
     private val sharedViewmodel: SharedViewmodel by viewModels()
 

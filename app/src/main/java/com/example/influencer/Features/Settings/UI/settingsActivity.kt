@@ -12,6 +12,7 @@ import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import cn.pedant.SweetAlert.SweetAlertDialog
+import com.example.influencer.Core.Data.Network.NetworkConnectivity.NetworkActivity
 import com.example.influencer.Features.Login.UI.LoginActivity
 import com.example.influencer.Features.ProfileTab.UI.UserProfileViewModel
 import com.example.influencer.R
@@ -22,7 +23,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class settingsActivity : AppCompatActivity() {
+class settingsActivity : NetworkActivity() {
     private lateinit var binding: ActivitySettingsBinding
     private lateinit var carga: SweetAlertDialog
     private val viewModel: SettingsViewModel by viewModels()

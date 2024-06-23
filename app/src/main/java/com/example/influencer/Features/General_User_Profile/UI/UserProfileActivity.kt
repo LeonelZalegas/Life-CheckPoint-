@@ -3,13 +3,14 @@ package com.example.influencer.Features.General_User_Profile.UI
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.commit
+import com.example.influencer.Core.Data.Network.NetworkConnectivity.NetworkActivity
 import com.example.influencer.Features.ProfileTab.UI.ProfileTabFragment
 import com.example.influencer.R
 import com.example.influencer.databinding.ActivityUserProfileBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class UserProfileActivity : AppCompatActivity() {
+class UserProfileActivity : NetworkActivity() {
     private lateinit var binding: ActivityUserProfileBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
