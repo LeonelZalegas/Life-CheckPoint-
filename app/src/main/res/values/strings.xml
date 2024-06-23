@@ -109,5 +109,17 @@
     //Users Followers/following list
     <string name="No_following_Users"> You are not Following any users yet!</string>
     <string name="No_followers_Users"> You don\'t have any Followers yet!</string>
-
+    //Settings activity
+    <string name="Settings_title"> Settings</string>
+    <string name="Settings_Subtitle1">Personal Profile</string>
+    <string name="ChangeUsername_Title">Change Username</string>
+    <string name="ChangeProfPic_Title">Change Username</string>
+    <string name="Settings_Subtitle2">Others</string>
+    <string name="LogOut_Title">Log Out</string>
+    <string name="Error1_changeUsername">Username must be at least 6 characters</string>
+    <string name="Error2_changeUsername">Username must not contain spaces</string>
+    <string name="Error3_changeUsername">Please check the username requirements</string>
+    <string name="LogOutAlertDialog_Title">Are you sure you want to log out?</string>
+    <string name="SuccesUsername_Title">Username Successfully Changed!</string>
+    <string name="SuccesProfPic_Title">Username Successfully Changed!</string>
 </resources>

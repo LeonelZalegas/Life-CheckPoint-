@@ -24,7 +24,8 @@
                 android:layout_height="40dp"
                 app:layout_constraintStart_toStartOf="parent"
                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginStart="10dp"/>
+                android:layout_marginStart="10dp"
+                android:clickable="false"/>
 
             <TextView
                 android:id="@+id/CheckpointText"
@@ -84,7 +85,8 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/UpdateChipNumber"
-                        android:text="@string/Checkpoint_Updates"/>
+                        android:text="@string/Checkpoint_Updates"
+                        android:clickable="false"/>
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/UpdateChipNumber"
@@ -92,7 +94,8 @@
                         android:layout_height="40dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/UpdateChipText" />
+                        app:layout_constraintStart_toEndOf="@id/UpdateChipText"
+                        android:clickable="false"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>

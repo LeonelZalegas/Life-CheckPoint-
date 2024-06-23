@@ -26,5 +26,11 @@ class IndividualCheckpointActivity : AppCompatActivity() {
                 add(R.id.SingleCardFragment, fragment)
             }
         }
+        setupGoingBack()
+    }
+    private fun setupGoingBack() {
+        binding.GoingBack.setOnClickListener {
+            finish()
+        }
     }
 }

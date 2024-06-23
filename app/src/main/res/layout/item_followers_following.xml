@@ -87,7 +87,8 @@
                 app:chipBackgroundColor="@color/water_green"
                 android:textSize="12dp"
                 android:maxWidth="160dp"
-                android:clickable="false"/>
+                android:clickable="false"
+                />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/userAge"

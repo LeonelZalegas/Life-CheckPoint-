@@ -23,5 +23,12 @@ class UserProfileActivity : AppCompatActivity() {
             setReorderingAllowed(true)
             add(R.id.fragment_container_view, fragment)
         }
+
+        setupGoingBack()
+    }
+    private fun setupGoingBack() {
+        binding.GoingBack.setOnClickListener {
+            finish()
+        }
     }
 }

@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.influencer.Features.General_User_Profile.UI.UserProfileActivity
+import com.example.influencer.R
 import com.example.influencer.databinding.ActivityFollowersFollowingBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -37,6 +38,8 @@ class FollowersFollowing_Activity : AppCompatActivity(),FollowersFollowing_Adapt
         }
 
         loadAndObserveUsers()
+        setupTitle()
+        setupGoingBack()
     }
 
     private fun setupRecyclerView() {
@@ -64,6 +67,20 @@ class FollowersFollowing_Activity : AppCompatActivity(),FollowersFollowing_Adapt
 
         viewModel.progressLoading.observe(this){ loadingInfo ->
             followersfollowingAdapter.followLoading(loadingInfo.first,  loadingInfo.second)
+        }
+    }
+
+    private fun setupTitle() {
+        if (FollowingOptionSelected)
+            binding.FollowersFollowingTitle.text = getString(R.string.Following)
+        else
+            binding.FollowersFollowingTitle.text = getString(R.string.Followers)
+
+    }
+
+    private fun setupGoingBack() {
+        binding.GoingBack.setOnClickListener {
+            finish()
         }
     }
 

@@ -69,7 +69,8 @@
         app:layout_constraintBottom_toTopOf="@id/guideline_blue_square"
         app:layout_constraintEnd_toStartOf="@id/guidelineverticalMiddle"
         app:layout_constraintVertical_bias="0.2"
-        app:chipBackgroundColor="@color/water_green"/>
+        app:chipBackgroundColor="@color/water_green"
+        android:clickable="false"/>
 
     <com.google.android.material.chip.Chip
         android:id="@+id/userAge"
@@ -80,7 +81,8 @@
         app:layout_constraintBottom_toTopOf="@id/guideline_blue_square"
         app:layout_constraintStart_toEndOf="@id/guidelineverticalMiddle"
         app:layout_constraintVertical_bias="0.2"
-        app:chipBackgroundColor="@color/water_green"/>
+        app:chipBackgroundColor="@color/water_green"
+        android:clickable="false"/>
 
 
     <com.google.android.material.chip.Chip

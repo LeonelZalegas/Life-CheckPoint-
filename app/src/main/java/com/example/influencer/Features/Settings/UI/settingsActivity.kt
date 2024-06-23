@@ -65,9 +65,9 @@ class settingsActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 if (s != null) {
                     if (s.length < 6) {
-                        textInputLayoutUsername.error = "Username must be at least 6 characters"
+                        textInputLayoutUsername.error = getString(R.string.Error1_changeUsername)
                     } else if (s.contains(" ")) {
-                        textInputLayoutUsername.error = "Username must not contain spaces"
+                        textInputLayoutUsername.error = getString(R.string.Error2_changeUsername)
                     } else {
                         textInputLayoutUsername.error = null // Clear error
                     }
@@ -77,7 +77,7 @@ class settingsActivity : AppCompatActivity() {
 
        // Create the AlertDialog using MaterialAlertDialogBuilder
         MaterialAlertDialogBuilder(this, R.style.CustomAlertDialog)
-            .setTitle("Change Username")
+            .setTitle(R.string.ChangeProfPic_Title)
             .setView(binding.root)
             .setNegativeButton("Cancel", null)
             .setPositiveButton("OK") { _, _ ->
@@ -85,7 +85,7 @@ class settingsActivity : AppCompatActivity() {
                 if (newUsername.isNotBlank() && newUsername.length >= 6 && !newUsername.contains(" ")) {
                     viewModel.updateUserName(newUsername)
                 } else {
-                    Toast.makeText(this, "Please check the username requirements.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,getString(R.string.Error3_changeUsername) , Toast.LENGTH_SHORT).show()
                 }
             }
             .show()
@@ -108,8 +108,8 @@ class settingsActivity : AppCompatActivity() {
     private fun setupLogoutButton() {
         binding.LogOutButton.setOnClickListener{
             MaterialAlertDialogBuilder(this,R.style.CustomAlertDialog)
-                .setTitle("Logout")
-                .setMessage("Are you sure you want to log out?")
+                .setTitle(R.string.LogOut_Title)
+                .setMessage(R.string.LogOutAlertDialog_Title)
                 .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
                 .setPositiveButton("Yes") { _, _ -> viewModel.logout() }
                 .show()

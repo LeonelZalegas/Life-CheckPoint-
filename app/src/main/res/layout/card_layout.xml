@@ -431,6 +431,7 @@
                     android:textSize="12dp"
                     app:chipMinHeight="25dp"
                     android:fontFamily="@font/happy"
+                    android:clickable="false"
                     />
 
                 <androidx.recyclerview.widget.RecyclerView
