@@ -8,10 +8,10 @@
         android:id="@+id/checkpointTabFragment"
         android:name="com.example.influencer.Features.CheckPoint_Tab.UI.CheckpointTabFragment"
         android:label="CheckpointTabFragment" />
-    <fragment
-        android:id="@+id/rankingTabFragment"
-        android:name="com.example.influencer.Features.Ranking_Tab.UI.RankingTabFragment"
-        android:label="RankingTabFragment" />
+<!--    <fragment-->
+<!--        android:id="@+id/rankingTabFragment"-->
+<!--        android:name="com.example.influencer.Features.Ranking_Tab.UI.RankingTabFragment"-->
+<!--        android:label="RankingTabFragment" />-->
     <fragment
         android:id="@+id/profileTabFragment"
         android:name="com.example.influencer.Features.ProfileTab.UI.ProfileTabFragment"

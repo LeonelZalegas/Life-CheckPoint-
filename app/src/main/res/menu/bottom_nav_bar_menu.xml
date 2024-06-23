@@ -6,11 +6,11 @@
     android:icon="@drawable/vector_asset_flag"
     />
 
-    <item
-        android:id="@+id/rankingTabFragment"
-        android:title="@string/rankingtab"
-        android:icon="@drawable/vector_asset_star"
-        />
+<!--    <item-->
+<!--        android:id="@+id/rankingTabFragment"-->
+<!--        android:title="@string/rankingtab"-->
+<!--        android:icon="@drawable/vector_asset_star"-->
+<!--        />-->
 
     <item
         android:id="@+id/profileTabFragment"
