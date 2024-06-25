@@ -36,6 +36,11 @@ class NetworkConnectivityObserver  @Inject constructor(
                 }
             }
 
+            //sends initially the netwrok so when the app is just open we can tell if there is internet or not
+            val activeNetwork = connectivityManager.activeNetwork
+            val initialState = activeNetwork != null
+            send(initialState)
+
             connectivityManager.registerDefaultNetworkCallback(callback)
             awaitClose {
                 connectivityManager.unregisterNetworkCallback(callback)
