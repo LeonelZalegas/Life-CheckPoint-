@@ -17,6 +17,7 @@ import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.Instant
+import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
@@ -98,5 +99,23 @@ class CountryDateActivity : NetworkActivity() {
                 finish()
             }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        saveDefaultValuesIfNeeded()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun saveDefaultValuesIfNeeded() {
+        if (selectedDate == null) {
+            selectedDate = LocalDate.of(1999, 6, 9).atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+        }
+        if (selectedCountry.isNullOrEmpty()) {
+            selectedCountry = "Argentina"
+            countryFlag = "AR"
+        }
+        viewModel.calculateAgeAndSave(selectedDate!!)
+        viewModel.storeCountryInfo(selectedCountry!!, countryFlag)
     }
 }

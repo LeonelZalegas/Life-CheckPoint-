@@ -120,17 +120,19 @@ public class GoogleSigninActivity extends AppCompatActivity {
         carga.setCancelable(false);
     }
 
-    private void goToOnBoarding(){
+    private void goToOnBoarding() {
         userPreferences.setSignedIn(true);
-        Intent intent_LogIn = new Intent(GoogleSigninActivity.this, OnBoardingActivity.class);
-        startActivity(intent_LogIn);
+        Intent intent = new Intent(GoogleSigninActivity.this, OnBoardingActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
         finish();
     }
 
-    private void goToHome(){
+    private void goToHome() {
         userPreferences.setSignedIn(true);
-        Intent intent_LogIn = new Intent(GoogleSigninActivity.this, Home.class);
-        startActivity(intent_LogIn);
+        Intent intent = new Intent(GoogleSigninActivity.this, Home.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
         finish();
     }
 }

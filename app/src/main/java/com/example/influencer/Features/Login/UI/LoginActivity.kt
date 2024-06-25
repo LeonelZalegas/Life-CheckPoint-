@@ -1,161 +1,145 @@
-package com.example.influencer.Features.Login.UI;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.AnimationDrawable;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
+package com.example.influencer.Features.Login.UI
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.example.influencer.Core.Data.Network.NetworkConnectivity.NetworkActivity;
-import com.example.influencer.Core.Utils.Event;
-import com.example.influencer.Core.Data.Preferences.UserPreferences;
-import com.example.influencer.Core.UI.Home;
-import com.example.influencer.R;
-import com.example.influencer.Features.SignIn.UI.GoogleSignin.GoogleSigninActivity;
-import com.example.influencer.Features.Login.Domain.Model.UsuarioLogin;
-import com.example.influencer.Features.SignIn.UI.AppSignIn.SignInActivity;
-import com.example.influencer.databinding.ActivityMainBinding;
-
-import javax.inject.Inject;
-
-import cn.pedant.SweetAlert.SweetAlertDialog;
-import dagger.hilt.android.AndroidEntryPoint;
+import dagger.hilt.android.AndroidEntryPoint
+import androidx.appcompat.app.AppCompatActivity
+import com.example.influencer.Features.Login.UI.LoginViewModel
+import javax.inject.Inject
+import com.example.influencer.Core.Data.Preferences.UserPreferences
+import cn.pedant.SweetAlert.SweetAlertDialog
+import android.os.Bundle
+import androidx.core.splashscreen.SplashScreen.KeepOnScreenCondition
+import android.content.Intent
+import android.graphics.Color
+import com.example.influencer.Core.UI.Home
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.influencer.R
+import android.graphics.drawable.AnimationDrawable
+import android.view.View
+import androidx.lifecycle.ViewModelProvider
+import com.example.influencer.Features.Login.Domain.Model.UsuarioLogin
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.core.splashscreen.SplashScreen
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.example.influencer.Core.Utils.Event
+import com.example.influencer.Features.SignIn.UI.GoogleSignin.GoogleSigninActivity
+import com.example.influencer.Features.SignIn.UI.AppSignIn.SignInActivity
+import com.example.influencer.databinding.ActivityMainBinding
 
 @AndroidEntryPoint
-public class LoginActivity extends NetworkActivity {
+class LoginActivity : AppCompatActivity() {
 
-    private LoginViewModel loginViewModel;
+    private val loginViewModel: LoginViewModel by viewModels()
+
     @Inject
-    UserPreferences userPreferences;
+    lateinit var userPreferences: UserPreferences
 
-    ActivityMainBinding binding;
-    SweetAlertDialog carga;
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var loadingDialog: SweetAlertDialog
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        handleSplashScreen()
+        super.onCreate(savedInstanceState)
 
-        //para el splash
-        androidx.core.splashscreen.SplashScreen splashScreen = androidx.core.splashscreen.SplashScreen.installSplashScreen(this);
-        splashScreen.setKeepOnScreenCondition(() -> false );
+        if (userPreferences.isSignedIn) {
+            navigateToHome()
+            return
+        }
 
-        super.onCreate(savedInstanceState);
-
-        //para si el usuario ya esta loggeado no lo enviemos again al layout Login o al layout Signin o al Splash sino al Home
-        if(userPreferences.isSignedIn()){
-            Intent intent_Home= new Intent(LoginActivity.this, Home.class);
-            startActivity(intent_Home);
-            finish();
-        }else{
-            binding = ActivityMainBinding.inflate(getLayoutInflater());
-            setContentView(binding.getRoot());}
-
-        //Esto seria para la animacion de fondo de la pantala del LogIn
-        ConstraintLayout gradiente_login = findViewById(R.id.gradiente_login);
-        AnimationDrawable animacion_login = (AnimationDrawable) gradiente_login.getBackground();
-
-        animacion_login.setEnterFadeDuration(2500);
-        animacion_login.setExitFadeDuration(5000);
-        animacion_login.start();
-        //
-
-        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
-        initLoading();
-        initUI();
+        setupBinding()
+        setupBackgroundAnimation()
+        initLoading()
+        initUI()
     }
 
-    private void initLoading(){
-        carga = new SweetAlertDialog(this,SweetAlertDialog.PROGRESS_TYPE);
-        carga.getProgressHelper().setBarColor(Color.parseColor("#F57E00"));
-        carga.setTitleText(R.string.Loading);
-        carga.setCancelable(false);
+    private fun handleSplashScreen() {
+        val splashScreen = installSplashScreen()
+        splashScreen.setKeepOnScreenCondition { false }
     }
 
-    private void initUI() {
-        initListeners();
-        initObservers();
+    private fun setupBinding() {
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 
-    private void initListeners() {
+    private fun setupBackgroundAnimation() {
+        val gradientLogin = findViewById<ConstraintLayout>(R.id.gradiente_login)
+        val animationLogin = gradientLogin.background as AnimationDrawable
+        animationLogin.apply {
+            setEnterFadeDuration(2500)
+            setExitFadeDuration(5000)
+            start()
+        }
+    }
 
-        //Para hacer el LogIn
-        binding.buttonLogIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String email =  binding.ponerEmail.getText().toString();
-                String contrasena = binding.ponerContrasena.getText().toString();
-                if(loginViewModel.validatingLogin(email,contrasena)) {
-                    loginViewModel.onLoginSelected(new UsuarioLogin(email,contrasena));
+    private fun initLoading() {
+        loadingDialog = SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE).apply {
+            progressHelper.barColor = Color.parseColor("#F57E00")
+            titleText = getString(R.string.Loading)
+            setCancelable(false)
+        }
+    }
+
+    private fun initUI() {
+        initListeners()
+        initObservers()
+    }
+
+    private fun initListeners() {
+        with(binding) {
+            buttonLogIn.setOnClickListener {
+                val email = ponerEmail.text.toString()
+                val password = ponerContrasena.text.toString()
+                if (loginViewModel.validatingLogin(email, password)) {
+                    loginViewModel.onLoginSelected(UsuarioLogin(email, password))
                 }
             }
-        });
-
-        //para el boton de hacer SignIn Con Google
-        binding.buttomSignInGoogle.setOnClickListener(view -> loginViewModel.onGoogleSignInSelected());
-
-        //para el boton de hacer SignIn manual
-        binding.signIn.setOnClickListener(view -> loginViewModel.onSignInSelected());
+            buttomSignInGoogle.setOnClickListener { loginViewModel.onGoogleSignInSelected() }
+            signIn.setOnClickListener { loginViewModel.onSignInSelected() }
+        }
     }
 
-    private void initObservers() {
-        loginViewModel.navigateToHome.observe(this, event -> {
-            if (event != null && event.getContentIfNotHandled() != null) {
-                goToHome();
+    private fun initObservers() {
+        loginViewModel.apply {
+            navigateToHome.observe(this@LoginActivity) { event ->
+                event.getContentIfNotHandled()?.let { navigateToHome() }
             }
-        });
 
-        loginViewModel.navigateToGoogleSignIn.observe(this, event -> {
-            if (event != null && event.getContentIfNotHandled() != null) {
-                goToGoogleSignIn();
+            navigateToGoogleSignIn.observe(this@LoginActivity) { event ->
+                event.getContentIfNotHandled()?.let { navigateToGoogleSignIn() }
             }
-        });
 
-        loginViewModel.navigateToSignIn.observe(this, event -> {
-            if (event != null && event.getContentIfNotHandled() != null) {
-                goToSignIn();
+            navigateToSignIn.observe(this@LoginActivity) { event ->
+                event.getContentIfNotHandled()?.let { navigateToSignIn() }
             }
-        });
 
-        loginViewModel.Loading.observe(this, new Observer<Event<Boolean>>() {
-            @Override
-            public void onChanged(Event<Boolean> event) {
-                Boolean isLoading = event.getContentIfNotHandled();
-                if (isLoading != null) {
-                    if (isLoading) {
-                        carga.show();
-                    } else {
-                        carga.dismiss();
-                    }
+            Loading.observe(this@LoginActivity) { event ->
+                event.getContentIfNotHandled()?.let { isLoading ->
+                    if (isLoading) loadingDialog.show() else loadingDialog.dismiss()
                 }
             }
-        });
 
-        loginViewModel.getToastMessage().observe(this, message -> {
-            if (message != null) {
-                Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+            toastMessage.observe(this@LoginActivity) { message ->
+                message?.let { Toast.makeText(this@LoginActivity, it, Toast.LENGTH_SHORT).show() }
             }
-        });
-
+        }
     }
 
-    private void goToHome() {
-        userPreferences.setSignedIn(true);
-        Intent intent_LogIn = new Intent(LoginActivity.this, Home.class);
-        startActivity(intent_LogIn);
-        finish();
+    private fun navigateToHome() {
+        userPreferences.setSignedIn(true)
+        val intent = Intent(this, Home::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        startActivity(intent)
+        finish()
     }
 
-    private void  goToGoogleSignIn() {
-        Intent intent_GoogleSignIn = new Intent(LoginActivity.this, GoogleSigninActivity.class);
-        startActivity(intent_GoogleSignIn);
+    private fun navigateToGoogleSignIn() {
+        startActivity(Intent(this, GoogleSigninActivity::class.java))
     }
 
-    private void  goToSignIn() {
-        Intent intent_registro = new Intent(LoginActivity.this, SignInActivity.class);
-        startActivity(intent_registro);
+    private fun navigateToSignIn() {
+        startActivity(Intent(this, SignInActivity::class.java))
     }
 }

@@ -1,6 +1,7 @@
 package com.example.influencer.Core.Data.Network.NetworkConnectivity
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -27,8 +28,10 @@ abstract class NetworkActivity : AppCompatActivity() {
         connectivityObserver.observe().onEach { isOnline ->
             if (!isOnline) {
                 showNoInternetDialog()
+                Log.w("networkSomething", "entra en mostrar dialogo" )
             } else {
                 noInternetDialog?.dismiss()
+                Log.w("networkSomething", "No muestra nada" )
             }
         }.launchIn(lifecycleScope)
     }
