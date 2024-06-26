@@ -1,31 +1,27 @@
-package com.example.influencer.Core.Data.Network.di;
+package com.example.influencer.Core.Data.Network.di
 
-import android.content.Context;
+import android.content.Context
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
+import dagger.hilt.android.qualifiers.ApplicationContext
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.example.influencer.R
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import dagger.Module
+import dagger.Provides
 
-import com.example.influencer.R;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-
-import javax.inject.Singleton;
-
-import dagger.Module;
-import dagger.Provides;
-import dagger.hilt.InstallIn;
-import dagger.hilt.android.qualifiers.ApplicationContext;
-import dagger.hilt.components.SingletonComponent;
-
-@InstallIn(SingletonComponent.class)
+@InstallIn(SingletonComponent::class)
 @Module
-public class GoogleSignInClientModuleDI {
-
+class GoogleSignInClientModuleDI {
     @Provides
     @Singleton
-    public GoogleSignInClient provideGoogleSignInClient (@ApplicationContext Context context){
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(context.getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-        return GoogleSignIn.getClient(context, gso);
+    fun provideGoogleSignInClient(@ApplicationContext context: Context): GoogleSignInClient {
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(context.getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        return GoogleSignIn.getClient(context, gso)
     }
 }
