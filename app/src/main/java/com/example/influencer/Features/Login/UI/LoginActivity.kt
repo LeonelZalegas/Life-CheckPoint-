@@ -64,7 +64,7 @@ class LoginActivity : AppCompatActivity() {
             if (!isOnline) {
                 showNoInternetDialog()
             } else {
-                if (userPreferences.isSignedIn) {
+                if (userPreferences.isSignedInSync) {
                     navigateToHomeSignedIn()
                 }else{
                     setupBinding()
@@ -146,7 +146,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun navigateToHome() {
-        userPreferences.setSignedIn(true)
+        userPreferences.isSignedInSync = true
         val intent = Intent(this, Home::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
@@ -155,7 +155,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun navigateToHomeSignedIn() {
-        userPreferences.setSignedIn(true)
+        userPreferences.isSignedInSync = true
         val intent = Intent(this, Home::class.java)
         startActivity(intent)
         finish()

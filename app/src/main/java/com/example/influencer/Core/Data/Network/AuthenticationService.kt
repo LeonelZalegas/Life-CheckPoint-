@@ -1,56 +1,35 @@
-package com.example.influencer.Core.Data.Network;
+package com.example.influencer.Core.Data.Network
 
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import com.google.android.gms.tasks.Task
+import javax.inject.Singleton
+import javax.inject.Inject
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.GoogleAuthProvider
 
 @Singleton
-public class AuthenticationService {
+class AuthenticationService @Inject constructor(private val firebaseAuth: FirebaseAuth) {
 
-    private final FirebaseAuth firebaseAuth;
+    val uid: String
+        get() = firebaseAuth.currentUser?.uid ?: ""
 
-    @Inject
-    public AuthenticationService(FirebaseAuth firebaseAuth) {
-        this.firebaseAuth = firebaseAuth;
+    val email: String
+        get() = firebaseAuth.currentUser?.email ?: ""
+
+    fun registrar(email: String, contrasena: String): Task<AuthResult> =
+        firebaseAuth.createUserWithEmailAndPassword(email, contrasena)
+
+    fun login(email: String, contrasena: String): Task<AuthResult> =
+        firebaseAuth.signInWithEmailAndPassword(email, contrasena)
+
+    fun googleSignin(idToken: String): Task<AuthResult> {
+        val credential: AuthCredential = GoogleAuthProvider.getCredential(idToken, null)
+        return firebaseAuth.signInWithCredential(credential)
     }
 
-    public String getUid(){
-        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        if (currentUser != null) {
-            return currentUser.getUid();
-        }else
-            return null;
-    }
-
-    public String getEmail(){
-        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        if (currentUser != null) {
-            return currentUser.getEmail();
-        }else
-            return null;
-    }
-
-    public Task<AuthResult> registrar(String email, String contrasena){
-        return firebaseAuth.createUserWithEmailAndPassword(email,contrasena);
-    }
-
-    public Task<AuthResult> login(String email, String contrasena){
-        return firebaseAuth.signInWithEmailAndPassword(email,contrasena);
-    }
-
-    public Task<AuthResult> googleSignin (String idToken){
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-        return firebaseAuth.signInWithCredential(credential);
-    }
-
-    public void signOut() {
-        firebaseAuth.signOut();
+    fun signOut() {
+        firebaseAuth.signOut()
     }
 }
-

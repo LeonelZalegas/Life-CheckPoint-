@@ -11,10 +11,10 @@ class CreateGoogleUserUseCase @Inject constructor(
     private val authenticationService: AuthenticationService
 ) {
     fun execute(profilePictureUrl: String?): Task<Void> {
-        val email = authenticationService.getEmail()
+        val email = authenticationService.email
         var username = email.substringBefore('@').take(16)
         val usuarioSignin = UsuarioSignin(email, username, "NO PASSWORD SAVED WITH GOOGLE SIGNIN").apply {
-            id = authenticationService.getUid()
+            id = authenticationService.uid
             this.profilePictureUrl = profilePictureUrl
         }
         return userService.crearUsuario(usuarioSignin)

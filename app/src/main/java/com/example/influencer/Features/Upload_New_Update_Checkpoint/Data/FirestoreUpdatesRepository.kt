@@ -19,7 +19,7 @@ class FirestoreUpdatesRepository @Inject constructor(
 
     //devuelve el Post con = categoria (seleccionada por user) y q ha sido la ultima publicada de esa categoria
     private suspend fun getLastPostDocumentRef(selectedCategory: String): DocumentReference = withContext(Dispatchers.IO) {
-        val uid = authService.getUid()
+        val uid = authService.uid
         val postsCollectionRef = db.collection("Posts")
 
         return@withContext postsCollectionRef

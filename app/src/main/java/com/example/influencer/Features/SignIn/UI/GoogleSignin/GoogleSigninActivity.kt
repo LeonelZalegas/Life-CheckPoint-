@@ -98,7 +98,7 @@ class GoogleSigninActivity : AppCompatActivity() {
     }
 
     private fun goToOnBoarding() {
-        userPreferences.setSignedIn(true)
+        userPreferences.isSignedInSync = true
         Intent(this, OnBoardingActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(this)
@@ -107,7 +107,7 @@ class GoogleSigninActivity : AppCompatActivity() {
     }
 
     private fun goToHome() {
-        userPreferences.setSignedIn(true)
+        userPreferences.isSignedInSync = true
         Intent(this, Home::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(this)

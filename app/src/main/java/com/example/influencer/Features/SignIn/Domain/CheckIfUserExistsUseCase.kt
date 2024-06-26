@@ -11,7 +11,7 @@ class CheckIfUserExistsUseCase @Inject constructor(
     private val authenticationService: AuthenticationService
 ) {
     fun execute(): Task<DocumentSnapshot> {
-        val userId = authenticationService.getUid()
+        val userId = authenticationService.uid
         return userService.getUsuario(userId)
     }
 }

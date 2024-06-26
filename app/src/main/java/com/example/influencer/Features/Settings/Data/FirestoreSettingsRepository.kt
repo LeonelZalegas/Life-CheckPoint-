@@ -21,7 +21,7 @@ class FirestoreSettingsRepository @Inject constructor(
 
     override suspend fun updateUsername(newUsername: String): Unit = withContext(Dispatchers.IO) {
         try {
-            val userId = authService.getUid()
+            val userId = authService.uid
             val userDocRef = db.collection("Usuarios").document(userId)
             userDocRef.update("username", newUsername).await()
         } catch (e: Exception) {
@@ -30,7 +30,7 @@ class FirestoreSettingsRepository @Inject constructor(
     }
 
     override suspend fun updateProfilePicture(imageUri: Uri) = withContext(Dispatchers.IO) {
-        val userId = authService.getUid() ?: return@withContext
+        val userId = authService.uid ?: return@withContext
         val storageRef = FirebaseStorage.getInstance().reference.child("images_profile/$userId.jpg")
         val userDocRef = db.collection("Usuarios").document(userId)
 
@@ -53,7 +53,7 @@ class FirestoreSettingsRepository @Inject constructor(
     override suspend fun logoutUser() = withContext(Dispatchers.IO) {
         try {
             authService.signOut()
-            userPreferences.isSignedIn = false
+            userPreferences.isSignedInSync = false
         } catch (e: Exception) {
             throw e
         }

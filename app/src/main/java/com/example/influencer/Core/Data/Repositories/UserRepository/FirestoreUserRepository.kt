@@ -21,21 +21,21 @@ class FirestoreUserRepository @Inject constructor(
 ): UserRepository {
 
     override suspend fun getUserProfilePictureUrl(): String = withContext(Dispatchers.IO) {
-        val uid = authService.getUid()
+        val uid = authService.uid
 
         val userDocSnapshot = db.collection("Usuarios").document(uid).get().await()
         return@withContext userDocSnapshot.getString("profilePictureUrl") ?: ""
     }
 
     override suspend fun saveUserAgeMonths(age: Int, months: Int): Unit = withContext(Dispatchers.IO){
-        val uid = authService.getUid()
+        val uid = authService.uid
 
         val userDocRef = db.collection("Usuarios").document(uid)
         userDocRef.update("years_old", age, "months_old", months).await()
     }
 
     override suspend fun saveUserCountry(countryName: String, countryFlag: String) {
-        val uid = authService.getUid()
+        val uid = authService.uid
 
         val userDocRef = db.collection("Usuarios").document(uid)
         userDocRef.update("countryName", countryName, "countryFlagCode", countryFlag).await()
@@ -43,7 +43,7 @@ class FirestoreUserRepository @Inject constructor(
 
     override suspend fun getUserById(userId: String?): Result<UsuarioSignin> = withContext(Dispatchers.IO) {
         try {
-            val uid = userId ?: authService.getUid()
+            val uid = userId ?: authService.uid
             val userDocSnapshot = db.collection("Usuarios").document(uid).get().await()
             val user = userDocSnapshot.toObject(UsuarioSignin::class.java)
             user?.let {
@@ -55,7 +55,7 @@ class FirestoreUserRepository @Inject constructor(
     }
 
     override suspend fun getOwnerUserId():String = withContext(Dispatchers.IO) {
-        authService.getUid()
+        authService.uid
     }
 
     override suspend fun isFollowing(currentUserId: String, targetUserId: String): Boolean = withContext(Dispatchers.IO) {
@@ -72,14 +72,14 @@ class FirestoreUserRepository @Inject constructor(
     //https://www.notion.so/ProfileTabFragment-26cfd73f6c2c4576b680f713ad431eaf?pvs=4#14054dcb1fa5488d90d1a78f3c2a8c5a
     //https://www.notion.so/ProfileTabFragment-26cfd73f6c2c4576b680f713ad431eaf?pvs=4#b2abd42a668c44e79a7c44748aedfa2b
     override suspend fun followUser(targetUserId: String) = withContext(Dispatchers.IO) {
-        val currentUserId = authService.getUid()
+        val currentUserId = authService.uid
         addUserToChunk(currentUserId, targetUserId, "following")
         addUserToChunk(targetUserId, currentUserId, "followers")
         incrementFollowCount(currentUserId, targetUserId, increment = true)
     }
 
     override suspend fun unfollowUser(targetUserId: String) = withContext(Dispatchers.IO) {
-        val currentUserId = authService.getUid()
+        val currentUserId = authService.uid
         removeUserFromChunk(currentUserId, targetUserId, "following")
         removeUserFromChunk(targetUserId, currentUserId, "followers")
         incrementFollowCount(currentUserId, targetUserId, increment = false)

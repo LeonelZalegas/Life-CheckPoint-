@@ -29,7 +29,7 @@ class FirestorePostRepository @Inject constructor(
 ): PostRepository {
 
     private suspend fun getUserPostCategories(): List<String> = withContext(Dispatchers.IO) {
-        val uid = authService.getUid()
+        val uid = authService.uid
         val postsCollectionRef = db.collection("Posts")
 
         try {
@@ -64,8 +64,8 @@ class FirestorePostRepository @Inject constructor(
     //modifica la BD en tiempo real sumando 1 al contador de likes y aparte devuelve el nuevo valor actualizado
     override suspend fun likePost(postId: String): Int = withContext(Dispatchers.IO) {
         val likedPostRef = db.collection("Posts").document(postId)
-        val currentUserLikedPostsRef = db.collection("Usuarios").document(authService.getUid()).collection("LikedPosts")
-        val likersRef = likedPostRef.collection("Likers").document(authService.getUid())
+        val currentUserLikedPostsRef = db.collection("Usuarios").document(authService.uid).collection("LikedPosts")
+        val likersRef = likedPostRef.collection("Likers").document(authService.uid)
 
         // Set the likedTime when adding the user to the Likers subcollection
         likersRef.set(mapOf("likedTime" to FieldValue.serverTimestamp())).await()
@@ -88,8 +88,8 @@ class FirestorePostRepository @Inject constructor(
     // same que likePost pero hace -1 al contador de likes
     override suspend fun unlikePost(postId: String): Int = withContext(Dispatchers.IO) {
         val likedPostRef = db.collection("Posts").document(postId)
-        val currentUserLikedPostsRef = db.collection("Usuarios").document(authService.getUid()).collection("LikedPosts")
-        val likersRef = likedPostRef.collection("Likers").document(authService.getUid())
+        val currentUserLikedPostsRef = db.collection("Usuarios").document(authService.uid).collection("LikedPosts")
+        val likersRef = likedPostRef.collection("Likers").document(authService.uid)
 
         // Remove the user from the Likers subcollection
         likersRef.delete().await()
@@ -217,7 +217,7 @@ class FirestorePostRepository @Inject constructor(
 
     override suspend fun deletePost(postId: String): Unit = withContext(Dispatchers.IO) {
         val postRef = db.collection("Posts").document(postId)
-        val userRef = db.collection("Usuarios").document(authService.getUid())
+        val userRef = db.collection("Usuarios").document(authService.uid)
         val storage = FirebaseStorage.getInstance()
 
         // Retrieve the post to get image URLs before deleting

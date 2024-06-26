@@ -54,7 +54,7 @@ class UploadCheckpointRepo @Inject constructor(
     }
 
     override suspend fun savePost(post: Post): Unit = withContext(Dispatchers.IO) {
-        val uid = authService.getUid()
+        val uid = authService.uid
         post.userId = uid  // Set the userId of the post
 
         val globalPostsRef = db.collection("Posts")

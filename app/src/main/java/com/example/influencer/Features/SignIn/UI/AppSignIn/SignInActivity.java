@@ -117,7 +117,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void goTonavigateToOnBoarding() {
-        userPreferences.setSignedIn(true);
+        userPreferences.setSignedInSync(true);
         Intent intent_LogIn = new Intent(SignInActivity.this, OnBoardingActivity.class);
         startActivity(intent_LogIn);
         ActivityCompat.finishAffinity(this); //en vez de poner finish() nomas utilizamos este metodo par asi tambien finalizar el activity de Login (antes solo se cerraba el Signin, por ende podias ir de Home a Login de nuevo si volvias para atras)
