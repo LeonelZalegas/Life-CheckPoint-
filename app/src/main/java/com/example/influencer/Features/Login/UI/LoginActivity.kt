@@ -110,7 +110,7 @@ class LoginActivity : AppCompatActivity() {
             buttonLogIn.setOnClickListener {
                 val email = ponerEmail.text.toString()
                 val password = ponerContrasena.text.toString()
-                if (loginViewModel.validatingLogin(email, password)) {
+                if (loginViewModel.validateLogin(email, password)) {
                     loginViewModel.onLoginSelected(UsuarioLogin(email, password))
                 }
             }
@@ -133,7 +133,7 @@ class LoginActivity : AppCompatActivity() {
                 event.getContentIfNotHandled()?.let { navigateToSignIn() }
             }
 
-            Loading.observe(this@LoginActivity) { event ->
+            isLoading.observe(this@LoginActivity) { event ->
                 event.getContentIfNotHandled()?.let { isLoading ->
                     if (isLoading) loadingDialog.show() else loadingDialog.dismiss()
                 }
