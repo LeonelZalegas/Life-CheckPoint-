@@ -3,11 +3,6 @@ package com.example.influencer.Features.Login.Domain
 import javax.inject.Inject
 import com.example.influencer.Core.Data.Network.AuthenticationService
 import com.example.influencer.Features.Login.Domain.Model.UsuarioLogin
-import com.example.influencer.Features.Login.UI.LoginListener
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.auth.AuthResult
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException

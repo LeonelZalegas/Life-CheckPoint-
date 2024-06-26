@@ -1,6 +1,6 @@
-package com.example.influencer.Features.SignIn.UI.AppSignIn;
+package com.example.influencer.Features.SignIn.UI.AppSignIn
 
-public interface CreateAccountListener {
-    void onCreateAccountSuccess();
-    void onCreateAccountError();
+interface CreateAccountListener {
+    fun onCreateAccountSuccess()
+    fun onCreateAccountError()
 }

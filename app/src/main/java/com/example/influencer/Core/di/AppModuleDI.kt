@@ -1,32 +1,30 @@
-package com.example.influencer.Core.di;
+package com.example.influencer.Core.di
 
-import android.app.Application;
-import android.content.Context;
-import android.content.res.Resources;
-
-import javax.inject.Singleton;
-
-import dagger.Module;
-import dagger.Provides;
-import dagger.hilt.InstallIn;
-import dagger.hilt.android.qualifiers.ApplicationContext;
-import dagger.hilt.components.SingletonComponent;
+import android.app.Application
+import android.content.Context
+import android.content.res.Resources
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent.class)
-public class AppModuleDI {
-
+@InstallIn(SingletonComponent::class)
+object AppModuleDI {
     // Provide the Application Resources
+    @JvmStatic
     @Provides
     @Singleton
-    public static Resources provideResources(Application application) {
-        return application.getResources();
+    fun provideResources(application: Application): Resources {
+        return application.resources
     }
 
     // Provide the Application context
+    @JvmStatic
     @Provides
     @Singleton
-    public static Context provideApplicationContext(Application application) {
-        return application;
+    fun provideApplicationContext(application: Application): Context {
+        return application
     }
 }
