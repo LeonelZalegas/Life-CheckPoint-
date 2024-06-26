@@ -1,36 +1,25 @@
-package com.example.influencer.Features.SignIn.Domain;
+package com.example.influencer.Features.SignIn.Domain
 
-import com.example.influencer.Core.Data.Network.AuthenticationService;
-import com.example.influencer.Core.Data.Network.UserService;
-import com.example.influencer.Features.SignIn.Domain.Model.UsuarioSignin;
-import com.example.influencer.Core.Data.Network.AuthenticationService;
-import com.example.influencer.Core.Data.Network.UserService;
-import com.example.influencer.Features.SignIn.Domain.Model.UsuarioSignin;
-import com.google.android.gms.tasks.Task;
+import com.example.influencer.Core.Data.Network.AuthenticationService
+import com.example.influencer.Core.Data.Network.UserService
+import com.example.influencer.Features.SignIn.Domain.Model.UsuarioSignin
+import com.google.android.gms.tasks.Task
+import javax.inject.Inject
 
-import javax.inject.Inject;
-
-public class CreateGoogleUserUseCase {
-
-    private final UserService userService;
-    private final AuthenticationService authenticationService;
-
-    @Inject
-    public CreateGoogleUserUseCase(UserService userService, AuthenticationService authenticationService) {
-        this.userService = userService;
-        this.authenticationService = authenticationService;
-    }
-
-    public Task<Void> execute(String profilePictureUrl) {
-        String email = authenticationService.getEmail();
-        int index = email.indexOf('@');
-        String username = email.substring(0, index);
-        if (username.length() > 16) {
-            username = username.substring(0, 16);
+class CreateGoogleUserUseCase @Inject constructor(
+    private val userService: UserService,
+    private val authenticationService: AuthenticationService
+) {
+    fun execute(profilePictureUrl: String?): Task<Void> {
+        val email = authenticationService.getEmail()
+        var username = email.substringBefore('@').take(16)
+        val usuarioSignin = UsuarioSignin(email, username, "NO PASSWORD SAVED WITH GOOGLE SIGNIN").apply {
+            id = authenticationService.getUid()
+            this.profilePictureUrl = profilePictureUrl
         }
-        UsuarioSignin usuarioSignin = new UsuarioSignin(email, username, "NO PASSWORD SAVED WITH GOOGLE SIGNIN");
-        usuarioSignin.setId(authenticationService.getUid());
-        usuarioSignin.setProfilePictureUrl(profilePictureUrl);
-        return userService.crearUsuario(usuarioSignin);
+        return userService.crearUsuario(usuarioSignin)
     }
 }
+
+
+

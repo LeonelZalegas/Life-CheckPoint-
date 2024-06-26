@@ -1,106 +1,76 @@
-package com.example.influencer.Features.SignIn.UI.GoogleSignin;
+package com.example.influencer.Features.SignIn.UI.GoogleSignin
 
-import android.content.res.Resources;
-import android.util.Log;
+// https://www.notion.so/re-factoreo-del-Google-Sign-In-5ff74b3cda2f4e7fa67e634f9bd16e20
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+import android.content.res.Resources
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.influencer.Core.Utils.Event
+import com.example.influencer.Core.Utils.SingleLiveEvent
+import com.example.influencer.Features.SignIn.Domain.CheckIfUserExistsUseCase
+import com.example.influencer.Features.SignIn.Domain.CreateGoogleUserUseCase
+import com.example.influencer.Features.SignIn.Domain.FirebaseAuthWithGoogleUseCase
+import com.example.influencer.R
+import com.google.android.gms.tasks.Tasks
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-import com.example.influencer.Core.Data.Network.AuthenticationService;
-import com.example.influencer.Core.Utils.Event;
-import com.example.influencer.Core.Utils.SingleLiveEvent;
-import com.example.influencer.Features.SignIn.Domain.CheckIfUserExistsUseCase;
-import com.example.influencer.Features.SignIn.Domain.CreateGoogleUserUseCase;
-import com.example.influencer.Features.SignIn.Domain.FirebaseAuthWithGoogleUseCase;
-import com.example.influencer.R;
-import com.google.android.gms.tasks.Tasks;
-
-import javax.inject.Inject;
-
-import dagger.hilt.android.lifecycle.HiltViewModel;
-
-//https://www.notion.so/re-factoreo-del-Google-Sign-In-5ff74b3cda2f4e7fa67e634f9bd16e20
+// https://www.notion.so/re-factoreo-del-Google-Sign-In-5ff74b3cda2f4e7fa67e634f9bd16e20
 @HiltViewModel
-public class GoogleSigninViewModel extends ViewModel {
+class GoogleSigninViewModel @Inject constructor(
+    private val firebaseAuthWithGoogleUseCase: FirebaseAuthWithGoogleUseCase,
+    private val checkIfUserExistsUseCase: CheckIfUserExistsUseCase,
+    private val createGoogleUserUseCase: CreateGoogleUserUseCase,
+    private val resources: Resources
+) : ViewModel() {
 
-    private final FirebaseAuthWithGoogleUseCase firebaseAuthWithGoogleUseCase;
-    private final CheckIfUserExistsUseCase checkIfUserExistsUseCase;
-    private final CreateGoogleUserUseCase createGoogleUserUseCase;
-    private final AuthenticationService authenticationService; //eliminar luego de ver q bug esta solucionado
-    private final Resources resources;
+    val userExists = SingleLiveEvent<Boolean>()
+    val userGetsCreated = SingleLiveEvent<Boolean>()
 
-    SingleLiveEvent<Boolean> userExists = new SingleLiveEvent<>();
-    SingleLiveEvent<Boolean> userGetsCreated = new SingleLiveEvent<>();
+    private val _loading = MutableLiveData<Event<Boolean>>()
+    val loading: LiveData<Event<Boolean>> = _loading
 
-    private final MutableLiveData<Event<Boolean>> _Loading = new MutableLiveData<>();
-    public LiveData<Event<Boolean>> Loading = _Loading;
+    val toastMessage = SingleLiveEvent<String>()
 
-    private final SingleLiveEvent<String> ToastMessage = new SingleLiveEvent<>();
-
-    @Inject
-    public GoogleSigninViewModel(FirebaseAuthWithGoogleUseCase firebaseAuthWithGoogleUseCase,
-                                 CheckIfUserExistsUseCase checkIfUserExistsUseCase,
-                                 CreateGoogleUserUseCase createGoogleUserUseCase,
-                                 AuthenticationService authenticationService,//eliminar luego de ver q bug esta solucionado
-                                 Resources resources) {
-
-        this.firebaseAuthWithGoogleUseCase = firebaseAuthWithGoogleUseCase;
-        this.checkIfUserExistsUseCase = checkIfUserExistsUseCase;
-        this.createGoogleUserUseCase = createGoogleUserUseCase;
-        this.authenticationService = authenticationService; //eliminar luego de ver q bug esta solucionado
-        this.resources = resources;
-    }
-
-    public SingleLiveEvent<Boolean> getUserExists() {
-        return userExists;
-    }
-
-    public SingleLiveEvent<Boolean> getUserGetsCreated() {
-        return userGetsCreated;
-    }
-
-
-    public void handleGoogleSignInResult(String idToken,String profilePictureUrl) {
-        _Loading.postValue(new Event<>(true));
+    fun handleGoogleSignInResult(idToken: String, profilePictureUrl: String) {
+        _loading.postValue(Event(true))
         firebaseAuthWithGoogleUseCase.execute(idToken)
-                .continueWithTask(task -> {
-                    if (task.isSuccessful()) {
-                        return checkIfUserExistsUseCase.execute();
+            .continueWithTask { task ->
+                if (task.isSuccessful) {
+                    checkIfUserExistsUseCase.execute()
+                } else {
+                    _loading.postValue(Event(false))
+                    toastMessage.value = resources.getString(R.string.Generic_error)
+                    throw RuntimeException(task.exception)
+                }
+            }
+            .continueWithTask { task ->
+                if (task.isSuccessful) {
+                    if (task.result.exists()) {
+                        _loading.postValue(Event(false))
+                        userExists.postValue(true)
+                        Tasks.forResult(null)
                     } else {
-                        _Loading.postValue(new Event<>(false));
-                        ToastMessage.setValue(resources.getString(R.string.Generic_error));
-                        throw new RuntimeException(task.getException());  //esto es para tirar otro error supongo xd
+                        createGoogleUserUseCase.execute(profilePictureUrl)
+                            .addOnSuccessListener {
+                                _loading.postValue(Event(false))
+                                userGetsCreated.postValue(true)
+                            }
                     }
-                })
-                .continueWithTask(task -> {
-                    if (task.isSuccessful()) {
-                        if (task.getResult().exists()) {
-                            _Loading.postValue(new Event<>(false));
-                            userExists.postValue(true);
-                            return Tasks.forResult(null); // Avoid triggering user creation flow
-                        } else {
-                            Log.d("GoogleSigninViewModel", "User does not exist in Firestore, creating new user. UID: " + authenticationService.getUid()); //eliminar luego de ver q bug esta solucionado
-                            return createGoogleUserUseCase.execute(profilePictureUrl)
-                                    .addOnSuccessListener(result -> {
-                                        _Loading.postValue(new Event<>(false));
-                                        userGetsCreated.postValue(true);
-                                    });
-                        }
-                    } else {
-                        _Loading.postValue(new Event<>(false));
-                        ToastMessage.setValue(resources.getString(R.string.FireStore_Error));
-                        Log.e("GoogleSigninViewModel", "Error checking user existence in Firestore.", task.getException()); //eliminar luego de ver q bug esta solucionado
-                        throw new RuntimeException(task.getException());
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    _Loading.postValue(new Event<>(false));
-                    ToastMessage.setValue(resources.getString(R.string.FireStore_Error));
-                });
-    }
-
-    public SingleLiveEvent<String> getToastMessage() {
-        return ToastMessage;
+                } else {
+                    _loading.postValue(Event(false))
+                    toastMessage.value = resources.getString(R.string.FireStore_Error)
+                    Log.e("GoogleSigninViewModel", "Error checking user existence in Firestore.", task.exception)
+                    throw RuntimeException(task.exception)
+                }
+            }
+            .addOnFailureListener { e ->
+                _loading.postValue(Event(false))
+                toastMessage.value = resources.getString(R.string.FireStore_Error)
+            }
     }
 }
