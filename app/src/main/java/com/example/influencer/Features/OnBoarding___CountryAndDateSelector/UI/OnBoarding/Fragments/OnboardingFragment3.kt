@@ -1,24 +1,24 @@
-package com.example.influencer.Features.OnBoarding___CountryAndDateSelector.UI.OnBoarding.Fragments;
+package com.example.influencer.Features.OnBoarding___CountryAndDateSelector.UI.OnBoarding.Fragments
 
-import android.os.Bundle;
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.os.Bundle
+import android.view.View
+import androidx.fragment.app.Fragment
+import com.example.influencer.databinding.FragmentOnboarding3Binding
 
-import androidx.fragment.app.Fragment;
+class OnboardingFragment3 : Fragment() {
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+    private var _binding: FragmentOnboarding3Binding? = null
+    private val binding get() = _binding!!
 
-import com.example.influencer.databinding.FragmentOnboarding3Binding;
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentOnboarding3Binding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-
-public class OnboardingFragment3 extends Fragment {
-
-    private FragmentOnboarding3Binding binding;
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        binding = FragmentOnboarding3Binding.inflate(inflater, container, false);
-        return binding.getRoot();
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

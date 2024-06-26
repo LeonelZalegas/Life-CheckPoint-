@@ -1,65 +1,72 @@
-package com.example.influencer.Features.OnBoarding___CountryAndDateSelector.UI.OnBoarding;
+package com.example.influencer.Features.OnBoarding___CountryAndDateSelector.UI.OnBoarding
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-
-import com.example.influencer.Features.OnBoarding___CountryAndDateSelector.UI.CountryAndDateSelector.CountryDateActivity;
-import com.example.influencer.Features.OnBoarding___CountryAndDateSelector.UI.OnBoarding.Fragments.OnboardingFragment1;
-import com.example.influencer.Features.OnBoarding___CountryAndDateSelector.UI.OnBoarding.Fragments.OnboardingFragment2;
-import com.example.influencer.Features.OnBoarding___CountryAndDateSelector.UI.OnBoarding.Fragments.OnboardingFragment3;
-import com.example.influencer.databinding.ActivityOnboardingBinding;
-import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
-
-import dagger.hilt.android.AndroidEntryPoint;
+import android.content.Intent
+import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModel
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.influencer.Features.OnBoarding___CountryAndDateSelector.UI.CountryAndDateSelector.CountryDateActivity
+import com.example.influencer.Features.OnBoarding___CountryAndDateSelector.UI.OnBoarding.Fragments.OnboardingFragment1
+import com.example.influencer.Features.OnBoarding___CountryAndDateSelector.UI.OnBoarding.Fragments.OnboardingFragment2
+import com.example.influencer.Features.OnBoarding___CountryAndDateSelector.UI.OnBoarding.Fragments.OnboardingFragment3
+import com.example.influencer.databinding.ActivityOnboardingBinding
+import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 @AndroidEntryPoint
-public class OnBoardingActivity extends AppCompatActivity {
+class OnBoardingActivity : AppCompatActivity() {
 
-    private ActivityOnboardingBinding binding;
+    private lateinit var binding: ActivityOnboardingBinding
+    private val viewModel: OnboardingViewModel by viewModels()
+    private lateinit var dotsIndicator: DotsIndicator
 
-    private OnboardingViewModel viewModel;
-    private DotsIndicator dotsIndicator;
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityOnboardingBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = ActivityOnboardingBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
-        viewModel = new ViewModelProvider(this).get(OnboardingViewModel.class);
-
-        // Set up ViewPager2 adapter
-        OnboardingPagerAdapter pagerAdapter = new OnboardingPagerAdapter(this);
-        pagerAdapter.addFragment(new OnboardingFragment1());
-        pagerAdapter.addFragment(new OnboardingFragment2());
-        pagerAdapter.addFragment(new OnboardingFragment3());
-        binding.onboardingViewPager.setAdapter(pagerAdapter);
-
-        //para la barrita de los dots del desplazamiento
-        dotsIndicator = binding.dotsIndicator;
-        dotsIndicator.attachTo(binding.onboardingViewPager);
-
-        binding.buttonStartNow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                viewModel.StartnowSelected();
-            }
-        });
-
-        viewModel.navigateToHome.observe(this, event -> {
-            if (event != null && event.getContentIfNotHandled() != null) {
-                goTonavigateToHome();
-            }
-        });
+        setupViewPager()
+        setupDotsIndicator()
+        setupStartNowButton()
+        observeNavigationEvents()
     }
 
-    private void goTonavigateToHome() {
-        Intent intent_save_birthdate_country = new Intent(OnBoardingActivity.this, CountryDateActivity.class);
-        startActivity(intent_save_birthdate_country);
-        finish();
+    private fun setupViewPager() {
+        val pagerAdapter = OnboardingPagerAdapter(this).apply {
+            addFragment(OnboardingFragment1())
+            addFragment(OnboardingFragment2())
+            addFragment(OnboardingFragment3())
+        }
+        binding.onboardingViewPager.adapter = pagerAdapter
+    }
+
+    private fun setupDotsIndicator() {
+        dotsIndicator = binding.dotsIndicator
+        dotsIndicator.attachTo(binding.onboardingViewPager)
+    }
+
+    private fun setupStartNowButton() {
+        binding.buttonStartNow.setOnClickListener {
+            viewModel.startNowSelected()
+        }
+    }
+
+    private fun observeNavigationEvents() {
+        viewModel.navigateToHome.observe(this) { event ->
+            event.getContentIfNotHandled()?.let {
+                navigateToHome()
+            }
+        }
+    }
+
+    private fun navigateToHome() {
+        val intent = Intent(this, CountryDateActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

@@ -1,33 +1,19 @@
-package com.example.influencer.Features.OnBoarding___CountryAndDateSelector.UI.OnBoarding;
+package com.example.influencer.Features.OnBoarding___CountryAndDateSelector.UI.OnBoarding
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import java.util.ArrayList
 
-import java.util.ArrayList;
-import java.util.List;
+class OnboardingPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
 
-public class OnboardingPagerAdapter extends FragmentStateAdapter {
+    private val fragmentList = mutableListOf<Fragment>()
 
-    private List<Fragment> fragmentList = new ArrayList<>();
-
-    public OnboardingPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
-        super(fragmentActivity);
+    fun addFragment(fragment: Fragment) {
+        fragmentList.add(fragment)
     }
 
-    public void addFragment(Fragment fragment) {
-        fragmentList.add(fragment);
-    }
+    override fun createFragment(position: Int): Fragment = fragmentList[position]
 
-    @NonNull
-    @Override
-    public Fragment createFragment(int position) {
-        return fragmentList.get(position);
-    }
-
-    @Override
-    public int getItemCount() {
-        return fragmentList.size();
-    }
+    override fun getItemCount(): Int = fragmentList.size
 }

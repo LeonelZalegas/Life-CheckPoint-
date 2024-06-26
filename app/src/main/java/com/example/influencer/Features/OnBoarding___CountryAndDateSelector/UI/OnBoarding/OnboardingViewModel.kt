@@ -1,28 +1,19 @@
-package com.example.influencer.Features.OnBoarding___CountryAndDateSelector.UI.OnBoarding;
+package com.example.influencer.Features.OnBoarding___CountryAndDateSelector.UI.OnBoarding
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
-
-import com.example.influencer.Core.Utils.Event;
-
-import javax.inject.Inject;
-
-import dagger.hilt.android.lifecycle.HiltViewModel;
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
+import com.example.influencer.Core.Utils.Event
 
 @HiltViewModel
-public class OnboardingViewModel extends ViewModel {
+class OnboardingViewModel @Inject constructor() : ViewModel() {
 
-    private final MutableLiveData<Event<Boolean>> _navigateToHome = new MutableLiveData<>();
-    public LiveData<Event<Boolean>> navigateToHome  = _navigateToHome ;
+    private val _navigateToHome = MutableLiveData<Event<Unit>>()
+    val navigateToHome: LiveData<Event<Unit>> = _navigateToHome
 
-    @Inject
-    public OnboardingViewModel() {
-        //no dependencies needed
-    }
-
-    public void StartnowSelected(){
-        _navigateToHome.postValue(new Event<>(true));
+    fun startNowSelected() {
+        _navigateToHome.value = Event(Unit)
     }
 }
-
