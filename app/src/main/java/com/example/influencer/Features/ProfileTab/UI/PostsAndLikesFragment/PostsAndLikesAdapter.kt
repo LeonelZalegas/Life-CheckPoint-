@@ -54,7 +54,7 @@ class PostsAndLikesAdapter(
                 UpdateChipText.setChipTextColor(colorInt)
                 UpdateChipNumber.chipBackgroundColor = ColorStateList.valueOf(colorInt)
                 UpdateChipNumber.setChipTextColor(colorInt)
-                UpdateChipNumber.text = post.UpdatesAmount.toString()
+                UpdateChipNumber.text = post.updatesAmount.toString()
             }
         }
 

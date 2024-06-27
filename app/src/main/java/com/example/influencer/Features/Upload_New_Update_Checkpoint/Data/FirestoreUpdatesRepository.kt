@@ -41,7 +41,7 @@ class FirestoreUpdatesRepository @Inject constructor(
          updatesCollectionRef.document().set(updateDocument).await()
 
         // Atomically increment the UpdatesAmount field in the Post document
-        lastPostDocRefCache.update("UpdatesAmount", FieldValue.increment(1))
+        lastPostDocRefCache.update("updatesAmount", FieldValue.increment(1))
     }
 
     //se  fija si la coleccion "Updates" esta creada en el Post, si no lo esta envia un 1 (1er update del post), si ya esta creada, se fija el > valor de update_Number de todos los documentos y devuelve ese valor +1

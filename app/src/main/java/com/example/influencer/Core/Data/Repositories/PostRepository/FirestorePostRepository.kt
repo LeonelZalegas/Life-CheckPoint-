@@ -245,6 +245,18 @@ class FirestorePostRepository @Inject constructor(
             batch.delete(likersRef.document(doc.id))
         }
 
+        // Delete all documents in the "Updates" collection if it exists
+        val updatesRef = postRef.collection("Updates")
+        try {
+            val updatesSnapshot = updatesRef.get().await()
+            updatesSnapshot.documents.forEach { doc ->
+                batch.delete(updatesRef.document(doc.id))
+            }
+        } catch (e: Exception) {
+            // If the collection doesn't exist or there's an error, log it and continue
+            Log.w("DeletePost", "Error deleting Updates collection: ${e.message}")
+        }
+
         // Decrement the post count in the user's document
         batch.update(userRef, "postCount", FieldValue.increment(-1))
 
