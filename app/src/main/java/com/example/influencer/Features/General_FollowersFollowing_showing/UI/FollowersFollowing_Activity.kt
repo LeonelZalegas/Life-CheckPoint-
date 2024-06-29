@@ -22,6 +22,7 @@ class FollowersFollowing_Activity : NetworkActivity(),FollowersFollowing_Adapter
     private lateinit var currentUserId : String
     private val viewModel: FollowersFollowing_Viewmodel by viewModels()
     lateinit var followersfollowingAdapter: FollowersFollowing_Adapter
+    lateinit var ownerUserId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +35,7 @@ class FollowersFollowing_Activity : NetworkActivity(),FollowersFollowing_Adapter
         FollowingOptionSelected = intent.getBooleanExtra("FollowingOptionSelected",true)
 
         viewModel.ownerUserId.observe(this) { ownerUserId ->
+            this.ownerUserId = ownerUserId
             followersfollowingAdapter = FollowersFollowing_Adapter(ownerUserId, this)
             setupRecyclerView()
         }
@@ -94,7 +96,7 @@ class FollowersFollowing_Activity : NetworkActivity(),FollowersFollowing_Adapter
     }
 
     override fun checkIfFollowing(targetUserId:String, callback: (Boolean) -> Unit) {
-        viewModel.checkIfFollowing(currentUserId,targetUserId,callback)
+        viewModel.checkIfFollowing(ownerUserId,targetUserId,callback)
     }
 
     override fun goToSelectedProfile(userId: String) {
