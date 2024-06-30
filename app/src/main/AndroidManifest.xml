@@ -138,6 +138,14 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".Features.SignIn.UI.AppSignIn.SignInActivity"
+            android:exported="false"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".Features.SignIn.UI.GoogleSignin.GoogleSigninActivity"
             android:exported="false"
             android:screenOrientation="portrait">

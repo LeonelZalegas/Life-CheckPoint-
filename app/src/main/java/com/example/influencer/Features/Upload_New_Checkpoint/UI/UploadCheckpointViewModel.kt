@@ -25,8 +25,8 @@ class UploadCheckpointViewModel @Inject constructor(
     private val _recyclerViewLiveData = MutableLiveData<MutableList<Uri?>>(mutableListOf())
     val recyclerViewLiveData: LiveData<MutableList<Uri?>> = _recyclerViewLiveData
 
-    private val _lastThreeImagesLiveData = MutableLiveData<List<Uri>?>()
-    val lastThreeImagesLiveData: MutableLiveData<List<Uri>?> = _lastThreeImagesLiveData
+    private val _lastThreeImagesLiveData = MutableLiveData<List<Uri>>()
+    val lastThreeImagesLiveData: LiveData<List<Uri>> = _lastThreeImagesLiveData
 
     val loading = MutableLiveData<Boolean>()
 
