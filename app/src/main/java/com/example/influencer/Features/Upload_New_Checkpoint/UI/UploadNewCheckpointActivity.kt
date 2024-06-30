@@ -259,9 +259,9 @@ por ende se creo TempImageAdapterFactory (This approach is particularly useful w
         }
 
         viewModel.lastThreeImagesLiveData.observe(this) { uris ->                   //actualizamos en real time las imagenes que se muestran en el imageview de las 3 ultimas imagenes
-            uris.getOrNull(0)?.let { binding.ImageSelection1.setImageURI(it) }
-            uris.getOrNull(1)?.let { binding.ImageSelection2.setImageURI(it) }
-            uris.getOrNull(2)?.let { binding.ImageSelection3.setImageURI(it) }
+            uris?.getOrNull(0)?.let { binding.ImageSelection1.setImageURI(it) }
+            uris?.getOrNull(1)?.let { binding.ImageSelection2.setImageURI(it) }
+            uris?.getOrNull(2)?.let { binding.ImageSelection3.setImageURI(it) }
         }
 
         viewModel.profilePictureUrl.observe(this) { url ->

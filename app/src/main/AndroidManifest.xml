@@ -146,22 +146,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Features.SignIn.UI.AppSignIn.SignInActivity"
-            android:exported="false"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".Features.SignIn.Domain.Validation.SigninValidation"
-            android:exported="false"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".Features.Login.UI.LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.App.ElSplash"
