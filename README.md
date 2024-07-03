@@ -34,6 +34,8 @@ Install and test the app below 👇
 
 Life Checkpoint draws its inspiration from the "Internet Checkpoint" phenomenon that originated on YouTube, popularized by creator taia777. The concept of an internet checkpoint - a digital space where people can leave their mark and return to reflect on their past - resonated deeply with viewers worldwide.
 
+watch video 👇
+
 [![Internet Checkpoint](https://res.cloudinary.com/dylbp6bql/image/upload/v1719851420/readme%20file/d3pj3wu5whnt883kms1g.jpg)](https://www.youtube.com/shorts/YRvqB2YMnmw "Internet Checkpoint")
 
 This app aims to capture the spirit of connection and reflection that made the Internet Checkpoint so impactful, fostering a community where personal stories intertwine to create a tapestry of human experiences, while providing a more structured, personal, and interactive experience. 
@@ -125,7 +127,7 @@ Life Checkpoint becomes a living, growing record of individual journeys and shar
 
 <img src="https://cursokotlin.com/wp-content/uploads/2021/05/Android-Clean-Architecture.png" alt="MVVM with Clean Architecture Diagram" width="230" />
 
-For more information on MVVM with Clean Architecture, check out [this detailed guide](https://insert-link-here.com)
+For more information on MVVM with Clean Architecture, check out [this detailed guide](https://developer.android.com/topic/architecture)
 
 ### Components
 
